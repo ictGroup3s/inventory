@@ -30,4 +30,14 @@ public class projectController {
 	public String selectall() {
 		return "selectall";
 	}
+	
+	@GetMapping("detail")
+	public String detail() {
+		return "detail";
+	}
+	
+	@GetMapping("register")
+	public String register() {
+		return "register";
+	}
 }

@@ -54,7 +54,7 @@
 		<div class="col-lg-3 col-6 text-right">
 			<a href="" class="btn border"> <i
 				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="" class="btn border"> <i
+			</a> <a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -76,8 +76,8 @@
 				</a>
 				<nav
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
-					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-					<div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 9999 ;">
+					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
 						<a href="selectall" class="nav-item nav-link">전체상품</a>
                         <a href="" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
                         <a href="" class="nav-item nav-link">국 ．밥 ．면</a>
@@ -102,8 +102,8 @@
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
 						<div class="navbar-nav ml-auto py-0">
-							<a href="" class="nav-item nav-link">회원가입</a> <a href=""
-								class="nav-item nav-link">로그인</a> <a href=""
+							<a href="" class="nav-item nav-link">로그인</a> <a href="register"
+								class="nav-item nav-link">회원가입</a> <a href=""
 								class="nav-item nav-link">고객센터</a>
 						</div>
 					</div>
