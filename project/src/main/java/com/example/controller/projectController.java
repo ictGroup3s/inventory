@@ -25,4 +25,9 @@ public class projectController {
 	public String checkout() {
 		return "checkout";
 	}
+	
+	@GetMapping("selectall")
+	public String selectall() {
+		return "selectall";
+	}
 }
