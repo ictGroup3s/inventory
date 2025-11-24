@@ -68,26 +68,23 @@
 	<div class="container-fluid">
 		<div class="row border-top px-xl-5">
 			<div class="col-lg-3 d-none d-lg-block">
-				<a
+		<a
 					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
 					data-toggle="collapse" href="#navbar-vertical"
 					style="height: 65px; margin-top: -1px; padding: 0 30px;">
-					<h6 class="m-0">Categories</h6> <i
+					<h6 class="m-0">관리자 페이지</h6> <i
 					class="fa fa-angle-down text-dark"></i>
 				</a>
 				<nav
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
 					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
 					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="selectall" class="nav-item nav-link">전체상품</a> <a href=""
-							class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a href=""
-							class="nav-item nav-link">국 ．밥 ．면</a> <a href=""
-							class="nav-item nav-link"> 식단관리 </a> <a href=""
-							class="nav-item nav-link">분식 ．간식</a> <a href=""
-							class="nav-item nav-link">베이커리 ．떡</a> <a href=""
-							class="nav-item nav-link">반찬 ．소스</a> <a href=""
-							class="nav-item nav-link">레시피</a> <a href=""
-							class="nav-item nav-link">Shoes</a>
+						<a href="" class="nav-item nav-link">대쉬보드 </a> 
+							<a href=""class="nav-item nav-link">상품관리</a> 
+							<a href=""class="nav-item nav-link">입고,재고관리</a>
+							<a href=""class="nav-item nav-link">주문관리</a>
+							<a href=""class="nav-item nav-link">통계</a>
+							<a href=""class="nav-item nav-link">고객관리</a>
 					</div>
 				</nav>
 			</div>
@@ -126,7 +123,7 @@
 			</div>
 
 			<div class="col-lg-7 pb-5">
-				<h3 class="font-weight-semi-bold">상품등록</h3>
+				<h3 class="font-weight-semi-bold">상품입고</h3>
 				<div class="d-flex mb-3">
 					
 				</div>
