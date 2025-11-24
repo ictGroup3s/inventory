@@ -83,7 +83,9 @@
 			<td><input type="button" value="회원가입"></td>
 		</tr>
 		<tr>
-			<td><img class ="loginlogo" src ="/img/google.png"><img class ="loginlogo" src ="/img/naver.png"><img class ="loginlogo" src ="/img/kakao.png"></td>
+			<td><img class ="loginlogo" src ="/img/google.png" width="50" height="50">
+			<img class ="loginlogo" src ="/img/naver.png"  width="50" height="50">
+			<img class ="loginlogo" src ="/img/kakao.png"  width="50" height="50"></td>
 			<!-- <td><img src ="/img/naver.png"></td>
 			<td><img src ="/img/kakao.png"></td> -->
 		</tr>
@@ -209,5 +211,6 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 </body>
+
 
 </html>
