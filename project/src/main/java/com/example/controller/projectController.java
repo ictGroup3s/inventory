@@ -30,9 +30,9 @@ public class projectController {
 		return "selectall";
 	}
 	
-	@GetMapping("detail")
-	public String detail() {
-		return "detail";
+	@GetMapping("fish2Detail")
+	public String fish2Detail() {
+		return "fish2Detail";
 	}
 	
 	@GetMapping("register")
@@ -50,12 +50,39 @@ public class projectController {
 		return "mlist";
 	}
 	
+	@GetMapping("selectBanchan")
+	public String selectBanchan() {
+		return "selectBanchan";
+	}
+	
+	@GetMapping("selectBunsik")
+	public String selectBunsik() {
+		return "selectBunsik";
+	}
+	
+	@GetMapping("selectDiet")
+	public String selectDiet() {
+		return "selectDiet";
+	}
+	
+	@GetMapping("selectGui")
+	public String selectGui() {
+		return "selectGui";
+	}
+	
+	@GetMapping("selectRecipe")
+	public String selectRecipe() {
+		return "selectRecipe";
+	}
+	
+	@GetMapping("selectSoup")
+	public String selectSoup() {
+		return "selectSoup";
+	}
+
+
 	@GetMapping("board")
 	public String board() {
 		return "board";
-	}
-	@GetMapping("stock2")
-	public String stock2() {
-		return "stock2";
 	}
 }

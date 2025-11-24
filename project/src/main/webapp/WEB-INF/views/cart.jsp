@@ -70,15 +70,13 @@
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
 					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
 					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="selectall" class="nav-item nav-link">전체상품</a> <a href=""
-							class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a href=""
-							class="nav-item nav-link">국 ．밥 ．면</a> <a href=""
-							class="nav-item nav-link"> 식단관리 </a> <a href=""
-							class="nav-item nav-link">분식 ．간식</a> <a href=""
-							class="nav-item nav-link">베이커리 ．떡</a> <a href=""
-							class="nav-item nav-link">반찬 ．소스</a> <a href=""
-							class="nav-item nav-link">레시피</a> <a href=""
-							class="nav-item nav-link">Shoes</a>
+						<a href="selectall" class="nav-item nav-link">전체상품</a>
+                        <a href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
+                        <a href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a>
+                        <a href="selectDiet" class="nav-item nav-link"> 식단관리 </a>
+                        <a href="selectBunsik" class="nav-item nav-link">분식 ．간식</a>
+                        <a href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a>
+                        <a href="selectRecipe" class="nav-item nav-link">레시피</a>
 					</div>
 				</nav>
 			</div>
@@ -189,6 +187,7 @@
 								</button></td>
 						</tr>
 						<tr>
+						
 							<td class="align-middle"><img src="img/닭가슴살.png" alt=""
 								style="width: 50px;"> 닭가슴살</td>
 							<td class="align-middle">8,000원</td>
