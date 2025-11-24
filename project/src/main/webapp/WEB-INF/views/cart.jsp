@@ -135,7 +135,7 @@
 					</thead>
 					<tbody class="align-middle">
 						<tr>
-							<td class="align-middle"><img src="img/떡볶이.png" alt=""
+							<td class="align-middle"><img src="img/bunsik.png" alt=""
 								style="width: 50px;"> 떡볶이</td>
 							<td class="align-middle">5,000원</td>
 							<td class="align-middle">
