@@ -107,7 +107,7 @@
 						<div class="navbar-nav ml-auto py-0">
 							<a href="login" class="nav-item nav-link">로그인</a> 
 							<a href="register" class="nav-item nav-link">회원가입</a> 
-							<a href="" class="nav-item nav-link">고객센터</a>
+							<a href="board" class="nav-item nav-link">고객센터</a>
 						</div>
 					</div>
 				</nav>
@@ -620,6 +620,7 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 </body>
+
 
 
 </html>
