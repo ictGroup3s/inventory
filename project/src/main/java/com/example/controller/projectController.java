@@ -45,4 +45,14 @@ public class projectController {
 	public String login() {
 		return "login";
 	}
+	
+	@GetMapping("mlist")
+	public String mlist() {
+		return "mlist";
+	}
+	
+	@GetMapping("board")
+	public String board() {
+		return "board";
+	}
 }
