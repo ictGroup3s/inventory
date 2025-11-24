@@ -105,7 +105,7 @@
 						id="navbarCollapse">
 
 						<div class="navbar-nav ml-auto py-0">
-							<a href="" class="nav-item nav-link">로그인</a> 
+							<a href="login" class="nav-item nav-link">로그인</a> 
 							<a href="register" class="nav-item nav-link">회원가입</a> 
 							<a href="" class="nav-item nav-link">고객센터</a>
 						</div>
@@ -124,16 +124,16 @@
 					data-ride="carousel">
 					<div class="carousel-inner border">
 						<div class="carousel-item active">
-							<img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
+							<img class="w-100 h-100" src="img/fish.png" alt="Image">
 						</div>
 						<div class="carousel-item">
-							<img class="w-100 h-100" src="img/product-2.jpg" alt="Image">
+							<img class="w-100 h-100" src="img/fish.png" alt="Image">
 						</div>
 						<div class="carousel-item">
-							<img class="w-100 h-100" src="img/product-3.jpg" alt="Image">
+							<img class="w-100 h-100" src="img/fish.png" alt="Image">
 						</div>
 						<div class="carousel-item">
-							<img class="w-100 h-100" src="img/product-4.jpg" alt="Image">
+							<img class="w-100 h-100" src="img/fish.png" alt="Image">
 						</div>
 					</div>
 					<a class="carousel-control-prev" href="#product-carousel"
@@ -146,7 +146,7 @@
 			</div>
 
 			<div class="col-lg-7 pb-5">
-				<h3 class="font-weight-semi-bold">Colorful Stylish Shirt</h3>
+				<h3 class="font-weight-semi-bold">고등어구이</h3>
 				<div class="d-flex mb-3">
 					<div class="text-primary mr-2">
 						<small class="fas fa-star"></small> <small class="fas fa-star"></small>
@@ -155,40 +155,26 @@
 					</div>
 					<small class="pt-1">(50 Reviews)</small>
 				</div>
-				<h3 class="font-weight-semi-bold mb-4">$150.00</h3>
-				<p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est
-					nonumy elitr erat diam stet sit clita ea. Sanc invidunt ipsum et,
-					labore clita lorem magna lorem ut. Erat lorem duo dolor no sea
-					nonumy. Accus labore stet, est lorem sit diam sea et justo, amet at
-					lorem et eirmod ipsum diam et rebum kasd rebum.</p>
+				<h3 class="font-weight-semi-bold mb-4">8,000원</h3>
+				<p class="mb-4">전자레인지 또는 후라이팬 조리. 전자레인지 30초 , 후라이팬 조리 10~15분 조리.</p>
 				<div class="d-flex mb-3">
-					<p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+					<!-- <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
 					<form>
-						<div class="custom-control custom-radio custom-control-inline">
+					 <div class="custom-control custom-radio custom-control-inline">
 							<input type="radio" class="custom-control-input" id="size-1"
-								name="size"> <label class="custom-control-label"
-								for="size-1">XS</label>
+								name="갯수"> <label class="custom-control-label"
+								for="size-1">1ea</label>
 						</div>
 						<div class="custom-control custom-radio custom-control-inline">
 							<input type="radio" class="custom-control-input" id="size-2"
 								name="size"> <label class="custom-control-label"
-								for="size-2">S</label>
+								for="size-2">2ea</label>
 						</div>
 						<div class="custom-control custom-radio custom-control-inline">
 							<input type="radio" class="custom-control-input" id="size-3"
 								name="size"> <label class="custom-control-label"
-								for="size-3">M</label>
-						</div>
-						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" class="custom-control-input" id="size-4"
-								name="size"> <label class="custom-control-label"
-								for="size-4">L</label>
-						</div>
-						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" class="custom-control-input" id="size-5"
-								name="size"> <label class="custom-control-label"
-								for="size-5">XL</label>
-						</div>
+								for="size-3">3ea</label>
+				
 					</form>
 				</div>
 				<div class="d-flex mb-4">
@@ -219,7 +205,7 @@
 								name="color"> <label class="custom-control-label"
 								for="color-5">Green</label>
 						</div>
-					</form>
+					</form>-->	
 				</div>
 				<div class="d-flex align-items-center mb-4 pt-2">
 					<div class="input-group quantity mr-3" style="width: 130px;">
@@ -237,10 +223,10 @@
 						</div>
 					</div>
 					<button class="btn btn-primary px-3">
-						<i class="fa fa-shopping-cart mr-1"></i> Add To Cart
+						<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
 					</button>
 				</div>
-				<div class="d-flex pt-2">
+			<!-- <div class="d-flex pt-2">
 					<p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
 					<div class="d-inline-flex">
 						<a class="text-dark px-2" href=""> <i
@@ -252,7 +238,7 @@
 							class="fab fa-pinterest"></i>
 						</a>
 					</div>
-				</div>
+				</div> -->	
 			</div>
 		</div>
 		<div class="row px-xl-5">
@@ -634,5 +620,6 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 </body>
+
 
 </html>
