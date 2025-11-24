@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>회원가입</title>
+<title>로그인</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
@@ -63,45 +63,29 @@
 	<!-- Topbar End -->
 	<div class ="" style= " margin-left:30px; hegith:auto" >
 	<!-- 나중에 form 태그 입히기 -->
-	<table border="1" align="center">
+	<table border="1" align="center" >
 		<tr>
-			<th colspan='2'>회원가입</th>
+			<th>로그인</th>
 		</tr>
 		<tr>
-			<td>아이디</td>
-			<td><input type ="text"></td>
+			<td><input type="text" id="login_id" placeholder ="아이디를 입력해주세요" >
 		</tr>
 		<tr>
-			<td>비밀번호</td>
-			<td><input type="text"></td>
+			<td><input type="password" id="login_pass" placeholder ="비밀번호를 입력해주세요" >
 		</tr>
 		<tr>
-			<td>비밀번호 확인</td>
-			<td></td>
+			<td align="right"><a href= "">아이디 찾기/비밀번호 찾기</a></td>
 		</tr>
 		<tr>
-			<td>이름</td>
-			<td></td>
+			<td><input type="button" value="로그인"></td>
 		</tr>
 		<tr>
-			<td>이메일</td>
-			<td></td>
+			<td><input type="button" value="회원가입"></td>
 		</tr>
 		<tr>
-			<td>휴대폰</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>주소</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>이용약관</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td colspan="2" align='right'><input type="button" value="가입하기"></td>
-			<td></td>
+			<td><img class ="loginlogo" src ="/img/google.png"><img class ="loginlogo" src ="/img/naver.png"><img class ="loginlogo" src ="/img/kakao.png"></td>
+			<!-- <td><img src ="/img/naver.png"></td>
+			<td><img src ="/img/kakao.png"></td> -->
 		</tr>
 	</table>
 	
