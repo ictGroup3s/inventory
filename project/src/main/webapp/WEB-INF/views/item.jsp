@@ -1,37 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
 <meta charset="utf-8">
-<title>EShopper - Bootstrap Shop Template</title>
+<title>상품등록</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
 
+<!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
+<!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
 	rel="stylesheet">
 
+<!-- Font Awesome -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
 
+<!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
 
+<!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
+
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
-				src='../img/logo.png' class='logo' />
+				src="\img\logo.png" class='logo' />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
@@ -56,37 +61,38 @@
 		</div>
 	</div>
 	</div>
+	<!-- Topbar End -->
+
+
+	<!-- Navbar Start -->
 	<div class="container-fluid">
 		<div class="row border-top px-xl-5">
 			<div class="col-lg-3 d-none d-lg-block">
-				<a
+		<a
 					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
 					data-toggle="collapse" href="#navbar-vertical"
 					style="height: 65px; margin-top: -1px; padding: 0 30px;">
-					<h6 class="m-0">Categories</h6> <i
+					<h6 class="m-0">관리자 페이지</h6> <i
 					class="fa fa-angle-down text-dark"></i>
 				</a>
 				<nav
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
 					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
 					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="selectall" class="nav-item nav-link">전체상품</a> <a href=""
-							class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a href=""
-							class="nav-item nav-link">국 ．밥 ．면</a> <a href=""
-							class="nav-item nav-link"> 식단관리 </a> <a href=""
-							class="nav-item nav-link">분식 ．간식</a> <a href=""
-							class="nav-item nav-link">베이커리 ．떡</a> <a href=""
-							class="nav-item nav-link">반찬 ．소스</a> <a href=""
-							class="nav-item nav-link">레시피</a> <a href=""
-							class="nav-item nav-link">Shoes</a>
+						<a href="" class="nav-item nav-link">대쉬보드 </a> 
+							<a href=""class="nav-item nav-link">상품관리</a> 
+							<a href=""class="nav-item nav-link">입고,재고관리</a>
+							<a href=""class="nav-item nav-link">주문관리</a>
+							<a href=""class="nav-item nav-link">통계</a>
+							<a href=""class="nav-item nav-link">고객관리</a>
 					</div>
 				</nav>
 			</div>
 			<div class="col-lg-9">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-					<a href="" class="text-decoration-none d-block d-lg-none"> <img
-						src='../img/logo.png' class='logo' />
+					<a href="/" class="text-decoration-none d-block d-lg-none"> <img
+						src="\img\logo.png" class='logo' />
 					</a>
 					<button type="button" class="navbar-toggler" data-toggle="collapse"
 						data-target="#navbarCollapse">
@@ -96,7 +102,7 @@
 						id="navbarCollapse">
 
 						<div class="navbar-nav ml-auto py-0">
-							<a href="login" class="nav-item nav-link">로그인</a> .
+							<a href="login" class="nav-item nav-link">로그인</a> 
 							<a href="register" class="nav-item nav-link">회원가입</a> 
 							<a href="board" class="nav-item nav-link">고객센터</a>
 						</div>
@@ -105,144 +111,85 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid bg-secondary mb-5">
-		<div
-			class="d-flex flex-column align-items-center justify-content-center"
-			style="min-height: 300px">
-			<h1 class="font-weight-semi-bold text-uppercase mb-3">Shopping
-				Cart</h1>
-			<div class="d-inline-flex">
-				<p class="m-0">
-					<a href="">Home</a>
-				</p>
-				<p class="m-0 px-2">-</p>
-				<p class="m-0">Shopping Cart</p>
-			</div>
-		</div>
-	</div>
-	<div class="container-fluid pt-5">
+	<!-- Navbar End -->
+
+	<!-- Shop Detail Start -->
+	<form>
+	<div class="container-fluid py-5">
 		<div class="row px-xl-5">
-			<div class="col-lg-8 table-responsive mb-5">
-				<table class="table table-bordered text-center mb-0">
-					<thead class="bg-secondary text-dark">
-						<tr>
-							<th>상품명</th>
-							<th>가격</th>
-							<th>수량</th>
-							<th>가격</th>
-							<th>삭제하기</th>
-						</tr>
-					</thead>
-					<tbody class="align-middle">
-						<tr>
-							<td class="align-middle"><img src="img/bunsik.png" alt=""
-								style="width: 50px;"> 떡볶이</td>
-							<td class="align-middle">5,000원</td>
-							<td class="align-middle">
-								<div class="input-group quantity mx-auto" style="width: 100px;">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-minus">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-									<input type="text"
-										class="form-control form-control-sm bg-secondary text-center"
-										value="1">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-plus">
-											<i class="fa fa-plus"></i>
-										</button>
-									</div>
-								</div>
-							</td>
-							<td class="align-middle">5,000원</td>
-							<td class="align-middle"><button
-									class="btn btn-sm btn-primary">
-									<i class="fa fa-times"></i>
-								</button></td>
-						</tr>
-						<tr>
-							<td class="align-middle"><img src="img/fish.png" alt=""
-								style="width: 50px;"> 생선구이</td>
-							<td class="align-middle">7,000원</td>
-							<td class="align-middle">
-								<div class="input-group quantity mx-auto" style="width: 100px;">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-minus">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-									<input type="text"
-										class="form-control form-control-sm bg-secondary text-center"
-										value="1">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-plus">
-											<i class="fa fa-plus"></i>
-										</button>
-									</div>
-								</div>
-							</td>
-							<td class="align-middle">7,000원</td>
-							<td class="align-middle"><button
-									class="btn btn-sm btn-primary">
-									<i class="fa fa-times"></i>
-								</button></td>
-						</tr>
-						<tr>
-							<td class="align-middle"><img src="img/닭가슴살.png" alt=""
-								style="width: 50px;"> 닭가슴살</td>
-							<td class="align-middle">8,000원</td>
-							<td class="align-middle">
-								<div class="input-group quantity mx-auto" style="width: 100px;">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-minus">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-									<input type="text"
-										class="form-control form-control-sm bg-secondary text-center"
-										value="1">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-plus">
-											<i class="fa fa-plus"></i>
-										</button>
-									</div>
-								</div>
-							</td>
-							<td class="align-middle">8,000원</td>
-							<td class="align-middle"><button
-									class="btn btn-sm btn-primary">
-									<i class="fa fa-times"></i>
-								</button></td>
-						</tr>
+			<div class="col-lg-5 pb-5">
+					<img class="w-100 h-60" src="img/fish.png" alt="Image">
 				
-					</tbody>
-				</table>
 			</div>
-			<div class="col-lg-4">
-				<div class="card border-secondary mb-5">
-					<div class="card-header bg-secondary border-0">
-						<h4 class="font-weight-semi-bold m-0">내 장바구니</h4>
-					</div>
-					<div class="card-body">
-						<div class="d-flex justify-content-between mb-3 pt-1">
-							<h6 class="font-weight-medium">상품가격</h6>
-							<h6 class="font-weight-medium">000원</h6>
-						</div>
-						
-					</div>
-					<div class="card-footer border-secondary bg-transparent">
-						<div class="d-flex justify-content-between mt-2">
-							<h5 class="font-weight-bold">총가격</h5>
-							<h5 class="font-weight-bold">000원</h5>
-						</div>
-						<button class="btn btn-block btn-primary my-3 py-3"
-							onclick="location.href='checkout' ">결제하기</button>
-					</div>
+
+			<div class="col-lg-7 pb-5">
+				<h3 class="font-weight-semi-bold">상품등록</h3>
+				<div class="d-flex mb-3">
+					
 				</div>
-			</div>
+				<div class="d-flex mb-3">
+			<table border=1 >
+			<tr>
+			<td>상품명</td><td><input type="text"> </td>
+			</tr>
+			<tr><td>상품번호</td><td><input type="text"> </td>
+			</tr>
+			<tr>
+			<td>카테고리</td>
+			<td>
+			<select>
+			<option value="">선택하세요</option>
+			<option value="">선택하세요</option>
+			<option value="">선택하세요</option>
+			<option value="">선택하세요</option>
+			</select>
+			</td>
+			</tr>
+			<tr>
+			<td>원산지</td><td><input type="text"> </td>
+			</tr>
+			<tr>
+			<td>원가</td><td><input type="text"> </td>
+			</tr>
+			<tr>
+			<td>소비자가</td><td><input type="text"> </td>
+			</tr>
+			</table>
+				</div>
+				<div class="d-flex align-items-center mb-4 pt-2">
+					
+					<button class="btn btn-primary px-3" >
+						등록
+					</button>
+					<button class="btn btn-primary px-3" >
+						수정
+					</button>
+					<button class="btn btn-primary px-3" >
+						삭제
+					</button>
+			
+				</div>
+				<table border=1>
+		<tr>
+		<td>상품코드</td><td>상품명</td><td>카테고리</td><td>원가</td><td>소비자가</td>
+		</tr>
+		<tr height="20">
+		<td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr height="20">
+		<td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr height="20">
+		<td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		</table>	
+			</div> <!-- 상품등록 /div -->
 		</div>
-	</div>
+		</form>
+		
+
+
+	<!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
 		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
@@ -336,20 +283,29 @@
 			</div>
 		</div>
 	</div>
+	<!-- Footer End -->
+
+
+	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
 
 
+	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
+	<!-- Contact Javascript File -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
+	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 </body>
+
+
 
 </html>
