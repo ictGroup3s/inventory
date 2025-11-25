@@ -18,6 +18,7 @@ public class projectController {
 	@GetMapping("shop")
 	public String shop() {
 		return "shop";
+		
 	}
 	
 	@GetMapping("checkout")
@@ -105,4 +106,5 @@ public class projectController {
 	public String order() {
 		return "order";
 	}
+	
 }
