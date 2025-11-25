@@ -115,20 +115,18 @@
 
 	<!-- Shop Detail Start -->
 	<form>
-	<div class="container-fluid py-5">
-		<div class="row px-xl-5">
-			<div class="col-lg-5 pb-5">
+	<div class="container-fluid py-5" style="margin-left: 300px;">
+		<div class="d-flex flex-wrap align-items-start px-xl-5">
+			<div class="p-2 flex-shrink-0">
 					<img src="img/fish.png" width="350" height="400">
-				
-			</div>
-
-			<div class="col-lg-7 pb-5">
+				 </div>
+	
+      <!-- 텍스트 및 입력폼 -->
+        <div class="p-2 flex-grow-1">
 				<h3 class="font-weight-semi-bold">상품입고</h3>
-				<div class="d-flex mb-3">
-					
-				</div>
-				<div class="d-flex mb-3">
-			<table border=1 >
+				
+			   <!-- 상품 입력 테이블 -->
+            <table border="1" class="mb-3">
 			<tr>
 			<td>상품코드</td><td><input type="text"> </td>
 			</tr>
@@ -141,25 +139,22 @@
 			<td>소비자가</td><td><input type="text"> </td>
 			</tr>
 			</table>
-				</div>
-				<div class="d-flex align-items-center mb-4 pt-2">
-					<div class="input-group quantity mr-3" style="width: 130px;">
-					
-					
-					</div>
-					<button class="btn btn-primary px-3" >
-						상품 입고
-					</button>
-				</div>
-				<table border=1>
-		<tr>
-		<td>상품코드</td><td>상품명</td><td>원가</td><td>마진율</td><td>입고수량</td><td>재고수량</td>
-		</tr>
-		<tr height="20">
-		<td></td><td></td><td></td><td></td><td></td><td></td>
-		</tr>
-		</table>	
-			</div> <!-- 상품등록 /div -->
+			
+			  <!-- 입고 버튼 -->
+            <div class="d-flex align-items-center mb-4 pt-2">
+                <button class="btn btn-primary px-3">상품 입고</button>
+            </div>
+          <!-- 입고 기록 테이블 -->
+            <table border="1">
+                <tr>
+                    <td>상품코드</td><td>상품명</td><td>원가</td><td>마진율</td><td>입고수량</td><td>재고수량</td>
+                </tr>
+                <tr height="20">
+                    <td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </table>
+			</div> 
+		</div>
 		</div>
 		</form>
 		

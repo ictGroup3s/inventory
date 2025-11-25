@@ -88,18 +88,25 @@
 			<div class="" style="margin-left: 200px; height: auto">
 				<h2>주문현황</h2>
 				<hr />
-				<table border="1" align="center" width="600" height="100">
+				<table align="center" width="600" height="100">
 					<tr>
-						<td><img src="/img/1.png"/></td>
-						<td><img src="/img/결제완료.png"></td>
-						<td><img src="/img/상품준비.png"></td>
-						<td><img src="/img/배송중.png"></td>
-						<td><img src="/img/픽업완료.png"></td>
+						<td><img src="img/주문확인.png"></td>
+						<td><img src="img/결제완료.png"></td>
+						<td><img src="img/상품준비.png"></td>
+						<td><img src="img/배송중.png"></td>
+						<td><img src="img/픽업완료.png"></td>
+					</tr>
+					<tr>
+						<td>주문확인>></td>
+						<td>결제완료>></td>
+						<td>상품준비>></td>
+						<td>배송중>></td>
+						<td>픽업완료>></td>
 					</tr>
 				</table>
 				<hr />
 				<h2 align='center'>최근 주문 배송내역</h2>
-				<table border="1" align="center" width="600">
+				 <table class="table table-sm table-striped">
 					
 					<tr align="center">
 						<td>주문번호</td>
