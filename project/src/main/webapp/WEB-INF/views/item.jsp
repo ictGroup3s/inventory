@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>입고관리</title>
+<title>상품등록</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <!-- Favicon -->
@@ -100,17 +100,30 @@
 
 						<!-- 우측: 상품 등록 폼 -->
 						<div class="col-lg-7 pb-5">
-							<h3 class="font-weight-semi-bold mb-4">상품입고</h3>
+							<h3 class="font-weight-semi-bold mb-4">상품등록</h3>
 
 							<form>
 								<!-- 상품 정보 입력 테이블 -->
 								<table class="table table-bordered">
 									<tr>
-										<td>상품코드</td>
+										<td>상품명</td>
 										<td><input type="text" class="form-control"></td>
 									</tr>
 									<tr>
-										<td>상품명</td>
+										<td>수량</td>
+										<td><input type="text" class="form-control"></td>
+									</tr>
+									<tr>
+										<td>카테고리</td>
+										<td><select class="form-control">
+												<option value="">선택하세요</option>
+												<option value="">카테고리1</option>
+												<option value="">카테고리2</option>
+												<option value="">카테고리3</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td>원산지</td>
 										<td><input type="text" class="form-control"></td>
 									</tr>
 									<tr>
@@ -125,7 +138,9 @@
 
 								<!-- 등록/수정/삭제 버튼 -->
 								<div class="d-flex align-items-center mb-4 pt-2">
-									<button class="btn btn-primary mr-2" type="submit">상품입고</button>
+									<button class="btn btn-primary mr-2" type="submit">등록</button>
+									<button class="btn btn-warning mr-2" type="button">수정</button>
+									<button class="btn btn-danger" type="button">삭제</button>
 								</div>
 							</form>
 						</div>
@@ -142,36 +157,32 @@
 									<tr>
 										<th>상품코드</th>
 										<th>상품명</th>
+										<th>카테고리</th>
 										<th>원가</th>
-										<th>마진율</th>
-										<th>입고수량</th>
-										<th>재고수량</th>
+										<th>소비자가</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td>001</td>
 										<td>연어</td>
+										<td>생선류</td>
 										<td>10,000</td>
 										<td>15,000</td>
-										<td>100</td>
-										<td>49</td>
 									</tr>
 									<tr>
 										<td>002</td>
 										<td>참치</td>
+										<td>생선류</td>
 										<td>12,000</td>
 										<td>18,000</td>
-										<td>99</td>
-										<td>87</td>
 									</tr>
 									<tr>
 										<td>003</td>
 										<td>광어</td>
+										<td>생선류</td>
 										<td>9,000</td>
 										<td>14,000</td>
-										<td>50</td>
-										<td>10</td>
 									</tr>
 								</tbody>
 							</table>

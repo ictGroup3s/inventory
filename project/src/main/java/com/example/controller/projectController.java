@@ -80,5 +80,31 @@ public class projectController {
 	public String selectSoup() {
 		return "selectSoup";
 	}
+
+
+	@GetMapping("board")
+	public String board() {
+		return "board";
+	}
+	
+	@GetMapping("dashboard")
+	public String dashboard() {
+		return "dashboard";
+	}
+	
+	@GetMapping("stock")
+	public String stock() {
+		return "stock";
+	}
+	
+	@GetMapping("item")
+	public String item() {
+		return "item";
+	}
+	
+	@GetMapping("order")
+	public String order() {
+		return "order";
+	}
 	
 }
