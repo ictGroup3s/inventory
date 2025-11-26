@@ -32,7 +32,7 @@
 </head>
 
 <body>
-<!-- ############## 로고부분 ############################## -->
+
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
@@ -64,7 +64,7 @@
 	<!-- Topbar End -->
 
 
-	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
+	<!-- Navbar Start -->
 	<div class="container-fluid">
 		<div class="row border-top px-xl-5">
 			<div class="col-lg-3 d-none d-lg-block">
@@ -79,15 +79,13 @@
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
 					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
 					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="selectall" class="nav-item nav-link">전체상품</a> <a href=""
-							class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a href=""
-							class="nav-item nav-link">국 ．밥 ．면</a> <a href=""
-							class="nav-item nav-link"> 식단관리 </a> <a href=""
-							class="nav-item nav-link">분식 ．간식</a> <a href=""
-							class="nav-item nav-link">베이커리 ．떡</a> <a href=""
-							class="nav-item nav-link">반찬 ．소스</a> <a href=""
-							class="nav-item nav-link">레시피</a> <a href=""
-							class="nav-item nav-link">Shoes</a>
+						<a href="selectall" class="nav-item nav-link">전체상품</a>
+                        <a href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
+                        <a href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a>
+                        <a href="selectDiet" class="nav-item nav-link"> 식단관리 </a>
+                        <a href="selectBunsik" class="nav-item nav-link">분식 ．간식</a>
+                        <a href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a>
+                        <a href="selectRecipe" class="nav-item nav-link">레시피</a>
 					</div>
 				</nav>
 			</div>
@@ -116,31 +114,96 @@
 	</div>
 	<!-- Navbar End -->
 
-	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
-<div class="container py-5">
-    <div class="d-flex flex-wrap align-items-center">
-        <!-- 이미지 -->
-        <div class="p-2 flex-shrink-0">
-            <img src="img/fish.png" alt="고등어구이" class="img-fluid" style="max-width:300px;">
-        </div>
+	<!-- Shop Detail Start -->
+	<div class="container-fluid py-5">
+		<div class="row px-xl-5">
+			<div class="col-lg-5 pb-5">
+				<div id="product-carousel" class="carousel slide"
+					data-ride="carousel">
+					<div class="carousel-inner border">
+						<div class="carousel-item active">
+							<img class="w-100 h-100" src="img/fish.png" alt="Image">
+						</div>
+						<div class="carousel-item">
+							<img class="w-100 h-100" src="img/fish.png" alt="Image">
+						</div>
+						<div class="carousel-item">
+							<img class="w-100 h-100" src="img/fish.png" alt="Image">
+						</div>
+						<div class="carousel-item">
+							<img class="w-100 h-100" src="img/fish.png" alt="Image">
+						</div>
+					</div>
+					<a class="carousel-control-prev" href="#product-carousel"
+						data-slide="prev"> <i class="fa fa-2x fa-angle-left text-dark"></i>
+					</a> <a class="carousel-control-next" href="#product-carousel"
+						data-slide="next"> <i
+						class="fa fa-2x fa-angle-right text-dark"></i>
+					</a>
+				</div>
+			</div>
 
-      <div class="p-2 flex-grow-1">
-            <h3 class="font-weight-semi-bold">고등어구이</h3>
-            <div class="d-flex mb-2 align-items-center">
-                <div class="text-primary mr-2">
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star-half-alt"></small>
-                    <small class="far fa-star"></small>
-                </div>
+			<div class="col-lg-7 pb-5">
+				<h3 class="font-weight-semi-bold">고등어구이</h3>
+				<div class="d-flex mb-3">
+					<div class="text-primary mr-2">
+						<small class="fas fa-star"></small> <small class="fas fa-star"></small>
+						<small class="fas fa-star"></small> <small
+							class="fas fa-star-half-alt"></small> <small class="far fa-star"></small>
+					</div>
 					<small class="pt-1">(50 Reviews)</small>
 				</div>
-				<h4 class="font-weight-semi-bold mb-2">8,000원</h4>
-				<p class="mb-4">전자레인지 또는 후라이팬 조리. <br>
-				전자레인지 30초 , 후라이팬 조리 10~15분 조리.</p>
+				<h3 class="font-weight-semi-bold mb-4">8,000원</h3>
+				<p class="mb-4">전자레인지 또는 후라이팬 조리. 전자레인지 30초 , 후라이팬 조리 10~15분 조리.</p>
 				<div class="d-flex mb-3">
-			
+					<!-- <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+					<form>
+					 <div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="size-1"
+								name="갯수"> <label class="custom-control-label"
+								for="size-1">1ea</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="size-2"
+								name="size"> <label class="custom-control-label"
+								for="size-2">2ea</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="size-3"
+								name="size"> <label class="custom-control-label"
+								for="size-3">3ea</label>
+				
+					</form>
+				</div>
+				<div class="d-flex mb-4">
+					<p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+					<form>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="color-1"
+								name="color"> <label class="custom-control-label"
+								for="color-1">Black</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="color-2"
+								name="color"> <label class="custom-control-label"
+								for="color-2">White</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="color-3"
+								name="color"> <label class="custom-control-label"
+								for="color-3">Red</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="color-4"
+								name="color"> <label class="custom-control-label"
+								for="color-4">Blue</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input" id="color-5"
+								name="color"> <label class="custom-control-label"
+								for="color-5">Green</label>
+						</div>
+					</form>-->	
 				</div>
 				<div class="d-flex align-items-center mb-4 pt-2">
 					<div class="input-group quantity mr-3" style="width: 130px;">
@@ -161,6 +224,19 @@
 						<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
 					</button>
 				</div>
+			<!-- <div class="d-flex pt-2">
+					<p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+					<div class="d-inline-flex">
+						<a class="text-dark px-2" href=""> <i
+							class="fab fa-facebook-f"></i>
+						</a> <a class="text-dark px-2" href=""> <i class="fab fa-twitter"></i>
+						</a> <a class="text-dark px-2" href=""> <i
+							class="fab fa-linkedin-in"></i>
+						</a> <a class="text-dark px-2" href=""> <i
+							class="fab fa-pinterest"></i>
+						</a>
+					</div>
+				</div> -->	
 			</div>
 		</div>
 		<div class="row px-xl-5">
