@@ -127,12 +127,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 								<a href ="">
-								<img class="img-fluid w-100" src="img/생선구이.png" alt="">
+								<img src="img/생선구이.png" width="300px" height="300px"alt="">
 								</a>
 							</div>
 							<div
@@ -154,11 +154,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/소곱창.png" alt="">
+								<img src="img/소곱창.png" width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -179,12 +179,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 								<a href="fish2Detail">
-									<img class="img-fluid w-100" src="img/생선구이2.png" alt="">
+									<img src="img/생선구이2.png" width="300px" height="300px"alt="">
 								</a>
 							</div>
 							<div
@@ -206,11 +206,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/la갈비.png" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -231,11 +231,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/la갈비.png" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -256,11 +256,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/la갈비.png" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -281,11 +281,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/la갈비.png" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -306,11 +306,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/la갈비.png" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -331,11 +331,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/la갈비.png" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
