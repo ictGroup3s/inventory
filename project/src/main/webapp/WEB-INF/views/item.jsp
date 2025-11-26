@@ -22,23 +22,19 @@
 	rel="stylesheet">
 
 <!-- Bootstrap & Libraries -->
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	rel="stylesheet">
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
-	rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
-
 	<!-- Topbar -->
 	<div class="row align-items-center py-3 px-xl-5 bg-light">
 		<div class="col-lg-3 d-none d-lg-block">
-			<a href="/" class="text-decoration-none"> <img src="img/logo.png"
-				class="logo" />
+			<a href="/" class="text-decoration-none"> 
+				<img src="img/logo.png" class="logo" />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
@@ -55,10 +51,12 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="#" class="btn border"><i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span></a>
-			<a href="cart" class="btn border"><i
-				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span></a>
+			<a href="#" class="btn border">
+				<i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+			</a>
+			<a href="cart" class="btn border">
+				<i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+			</a>
 		</div>
 	</div>
 
@@ -66,8 +64,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Sidebar -->
-			<nav id="sidebarMenu"
-				class="col-lg-2 d-lg-block bg-light sidebar admin-sidebar collapse">
+			<nav id="sidebarMenu" class="col-lg-2 d-lg-block bg-light sidebar admin-sidebar collapse">
 				<h6 class="p-3">관리자 페이지</h6>
 				<ul class="nav flex-column">
 					<li class="nav-item"><a href="#" class="nav-link">대쉬보드</a></li>
@@ -79,12 +76,11 @@
 				</ul>
 			</nav>
 
-			<!-- Content -->
+			<!-- Dashboard Content -->
 			<div class="col-lg-10">
 				<!-- Mobile toggler for sidebar -->
 				<nav class="navbar navbar-light bg-light d-lg-none">
-					<button class="navbar-toggler" type="button" data-toggle="collapse"
-						data-target="#sidebarMenu">
+					<button class="navbar-toggler" type="button" data-toggle="collapse"	data-target="#sidebarMenu">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 				</nav>
