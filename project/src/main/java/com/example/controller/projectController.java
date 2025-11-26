@@ -103,7 +103,7 @@ public class projectController {
 	
 	@GetMapping("item")
 	public String item() {
-		return "order";
+		return "item";
 	}
 	
 	@GetMapping("order")
