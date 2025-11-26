@@ -143,7 +143,7 @@
 					<h4 class="font-weight-semi-bold mb-4">주소 입력</h4>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label>이름</label> <input class="form-control" type="text">
+							<label>이름</label> <input class="form-control" type="text" id="Name">
 						</div>
 						<!--<div class="col-md-6 form-group">
 							<label>Last Name</label> <input class="form-control" type="text"
@@ -153,10 +153,10 @@
 							<label>이메일</label> <input class="form-control" type="text">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>전화번호</label> <input class="form-control" type="text">
+							<label>전화번호</label> <input class="form-control" type="text" id="Phone">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>주 소</label> <input class="form-control" type="text">
+							<label>주 소</label> <input class="form-control" type="text" id="Address">
 						</div>
 					<!-- <div class="col-md-6 form-group">
 							<label>Address Line 2</label> <input class="form-control"
@@ -202,23 +202,24 @@
 					<h4 class="font-weight-semi-bold mb-4">수령지 주소</h4>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label>이름</label> <input class="form-control" type="text">
+							<label>이름</label> <input class="form-control" type="text" id="shipName">
 						</div>
 							<div class="col-md-6 form-group">
-							<label>핸드폰 번호</label> <input class="form-control" type="text">
+							<label>핸드폰 번호</label> <input class="form-control" type="text" id="shipPhone">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>수령주소</label> <input class="form-control" type="text">
+							<label>수령주소</label> <input class="form-control" type="text" id="shipAddress">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>메모</label> <select class="custom-select">
+							<label>메모</label>
+							 <select class="custom-select" id="memoSelect">
 								<option selected>요청사항</option>
-								<option>현관 비밀번호</option>
 								<option>문앞에 놓아주세요</option>
 								<option>경비실에 맡겨주세요</option>
 								<option>택배함에 넣어주세요</option>
-								<option>직접입력</option>
+								<option value="direct">직접입력</option>
 							</select>
+							<input type="text" class="form-control mt-2" id="memoInput" placeholder="요청사항 입력" style="display:none;">
 						</div>
 					</div>
 				</div>
@@ -282,11 +283,19 @@
 							</div>
 						</div>
 					</div>
-		<table><tr>
-			<td><img class ="loginlogo" src ="/img/google.png" width="50" height="50">	
-		<img class ="loginlogo" src ="/img/naver.png"  width="50" height="50">
-		<img class ="loginlogo" src ="/img/kakao.png"  width="50" height="50"></td>
-			</tr></table>
+				 <!-- 1) 기타결제  -->
+            <div class="tab-pane fade show active" id="social" role="tabpanel">
+                <div class="text-center mb-4">
+
+                    <a href="/oauth/naver" class="btn btn-light border d-block mb-2 py-2 social-btn">
+                        <img src="/img/naver.png"> NaverPay로 결제 
+                    </a>
+
+                    <a href="/oauth/kakao" class="btn btn-light border d-block py-2 social-btn">
+                        <img src="/img/kakao.png"> KakaoPay로 결제 
+                    </a>
+                </div>
+            </div>
 					<div class="card-footer border-secondary bg-transparent">
 						<button
 							class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">결제하기</button>
@@ -413,6 +422,34 @@
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
-</body>
 
+<!-- 여기서부터 체크박스 복사 스크립트 작성 -->
+<script>
+document.getElementById('newaccount').addEventListener('change', function() {
+    if(this.checked) {
+        document.getElementById('shipName').value = document.getElementById('Name').value;
+        document.getElementById('shipPhone').value = document.getElementById('Phone').value;
+        document.getElementById('shipAddress').value = document.getElementById('Address').value;
+    } else {
+        document.getElementById('shipName').value = '';
+        document.getElementById('shipPhone').value = '';
+        document.getElementById('shipAddress').value = '';
+    }
+});
+</script>
+
+<!-- 여기는 요청사항 직접입력 칸 -->
+<script>
+document.getElementById('memoSelect').addEventListener('change', function() {
+    const memoInput = document.getElementById('memoInput');
+    if(this.value === 'direct') {
+        memoInput.style.display = 'block'; // 입력창 보이기
+        memoInput.focus(); // 포커스 주기
+    } else {
+        memoInput.style.display = 'none'; // 숨기기
+        memoInput.value = ''; // 기존 입력값 초기화
+    }
+});
+</script>
+</body>
 </html>
