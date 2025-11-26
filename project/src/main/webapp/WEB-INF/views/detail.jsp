@@ -349,83 +349,14 @@
 	<!-- Shop Detail End -->
 
 	<!-- Products Start -->
-
-<div class="text-center mb-4">
-    <h2 class="section-title px-5">
-        <span class="px-2">Best Products</span>
-    </h2>
-</div>
-
 <div class="bxslider-wrapper">
     <ul class="bxslider">
-        <li>
-            <div class="card product-item">
-                <div class="card-header product-img">
-                    <img src="img/product-1.jpg" alt="">
-                </div>
-                <div class="card-body text-center">
-                    <h6 class="text-truncate mb-2">Colorful Stylish Shirt</h6>
-                    <div class="d-flex justify-content-center">
-                        <h6>$123.00</h6>
-                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                    </div>
-                </div>
-                <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a href="#" class="btn btn-sm text-dark p-0">
-                        <i class="fas fa-eye text-primary mr-1"></i>View Detail
-                    </a>
-                    <a href="#" class="btn btn-sm text-dark p-0">
-                        <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                    </a>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card product-item">
-                <div class="card-header product-img">
-                    <img src="img/product-2.jpg" alt="">
-                </div>
-                <div class="card-body text-center">
-                    <h6 class="text-truncate mb-2">Colorful Stylish Shirt</h6>
-                    <div class="d-flex justify-content-center">
-                        <h6>$123.00</h6>
-                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                    </div>
-                </div>
-                <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a href="#" class="btn btn-sm text-dark p-0">
-                        <i class="fas fa-eye text-primary mr-1"></i>View Detail
-                    </a>
-                    <a href="#" class="btn btn-sm text-dark p-0">
-                        <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                    </a>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card product-item">
-                <div class="card-header product-img">
-                    <img src="img/product-3.jpg" alt="">
-                </div>
-                <div class="card-body text-center">
-                    <h6 class="text-truncate mb-2">Colorful Stylish Shirt</h6>
-                    <div class="d-flex justify-content-center">
-                        <h6>$123.00</h6>
-                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                    </div>
-                </div>
-                <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a href="#" class="btn btn-sm text-dark p-0">
-                        <i class="fas fa-eye text-primary mr-1"></i>View Detail
-                    </a>
-                    <a href="#" class="btn btn-sm text-dark p-0">
-                        <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                    </a>
-                </div>
-            </div>
-        </li>
+        <li><img src="img/product-1.jpg" alt="Product 1"></li>
+        <li><img src="img/product-2.jpg" alt="Product 2"></li>
+        <li><img src="img/product-3.jpg" alt="Product 3"></li>
     </ul>
 </div>
+
 <!-- Products End -->
 
 
@@ -521,3 +452,4 @@
 
 
 </html>
+
