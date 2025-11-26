@@ -54,8 +54,26 @@ public class projectController {
 	public String board() {
 		return "board";
 	}
-	@GetMapping("stock2")
-	public String stock2() {
-		return "stock2";
+	@GetMapping("stock")
+	public String stock() {
+		return "stock";
+	}
+	
+	@GetMapping("item")
+	public String item() {
+		return "item";
+	}
+	@GetMapping("order")
+	public String order() {
+		return "order";
+	}
+	@GetMapping("mypage")
+	public String mypage() {
+		return "mypage";
+	}
+	
+	@GetMapping("dashboard")
+	public String dashboard() {
+		return "dashboard";
 	}
 }
