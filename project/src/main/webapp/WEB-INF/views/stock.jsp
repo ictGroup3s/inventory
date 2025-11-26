@@ -95,8 +95,9 @@
 					<!-- 상품 등록 영역 -->
 					<div class="row px-xl-5">
 						<!-- 좌측: 상품 이미지 -->
-						<div class="col-lg-5 pb-5">
-							<img class="w-100 h-60" src="img/fish.png" alt="상품 이미지">
+						<div class="col-lg-5 pb-5 text-center">
+							<img src="img/fish.png" alt="상품 이미지" class="img-fluid"
+								style="width: 600px; height: 500px;">
 						</div>
 
 						<!-- 우측: 상품 등록 폼 -->
