@@ -100,6 +100,7 @@
                                 <!-- Inserted Chart canvas -->
                                 <div id="chartWrapSales" class="chart-box">
                                   <canvas id="salesChart"></canvas>
+                                  <div id="status-salesChart" class="chart-status text-danger small mt-1" aria-live="polite"></div>
                                 </div>
                             </div>
                         </div>
@@ -113,6 +114,7 @@
                                 <!-- 분류별 매출액 -->
                                 <div id="chartWrapCategory" class="chart-box">
                                             <canvas id="categoryChart"></canvas>
+                                            <div id="status-categoryChart" class="chart-status text-danger small mt-1" aria-live="polite"></div>
                                         </div>
                             </div>
                         </div>
@@ -130,6 +132,7 @@
                                 <h6 class="card-title">수입/지출</h6>
                                 <div id="stockChartWrap" class="chart-box">
                                     <canvas id="stockChart"></canvas>
+                                    <div id="status-stockChart" class="chart-status text-danger small mt-1" aria-live="polite"></div>
                                 </div>
                             </div>
                         </div>
@@ -143,6 +146,7 @@
                                 <p class="text-muted small">기간별 방문자수와 주문건수 (샘플)</p>
                                 <div id="visitorsChartWrap" class="chart-box">
                                     <canvas id="visitorsChart"></canvas>
+                                    <div id="status-visitorsChart" class="chart-status text-danger small mt-1" aria-live="polite"></div>
                                 </div>
                             </div>
                         </div>
@@ -441,9 +445,18 @@
         const chart = new Chart(canvas, chartConfig);
         canvas._chartInstance = chart;
         logSizes(name, canvas);
+        // report success to visible status area (if present)
+        try{
+          const s = document.getElementById('status-' + canvasId);
+          if(s){ s.textContent = '초기화 성공'; s.style.color = 'green'; }
+        }catch(e){ /* ignore */ }
         return chart;
       } catch (err) {
         console.error('createChart error for ' + canvasId, err);
+        try{
+          const s = document.getElementById('status-' + canvasId);
+          if(s){ s.textContent = '차트 초기화 실패: ' + (err && err.message ? err.message : String(err)); s.style.color = 'darkred'; }
+        }catch(e){ /* ignore */ }
         return null;
       }
     }
@@ -715,7 +728,7 @@
                 searching: true,
                 ordering: true,
                 // newest-first: year(desc), month(desc)
-                order: [[0,g 'desc'], [1, 'desc']],
+                order: [[0, 'desc'], [1, 'desc']],
                 dom: 'Bfrtip',
                 buttons: [ 'csv', 'excel' ]
             });
