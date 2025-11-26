@@ -715,7 +715,7 @@
                 searching: true,
                 ordering: true,
                 // newest-first: year(desc), month(desc)
-                order: [[0, 'desc'], [1, 'desc']],
+                order: [[0,g 'desc'], [1, 'desc']],
                 dom: 'Bfrtip',
                 buttons: [ 'csv', 'excel' ]
             });
