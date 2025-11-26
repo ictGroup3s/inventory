@@ -41,6 +41,12 @@ public class projectController {
 		return "register";
 	}
 	
+	@GetMapping("register2")
+	public String register2() {
+		return "register2";
+	}
+	
+	
 	@GetMapping("login")
 	public String login() {
 		return "login";
