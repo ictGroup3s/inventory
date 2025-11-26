@@ -1,260 +1,210 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>고객관리</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Free HTML Templates" name="keywords">
-<meta content="Free HTML Templates" name="description">
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
-<!-- Google Web Fonts -->
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-	rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
 <!-- Font Awesome -->
 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet">
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+    rel="stylesheet">
 
-<!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
-	rel="stylesheet">
+<!-- Bootstrap & Libraries -->
+<link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    rel="stylesheet">
 
-<!-- Customized Bootstrap Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<!-- Custom Styles -->
+<link rel="stylesheet" href="css/style.css">
+
 </head>
-
 <body>
 
-	<div class="row align-items-center py-3 px-xl-5">
-		<div class="col-lg-3 d-none d-lg-block">
-			<a href="/" class="text-decoration-none">
-				<img src="\img\logo.png" class='logo' />
-			</a>
-		</div>
-		<div class="col-lg-6 col-6 text-left">
-			<form action="">
-				<div class="input-group">
-					<input type="text" class="form-control"
-						placeholder="Search for products">
-					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
-							<i class="fa fa-search"></i>
-						</span>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
-				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
-			</a>
-		</div>
-	</div>
-	<!-- Topbar End -->
-	
-	<div class="container-fluid">
-		<div class="row border-top px-xl-5">
-			<div class="col-lg-3 d-none d-lg-block">
-				<a
-					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
-					data-toggle="collapse" href="#navbar-vertical"
-					style="height: 65px; margin-top: -1px; padding: 0 30px;">
-					<h6 class="m-0">관리자 페이지</h6> <i
-					class="fa fa-angle-down text-dark"></i>
-				</a>
-				<nav
-					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
-					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-							<a href="" class="nav-item nav-link">대쉬보드 </a> 
-							<a href=""class="nav-item nav-link">상품관리</a> 
-							<a href=""class="nav-item nav-link">입고,재고관리</a>
-							<a href=""class="nav-item nav-link">주문관리</a>
-							<a href=""class="nav-item nav-link">통계</a>
-							<a href=""class="nav-item nav-link">고객관리</a>
-							
-					
-					</div>
-				</nav>
-			</div>
-	<div class ="" style= " margin-left:30px; heigth:auto" >
-	<h2>우수고객 (VIP)</h2><hr/>
-	<table border="1" align="center" width="900">
-		<tr align="center">
-			<td>고객번호</td>
-			<td>고객명</td>
-			<td>주소</td>
-			<td>총 구매금액</td>
-		</tr>
-		<tr height="30">
-			<td></td><td></td><td></td><td></td>
-		</tr>
-			<tr height="30">
-			<td></td><td></td><td></td><td></td>
-		</tr>
-			<tr height="30">
-			<td></td><td></td><td></td><td></td>
-		</tr>
-</table>
-<HR/>
+<!-- Topbar -->
+<div class="row align-items-center py-3 px-xl-5 bg-light">
+    <div class="col-lg-3 d-none d-lg-block">
+        <a href="/" class="text-decoration-none">
+            <img src="img/logo.png" class="logo" />
+        </a>
+    </div>
+    <div class="col-lg-6 col-6 text-left">
+        <form action="">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for products">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-transparent text-primary">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-3 col-6 text-right">
+        <a href="#" class="btn border"><i class="fas fa-heart text-primary"></i> <span class="badge">0</span></a>
+        <a href="cart" class="btn border"><i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span></a>
+    </div>
+</div>
 
-	<h2>휴면고객</h2>
-	<table border="1" align="center" width="900">
-		<tr align="center">
-			<td>고객번호</td>
-			<td>고객명</td>
-			<td>주소</td>
-			<td>총 구매금액</td>
-		</tr>
-		<tr height="30">
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-			<tr height="30">
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-			<tr height="30">
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
+<!-- Main Layout -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-lg-2 d-lg-block bg-light sidebar admin-sidebar">
+            <h6 class="p-3">관리자 페이지</h6>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="dashboard" class="nav-link">대쉬보드</a></li>
+                <li class="nav-item"><a href="item" class="nav-link">상품관리</a></li>
+                <li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
+                <li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
+                <li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
+                <li class="nav-item"><a href="mlist" class="nav-link active">고객관리</a></li>
+            </ul>
+        </nav>
 
-	</table>
-	
-	
-	</div>
-	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-		<div class="row px-xl-5 pt-5">
-			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-				<a href="" class="text-decoration-none">
-					<h1 class="mb-4 display-5 font-weight-semi-bold">
-						<span
-							class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-					</h1>
-				</a>
-				<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
-					ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-				<p class="mb-2">
-					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
-					New York, USA
-				</p>
-				<p class="mb-2">
-					<i class="fa fa-envelope text-primary mr-3"></i>info@example.com
-				</p>
-				<p class="mb-0">
-					<i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890
-				</p>
-			</div>
-			<div class="col-lg-8 col-md-12">
-				<div class="row">
-					<div class="col-md-4 mb-5">
-						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="index.html"><i
-								class="fa fa-angle-right mr-2"></i>Home</a> <a
-								class="text-dark mb-2" href="shop.html"><i
-								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-								class="text-dark mb-2" href="detail.html"><i
-								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-								class="text-dark mb-2" href="cart.html"><i
-								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-								class="text-dark mb-2" href="checkout.html"><i
-								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
-								href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact
-								Us</a>
-						</div>
-					</div>
-					<div class="col-md-4 mb-5">
-						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="index.html"><i
-								class="fa fa-angle-right mr-2"></i>Home</a> <a
-								class="text-dark mb-2" href="shop.html"><i
-								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-								class="text-dark mb-2" href="detail.html"><i
-								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-								class="text-dark mb-2" href="cart.html"><i
-								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-								class="text-dark mb-2" href="checkout.html"><i
-								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
-								href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact
-								Us</a>
-						</div>
-					</div>
-					<div class="col-md-4 mb-5">
-						<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-						<form action="">
-							<div class="form-group">
-								<input type="text" class="form-control border-0 py-4"
-									placeholder="Your Name" required="required" />
-							</div>
-							<div class="form-group">
-								<input type="email" class="form-control border-0 py-4"
-									placeholder="Your Email" required="required" />
-							</div>
-							<div>
-								<button class="btn btn-primary btn-block border-0 py-3"
-									type="submit">Subscribe Now</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row border-top border-light mx-xl-5 py-4">
-			<div class="col-md-6 px-xl-0">
-				<p class="mb-md-0 text-center text-md-left text-dark">
-					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
-						Site Name</a>. All Rights Reserved. Designed by <a
-						class="text-dark font-weight-semi-bold"
-						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
-					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-				</p>
-			</div>
-			<div class="col-md-6 px-xl-0 text-center text-md-right">
-				<img class="img-fluid" src="img/payments.png" alt="">
-			</div>
-		</div>
-	</div>
-	<!-- Footer End -->
+        <!-- Content -->
+        <div class="col-lg-10 dashboard-content">
+            <h3 class="mb-4">고객관리</h3>
 
+            <h4>우수고객 (VIP)</h4>
+<div class="table-responsive mb-4">
+    <table class="table table-bordered text-center">
+        <thead class="thead-light">
+            <tr>
+                <th>고객번호</th>
+                <th>고객명</th>
+                <th>주소</th>
+                <th>총 구매금액</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>096</td>
+                <td>김철수</td>
+                <td>서울 강남구</td>
+                <td>2,500,000원</td>
+            </tr>
+            <tr>
+                <td>078</td>
+                <td>이영희</td>
+                <td>서울 송파구</td>
+                <td>1,980,000원</td>
+            </tr>
+            <tr>
+                <td>011</td>
+                <td>박민수</td>
+                <td>경기 수원시</td>
+                <td>1,500,000원</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-	<!-- Back to Top -->
-	<a href="#" class="btn btn-primary back-to-top"><i
-		class="fa fa-angle-double-up"></i></a>
+<h4>휴면고객</h4>
+<div class="table-responsive mb-4">
+    <table class="table table-bordered text-center">
+        <thead class="thead-light">
+            <tr>
+                <th>고객번호</th>
+                <th>고객명</th>
+                <th>주소</th>
+                <th>총 구매금액</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>001</td>
+                <td>최지훈</td>
+                <td>서울 마포구</td>
+                <td>120,000원</td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>정수민</td>
+                <td>인천 부평구</td>
+                <td>85,000원</td>
+            </tr>
+            <tr>
+                <td>003</td>
+                <td>한예진</td>
+                <td>대전 서구</td>
+                <td>60,000원</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
+        </div>
+    </div>
+</div>
 
-	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<!-- Footer (기존 그대로) -->
+<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+    <div class="row px-xl-5 pt-5">
+        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+            <a href="#" class="text-decoration-none">
+                <h1 class="mb-4 display-5 font-weight-semi-bold">
+                    <span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
+                </h1>
+            </a>
+            <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
+            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
+            <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+        </div>
+        <div class="col-lg-8 col-md-12">
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                        <a class="text-dark" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                        <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                        <a class="text-dark" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+                    <form action="">
+                        <input type="text" class="form-control mb-2" placeholder="Your Name" required>
+                        <input type="email" class="form-control mb-2" placeholder="Your Email" required>
+                        <button class="btn btn-primary btn-block" type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-	<!-- Contact Javascript File -->
-	<script src="mail/jqBootstrapValidation.min.js"></script>
-	<script src="mail/contact.js"></script>
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
 
-	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
 </body>
-
-
 </html>
