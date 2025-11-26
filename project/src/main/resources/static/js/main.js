@@ -111,37 +111,6 @@
 			}
 		});
 
-		//chat
-	const socket = io("http://localhost:9092");
-
-	$('#chatFloatingBtn').click(function() {
-		$('#chatBox').toggle();
-	});
-
-	socket.on("chat", function(msg) {
-		$('#messages').append(
-			'<div><strong>' + msg.sender + ':</strong> '
-			+ msg.message + '</div>');
-		$('#messages').scrollTop($('#messages')[0].scrollHeight);
-	});
-
-	$('#sendBtn').click(function() {
-		const message = $('#msgInput').val();
-		if (!message)
-			return;
-
-		socket.emit("chat", {
-			sender: "고객",
-			message: message
-		});
-		$('#msgInput').val('');
-	});
-
-	//chatAdmin
-	socket.on("chat", function(msg) {
-		$('#adminMessages').append('<div><strong>' + msg.sender + ':</strong> ' + msg.message + '</div>');
-		$('#adminMessages').scrollTop($('#adminMessages')[0].scrollHeight);
-	});
 
 })/*(jQuery);*/
 
