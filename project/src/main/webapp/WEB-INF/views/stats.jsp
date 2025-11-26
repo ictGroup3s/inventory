@@ -39,9 +39,30 @@
 <link rel="stylesheet" href="css/style.css">
 
 
+<!-- jQuery 먼저 -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart.js DataLabels -->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<!-- DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- custom JS -->
+<script src="js/stats.js"></script>
+
+
 </head>
 <body>
+<<<<<<< HEAD
 	<!-- Topbar -->
+=======
+<!-- Topbar -->
+>>>>>>> c7744a041dec3c82c05547e160395260726cbf99
 	<div class="row align-items-center py-3 px-xl-5 bg-light">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img src="img/logo.png"
@@ -314,6 +335,7 @@
 							</div>
 						</div>
 					</div>
+<<<<<<< HEAD
 
 					<div class="col-lg-6 col-md-12 mb-3">
 						<div class="card">
@@ -431,134 +453,100 @@
   if (window.Chart && window.ChartDataLabels) {
     Chart.register(ChartDataLabels);
   }
+=======
+>>>>>>> c7744a041dec3c82c05547e160395260726cbf99
 
-  // Create charts after DOM is ready to ensure canvas elements exist
-  document.addEventListener('DOMContentLoaded', function() {
-    // Defensive: remove 'h-100' from cards that contain charts to prevent forced full-height stretching
-    try {
-      document.querySelectorAll('.card.h-100').forEach(function(card){
-        if (card.querySelector('.chart-box')) {
-          card.classList.remove('h-100');
-          // ensure card doesn't get forced to full height
-          card.style.height = 'auto';
-        }
-      });
-    } catch(e){ console.warn('card adjust failed', e); }
-    
-    // Debug helper: log sizes of chart containers and canvases (visible in console)
-    function logSizes(name, canvas){
-      if (!canvas) return;
-      const parent = canvas.parentElement;
-      console.log('[chart-size]', name, 'parent', parent.clientWidth+'x'+parent.clientHeight, 'canvas(css)', canvas.clientWidth+'x'+canvas.clientHeight, 'canvas(pixels)', canvas.width+'x'+canvas.height);
-    }
-    
-    // Window resize logger to observe growth behavior
-    let _resizeLogTimer = null;
-    window.addEventListener('resize', function(){
-      if (_resizeLogTimer) clearTimeout(_resizeLogTimer);
-      _resizeLogTimer = setTimeout(function(){
-        ['salesChart','stockChart','visitorsChart','categoryChart'].forEach(function(id){
-          const c = document.getElementById(id);
-          if (c) logSizes(id, c);
-        });
-      }, 200);
-    });
+					<div class="col-lg-6 col-md-12 mb-3">
+						<div class="card">
+							<div class="card-body">
+								<h6 class="card-title">월별 방문자수 / 주문건수 (최근 12개월)</h6>
+								<p class="text-muted small">월별 방문자 및 주문 합계</p>
+								<div class="table-responsive">
+									<table id="monthlyMetricsTable"
+										class="table table-sm table-bordered" style="width: 100%">
+										<thead>
+											<tr>
+												<th>연도</th>
+												<th>월</th>
+												<th>방문자수</th>
+												<th>주문건수</th>
+												<th>평균 주문/일</th>
+												<th>비고</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="m" items="${monthlyVisitors}">
+												<tr>
+													<td>${m.year}</td>
+													<td>${m.month}</td>
+													<td>${m.visitors}</td>
+													<td>${m.orders}</td>
+													<td>${m.avgPerDay}</td>
+													<td>${m.note}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-     // Helper: safe create chart with try/catch
-     function safeCreate(createFn, name) {
-      try {
-        createFn();
-        console.log(name + ' initialized');
-      } catch (e) {
-        console.error('Error initializing ' + name, e);
-      }
-    }
+			</div>
+		</div>
+	</div>
 
-    // Helper: create a responsive Chart and keep a reference on the canvas element
-    function createChart(canvasId, chartConfig, name) {
-      try {
-        const canvas = document.getElementById(canvasId);
-        if (!canvas) return null;
-        // ensure options exist
-        chartConfig.options = chartConfig.options || {};
-        // let Chart.js handle sizing responsively but allow CSS height
-        chartConfig.options.responsive = true;
-        chartConfig.options.maintainAspectRatio = false; // we'll control container height via CSS/JS
+	<!-- Footer (기존 Footer 사용) -->
+	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+		<div class="row px-xl-5 pt-5">
+			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+				<a href="#" class="text-decoration-none">
+					<h1 class="mb-4 display-5 font-weight-semi-bold">
+						<span
+							class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
+					</h1>
+				</a>
+				<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
+					ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
+			</div>
+			<div class="col-lg-8 col-md-12">
+				<div class="row">
+					<div class="col-md-4 mb-5">
+						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-dark mb-2" href="#"><i
+								class="fa fa-angle-right mr-2"></i>Home</a> <a
+								class="text-dark mb-2" href="#"><i
+								class="fa fa-angle-right mr-2"></i>Our Shop</a>
+						</div>
+					</div>
+					<div class="col-md-4 mb-5">
+						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-dark mb-2" href="#"><i
+								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
+								class="text-dark mb-2" href="#"><i
+								class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+						</div>
+					</div>
+					<div class="col-md-4 mb-5">
+						<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+						<form action="">
+							<input type="text" class="form-control mb-2"
+								placeholder="Your Name" required> <input type="email"
+								class="form-control mb-2" placeholder="Your Email" required>
+							<button class="btn btn-primary btn-block" type="submit">Subscribe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-        if (canvas._chartInstance) {
-          try { canvas._chartInstance.destroy(); } catch(e) { console.warn('destroy failed', e); }
-        }
-        // pass the canvas element (preferred) so Chart.js can size it
-        const chart = new Chart(canvas, chartConfig);
-        canvas._chartInstance = chart;
-        logSizes(name, canvas);
-        // report success to visible status area (if present)
-        try{
-          const s = document.getElementById('status-' + canvasId);
-          if(s){ s.textContent = '초기화 성공'; s.style.color = 'green'; }
-        }catch(e){ /* ignore */ }
-        return chart;
-      } catch (err) {
-        console.error('createChart error for ' + canvasId, err);
-        try{
-          const s = document.getElementById('status-' + canvasId);
-          if(s){ s.textContent = '차트 초기화 실패: ' + (err && err.message ? err.message : String(err)); s.style.color = 'darkred'; }
-        }catch(e){ /* ignore */ }
-        return null;
-      }
-    }
 
-    // Debounced resize: recalc canvas sizes and call chart.resize()
-    let _chartResizeTimer = null;
-    function scheduleChartResize() {
-      if (_chartResizeTimer) clearTimeout(_chartResizeTimer);
-      _chartResizeTimer = setTimeout(function(){
-        // Equalize container heights first, then ask charts to resize to fit
-        equalizeBottomCharts();
-        ['salesChart','stockChart','visitorsChart','categoryChart'].forEach(function(id){
-          const c = document.getElementById(id);
-          if (!c || !c._chartInstance) return;
-          try { c._chartInstance.resize(); } catch(e) { console.warn('chart resize failed', e); }
-          logSizes(id, c);
-        });
-      }, 150);
-    }
-    window.addEventListener('resize', scheduleChartResize);
-    
-    // Equalize heights for 'stockChartWrap' and 'visitorsChartWrap'
-    function equalizeBottomCharts() {
-      try {
-        const a = document.getElementById('stockChartWrap');
-        const b = document.getElementById('visitorsChartWrap');
-        if (!a || !b) return;
-        // reset any inline height to measure natural heights
-        a.style.height = '';
-        b.style.height = '';
-        // measure (use computed style if clientHeight is 0)
-        let ha = a.clientHeight;
-        let hb = b.clientHeight;
-        if (!ha || ha === 0) {
-          const cs = window.getComputedStyle(a);
-          ha = Math.round(parseFloat(cs && cs.height) || 0);
-        }
-        if (!hb || hb === 0) {
-          const cs2 = window.getComputedStyle(b);
-          hb = Math.round(parseFloat(cs2 && cs2.height) || 0);
-        }
-        const target = Math.max(ha || 0, hb || 0, 220); // ensure a reasonable minimum
-        // apply pixel height to both
-        a.style.height = target + 'px';
-        b.style.height = target + 'px';
-        // also resize canvases inside
-        ['stockChart','visitorsChart'].forEach(function(id){
-          const c = document.getElementById(id);
-          if (!c || !c._chartInstance) return;
-          try { c._chartInstance.resize(); } catch(e) { console.warn('chart resize failed', e); }
-          logSizes(id, c);
-        });
-      } catch(e) { console.warn('equalizeBottomCharts failed', e); }
-    }
 
+<<<<<<< HEAD
     // Equalize full card heights (including headers, paragraphs) for the two bottom chart cards
     function equalizeBottomCardHeights() {
       try {
@@ -1043,3 +1031,9 @@
 	font-size: 12px;
 }
 </style>
+=======
+
+</body>
+</html>
+
+>>>>>>> c7744a041dec3c82c05547e160395260726cbf99
