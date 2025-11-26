@@ -93,7 +93,7 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <h5 class="card-title">주문현황</h5>
-                                <p>총 주문 건수: 56 / 총 매출: ₩7,890,000</p>
+                                <p>총 주문 건수: 67 / 총 매출: ₩1,292,000</p>
                                 <h6 class="mt-3">최근 고객 주문</h6>
                                 <table class="table table-sm table-striped">
                                     <thead>
@@ -121,7 +121,7 @@
                                 <div class="card h-100">
                                     <div class="card-body text-center">
                                         <h6>방문자수</h6>
-                                        <p>1234</p>
+                                        <p>781</p>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
                                 <div class="card h-100">
                                     <div class="card-body text-center">
                                         <h6>일 매출</h6>
-                                        <p>₩789,000</p>
+                                        <p>₩1,185,000</p>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                                 <div class="card h-100">
                                     <div class="card-body text-center">
                                         <h6>월 매출</h6>
-                                        <p>₩12,345,000</p>
+                                        <p>₩26,345,000</p>
                                     </div>
                                 </div>
                             </div>
@@ -159,13 +159,20 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <h5 class="card-title">매출 흐름표</h5>
+                                <!-- Inserted Chart canvas -->
+                                <div id="chartWrapSales" style="width:100%; height:260px;">
+								  <canvas id="salesChart"></canvas>
+								</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 mb-3">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="card-title">입고/재고표</h5>
+                                <h5 class="card-title">수입/지출</h5>
+                                <div id="stockChartWrap" style="width:100%; height:260px;">
+								  <canvas id="stockChart"></canvas>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -220,7 +227,164 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/main.js"></script>
+
+<!-- Inline script to render the sales chart -->
+<!-- Chart.js CDN (v4) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('salesChart').getContext('2d');
+
+    // 예시 레이블 (원하시면 숫자 대신 인덱스 사용 가능)
+    const labels = ['5월', '6월', '7월', '8월', '9월', '10월', '11월'];
+
+    // 예시 데이터 (임의값)
+    const dataRed = [710, 640, 690, 720, 790, 880, 940];
+    const dataBlue  = [1820, 1750, 1630, 1660, 2080, 2350, 2630];
+
+    // (선택) 그라데이션 예시 - 파란선
+    const gradBlue = ctx.createLinearGradient(0, 0, 0, 250);
+    gradBlue.addColorStop(0, 'rgba(30, 80, 200, 1)');
+    gradBlue.addColorStop(1, 'rgba(30, 80, 200, 0.8)');
+
+    const config = {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Series A',
+            data: dataBlue,
+            borderColor: gradBlue,
+            borderWidth: 3,            // 두꺼운 파란선
+            pointRadius: 0,            // 점 숨기기
+            tension: 0.35,            // 곡선 부드러움
+            fill: false,
+            cubicInterpolationMode: 'monotone',
+          },
+          {
+            label: 'Series B',
+            data: dataRed,
+            borderColor: 'rgba(230,100,120,0.95)',
+            borderWidth: 2,            // 얇은 빨간선
+            pointRadius: 0,
+            tension: 0.35,
+            fill: false,
+            cubicInterpolationMode: 'monotone',
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }, // 범례 숨기기(원하면 true)
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              // x축 라벨 예시 스타일(아래는 숫자 단위로만 표시)
+              color: '#666',
+              padding: 6
+            }
+          },
+          y: {
+            grid: {
+              color: 'rgba(0,0,0,0.06)', // 연한 회색 그리드
+              drawBorder: false
+            },
+            ticks: {
+              color: '#666',
+              // y축 범위를 고정하려면 min/max 지정 가능
+              // min: 0, max: 1200
+            }
+          }
+        },
+        elements: {
+          line: {
+            borderJoinStyle: 'round'
+          }
+        }
+      }
+    };
+
+    const myChart = new Chart(ctx, config);
+  </script>
+  <script>
+  // 레이블(예: 월)
+  const stockLabels = ['5월', '6월', '7월', '8월', '9월', '10월', '11월'];
+
+  // 예시 데이터: 수입 / 지출 (단위: 만원)
+  const incomeData =  [1200, 1500, 1100, 1400, 1700, 1600, 1900];
+  const expenseData = [ 800,  700,  900, 1000,  850, 1200, 1100];
+
+  const ctxStock = document.getElementById('stockChart').getContext('2d');
+
+  const stockConfig = {
+    type: 'bar',
+    data: {
+      labels: stockLabels,
+      datasets: [
+        {
+          label: '수입',
+          data: incomeData,
+          backgroundColor: 'rgba(54,162,235,0.85)', // 파랑
+          borderColor: 'rgba(54,162,235,1)',
+          borderWidth: 1,
+          barThickness: 'flex'
+        },
+        {
+          label: '지출',
+          data: expenseData,
+          backgroundColor: 'rgba(255,99,132,0.85)', // 빨강
+          borderColor: 'rgba(255,99,132,1)',
+          borderWidth: 1,
+          barThickness: 'flex'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const value = context.raw;
+              return context.dataset.label + ': ' + value.toLocaleString() + ' (만원)';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: false,
+          grid: { display: false },
+          ticks: { color: '#666' }
+        },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.06)', drawBorder: false },
+          ticks: {
+            color: '#666',
+            callback: function(value) {
+              return value.toLocaleString() + ' (만원)';
+            }
+          }
+        }
+      }
+    }
+  };
+
+  // 인스턴스 생성
+  const stockChart = new Chart(ctxStock, stockConfig);
+</script>
 
 </body>
 </html>
