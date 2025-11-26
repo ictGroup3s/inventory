@@ -9606,14 +9606,42 @@ a.text-dark:hover, a.text-dark:focus {
     display: none; flex-direction:column; overflow:hidden;
   }
   .chat-header { background:#007bff; color:#fff; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; }
-  .chat-messages { padding:12px; background:#f7f7f7; overflow-y:auto; flex:1; }
+  .chat-messages {
+  padding: 12px;
+  height: calc(100% - 110px);
+  overflow-y: auto;
+  background: #f7f7f7;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;               /* 메시지 간 간격 */
+}
   .chat-input { display:flex; gap:8px; padding:8px; border-top:1px solid #eee; }
   .chat-input input[type="text"]{ flex:1; padding:8px; border-radius:6px; border:1px solid #ddd; }
-  .msg { margin-bottom:10px; }
-  .msg .meta { font-size:11px; color:#666; margin-bottom:4px; }
-  .msg .text { display:inline-block; padding:8px 10px; border-radius:8px; max-width:80%; }
-  .msg.customer .text { background:#e9f2ff; color:#044; float:left; }
+  /* 각 메시지 항목: 기본은 왼쪽 정렬 */
+  .msg {
+	  display: flex;
+	  flex-direction: column;
+	  align-items: flex-start; /* 기본: 왼쪽(고객) */
+	  max-width: 100%;
+ }
+   /* 관리자는 오른쪽 정렬 */
+  .msg.admin {  align-items: flex-end;  }
+  
+  .msg .meta { font-size:11px; color:#666; margin-bottom: 6px; line-height: 1; }
+  /* 메타 정렬(관리자는 우측) */
+  .msg.admin .meta {  text-align: right; }
+  .msg .text { display: inline-block;
+	  padding: 8px 12px;
+	  border-radius: 10px;
+	  max-width: 75%;          /* 한 줄 넓이 제한 */
+	  word-break: break-word;  /* 긴 단어도 줄바꿈 */
+	  box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+  .msg.customer .text { background:#e9f2ff; color:#044; }
   .msg.admin .text { background:#007bff; color:#fff; float:right; }
+  /* 메시지 컨테이너가 차지하는 너비 제어 — admin은 우측으로 붙음, customer는 좌측 */
+.msg.customer { justify-content: flex-start; }
+.msg.admin { justify-content: flex-end; }
   /* 데스크탑 */
 .chat-button {
   right: 90px;
