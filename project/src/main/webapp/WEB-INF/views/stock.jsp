@@ -64,21 +64,22 @@
 
 	<!-- Main Layout -->
 	<div class="container-fluid">
-		<div class="row">
-			<!-- Sidebar -->
-			<nav id="sidebarMenu"
-				class="col-lg-2 d-lg-block bg-light sidebar admin-sidebar collapse">
-				<h6 class="p-3">관리자 페이지</h6>
-				<ul class="nav flex-column">
-					<li class="nav-item"><a href="#" class="nav-link">대쉬보드</a></li>
-					<li class="nav-item"><a href="item" class="nav-link active">상품관리</a></li>
-					<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
-					<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">통계</a></li>
-					<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
-				</ul>
-			</nav>
-
+		<div class="row px-xl-5">
+			<div class="col-lg-2 ">
+				<!-- Sidebar -->
+				<nav class="category-sidebar">
+					<h6>관리자 페이지</h6>
+					<ul class="nav flex-column">
+						<li class="nav-item"><a href="dashboard" class="nav-link">대쉬보드</a></li>
+						<li class="nav-item"><a href="item" class="nav-link active">상품관리</a></li>
+						<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
+						<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
+						<li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
+						<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
+						<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
+					</ul>
+				</nav>
+			</div>
 			<!-- Content -->
 			<div class="col-lg-10">
 				<!-- Mobile toggler for sidebar -->

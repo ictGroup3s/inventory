@@ -4,34 +4,32 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>전체상품</title>
+<title>반찬 ．소스</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
 
-<!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
-<!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
 	rel="stylesheet">
 
-<!-- Font Awesome -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
 
-<!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
 
-<!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
+
+
+
 </head>
 
-<body>
+<body class ="page-selectBanchan">
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> 
@@ -59,36 +57,9 @@
 			</a>
 		</div>
 	</div>
-	</div>
-	<!-- Topbar End -->
-
-
-	<!-- Navbar Start -->
 	<div class="container-fluid">
 		<div class="row border-top px-xl-5">
-			<div class="col-lg-3 d-none d-lg-block">
-				<a
-					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
-					data-toggle="collapse" href="#navbar-vertical"
-					style="height: 65px; margin-top: -1px; padding: 0 30px;">
-					<h6 class="m-0">Categories</h6> <i
-					class="fa fa-angle-down text-dark"></i>
-				</a>
-				<nav
-					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
-					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 9999 ;">
-					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="selectall" class="nav-item nav-link">전체상품</a>
-                        <a href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
-                        <a href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a>
-                        <a href="selectDiet" class="nav-item nav-link"> 식단관리 </a>
-                        <a href="selectBunsik" class="nav-item nav-link">분식 ．간식</a>
-                        <a href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a>
-                        <a href="selectRecipe" class="nav-item nav-link">레시피</a>
-					</div>
-				</nav>
-			</div>
-			<div class="col-lg-9">
+			<div class="col-lg-12">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
 					<a href="/" class="text-decoration-none d-block d-lg-none">
@@ -110,156 +81,23 @@
 			</div>
 		</div>
 	</div>
-	<!-- Navbar End -->
-
-
-	
-
-
-	<!-- Shop Start -->
 	<div class="container-fluid pt-5">
 		<div class="row px-xl-5">
-			<!-- Shop Sidebar Start -->
-			<div class="col-lg-3 col-md-12">
-				<!-- Price Start -->
-				<div class="border-bottom mb-4 pb-4">
-					<h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-					<form>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" checked
-								id="price-all"> <label class="custom-control-label"
-								for="price-all">All Price</label> <span
-								class="badge border font-weight-normal">1000</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="price-1">
-							<label class="custom-control-label" for="price-1">$0 -
-								$100</label> <span class="badge border font-weight-normal">150</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="price-2">
-							<label class="custom-control-label" for="price-2">$100 -
-								$200</label> <span class="badge border font-weight-normal">295</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="price-3">
-							<label class="custom-control-label" for="price-3">$200 -
-								$300</label> <span class="badge border font-weight-normal">246</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="price-4">
-							<label class="custom-control-label" for="price-4">$300 -
-								$400</label> <span class="badge border font-weight-normal">145</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-							<input type="checkbox" class="custom-control-input" id="price-5">
-							<label class="custom-control-label" for="price-5">$400 -
-								$500</label> <span class="badge border font-weight-normal">168</span>
-						</div>
-					</form>
-				</div>
-				<!-- Price End -->
-
-				<!-- Color Start -->
-				<div class="border-bottom mb-4 pb-4">
-					<h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
-					<form>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" checked
-								id="color-all"> <label class="custom-control-label"
-								for="price-all">All Color</label> <span
-								class="badge border font-weight-normal">1000</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="color-1">
-							<label class="custom-control-label" for="color-1">Black</label> <span
-								class="badge border font-weight-normal">150</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="color-2">
-							<label class="custom-control-label" for="color-2">White</label> <span
-								class="badge border font-weight-normal">295</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="color-3">
-							<label class="custom-control-label" for="color-3">Red</label> <span
-								class="badge border font-weight-normal">246</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="color-4">
-							<label class="custom-control-label" for="color-4">Blue</label> <span
-								class="badge border font-weight-normal">145</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-							<input type="checkbox" class="custom-control-input" id="color-5">
-							<label class="custom-control-label" for="color-5">Green</label> <span
-								class="badge border font-weight-normal">168</span>
-						</div>
-					</form>
-				</div>
-				<!-- Color End -->
-
-				<!-- Size Start -->
-				<div class="mb-5">
-					<h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
-					<form>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" checked
-								id="size-all"> <label class="custom-control-label"
-								for="size-all">All Size</label> <span
-								class="badge border font-weight-normal">1000</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="size-1">
-							<label class="custom-control-label" for="size-1">XS</label> <span
-								class="badge border font-weight-normal">150</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="size-2">
-							<label class="custom-control-label" for="size-2">S</label> <span
-								class="badge border font-weight-normal">295</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="size-3">
-							<label class="custom-control-label" for="size-3">M</label> <span
-								class="badge border font-weight-normal">246</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-							<input type="checkbox" class="custom-control-input" id="size-4">
-							<label class="custom-control-label" for="size-4">L</label> <span
-								class="badge border font-weight-normal">145</span>
-						</div>
-						<div
-							class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-							<input type="checkbox" class="custom-control-input" id="size-5">
-							<label class="custom-control-label" for="size-5">XL</label> <span
-								class="badge border font-weight-normal">168</span>
-						</div>
-					</form>
-				</div>
-				<!-- Size End -->
+            
+            <div class="col-lg-2 col-md-12 d-none d-lg-block">
+				<nav class="category-sidebar">
+					<h6 class="p-3">상품 카테고리</h6>
+					<ul class="nav flex-column">
+						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link active">국 ．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link active">반찬 ．소스</a></li>
+						<li class="nav-item"><a href="selectRecipe" class="nav-link">레시피</a></li>
+					</ul>
+				</nav>
 			</div>
-			<!-- Shop Sidebar End -->
-
-
-			<!-- Shop Product Start -->
 			<div class="col-lg-9 col-md-12">
 				<div class="row pb-3">
 					<div class="col-12 pb-1">
@@ -289,15 +127,17 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+								<a href ="">
+								<img src="img/생선구이.png" width="300px" height="300px"alt="">
+								</a>
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+								<h6 class="text-truncate mb-3">생선구이</h6>
 								<div class="d-flex justify-content-center">
 									<h6>$123.00</h6>
 									<h6 class="text-muted ml-2">
@@ -314,19 +154,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-2.jpg" alt="">
+								<img src="img/소곱창.png" width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+								<h6 class="text-truncate mb-3">소곱창/ 한우대창구이</h6>
 								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
+									<h6>5,820원</h6>
 									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
+										<del>9,700원</del>
 									</h6>
 								</div>
 							</div>
@@ -339,19 +179,46 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-3.jpg" alt="">
+								<a href="fish2Detail">
+									<img src="img/생선구이2.png" width="300px" height="300px"alt="">
+								</a>
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+								<h6 class="text-truncate mb-3">가시없는 고등어 2개입</h6>
 								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
+									<h6>5,940원</h6>
 									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
+										<del>9,900원</del>
+									</h6>
+								</div>
+							</div>
+							<div
+								class="card-footer d-flex justify-content-between bg-light border">
+								<a href="fish2Detail" class="btn btn-sm text-dark p-0"><i
+									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+									class="btn btn-sm text-dark p-0"><i
+									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
+							<div
+								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+							</div>
+							<div
+								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<div class="d-flex justify-content-center">
+									<h6>19,800원</h6>
+									<h6 class="text-muted ml-2">
+										<del>29,800원</del>
 									</h6>
 								</div>
 							</div>
@@ -364,19 +231,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-4.jpg" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
 								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
+									<h6>19,800원</h6>
 									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
+										<del>29,800원</del>
 									</h6>
 								</div>
 							</div>
@@ -389,19 +256,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-5.jpg" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
 								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
+									<h6>19,800원</h6>
 									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
+										<del>29,800원</del>
 									</h6>
 								</div>
 							</div>
@@ -414,19 +281,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-6.jpg" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
 								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
+									<h6>19,800원</h6>
 									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
+										<del>29,800원</del>
 									</h6>
 								</div>
 							</div>
@@ -439,19 +306,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-7.jpg" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
 								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
+									<h6>19,800원</h6>
 									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
+										<del>29,800원</del>
 									</h6>
 								</div>
 							</div>
@@ -464,44 +331,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-8.jpg" alt="">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
 								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
+									<h6>19,800원</h6>
 									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-						<div class="card product-item border-0 mb-4">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
-									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
+										<del>29,800원</del>
 									</h6>
 								</div>
 							</div>
@@ -533,13 +375,8 @@
 					</div>
 				</div>
 			</div>
-			<!-- Shop Product End -->
-		</div>
+			</div>
 	</div>
-	<!-- Shop End -->
-
-
-	<!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
 		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
@@ -633,26 +470,19 @@
 			</div>
 		</div>
 	</div>
-	<!-- Footer End -->
-
-
-	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
 
 
-	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-	<!-- Contact Javascript File -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
-	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 </body>
 
