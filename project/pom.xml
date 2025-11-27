@@ -46,6 +46,12 @@
 			<version>3.0.5</version>
 		</dependency>
 
+		<!-- Spring Security 추가 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -108,7 +114,24 @@
 		    <artifactId>netty-socketio</artifactId>
 		    <version>1.7.17</version>
 		</dependency>
-	
+
+		<!-- 추가: Spring Data JPA 및 H2 (개발/테스트용) -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <scope>runtime</scope>
+		</dependency>
+
+		<!-- 추가: Flyway 마이그레이션 -->
+		<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-core</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
