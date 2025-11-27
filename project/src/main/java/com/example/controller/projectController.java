@@ -40,6 +40,11 @@ public class projectController {
 		return "fish2Detail";
 	}
 	
+	@GetMapping("detail")
+	public String detail() {
+		return "detail";
+	}
+	
 	@GetMapping("register")
 	public String register() {
 		return "register";

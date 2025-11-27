@@ -29,6 +29,50 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
+
+<style>
+    /* 카드 전체 가로폭 제한 */
+    .product-item {
+        max-width: 280px;   /* 카드 최대 가로 너비 */
+        margin: 0 auto;     /* 가운데 정렬 */
+    }
+
+    /* 상품 이미지 크기 제한 */
+    .product-item img {
+        width: 100%;
+        max-width: 260px; /* 이미지 최대 너비 */
+        margin: 0 auto;
+        display: block;
+    }
+
+    /* 큰 화면일 경우 더 강하게 제한 */
+    @media (min-width: 1200px) {
+        .product-item {
+            max-width: 260px;
+        }
+        .product-item img {
+            max-width: 240px;
+        }
+    }
+</style>
+
+<script>
+$('.related-carousel').owlCarousel({
+    autoplay: true,
+    smartSpeed: 1000,
+    margin: 10, /* 카드 사이 간격을 30 → 10 정도로 줄이기 */
+    loop: true,
+    nav: true,
+    responsive: {
+        0:   { items: 1 },
+        576: { items: 2 },
+        768: { items: 3 },
+        992: { items: 4 },
+        1200:{ items: 5 } /* 화면 넓을 때 5개 보이기 */
+    }
+});
+</script>
+
 </head>
 
 <body>
