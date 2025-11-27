@@ -4,88 +4,40 @@
 <html>
 <head>
 <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>상세정보</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free HTML Templates" name="keywords">
+<meta content="Free HTML Templates" name="description">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script src="js/main.js"></script>
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
 	rel="stylesheet">
 
 <!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
 
-<!-- bxSlider Stylesheet -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.css" rel="stylesheet">
-
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
 
- <style>
-/* BxSlider 카드 스타일 */
-.bxslider li {
-    display: inline-block;
-    margin: 0 10px;
-}
+<!-- bxSlider CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 
-.bx-wrapper .bx-viewport {
-    overflow: visible !important;
-}
-
-.bxslider .card {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.bxslider .card-header img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-}
-
-.bxslider .card-body .d-flex h6 {
-    margin: 0 5px 0 0;
-    font-weight: 600;
-}
-
-.bxslider .card-footer a {
-    font-size: 12px;
-}
-
-@media (max-width: 768px) {
-    .bxslider .product-item {
-        width: 150px;
-        margin: 0 3px;
-    }
-    .bxslider .product-img img {
-        height: 200px;
-    }
-}
-
-/* Back to top 버튼 */
-.back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    display: none;
-    background: #007bff;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 999;
-}
-</style>
 </head>
+
 <body>
 <!-- ############## 로고부분 ############################## -->
 	<div class="row align-items-center py-3 px-xl-5">
@@ -347,99 +299,155 @@
 		</div>
 	</div>
 	<!-- Shop Detail End -->
-
-	<!-- Products Start -->
-<div class="bxslider-wrapper">
-    <ul class="bxslider">
-        <li><img src="img/product-1.jpg" alt="Product 1"></li>
-        <li><img src="img/product-2.jpg" alt="Product 2"></li>
-        <li><img src="img/product-3.jpg" alt="Product 3"></li>
-    </ul>
-</div>
-
-<!-- Products End -->
-
-
-
-	    <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-        <div class="row px-xl-5 pt-3">
-            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
-           
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
-                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
-                <h2 class="mb-0">
-   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
-					</h2>
-                       </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
-                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-                            <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a>
-                         </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-12 mt-4 mb-5">
-                        <p class="text-dark mb-2">
-                        <span>stockbob 소개</span>
-                            &nbsp;&nbsp; | &nbsp;&nbsp;
-                        <span>이용약관</span>
-                       		&nbsp; | &nbsp;
-                       	<span>개인정보처리방침</span>
-                       		&nbsp; | &nbsp;
-                       	<span>이용안내</span>
-                       	
-                       </p><br>
-                       <p style="color: #999;">
-                       법인명 (상호) : 주식회사 STOCKBOB<br>
-                       사업자등록번호 : 000-11-00000<br>
-						통신판매업 : 제 2025-서울-11111 호<br>
-						주소 : 서울특별시 서대문구 신촌동 00<br>
-						채용문의 : ict.atosoft.com<br>
-						팩스 : 070-0000-0000
-                       </p>
-                      </div>
-                    </div>
-                 
-                    </div>
-                  
-                </div>
-            </div>
-        </div>
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-
-	<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
 	
+<!-- Image Slider Start -->
+<div class="container py-5">
+    <ul class="bxslider">
+    <li>
+    <div class="slider-card">
+      <img src="img/bulgogi.jpg" alt="Slider Image 1" />
+      <h5 class="slider-title">불고기</h5>
+        <p class="slider-price">12,000원</p>
+         <button class="btn btn-primary slider-cart">장바구니 담기</button>
+            </div>
+        </li>
+        <li>
+    <div class="slider-card">
+     <a href="productDetail.jsp?id=1">
+     <img src="img/fish.png" alt="Slider Image 2" /></a>
+      <h5 class="slider-title">고등어구이</h5>
+        <p class="slider-price">12,000원</p>
+         <button class="btn btn-primary slider-cart">장바구니 담기</button>
+            </div>
+        </li> 
+     <li>
+    <div class="slider-card">
+       <img src="img/egg.png" alt="Slider Image 3" />
+      <h5 class="slider-title">계란세트</h5>
+        <p class="slider-price">12,000원</p>
+         <button class="btn btn-primary slider-cart">장바구니 담기</button>
+            </div>
+        </li> 
+     <li>
+    <div class="slider-card">
+       <img src="img/oven.png" alt="Slider Image 4" />
+      <h5 class="slider-title">파스타</h5>
+        <p class="slider-price">12,000원</p>
+         <button class="btn btn-primary slider-cart">장바구니 담기</button>
+            </div>
+        </li> 
+     </ul>
+</div>
+<!-- Image Slider End -->
+
+	<!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+		<div class="row px-xl-5 pt-5">
+			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+				<a href="" class="text-decoration-none">
+					<h1 class="mb-4 display-5 font-weight-semi-bold">
+						<span
+							class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
+					</h1>
+				</a>
+				<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
+					ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
+				<p class="mb-2">
+					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
+					New York, USA
+				</p>
+				<p class="mb-2">
+					<i class="fa fa-envelope text-primary mr-3"></i>info@example.com
+				</p>
+				<p class="mb-0">
+					<i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890
+				</p>
+			</div>
+			<div class="col-lg-8 col-md-12">
+				<div class="row">
+					<div class="col-md-4 mb-5">
+						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-dark mb-2" href="index.html"><i
+								class="fa fa-angle-right mr-2"></i>Home</a> <a
+								class="text-dark mb-2" href="shop.html"><i
+								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
+								class="text-dark mb-2" href="detail.html"><i
+								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
+								class="text-dark mb-2" href="cart.html"><i
+								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
+								class="text-dark mb-2" href="checkout.html"><i
+								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
+								href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact
+								Us</a>
+						</div>
+					</div>
+					<div class="col-md-4 mb-5">
+						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-dark mb-2" href="index.html"><i
+								class="fa fa-angle-right mr-2"></i>Home</a> <a
+								class="text-dark mb-2" href="shop.html"><i
+								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
+								class="text-dark mb-2" href="detail.html"><i
+								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
+								class="text-dark mb-2" href="cart.html"><i
+								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
+								class="text-dark mb-2" href="checkout.html"><i
+								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
+								href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact
+								Us</a>
+						</div>
+					</div>
+					<div class="col-md-4 mb-5">
+						<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+						<form action="">
+							<div class="form-group">
+								<input type="text" class="form-control border-0 py-4"
+									placeholder="Your Name" required="required" />
+							</div>
+							<div class="form-group">
+								<input type="email" class="form-control border-0 py-4"
+									placeholder="Your Email" required="required" />
+							</div>
+							<div>
+								<button class="btn btn-primary btn-block border-0 py-3"
+									type="submit">Subscribe Now</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row border-top border-light mx-xl-5 py-4">
+			<div class="col-md-6 px-xl-0">
+				<p class="mb-md-0 text-center text-md-left text-dark">
+					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						Site Name</a>. All Rights Reserved. Designed by <a
+						class="text-dark font-weight-semi-bold"
+						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
+					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+				</p>
+			</div>
+			<div class="col-md-6 px-xl-0 text-center text-md-right">
+				<img class="img-fluid" src="img/payments.png" alt="">
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
+
+
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
+
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Contact Javascript File -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
@@ -452,4 +460,3 @@
 
 
 </html>
-

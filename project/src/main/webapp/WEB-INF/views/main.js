@@ -5,17 +5,17 @@
 	$(document).ready(function() {
 		// ================== BxSlider 초기화 ==================
 		    $('.bxslider').bxSlider({
-		        minSlides: 3,
-		        maxSlides: 3,
-		        slideWidth: 200,
-		        slideMargin: 10,
+		        auto: true,
 		        moveSlides: 1,
 		        pager: false,
 		        controls: true,
-		        auto: false,
+		        pause : 3000,
 		        speed: 100,
 		        infiniteLoop: true,
-		      
+				minSlides: 2,      // 최소 보여줄 슬라이드
+				   maxSlides: 4,      // 최대 보여줄 슬라이드
+				   slideWidth: 250,   // 슬라이드 개별 너비
+				   slideMargin: 10    // 슬라이드 간격
 		        		    });
 
 				  
