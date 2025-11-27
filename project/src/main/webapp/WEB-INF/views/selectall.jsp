@@ -88,7 +88,7 @@
 				<nav class="category-sidebar">
 					<h6 class="p-3">상품 카테고리</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
+						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
 						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>

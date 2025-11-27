@@ -94,7 +94,7 @@
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
 						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
 						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-						<li class="nav-item"><a href="selectRecipe" class="nav-link">레시피</a></li>
+						<li class="nav-item"><a href="selectRecipe" class="nav-link active">레시피</a></li>
 					</ul>
 				</nav>
 			</div>
