@@ -76,7 +76,10 @@
                 <a class="nav-link active" id="social-tab" data-toggle="tab" href="#social" role="tab">소셜 로그인</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="form-tab" data-toggle="tab" href="#form" role="tab">일반 회원가입</a>
+                <a class="nav-link" id="form-tab" data-toggle="tab" href="#userForm" role="tab">일반 회원가입</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="form-tab" data-toggle="tab" href="#adminForm" role="tab">관리자 회원가입</a>
             </li>
         </ul>
 
@@ -102,26 +105,31 @@
             </div>
 
             <!-- 2) 일반 회원가입 폼 -->
-            <div class="tab-pane fade" id="form" role="tabpanel">
+            <div class="tab-pane fade" id="userForm" role="tabpanel">
                 <form action="registerAction" method="post">
                     <div class="form-group">
-                        <label>아이디</label>
+                        <label>아이디 *</label>
                         <input type="text" name="user_id" class="form-control" placeholder="아이디 입력" required>
                     </div>
 
                     <div class="form-group">
-                        <label>비밀번호</label>
+                        <label>비밀번호 *</label>
                         <input type="password" name="user_pw" class="form-control" placeholder="비밀번호 입력" required>
                     </div>
 
                     <div class="form-group">
-                        <label>비밀번호 확인</label>
+                        <label>비밀번호 확인 *</label>
                         <input type="password" name="user_pw2" class="form-control" placeholder="비밀번호 재입력" required>
                     </div>
 
                     <div class="form-group">
-                        <label>이름</label>
+                        <label>이름 *</label>
                         <input type="text" name="user_name" class="form-control" placeholder="이름 입력" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>전화번호</label>
+                        <input type="text" name="user_pnum" class="form-control" placeholder="전화번호 입력" required>
                     </div>
 
                     <div class="form-group">
@@ -134,6 +142,51 @@
                         <input type="text" name="user_addr" class="form-control" placeholder="주소 입력" required>
                     </div>
 
+                    <div class="form-group">
+                        <label>이용약관</label>
+                        <div class="border p-3 mb-2" style="height: 100px; overflow-y: auto; background:#f8f8f8;">
+                            [이용약관 예시]<br>
+                            회원가입 시 동의가 필요한 약관 내용이 들어갑니다.
+                        </div>
+                        <input type="checkbox" required> 동의합니다.
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block py-2 mt-3">가입하기</button>
+                    <button type="button" onclick="location.href='login'" class="btn btn-outline-primary btn-block py-2 mt-2">취소 (로그인으로)</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="adminForm" role="tabpanel">
+                <form action="registerAction" method="post">
+                    <div class="form-group">
+                        <label>아이디 *</label>
+                        <input type="text" name="admin_id" class="form-control" placeholder="아이디 입력" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>비밀번호 *</label>
+                        <input type="password" name="admin_pw" class="form-control" placeholder="비밀번호 입력" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>비밀번호 확인 *</label>
+                        <input type="password" name="admin_pw2" class="form-control" placeholder="비밀번호 재입력" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>이름 *</label>
+                        <input type="text" name="admin_name" class="form-control" placeholder="이름 입력" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>사업자번호 *</label>
+                        <input type="text" name="admin_bnum" class="form-control" placeholder="사업자번호 입력" required>
+                    </div>
+					
+					<div class="form-group">
+                        <label>전화번호</label>
+                        <input type="text" name="admin_pnum" class="form-control" placeholder="전화번호 입력" required>
+                    </div>
+                    
                     <div class="form-group">
                         <label>이용약관</label>
                         <div class="border p-3 mb-2" style="height: 100px; overflow-y: auto; background:#f8f8f8;">
