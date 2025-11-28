@@ -96,10 +96,11 @@
 					<div class="row px-xl-5">
 						<!-- 좌측: 상품 이미지 -->
 						<div class="col-lg-5 pb-5 text-center">
-							<img src="img/fish.png" alt="상품 이미지" class="img-fluid"
-								style="width: 600px; height: 500px;">
+ -----	////////    	<img id="itemImageInput" src="img/fish.png" alt="상품 이미지" class="img-fluid"  style="width: 600px; height: 500px;">
+							<input id="itemImageInputUpload" type="file" accept="image/*"/>
+							<button id="itemUploadBtn" type="button">업로드</button>
+							<span id="uploadStatus" style="margin-left: 12px;"></span>
 						</div>
-
 						<!-- 우측: 상품 등록 폼 -->
 						<div class="col-lg-7 pb-5">
 							<h3 class="font-weight-semi-bold mb-4">상품등록</h3>
@@ -250,5 +251,6 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+		
 </body>
 </html>
