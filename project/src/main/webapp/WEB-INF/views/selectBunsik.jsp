@@ -132,16 +132,16 @@
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 								<a href ="">
-								<img src="img/생선구이.png" width="300px" height="300px"alt="">
+								<img src="img/gochu.png" width="300px" height="300px"alt="">
 								</a>
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">생선구이</h6>
+								<h6 class="text-truncate mb-3">고추튀김</h6>
 								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
+									<h6>12,900원</h6>
 									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
+										<del>900</del>
 									</h6>
 								</div>
 							</div>
@@ -158,13 +158,13 @@
 						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/소곱창.png" width="300px" height="300px" alt="">
+								<img src="img/김밥1.png" width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">소곱창/ 한우대창구이</h6>
+								<h6 class="text-truncate mb-3">[성수동분식]김밥2줄 6종(택1)</h6>
 								<div class="d-flex justify-content-center">
-									<h6>5,820원</h6>
+									<h6>8,900원</h6>
 									<h6 class="text-muted ml-2">
 										<del>9,700원</del>
 									</h6>
@@ -184,14 +184,14 @@
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 								<a href="fish2Detail">
-									<img src="img/생선구이2.png" width="300px" height="300px"alt="">
+									<img src="img/납작만두.png" width="300px" height="300px"alt="">
 								</a>
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">가시없는 고등어 2개입</h6>
+								<h6 class="text-truncate mb-3">[성수동분식]대구식 수제 납작만두(30개입)</h6>
 								<div class="d-flex justify-content-center">
-									<h6>5,940원</h6>
+									<h6>7,200원</h6>
 									<h6 class="text-muted ml-2">
 										<del>9,900원</del>
 									</h6>
@@ -210,13 +210,13 @@
 							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+								<img src="img/불비빔냉면.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<h6 class="text-truncate mb-3">[분식EASY] 불비빔냉면과 왕만두</h6>
 								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
+									<h6>13,000원</h6>
 									<h6 class="text-muted ml-2">
 										<del>29,800원</del>
 									</h6>
@@ -235,13 +235,13 @@
 							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+								<img src="img/시래기떡볶이.png"width="300px" height="300px" alt="">
 							</div>
 							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								class="card-bㅇody border-left border-right text-center p-0 pt-4 pb-3">
+								<h6 class="text-truncate mb-3">[남도분식] 시래기 떡볶이</h6>
 								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
+									<h6>6,900원</h6>
 									<h6 class="text-muted ml-2">
 										<del>29,800원</del>
 									</h6>
@@ -260,13 +260,13 @@
 							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+								<img src="img/쫄면.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<h6 class="text-truncate mb-3">[청정원] 매콤새콤쫄면 2인분</h6>
 								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
+									<h6>6,480원</h6>
 									<h6 class="text-muted ml-2">
 										<del>29,800원</del>
 									</h6>
@@ -285,13 +285,13 @@
 							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+								<img src="img/튀김.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<h6 class="text-truncate mb-3">떡볶이용 모듬튀김 430g</h6>
 								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
+									<h6>7,800원</h6>
 									<h6 class="text-muted ml-2">
 										<del>29,800원</del>
 									</h6>
@@ -310,13 +310,13 @@
 							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+								<img src="img/순대.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<h6 class="text-truncate mb-3">[맛의 고수] 맛고 순대 2종(냉장)</h6>
 								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
+									<h6>5,310원</h6>
 									<h6 class="text-muted ml-2">
 										<del>29,800원</del>
 									</h6>
@@ -335,13 +335,13 @@
 							<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+								<img src="img/유뷰주머니.png"width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<h6 class="text-truncate mb-3">[고래주방] 부산깡통시장 유뷰주머니</h6>
 								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
+									<h6>9,900원</h6>
 									<h6 class="text-muted ml-2">
 										<del>29,800원</del>
 									</h6>

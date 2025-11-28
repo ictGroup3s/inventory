@@ -279,7 +279,7 @@
 							<div class="custom-control custom-radio">
 								<input type="radio" class="custom-control-input" name="payment"
 									id="banktransfer"> <label class="custom-control-label"
-									for="banktransfer">기타 결제수단</label>
+									for="banktransfer">간편결제</label>
 							</div>
 						</div>
 					</div>
@@ -296,10 +296,9 @@
                     </a>
                 </div>
             </div>
-					<div class="card-footer border-secondary bg-transparent">
-						<button
-							class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">결제하기</button>
-					</div>
+					<button
+						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
+						data-toggle="modal" data-target="#payModal">결제하기</button>
 				</div>
 			</div>
 		</div>
@@ -451,5 +450,57 @@ document.getElementById('memoSelect').addEventListener('change', function() {
     }
 });
 </script>
+	<!-- 결제 모달 -->
+	<div class="modal fade" id="payModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+
+				<div class="modal-header bg-primary text-white">
+					<h5 class="modal-title">결제 진행</h5>
+					<button type="button" class="close text-white" data-dismiss="modal">
+						&times;</button>
+				</div>
+
+				<div class="modal-body">
+
+					<h5>
+						<b>카드사 선택</b>
+					</h5>
+					<div class="row text-center mt-3">
+
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block">국민</button>
+						</div>
+
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block">현대</button>
+						</div>
+
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block">농협</button>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block">카카오뱅크</button>
+						</div>
+					</div>
+
+					<hr>
+
+					<h5 class="mt-3">
+						<b>결제금액</b>
+					</h5>
+					<h4 class="text-primary font-weight-bold">38,000원</h4>
+
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-primary btn-block w-100 py-2">결제하기
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>
