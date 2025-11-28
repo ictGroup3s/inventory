@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -280,11 +279,7 @@
 							<div class="custom-control custom-radio">
 								<input type="radio" class="custom-control-input" name="payment"
 									id="banktransfer"> <label class="custom-control-label"
-<<<<<<< HEAD
 									for="banktransfer">간편결제</label>
-=======
-									for="banktransfer">기타 결제수단</label>
->>>>>>> main
 							</div>
 						</div>
 					</div>
@@ -301,16 +296,9 @@
                     </a>
                 </div>
             </div>
-<<<<<<< HEAD
 					<button
 						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
 						data-toggle="modal" data-target="#payModal">결제하기</button>
-=======
-					<div class="card-footer border-secondary bg-transparent">
-						<button
-							class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">결제하기</button>
-					</div>
->>>>>>> main
 				</div>
 			</div>
 		</div>
@@ -462,7 +450,6 @@ document.getElementById('memoSelect').addEventListener('change', function() {
     }
 });
 </script>
-<<<<<<< HEAD
 	<!-- 결제 모달 -->
 	<div class="modal fade" id="payModal" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
@@ -515,7 +502,5 @@ document.getElementById('memoSelect').addEventListener('change', function() {
 		</div>
 	</div>
 
-=======
->>>>>>> main
 </body>
 </html>
