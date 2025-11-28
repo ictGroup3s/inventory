@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,18 +95,35 @@
 
 					<!-- 상품 등록 영역 -->
 					<div class="row px-xl-5">
-						<!-- 좌측: 상품 이미지 -->
+						<!-- 좌측: 상품 이미지 (미리보기 전용) -->
 						<div class="col-lg-5 pb-5 text-center">
- -----	////////    	<img id="itemImageInput" src="img/fish.png" alt="상품 이미지" class="img-fluid"  style="width: 600px; height: 500px;">
-							<input id="itemImageInputUpload" type="file" accept="image/*"/>
-							<button id="itemUploadBtn" type="button">업로드</button>
-							<span id="uploadStatus" style="margin-left: 12px;"></span>
+								<c:if test="${not empty uploadImages}">
+									<c:forEach var="img" items="${uploadImages}">
+										<img id="itemImagePreview" src="${img}" alt="상품 이미지" class="img-fluid mb-2" style="width: 600px; height: 500px;" />
+									</c:forEach>
+								</c:if>
+								<c:if test="${empty uploadImages}">
+									<c:if test="${not empty uploadImage}">
+										<img id="itemImagePreview" src="${uploadImage}" alt="상품 이미지" class="img-fluid" style="width: 600px; height: 500px;" />
+									</c:if>
+									<c:if test="${empty uploadImage}">
+										<img id="itemImagePreview" src="img/fish.png" alt="상품 이미지" class="img-fluid" style="width: 600px; height: 500px;" />
+									</c:if>
+								</c:if>
+
+								<div class="mt-2">
+									<input id="itemImageInputUpload" type="file" accept="image/*" style="display:none;" />
+									<span id="uploadStatus" style="margin-left: 12px;"></span>
+								</div>
 						</div>
 						<!-- 우측: 상품 등록 폼 -->
 						<div class="col-lg-7 pb-5">
 							<h3 class="font-weight-semi-bold mb-4">상품등록</h3>
 
-							<form>
+							<form action="${pageContext.request.contextPath}/views/item/upload" method="post" enctype="multipart/form-data">
+								<!-- 파일 입력은 통합 폼 안에 포함되어 있으며, '등록' 버튼으로 파일과 상품 데이터를 함께 전송합니다. -->
+								<input type="file" id="fileInput" name="file" accept="image/*" style="display:none;" />
+								<input type="hidden" id="uploadedImagePath" name="imagePath" />
 								<!-- 상품 정보 입력 테이블 -->
 								<table class="table table-bordered">
 									<tr>
@@ -123,7 +141,8 @@
 												<option value="">카테고리1</option>
 												<option value="">카테고리2</option>
 												<option value="">카테고리3</option>
-										</select></td>
+											</select>
+										</td>
 									</tr>
 									<tr>
 										<td>원산지</td>
@@ -141,6 +160,7 @@
 
 								<!-- 등록/수정/삭제 버튼 -->
 								<div class="d-flex align-items-center mb-4 pt-2">
+									<button id="previewBtn" class="btn btn-secondary mr-2" type="button">업로드</button>
 									<button class="btn btn-primary mr-2" type="submit">등록</button>
 									<button class="btn btn-warning mr-2" type="button">수정</button>
 									<button class="btn btn-danger" type="button">삭제</button>
@@ -251,6 +271,26 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+	// 파일 선택 버튼과 미리보기 동작
+	$(document).ready(function(){
+		$('#previewBtn').on('click', function(){
+			// 트리거 파일 선택
+			$('#fileInput').click();
+		});
+
+		$('#fileInput').on('change', function(e){
+			const file = this.files[0];
+			if (!file) return;
+			const reader = new FileReader();
+			reader.onload = function(ev){
+				$('#itemImagePreview').attr('src', ev.target.result);
+				$('#uploadedImagePath').val(''); // 서버 업로드 하지 않는 경우 비워둠
+			}
+			reader.readAsDataURL(file);
+		});
+	});
+	</script>
 		
 </body>
 </html>
