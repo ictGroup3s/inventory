@@ -96,7 +96,17 @@
 			}
 			button.parent().parent().find('input').val(newVal);
 		});
+		//sidebar 클릭
+	const currentPath = window.location.pathname.split('/').pop();
 
-	})/*(jQuery);*/
+	$('.category-sidebar .nav-link').removeClass('active') 
+		.each(function() {
+			const $el = $(this);
+			if ($el.attr('href') === currentPath) {
+				$el.addClass('active');
+			}
+		});
 
-})
+	})
+
+})/*(jQuery);*/
