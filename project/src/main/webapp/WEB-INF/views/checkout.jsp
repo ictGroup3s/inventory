@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -50,7 +51,7 @@
 					</div>
 				</div>
 			</form>
-		</div>
+		</div> 
 		<div class="col-lg-3 col-6 text-right">
 			<a href="" class="btn border"> <i
 				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
@@ -143,35 +144,31 @@
 					<h4 class="font-weight-semi-bold mb-4">주소 입력</h4>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label>이름</label> <input class="form-control" type="text"
-								placeholder="John">
+							<label>이름</label> <input class="form-control" type="text" id="Name">
 						</div>
 						<!--<div class="col-md-6 form-group">
 							<label>Last Name</label> <input class="form-control" type="text"
 								placeholder="Doe">
 						</div>   -->
 						<div class="col-md-6 form-group">
-							<label>E-mail</label> <input class="form-control" type="text"
-								placeholder="example@email.com">
+							<label>이메일</label> <input class="form-control" type="text">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>핸드폰번호</label> <input class="form-control" type="text"
-								placeholder="010 456 789">
+							<label>전화번호</label> <input class="form-control" type="text" id="Phone">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>주 소</label> <input class="form-control"
-								type="text" placeholder="123 Street">
+							<label>주 소</label> <input class="form-control" type="text" id="Address">
 						</div>
 					<!-- <div class="col-md-6 form-group">
 							<label>Address Line 2</label> <input class="form-control"
 								type="text" placeholder="123 Street"> -->	
 						</div>
 						<div class="col-md-6 form-group">
-							<label>Country</label> <select class="custom-select">
-								<option selected>United States</option>
-								<option>Afghanistan</option>
-								<option>Albania</option>
-								<option>Algeria</option>
+							<label>지역선택</label> <select class="custom-select">
+								<option selected>서울특별시</option>
+								<option>경기도</option>
+								<option>대전광역시</option>
+								<option>광주광역시</option>
 							</select>
 			<!-- 		</div>
 						<div class="col-md-6 form-group">
@@ -190,15 +187,14 @@
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input"
 									id="newaccount"> <label class="custom-control-label"
-									for="newaccount">Create an account</label>
+									for="newaccount">위 내용과 동일</label>
 							</div>
 						</div>
 						<div class="col-md-12 form-group">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="shipto">
 								<label class="custom-control-label" for="shipto"
-									data-toggle="collapse" data-target="#shipping-address">Ship
-									to different address</label>
+									data-toggle="collapse" data-target="#shipping-address">수령지 주소입력</label>
 							</div>
 						</div>
 					</div>
@@ -207,24 +203,24 @@
 					<h4 class="font-weight-semi-bold mb-4">수령지 주소</h4>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label>이름</label> <input class="form-control" type="text"
-								placeholder="John">
+							<label>이름</label> <input class="form-control" type="text" id="shipName">
 						</div>
 							<div class="col-md-6 form-group">
-							<label>핸드폰 번호</label> <input class="form-control" type="text"
-								placeholder="010 456 789">
+							<label>핸드폰 번호</label> <input class="form-control" type="text" id="shipPhone">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>수령주소</label> <input class="form-control"
-								type="text" placeholder="123 Street">
+							<label>수령주소</label> <input class="form-control" type="text" id="shipAddress">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>메모</label> <select class="custom-select">
+							<label>메모</label>
+							 <select class="custom-select" id="memoSelect">
 								<option selected>요청사항</option>
-								<option>현관 비밀번호</option>
 								<option>문앞에 놓아주세요</option>
 								<option>경비실에 맡겨주세요</option>
+								<option>택배함에 넣어주세요</option>
+								<option value="direct">직접입력</option>
 							</select>
+							<input type="text" class="form-control mt-2" id="memoInput" placeholder="요청사항 입력" style="display:none;">
 						</div>
 					</div>
 				</div>
@@ -250,13 +246,13 @@
 						</div>
 						<hr class="mt-0">
 						<div class="d-flex justify-content-between mb-3 pt-1">
-							<h6 class="font-weight-medium">Subtotal</h6>
+							<h6 class="font-weight-medium">상품금액</h6>
 							<h6 class="font-weight-medium">38,000원</h6>
 						</div>
 					</div>
 					<div class="card-footer border-secondary bg-transparent">
 						<div class="d-flex justify-content-between mt-2">
-							<h5 class="font-weight-bold">Total</h5>
+							<h5 class="font-weight-bold">결제금액</h5>
 							<h5 class="font-weight-bold">38,000원</h5>
 						</div>
 					</div>
@@ -270,29 +266,37 @@
 							<div class="custom-control custom-radio">
 								<input type="radio" class="custom-control-input" name="payment"
 									id="paypal"> <label class="custom-control-label"
-									for="paypal">Paypal</label>
+									for="paypal">카드결제</label>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="custom-control custom-radio">
 								<input type="radio" class="custom-control-input" name="payment"
 									id="directcheck"> <label class="custom-control-label"
-									for="directcheck">카드결제</label>
+									for="directcheck">계좌이체</label>
 							</div>
 						</div>
 						<div class="">
 							<div class="custom-control custom-radio">
 								<input type="radio" class="custom-control-input" name="payment"
 									id="banktransfer"> <label class="custom-control-label"
-									for="banktransfer">계좌이체</label>
+									for="banktransfer">기타 결제수단</label>
 							</div>
 						</div>
 					</div>
-		<table><tr>
-			<td><img class ="loginlogo" src ="/img/google.png" width="50" height="50">	
-		<img class ="loginlogo" src ="/img/naver.png"  width="50" height="50">
-		<img class ="loginlogo" src ="/img/kakao.png"  width="50" height="50"></td>
-			</tr></table>
+				 <!-- 1) 기타결제  -->
+            <div class="tab-pane fade show active" id="social" role="tabpanel">
+                <div class="text-center mb-4">
+
+                    <a href="/oauth/naver" class="btn btn-light border d-block mb-2 py-2 social-btn">
+                        <img src="/img/naver.png"> NaverPay로 결제 
+                    </a>
+
+                    <a href="/oauth/kakao" class="btn btn-light border d-block py-2 social-btn">
+                        <img src="/img/kakao.png"> KakaoPay로 결제 
+                    </a>
+                </div>
+            </div>
 					<div class="card-footer border-secondary bg-transparent">
 						<button
 							class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">결제하기</button>
@@ -419,6 +423,34 @@
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
-</body>
 
+<!-- 여기서부터 체크박스 복사 스크립트 작성 -->
+<script>
+document.getElementById('newaccount').addEventListener('change', function() {
+    if(this.checked) {
+        document.getElementById('shipName').value = document.getElementById('Name').value;
+        document.getElementById('shipPhone').value = document.getElementById('Phone').value;
+        document.getElementById('shipAddress').value = document.getElementById('Address').value;
+    } else {
+        document.getElementById('shipName').value = '';
+        document.getElementById('shipPhone').value = '';
+        document.getElementById('shipAddress').value = '';
+    }
+});
+</script>
+
+<!-- 여기는 요청사항 직접입력 칸 -->
+<script>
+document.getElementById('memoSelect').addEventListener('change', function() {
+    const memoInput = document.getElementById('memoInput');
+    if(this.value === 'direct') {
+        memoInput.style.display = 'block'; // 입력창 보이기
+        memoInput.focus(); // 포커스 주기
+    } else {
+        memoInput.style.display = 'none'; // 숨기기
+        memoInput.value = ''; // 기존 입력값 초기화
+    }
+});
+</script>
+</body>
 </html>
