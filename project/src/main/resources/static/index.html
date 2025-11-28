@@ -2,11 +2,13 @@
 <html lang="en">
 
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta charset="utf-8">
     <title>StockBob</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
+    
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -79,7 +81,7 @@
                         <a href="selectDiet" class="nav-item nav-link"> 식단관리 </a>
                         <a href="selectBunsik" class="nav-item nav-link">분식 ．간식</a>
                         <a href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a>
-                        <a href="selectRecipe" class="nav-item nav-link">레시피</a>
+                        <a href="selectdrink" class="nav-item nav-link">생수 ．음료</a>
                     </div>
                 </nav>
             </div>
@@ -106,9 +108,22 @@
                             
                         </div> -->
                         <div class="navbar-nav ml-auto py-0">
-                        	<a href="login" class="nav-item nav-link">로그인</a>
+                        	<!-- 로그인전 -->
+                        	<!-- <a href="login" class="nav-item nav-link">로그인</a>
                         	<a href="register" class="nav-item nav-link">회원가입</a>
-                            <a href="board" class="nav-item nav-link">고객센터</a>
+                            <a href="board" class="nav-item nav-link">고객센터</a> -->
+                            
+                            <!-- 회원 로그인 후  -->
+                           <!--  <a href="" class="nav-item nav-link">홍길동님</a>
+                        	<a href="register" class="nav-item nav-link">로그아웃</a>
+                        	<a href="mypage" class="nav-item nav-link">마이페이지</a>
+                            <a href="board" class="nav-item nav-link">고객센터</a> -->
+                            
+                            <!-- 회원 로그인 후  -->
+                            <a href="" class="nav-item nav-link">홍길동관리자</a>
+                        	<a href="" class="nav-item nav-link">로그아웃</a>
+                        	<a href="dashboard" class="nav-item nav-link">관리자페이지</a>
+                            
                         </div>
                     </div>
                 </nav>
@@ -486,6 +501,23 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+<!-- ------------------채팅 관련 추가---------------- -->
+		<!-- 채팅 버튼 -->
+	  <button id="chatToggle" class="chat-button" title="문의">💬</button>
+	
+	  <!-- 채팅 박스 (초기에는 숨김) -->
+	  <div id="chatBox" class="chat-box" role="dialog" aria-hidden="true" aria-label="고객 상담">
+	    <div class="chat-header">
+	      <span>관리자 채팅</span>
+	      <button id="closeBtn" style="background:none;border:none;color:#fff;font-size:16px">✕</button>
+	    </div>
+	    <div id="messages" class="chat-messages"></div>
+	    <div class="chat-input">	      
+	      <input id="messageInput" type="text" placeholder="메시지를 입력하세요..." />
+	      <button id="sendBtn">전송</button>
+	    </div>
+	  </div>
+	  <!-- ------------------채팅 관련 ---------------- -->
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -499,6 +531,190 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+    <!-- SockJS + StompJS -->
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+<!-- ------------------채팅 관련 스크립트 시작---------------- -->
+  <script>
+  (function() {
+    // 유틸: UUID (간단)
+    function uuidv4(){
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+        const r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+      });
+    }
+
+    // 클라이언트 id 저장/조회
+    const CLIENT_KEY = 'chat_client_id';
+    let clientId = localStorage.getItem(CLIENT_KEY);
+    if (!clientId) {
+      clientId = 'user-' + uuidv4();
+      localStorage.setItem(CLIENT_KEY, clientId);
+    }
+    
+    function getDefaultSender() {
+    	  const short = (clientId || '').replace(/^user-/, '').slice(0,6);
+    	  return short ? ('손님-' + short) : '손님';
+    	}
+
+    // roomId 전략: 단순히 clientId를 사용 (서버에서 별도 room 생성 API를 쓰려면 그걸 호출해 roomId를 받도록 변경)
+    const roomId = clientId;
+
+    const chatToggle = document.getElementById('chatToggle');
+    const chatBox = document.getElementById('chatBox');
+    const closeBtn = document.getElementById('closeBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    const msgInput = document.getElementById('messageInput');
+    const senderInput = document.getElementById('senderInput');
+    const messagesEl = document.getElementById('messages');
+
+    let stompClient = null;
+    let connected = false;
+
+    function appendMessage(msg) {
+      const el = document.createElement('div');
+      const who = (msg.sender && /관리자|admin/i.test(msg.sender)) ? 'admin' : 'customer';
+      el.className = 'msg ' + who;
+      const meta = document.createElement('div'); meta.className = 'meta';
+      meta.textContent = (msg.sender || '손님') + ' · ' + new Date(msg.timestamp || Date.now()).toLocaleTimeString();
+      const txt = document.createElement('div'); txt.className = 'text';
+      txt.textContent = msg.content;
+      el.appendChild(meta); el.appendChild(txt);
+      messagesEl.appendChild(el);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function connect() {
+      // SockJS 엔드포인트는 서버에 맞춰 '/ws' (WebSocketConfig에서 registerStompEndpoints로 등록한 값)
+      const socket = new SockJS(window.location.origin + '/ws');
+      stompClient = Stomp.over(socket);
+      // 디버그 로그 끄기 (원하면 console.log로 변경)
+      stompClient.debug = function(msg){ console.log('STOMP: ' + msg); };
+
+      stompClient.connect({}, function(frame) {
+        connected = true;
+        
+        // 구독: room 전용 토픽
+        stompClient.subscribe('/topic/chat/' + roomId, function(payload) {
+          try {
+            const msg = JSON.parse(payload.body);
+            appendMessage(msg);
+          } catch(e) { console.error(e); }
+        });
+
+        // (옵션) 히스토리 로드: 서버에 /api/chat/history?roomId=... 가 구현되어 있다면 호출
+        fetch('/api/chat/history?roomId=' + encodeURIComponent(roomId))
+          .then(r => r.ok ? r.json() : Promise.reject(r))
+          .then(list => { if (Array.isArray(list)) list.forEach(appendMessage); })
+          .catch(()=>{ /* 히스토리 없으면 무시 */});
+      }, function(err) {
+        console.error('STOMP 연결 실패', err);
+      });
+    }
+
+    function send() {
+    	  try {
+    	    const text = msgInput.value && msgInput.value.trim();
+    	    if (!text) return;
+
+    	    // senderInput이 null일 수 있으므로 안전하게 처리
+    	    // optional chaining 사용 가능: senderInput?.value
+    	    const senderFromInput = (typeof senderInput !== 'undefined' && senderInput && senderInput.value) ? senderInput.value.trim() : '';
+    	    const sender = senderFromInput || getDefaultSender();
+
+    	    const payload = { type:'CHAT', roomId: roomId, sender: sender, content: text, timestamp: Date.now() };
+
+    	    if (stompClient && connected) {
+    	      stompClient.send('/app/chat.send', {}, JSON.stringify(payload));
+    	      msgInput.value = '';
+//    	      appendMessage(payload); // 즉시 로컬에 표시
+    	      console.log('STOMP send ->', payload);
+    	    } else {
+    	      console.warn('WebSocket not connected - using REST fallback');
+    	      fetch('/api/chat/send', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)})
+    	        .then(()=>{ msgInput.value=''; appendMessage(payload); })
+    	        .catch(e => { console.error('REST fallback error', e); alert('메시지 전송 실패'); });
+    	    }
+    	  } catch (err) {
+    	    console.error('send() error', err);
+    	  }
+    	}
+
+    // UI 이벤트
+    chatToggle.addEventListener('click', function(){
+      if (chatBox.style.display === 'flex') {
+        chatBox.style.display = 'none';
+      } else {
+        chatBox.style.display = 'flex';
+        if (!connected) connect();
+      }
+    });
+    closeBtn.addEventListener('click', function(){ chatBox.style.display = 'none'; });
+    sendBtn.addEventListener('click', send);
+    msgInput.addEventListener('keypress', function(e){ if (e.key === 'Enter') send(); });
+
+    // (선택) 페이지 열릴 때 채팅 자동 연결하려면 아래 주석 해제
+    // window.addEventListener('load', connect);
+
+    console.log('chat clientId=', clientId, ' roomId=', roomId);
+  })();
+  </script>
+  <script>
+(function(){
+  const chatBtn = document.getElementById('chatToggle'); // chat 버튼 id
+  const chatBox = document.getElementById('chatBox');   // 채팅 박스 (옵션)
+  const backBtn = document.querySelector('.back-to-top');
+
+  function getBackBottomOffset() {
+    if (!backBtn) return 0;
+    const style = getComputedStyle(backBtn);
+    if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) {
+      return 0;
+    }
+    // backBtn는 fixed 위치이므로 높이만큼 간격 확보
+    const h = backBtn.getBoundingClientRect().height || 0;
+    return h;
+  }
+
+  function adjustChatPosition() {
+    const offset = getBackBottomOffset();
+    const baseGap = 20; // back-to-top과 chat 사이 최소 간격(px)
+    if (chatBtn) {
+      // chat 버튼을 back-to-top 위로 올리거나 아래로 밀고 싶다면 계산식 조정
+      // 여기서는 back-to-top 위에 겹치지 않게 올리는 방식: bottom = offset + baseGap
+      chatBtn.style.bottom = (offset + baseGap) + 'px';
+      // z-index 안전값
+      chatBtn.style.zIndex = 1060;
+    }
+    if (chatBox) {
+      // 채팅 박스(열렸을 때) 위치도 보정
+      // chatBox이 chatBtn 위에 열리도록 충분히 위로 띄움 (예: offset + 100)
+      chatBox.style.bottom = (offset + 100) + 'px';
+      chatBox.style.zIndex = 1060;
+    }
+  }
+
+  // 초기 보정
+  document.addEventListener('DOMContentLoaded', adjustChatPosition);
+  // 창 크기/스크롤 변경 시 보정
+  window.addEventListener('resize', adjustChatPosition);
+  window.addEventListener('scroll', adjustChatPosition);
+
+  // 만약 back-to-top이 스크립트로 보였다/숨겼다 하면 MutationObserver로 모니터링
+  if (backBtn && window.MutationObserver) {
+    const mo = new MutationObserver(adjustChatPosition);
+    mo.observe(backBtn, { attributes: true, attributeFilter: ['style', 'class'] });
+  }
+
+  // 최초 실행(이미 DOM 로드된 경우)
+  adjustChatPosition();
+})();
+</script>
+<!-- ------------------채팅 관련 스크립트 끝---------------- -->
+
 </body>
 
 </html>

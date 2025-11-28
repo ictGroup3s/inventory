@@ -40,6 +40,11 @@ public class projectController {
 		return "fish2Detail";
 	}
 	
+	@GetMapping("detail")
+	public String detail() {
+		return "detail";
+	}
+	
 	@GetMapping("register")
 	public String register() {
 		return "register";
@@ -76,9 +81,9 @@ public class projectController {
 		return "selectGui";
 	}
 	
-	@GetMapping("selectRecipe")
-	public String selectRecipe() {
-		return "selectRecipe";
+	@GetMapping("selectdrink")
+	public String selectdrink() {
+		return "selectdrink";
 	}
 	
 	@GetMapping("selectSoup")
@@ -111,6 +116,7 @@ public class projectController {
 	public String order() {
 		return "order";
 	}
+
 // 	통계 페이지(연도별*월별 매출 / 지출)	
 	@GetMapping("stats")
 	public String stats(Model model) throws Exception {
@@ -215,5 +221,4 @@ public class projectController {
 
         return "stats";
     }
-    
 }

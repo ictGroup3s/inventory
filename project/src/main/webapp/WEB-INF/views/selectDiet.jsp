@@ -90,10 +90,10 @@
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link active">국 ．밥 ．면</a></li>
-						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectDiet" class="nav-link active">식단관리</a></li>
 						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link active">반찬 ．소스</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
 						<li class="nav-item"><a href="selectRecipe" class="nav-link">레시피</a></li>
 					</ul>
 				</nav>
