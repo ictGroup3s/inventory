@@ -81,9 +81,9 @@ public class projectController {
 		return "selectGui";
 	}
 	
-	@GetMapping("selectRecipe")
-	public String selectRecipe() {
-		return "selectRecipe";
+	@GetMapping("selectdrink")
+	public String selectdrink() {
+		return "selectdrink";
 	}
 	
 	@GetMapping("selectSoup")
