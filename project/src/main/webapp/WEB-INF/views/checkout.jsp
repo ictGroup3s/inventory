@@ -469,18 +469,18 @@ document.getElementById('memoSelect').addEventListener('change', function() {
 					<div class="row text-center mt-3">
 
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block">국민</button>
+							<button class="btn btn-outline-primary btn-block card-btn">국민</button>
 						</div>
 
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block">현대</button>
+							<button class="btn btn-outline-primary btn-block card-btn">현대</button>
 						</div>
 
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block">농협</button>
+							<button class="btn btn-outline-primary btn-block card-btn">농협</button>
 						</div>
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block">카카오뱅크</button>
+							<button class="btn btn-outline-primary btn-block card-btn">카카오뱅크</button>
 						</div>
 					</div>
 
@@ -494,9 +494,35 @@ document.getElementById('memoSelect').addEventListener('change', function() {
 				</div>
 
 				<div class="modal-footer">
-					<button class="btn btn-primary btn-block w-100 py-2">결제하기
-					</button>
+					<button
+						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
+						data-toggle="modal" data-target="#payModal">결제하기</button>
 				</div>
+
+					<script>
+						let selectedCard = null;  // 선택된 카드 저장
+						
+						// 모든 카드 버튼
+						const cardButtons = document.querySelectorAll('.card-btn');
+						
+						cardButtons.forEach(btn => {
+						    btn.addEventListener('click', function () {
+						
+						        // 1) 모든 버튼에서 active 제거
+						        cardButtons.forEach(b => {
+						            b.classList.remove('btn-primary');
+						            b.classList.add('btn-outline-primary');
+						        });
+						
+						        // 2) 현재 클릭한 버튼에 active 스타일 적용
+						        this.classList.remove('btn-outline-primary');
+						        this.classList.add('btn-primary');
+						
+						        // 3) 선택된 카드 저장
+						        selectedCard = this.innerText;
+						    });
+						});
+				</script>
 
 			</div>
 		</div>
