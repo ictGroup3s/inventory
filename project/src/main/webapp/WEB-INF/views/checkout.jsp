@@ -10,6 +10,8 @@
 <meta content="Free HTML Templates" name="description">
 
 <!-- Favicon -->
+
+
 <link href="img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
@@ -34,8 +36,8 @@
 <body>
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
-			<a href="/" class="text-decoration-none"> 
-				<img src='../img/logo.png' class='logo' />
+			<a href="/" class="text-decoration-none"> <img
+				src='../img/logo.png' class='logo' />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
@@ -50,7 +52,7 @@
 					</div>
 				</div>
 			</form>
-		</div> 
+		</div>
 		<div class="col-lg-3 col-6 text-right">
 			<a href="" class="btn border"> <i
 				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
@@ -64,8 +66,8 @@
 
 
 	<!-- Navbar Start -->
- <div class="container-fluid">
-	<!-- <div class="row border-top px-xl-5">
+	<div class="container-fluid">
+		<!-- <div class="row border-top px-xl-5">
 		 	<div class="col-lg-3 d-none d-lg-block">
 			<a
 					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
@@ -90,29 +92,29 @@
                     </div>
 				</nav>	
 			</div> -->
-			<div class="col-lg-9" aling="right">
-				<nav
-					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-					<a href="" class="text-decoration-none d-block d-lg-none">
-						<h1 class="m-0 display-5 font-weight-semi-bold">
-							<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
-						</h1>
-					</a>
-					<button type="button" class="navbar-toggler" data-toggle="collapse"
-						data-target="#navbarCollapse">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
-						 <div class="navbar-nav ml-auto py-0">
-							<a href="login" class="nav-item nav-link">로그인</a> 
-							<a href="register" class="nav-item nav-link">회원가입</a> 
-							<a href="board" class="nav-item nav-link">고객센터</a>
-						</div>
+		<div class="col-lg-9" aling="right">
+			<nav
+				class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+				<a href="" class="text-decoration-none d-block d-lg-none">
+					<h1 class="m-0 display-5 font-weight-semi-bold">
+						<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
+					</h1>
+				</a>
+				<button type="button" class="navbar-toggler" data-toggle="collapse"
+					data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-between"
+					id="navbarCollapse">
+					<div class="navbar-nav ml-auto py-0">
+						<a href="login" class="nav-item nav-link">로그인</a> <a
+							href="register" class="nav-item nav-link">회원가입</a> <a
+							href="board" class="nav-item nav-link">고객센터</a>
 					</div>
-				</nav>
-			</div>
+				</div>
+			</nav>
 		</div>
+	</div>
 	</div>
 	<!-- Navbar End -->
 
@@ -143,7 +145,8 @@
 					<h4 class="font-weight-semi-bold mb-4">주소 입력</h4>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label>이름</label> <input class="form-control" type="text" id="Name">
+							<label>이름</label> <input class="form-control" type="text"
+								id="Name">
 						</div>
 						<!--<div class="col-md-6 form-group">
 							<label>Last Name</label> <input class="form-control" type="text"
@@ -153,23 +156,25 @@
 							<label>이메일</label> <input class="form-control" type="text">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>전화번호</label> <input class="form-control" type="text" id="Phone">
+							<label>전화번호</label> <input class="form-control" type="text"
+								id="Phone">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>주 소</label> <input class="form-control" type="text" id="Address">
+							<label>주 소</label> <input class="form-control" type="text"
+								id="Address">
 						</div>
-					<!-- <div class="col-md-6 form-group">
+						<!-- <div class="col-md-6 form-group">
 							<label>Address Line 2</label> <input class="form-control"
-								type="text" placeholder="123 Street"> -->	
-						</div>
-						<div class="col-md-6 form-group">
-							<label>지역선택</label> <select class="custom-select">
-								<option selected>서울특별시</option>
-								<option>경기도</option>
-								<option>대전광역시</option>
-								<option>광주광역시</option>
-							</select>
-			<!-- 		</div>
+								type="text" placeholder="123 Street"> -->
+					</div>
+					<div class="col-md-6 form-group">
+						<label>지역선택</label> <select class="custom-select">
+							<option selected>서울특별시</option>
+							<option>경기도</option>
+							<option>대전광역시</option>
+							<option>광주광역시</option>
+						</select>
+						<!-- 		</div>
 						<div class="col-md-6 form-group">
 							<label>City</label> <input class="form-control" type="text"
 								placeholder="New York">
@@ -181,7 +186,7 @@
 						<div class="col-md-6 form-group">
 							<label>ZIP Code</label> <input class="form-control" type="text"
 								placeholder="123">
-						</div>-->	
+						</div>-->
 						<div class="col-md-12 form-group">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input"
@@ -193,7 +198,8 @@
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="shipto">
 								<label class="custom-control-label" for="shipto"
-									data-toggle="collapse" data-target="#shipping-address">수령지 주소입력</label>
+									data-toggle="collapse" data-target="#shipping-address">수령지
+									주소입력</label>
 							</div>
 						</div>
 					</div>
@@ -202,29 +208,31 @@
 					<h4 class="font-weight-semi-bold mb-4">수령지 주소</h4>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label>이름</label> <input class="form-control" type="text" id="shipName">
-						</div>
-							<div class="col-md-6 form-group">
-							<label>핸드폰 번호</label> <input class="form-control" type="text" id="shipPhone">
+							<label>이름</label> <input class="form-control" type="text"
+								id="shipName">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>수령주소</label> <input class="form-control" type="text" id="shipAddress">
+							<label>핸드폰 번호</label> <input class="form-control" type="text"
+								id="shipPhone">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>메모</label>
-							 <select class="custom-select" id="memoSelect">
+							<label>수령주소</label> <input class="form-control" type="text"
+								id="shipAddress">
+						</div>
+						<div class="col-md-6 form-group">
+							<label>메모</label> <select class="custom-select" id="memoSelect">
 								<option selected>요청사항</option>
 								<option>문앞에 놓아주세요</option>
 								<option>경비실에 맡겨주세요</option>
 								<option>택배함에 넣어주세요</option>
 								<option value="direct">직접입력</option>
-							</select>
-							<input type="text" class="form-control mt-2" id="memoInput" placeholder="요청사항 입력" style="display:none;">
+							</select> <input type="text" class="form-control mt-2" id="memoInput"
+								placeholder="요청사항 입력" style="display: none;">
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4" >
+			<div class="col-lg-4">
 				<div class="card border-secondary mb-5">
 					<div class="card-header bg-secondary border-0">
 						<h4 class="font-weight-semi-bold m-0">주문서</h4>
@@ -283,19 +291,22 @@
 							</div>
 						</div>
 					</div>
-				 <!-- 1) 기타결제  -->
-            <div class="tab-pane fade show active" id="social" role="tabpanel">
-                <div class="text-center mb-4">
+					<!-- 1) 기타결제  -->
+					<div class="tab-pane fade show active" id="social" role="tabpanel">
+						<div class="text-center mb-4">
 
-                    <a href="/oauth/naver" class="btn btn-light border d-block mb-2 py-2 social-btn">
-                        <img src="/img/naver.png"> NaverPay로 결제 
-                    </a>
+							<!-- SDK 방식 버튼 -->
+							<button id="naverPayBtn"
+								class="btn btn-light border d-block mb-2 py-2 social-btn">
+								<img src="/img/naver.png"> NaverPay로 결제
+							</button>
 
-                    <a href="/oauth/kakao" class="btn btn-light border d-block py-2 social-btn">
-                        <img src="/img/kakao.png"> KakaoPay로 결제 
-                    </a>
-                </div>
-            </div>
+							<a href="/oauth/kakao"
+								class="btn btn-light border d-block py-2 social-btn"> <img
+								src="/img/kakao.png"> KakaoPay로 결제
+							</a>
+						</div>
+					</div>
 					<button
 						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
 						data-toggle="modal" data-target="#payModal">결제하기</button>
@@ -422,34 +433,34 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 
-<!-- 여기서부터 체크박스 복사 스크립트 작성 -->
-<script>
-document.getElementById('newaccount').addEventListener('change', function() {
-    if(this.checked) {
-        document.getElementById('shipName').value = document.getElementById('Name').value;
-        document.getElementById('shipPhone').value = document.getElementById('Phone').value;
-        document.getElementById('shipAddress').value = document.getElementById('Address').value;
-    } else {
-        document.getElementById('shipName').value = '';
-        document.getElementById('shipPhone').value = '';
-        document.getElementById('shipAddress').value = '';
-    }
-});
-</script>
+	<!-- 여기서부터 체크박스 복사 스크립트 작성 -->
+	<script>
+		document.getElementById('newaccount').addEventListener('change', function() {
+		    if(this.checked) {
+		        document.getElementById('shipName').value = document.getElementById('Name').value;
+		        document.getElementById('shipPhone').value = document.getElementById('Phone').value;
+		        document.getElementById('shipAddress').value = document.getElementById('Address').value;
+		    } else {
+		        document.getElementById('shipName').value = '';
+		        document.getElementById('shipPhone').value = '';
+		        document.getElementById('shipAddress').value = '';
+		    }
+		});
+	</script>
 
-<!-- 여기는 요청사항 직접입력 칸 -->
-<script>
-document.getElementById('memoSelect').addEventListener('change', function() {
-    const memoInput = document.getElementById('memoInput');
-    if(this.value === 'direct') {
-        memoInput.style.display = 'block'; // 입력창 보이기
-        memoInput.focus(); // 포커스 주기
-    } else {
-        memoInput.style.display = 'none'; // 숨기기
-        memoInput.value = ''; // 기존 입력값 초기화
-    }
-});
-</script>
+	<!-- 여기는 요청사항 직접입력 칸 -->
+	<script>
+		document.getElementById('memoSelect').addEventListener('change', function() {
+		    const memoInput = document.getElementById('memoInput');
+		    if(this.value === 'direct') {
+		        memoInput.style.display = 'block'; // 입력창 보이기
+		        memoInput.focus(); // 포커스 주기
+		    } else {
+		        memoInput.style.display = 'none'; // 숨기기
+		        memoInput.value = ''; // 기존 입력값 초기화
+		    }
+		});
+	</script>
 	<!-- 결제 모달 -->
 	<div class="modal fade" id="payModal" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
@@ -499,7 +510,7 @@ document.getElementById('memoSelect').addEventListener('change', function() {
 						data-toggle="modal" data-target="#payModal">결제하기</button>
 				</div>
 
-					<script>
+				<script>
 						let selectedCard = null;  // 선택된 카드 저장
 						
 						// 모든 카드 버튼
