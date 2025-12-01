@@ -35,11 +35,6 @@ public class projectController {
 		return "selectall";
 	}
 	
-	@GetMapping("fish2Detail")
-	public String fish2Detail() {
-		return "fish2Detail";
-	}
-	
 	@GetMapping("detail")
 	public String detail() {
 		return "detail";
@@ -116,7 +111,13 @@ public class projectController {
 	public String order() {
 		return "order";
 	}
+	
+	@GetMapping("mypage")
+	public String mypage() {
+		return "mypage";
+	}
 
+	
 // 	통계 페이지(연도별*월별 매출 / 지출)	
 	@GetMapping("stats")
 	public String stats(Model model) throws Exception {
