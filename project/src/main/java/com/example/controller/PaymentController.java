@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class PaymentController {
 	
-	@GetMapping("/checkout")
+	@GetMapping("project/checkout")
 	public String checkoutPage() {
 	    return "checkout";  // checkout.jsp
 	}
