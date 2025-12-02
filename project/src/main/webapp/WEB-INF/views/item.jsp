@@ -104,20 +104,20 @@
 						<div class="col-lg-7 pb-5">
 							<h3 class="font-weight-semi-bold mb-4">상품등록</h3>
 
-							<form>
+							<form action="saveItem" method="post" enctype="multipart/form-data">
 								<!-- 상품 정보 입력 테이블 -->
 								<table class="table table-bordered">
 									<tr>
 										<td>상품명</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="text" class="form-control" name="name"></td>
 									</tr>
 									<tr>
 										<td>수량</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="text" class="form-control" name="quantity"></td>
 									</tr>
 									<tr>
 										<td>카테고리</td>
-										<td><select class="form-control">
+										<td><select class="form-control" name ="cate">
 												<option value="">선택하세요</option>
 												<option value="">카테고리1</option>
 												<option value="">카테고리2</option>
@@ -125,16 +125,16 @@
 										</select></td>
 									</tr>
 									<tr>
-										<td>원산지</td>
-										<td><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
 										<td>원가</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="text" class="form-control" name="origin_price"></td>
 									</tr>
 									<tr>
 										<td>소비자가</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="text" class="form-control" name="price"></td>
+									</tr>
+									<tr>
+										<td>파일등록</td>
+										<td><input type="file" class="form-control" name="img"></td>
 									</tr>
 								</table>
 
