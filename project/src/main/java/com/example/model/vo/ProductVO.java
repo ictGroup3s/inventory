@@ -1,11 +1,14 @@
 package com.example.model.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
 public class ProductVO {
 	private Integer item_no;
-	private String item_img;
+	private String item_img;	//DB용
+	private MultipartFile item_imgFile; // 업로드용
 	private String item_name;
 	private String item_content;
 	private Integer origin_p;
@@ -13,4 +16,5 @@ public class ProductVO {
 	private Integer stock_cnt;
 	private Integer cate_no;
 	private Integer dis_no;
+	private String cate_name;
 }

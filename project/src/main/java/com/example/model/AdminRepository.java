@@ -1,11 +1,12 @@
-package com.example.service;
+package com.example.model;
 
 import java.util.List;
 
 import com.example.model.vo.ProductVO;
 
-public interface AdminService {
+public interface AdminRepository {
+
 	public void saveItem(ProductVO vo);
-	List<ProductVO> getItemList(); 
+	public List<ProductVO> getItemList();
 	public void updateItem(ProductVO vo);
 }

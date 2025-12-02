@@ -106,12 +106,12 @@ public class projectController {
 	public String stock() {
 		return "stock";
 	}
-	
-	@GetMapping("item")
-	public String item() {
-		return "item";
-	}
-	
+
+	//@GetMapping("item")
+	//public String item() { 
+	//	return "item"; 
+	//}
+	 
 	@GetMapping("order")
 	public String order() {
 		return "order";
