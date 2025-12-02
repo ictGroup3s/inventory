@@ -116,6 +116,21 @@ public class projectController {
 	public String order() {
 		return "order";
 	}
+	
+	@GetMapping("/mypage")
+	public String mypage() {
+		return "mypage";
+	}
+	
+	@GetMapping("/type")
+	public String typepage() {
+		return "type";
+	}
+	
+	
+	
+	
+	
 
 // 	통계 페이지(연도별*월별 매출 / 지출)	
 	@GetMapping("stats")

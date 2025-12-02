@@ -1,14 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>결제시작</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Free HTML Templates" name="keywords">
-<meta content="Free HTML Templates" name="description">
+<body>
+<h3>결제 진행중...</h3>
+<p>결제 수단: <%= request.getParameter("payment") %></p>
 
-
+<!-- 실제 결제 SDK 연동 혹은 결제 완료 후 처리 -->
 </body>
 </html>

@@ -282,6 +282,9 @@
 									id="directcheck"> <label class="custom-control-label"
 									for="directcheck">계좌이체</label>
 							</div>
+							<div class="form-group" id="bankInfo" style="display: none;">
+								<p>국민은행 123-456-7890</p>
+							</div>
 						</div>
 						<div class="">
 							<div class="custom-control custom-radio">
@@ -301,15 +304,15 @@
 								<img src="/img/naver.png"> NaverPay로 결제
 							</button>
 
-							<a href="/oauth/kakao"
-								class="btn btn-light border d-block py-2 social-btn"> <img
-								src="/img/kakao.png"> KakaoPay로 결제
-							</a>
+							<button id="kakaoPayBtn"
+								class="btn btn-light border d-block py-2 social-btn">
+								<img src="/img/kakao.png"> KakaoPay로 결제
+							</button>
+
 						</div>
 					</div>
-					<button
-						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
-						data-toggle="modal" data-target="#payModal">결제하기</button>
+					<button id="btnOpenModal"
+						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">결제하기</button>
 				</div>
 			</div>
 		</div>
@@ -461,17 +464,18 @@
 		    }
 		});
 	</script>
-	<!-- 결제 모달 -->
-	<div class="modal fade" id="payModal" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered modal-lg">
+	
+			<!-- 결제 모달 -->
+			<div class="modal fade" id="payModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 
-				<div class="modal-header bg-primary text-white">
-					<h5 class="modal-title">결제 진행</h5>
-					<button type="button" class="close text-white" data-dismiss="modal">
-						&times;</button>
-				</div>
-
+			<div class="modal-header bg-primary text-white">
+				<h5 class="modal-title">결제하기</h5>
+				<button type="button" class="close text-white" data-dismiss="modal">
+					&times;</button>
+			</div>
+			
 				<div class="modal-body">
 
 					<h5>
@@ -503,36 +507,98 @@
 					<h4 class="text-primary font-weight-bold">38,000원</h4>
 
 				</div>
-
+				
+				<!-- 결제 모달 버튼 -->
 				<div class="modal-footer">
-					<button
-						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
-						data-toggle="modal" data-target="#payModal">결제하기</button>
+					<button id="btnModalCheckout" type="button"
+						class="btn btn-primary btn-lg btn-block" data-toggle="modal">결제진행</button>
 				</div>
 
 				<script>
-						let selectedCard = null;  // 선택된 카드 저장
-						
-						// 모든 카드 버튼
-						const cardButtons = document.querySelectorAll('.card-btn');
-						
-						cardButtons.forEach(btn => {
-						    btn.addEventListener('click', function () {
-						
-						        // 1) 모든 버튼에서 active 제거
-						        cardButtons.forEach(b => {
-						            b.classList.remove('btn-primary');
-						            b.classList.add('btn-outline-primary');
-						        });
-						
-						        // 2) 현재 클릭한 버튼에 active 스타일 적용
-						        this.classList.remove('btn-outline-primary');
-						        this.classList.add('btn-primary');
-						
-						        // 3) 선택된 카드 저장
-						        selectedCard = this.innerText;
-						    });
-						});
+					document.addEventListener('DOMContentLoaded', function() {
+					    const btnOpenModal = document.getElementById('btnOpenModal');      // 결제하기 버튼
+					    const btnModalCheckout = document.getElementById('btnModalCheckout'); // 모달 안 결제진행 버튼
+					    const paymentRadios = document.querySelectorAll('input[name="payment"]');
+					    const bankRadio = document.getElementById('directcheck');
+					    const bankInfo = document.getElementById('bankInfo');
+	
+					    // 결제하기 버튼 클릭
+					    btnOpenModal.addEventListener('click', function(e) {
+					        e.preventDefault();
+					        let selected = null;
+					        paymentRadios.forEach(radio => {
+					            if(radio.checked) selected = radio.id;
+					        });
+	
+					        if(!selected) {
+					            alert('결제 방식을 선택해주세요!');
+					            return;
+					        }
+	
+					        if(selected === 'paypal') {
+					            $('#payModal').modal('show'); // 카드결제 모달
+					        } else if(selected === 'directcheck') {
+					            bankInfo.style.display = 'block'; // 계좌이체
+					        } else {
+					            // 간편결제 → payment.jsp로 바로 이동
+					            window.location.href = '/payment.jsp?method=' + selected;
+					        }
+					    });
+	
+					    // 모달 안 카드사 선택 후 결제 진행 버튼
+					    btnModalCheckout.addEventListener('click', function() {
+					        const selectedCardBtn = document.querySelector('.card-btn.btn-primary');
+					        if(!selectedCardBtn) {
+					            alert('카드를 선택해주세요!');
+					            return;
+					        }
+	
+					        const cardName = selectedCardBtn.innerText;
+					        // 실제 결제 로직 삽입 가능
+					        $('#payModal').modal('hide'); // 모달 닫기
+	
+					        // payment.jsp로 이동, 카드사 정보 전달
+					        window.location.href = '/payment.jsp?method=card&card=' + encodeURIComponent(cardName);
+					    });
+	
+					    // 카드 선택 버튼 클릭 시 활성화 표시
+					    const cardButtons = document.querySelectorAll('.card-btn');
+					    cardButtons.forEach(btn => {
+					        btn.addEventListener('click', function() {
+					            cardButtons.forEach(b => b.classList.remove('btn-primary'));
+					            cardButtons.forEach(b => b.classList.add('btn-outline-primary'));
+					            this.classList.remove('btn-outline-primary');
+					            this.classList.add('btn-primary');
+					        });
+					    });
+	
+					    // 계좌이체 선택 시 계좌번호 보이기
+					    paymentRadios.forEach(radio => {
+					        radio.addEventListener('change', function() {
+					            if(bankRadio.checked) {
+					                bankInfo.style.display = 'block';
+					            } else {
+					                bankInfo.style.display = 'none';
+					            }
+					        });
+					    });
+	
+					    // 기타결제 버튼 클릭 → 바로 payment.jsp 이동
+					    const naverBtn = document.getElementById('naverPayBtn');
+					    const kakaoBtn = document.getElementById('kakaoPayBtn');
+	
+					    naverBtn.addEventListener('click', function() {
+					        window.location.href = '/naver';
+					    });
+	
+					  // 카카오페이 결제 버튼
+
+					    kakaoBtn.addEventListener('click', function(e) {
+					    	 window.location.href = '/kakao'; 
+					    	
+					    });
+					        // 기본 href 동작 그대로 실행 (e.preventDefault() 삭제)
+					  });
 				</script>
 
 			</div>
