@@ -122,9 +122,14 @@ public class projectController {
 		return "mypage";
 	}
 	
-	@GetMapping("/type")
-	public String typepage() {
-		return "type";
+	@GetMapping("/orderhistory")
+	public String orderhistory() {
+		return "orderhistory";
+	}
+	
+	@GetMapping("/orderhistory2")
+	public String orderhistory2() {
+		return "orderhistory2";
 	}
 	
 	

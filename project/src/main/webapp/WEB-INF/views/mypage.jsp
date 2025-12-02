@@ -75,12 +75,12 @@
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
 					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
 					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="" class="nav-item nav-link">주문현황 </a> <a href="/mypage"
-							class="nav-item nav-link">취소/반품/교환</a> <a href="project/type"
-							class="nav-item nav-link">회원정보변경</a> <a href=""
-							class="nav-item nav-link">회원탈퇴</a> <a href=""
-							class="nav-item nav-link">최근본상품</a> <a href=""
-							class="nav-item nav-link">1:1 문의내역</a>
+						<a href="/mypage" class="nav-item nav-link">주문현황 </a> 
+						<a href="/orderhistory"class="nav-item nav-link">취소/반품/교환</a> 
+						<a href=""class="nav-item nav-link">회원정보변경</a> 
+						<a href=""class="nav-item nav-link">회원탈퇴</a> 
+						<a href=""class="nav-item nav-link">최근본상품</a> 
+						<a href=""class="nav-item nav-link">1:1 문의내역</a>
 
 
 					</div>
