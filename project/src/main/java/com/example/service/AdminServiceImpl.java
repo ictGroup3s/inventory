@@ -31,4 +31,10 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 
+	@Override
+	public void deleteItem(Integer itemNo) throws Exception {
+		adminRepository.deleteItem(itemNo);
+		
+	}
+
 }

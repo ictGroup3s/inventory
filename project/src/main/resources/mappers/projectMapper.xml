@@ -58,5 +58,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    </if>
 	    WHERE item_no = #{item_no}
 	</update>
-
+	
+	<delete id="deleteItem" parameterType="int">
+		DELETE FROM product
+        WHERE item_no = #{itemNo}
+	</delete>
 </mapper>

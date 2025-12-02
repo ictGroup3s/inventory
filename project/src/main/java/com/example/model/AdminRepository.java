@@ -9,4 +9,5 @@ public interface AdminRepository {
 	public void saveItem(ProductVO vo);
 	public List<ProductVO> getItemList();
 	public void updateItem(ProductVO vo);
+	public void deleteItem(Integer itemNo) throws Exception;
 }

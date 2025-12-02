@@ -31,4 +31,10 @@ public class AdminRepositoryImpl implements AdminRepository{
 		
 	}
 
+	@Override
+	public void deleteItem(Integer itemNo) throws Exception {
+		sess.delete("adminmapper.deleteItem",itemNo);
+		
+	}
+
 }

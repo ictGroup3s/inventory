@@ -58,18 +58,42 @@
 		$('.item-row').on('click', function() {
 			const $this = $(this);
 			$('input[name="item_no"]').val($this.data('item_no'));
-		    $('input[name="item_name"]').val($this.data('item_name'));
-		    $('textarea[name="item_content"]').val($this.data('item_content'));
-		    $('input[name="origin_p"]').val($this.data('origin_p'));
-		    $('input[name="sales_p"]').val($this.data('sales_p'));
-		    $('input[name="stock_cnt"]').val($this.data('stock_cnt'));
-		    $('select[name="cate_no"]').val($this.data('cate_no'));
-		    let imgPath = $this.data('item_img');
-		    if(imgPath) {
-		        $('#preview').attr('src', '/img/product/' + imgPath);
-		    } else {
-		        $('#preview').attr('src', 'img/insert_pic.png'); // 기본 이미지
-		    }
+			$('input[name="item_name"]').val($this.data('item_name'));
+			$('textarea[name="item_content"]').val($this.data('item_content'));
+			$('input[name="origin_p"]').val($this.data('origin_p'));
+			$('input[name="sales_p"]').val($this.data('sales_p'));
+			$('input[name="stock_cnt"]').val($this.data('stock_cnt'));
+			$('select[name="cate_no"]').val($this.data('cate_no'));
+			let imgPath = $this.data('item_img');
+			if (imgPath) {
+				$('#preview').attr('src', '/img/product/' + imgPath);
+			} else {
+				$('#preview').attr('src', 'img/insert_pic.png'); // 기본 이미지
+			}
+		});
+		
+		$('.delete-btn').click(function() {
+		    let itemNo = $(this).data('itemno'); // data-itemno와 맞춤
+		    let row = $(this).closest('tr');
+
+		    console.log(itemNo); // 숫자가 제대로 찍히는지 확인
+
+		    $.ajax({
+		        url: '/deleteItem',
+		        type: 'POST',
+		        data: { itemNo: itemNo },
+		        success: function(response) {
+		            if(response === "success") {
+		                row.remove();
+		                alert("정말로 삭제하시겠습니까?")
+		            } else {
+		                alert('삭제 실패');
+		            }
+		        },
+		        error: function() {
+		            alert('삭제 실패');
+		        }
+		    });
 		});
 
 	});
@@ -204,7 +228,7 @@
 									<button class="btn btn-primary mr-2" type="submit">등록</button>
 									<button class="btn btn-warning mr-2" type="submit"
 										formaction="/itemUpdate">수정</button>
-									<button class="btn btn-danger" type="button">삭제</button>
+									
 								</div>
 							</form>
 						</div>
@@ -228,12 +252,10 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${list}" var="item">
-										<tr class="item-row" 
-											data-item_no="${item.item_no}"
+										<tr class="item-row" data-item_no="${item.item_no}"
 											data-item_name="${item.item_name}"
 											data-origin_p="${item.origin_p}"
-											data-sales_p="${item.sales_p}" 
-											data-cate_no="${item.cate_no}"
+											data-sales_p="${item.sales_p}" data-cate_no="${item.cate_no}"
 											data-stock_cnt="${item.stock_cnt}"
 											data-item_content="${item.item_content}"
 											data-item_img="${item.item_img}">
@@ -242,6 +264,7 @@
 											<td>${item.cate_name}</td>
 											<td>${item.origin_p}</td>
 											<td>${item.sales_p}</td>
+											<td><button class="btn btn-danger delete-btn" data-itemno="${item.item_no}">삭제</button></td>
 										</tr>
 									</c:forEach>
 								</tbody>
