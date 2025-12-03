@@ -116,6 +116,40 @@ public class projectController {
 	public String order() {
 		return "order";
 	}
+	
+	@GetMapping("/mypage")
+	public String mypage() {
+		return "mypage";
+	}
+	
+	@GetMapping("/orderhistory")
+	public String orderhistory() {
+		return "orderhistory";
+	}
+	
+	@GetMapping("/mycs")
+	public String mycs() {
+		return "mycs";
+	}
+	
+	@GetMapping("/myqna")
+	public String myqna() {
+		return "myqna";
+	}
+	
+	/*
+	 * @GetMapping("/ordercomplete") public String ordercomplete() { return
+	 * "ordercomplete"; }
+	 */
+	
+	@GetMapping("/mydelivery")
+	public String mydelivery() {
+		return "mydelivery";
+	}
+	
+	
+	
+	
 
 // 	통계 페이지(연도별*월별 매출 / 지출)	
 	@GetMapping("stats")
