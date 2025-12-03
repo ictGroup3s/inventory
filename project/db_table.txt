@@ -7,7 +7,7 @@ CREATE TABLE customer (
 	reg_date    VARCHAR2(500)  NULL,     -- 회원가입일
 	api         VARCHAR2(1000) NULL,     -- API인증
 	buiss_no    NUMBER        NOT NULL, -- 사업자번호
-	phone       NUMBER        NULL,     -- 전화번호
+	phone       VARCHAR2(500)        NULL,     -- 전화번호
 	addr        VARCHAR2(1500) NULL,     -- 주소
 	email       VARCHAR2(500)  NULL      -- 이메일
 );
