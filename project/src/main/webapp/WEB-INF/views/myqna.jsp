@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>주문내역</title>
+<title>1:1문의내역</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <!-- Favicon -->
@@ -60,9 +60,9 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="/orderhistory" class="nav-link active">주문내역</a></li>
+						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
 						<li class="nav-item"><a href="/cs" class="nav-link">취소/반품/교환내역</a></li>
-						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
+						<li class="nav-item"><a href="/myqna" class="nav-link active">1:1문의내역</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -70,28 +70,28 @@
 			<!-- Main Content -->
 			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
-					<h4>주문내역</h4>
+					<h4>1:1문의내역</h4>
 				</div>
-
+				
 				<div class="col-lg-10 mx-auto">
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th>주문번호</th>
-								<th>상품명</th>
-								<th>결제금액</th>
-								<th>주문상태</th>
-								<th>처리</th>
+								<th>문의번호</th>
+								<th>제목</th>
+								<th>상태</th>
+								<th>작성일</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>10001</td>
-								<td>상품명1</td>
-								<td>10,000원</td>
-								<td>주문요청 중</td>
+								<td>1001</td>
+								<td>배송 문의</td>
+								<td>답변완료</td>
+								<td>2025-12-01</td>
 								<td>
-									<button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#orderDetailModal">
+									<button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#detailModal">
 										상세보기
 									</button>
 								</td>
@@ -103,110 +103,61 @@
 		</div>
 	</div>
 
-	<!-- 주문 상세 모달 -->
-	<div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+	<!-- 모달 -->
+	<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="orderDetailModalLabel">주문 상세내역</h5>
+					<h5 class="modal-title" id="detailModalLabel">1:1문의 상세내역</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<!-- 주문 기본 정보 -->
 					<div class="row mb-3">
 						<div class="col-md-6">
-							<strong>주문번호:</strong> 10001
+							<strong>문의번호:</strong> 1001
 						</div>
 						<div class="col-md-6">
-							<strong>주문일자:</strong> 2025-12-01 14:30
+							<strong>작성일:</strong> 2025-12-01
 						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-12">
-							<strong>주문상태:</strong> <span class="badge badge-warning">주문요청 중</span>
-						</div>
-					</div>
-					
-					<hr>
-					
-					<!-- 상품 정보 -->
-					<h6 class="mb-3"><strong>주문 상품</strong></h6>
-					<div class="table-responsive">
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>상품명</th>
-									<th>수량</th>
-									<th>가격</th>
-									<th>합계</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>상품명1</td>
-									<td>1개</td>
-									<td>10,000원</td>
-									<td>10,000원</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-					<hr>
-					
-					<!-- 결제 정보 -->
-					<h6 class="mb-3"><strong>결제 정보</strong></h6>
-					<div class="row mb-2">
 					</div>
 					<div class="row mb-3">
 						<div class="col-md-6">
-							<strong>총 결제 금액:</strong>
+							<strong>제목:</strong> 배송 문의
 						</div>
-						<div class="col-md-6 text-right">
-							<h5 class="text-primary mb-0">13,000원</h5>
+						<div class="col-md-6">
+							<strong>상태:</strong> <span class="badge badge-success">답변완료</span>
+						</div>
+					</div>
+					<hr>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>문의 내용:</strong>
+							<p class="mt-2 p-3" style="background-color: #f8f9fa; border-radius: 5px;">
+								주문한 상품이 언제 도착하나요? 배송 조회가 되지 않아 문의 드립니다.
+							</p>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<div class="col-md-12">
-							<strong>결제 방법:</strong> 신용카드 (국민카드 **** **** **** 1234)
+							<strong>답변 내용:</strong>
+							<p class="mt-2 p-3" style="background-color: #e7f3ff; border-radius: 5px;">
+								안녕하세요. 고객님의 주문 상품은 12월 3일에 출고 예정입니다. 
+								배송 완료까지 2-3일 정도 소요될 예정이며, 출고 시 송장번호를 별도로 안내해드리겠습니다. 
+								감사합니다.
+							</p>
 						</div>
 					</div>
-					
-					<hr>
-					
-					<!-- 배송 정보 -->
-					<h6 class="mb-3"><strong>배송 정보</strong></h6>
-					<div class="row mb-2">
+					<div class="row">
 						<div class="col-md-12">
-							<strong>받는 사람:</strong> 홍길동
+							<strong>처리 이력:</strong>
+							<ul class="mt-2">
+								<li>2025-12-01 14:30: 문의 접수</li>
+								<li>2025-12-01 16:45: 답변 완료</li>
+							</ul>
 						</div>
 					</div>
-					<div class="row mb-2">
-						<div class="col-md-12">
-							<strong>연락처:</strong> 010-1234-5678
-						</div>
-					</div>
-					<div class="row mb-2">
-						<div class="col-md-12">
-							<strong>배송지:</strong> 서울시 강남구 테헤란로 123, 101호
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-12">
-							<strong>배송 요청사항:</strong> 문 앞에 놓아주세요
-						</div>
-					</div>
-					
-					<hr>
-					
-					<!-- 주문 진행 상태 -->
-					<h6 class="mb-3"><strong>주문 진행 상태</strong></h6>
-					<ul class="mt-2">
-						<li>2025-12-01 15:00: 결제 완료</li>
-						<li>처리 예정일: 2025-12-02</li>
-					</ul>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -216,8 +167,8 @@
 	</div>
 
 	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 500px !important;">
-		<div class="row px-xl-5 pt-5">
+	<div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
+				<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
 				<a href="" class="text-decoration-none">
 					<h1 class="mb-4 display-5 font-weight-semi-bold">

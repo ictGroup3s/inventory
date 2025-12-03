@@ -127,11 +127,20 @@ public class projectController {
 		return "orderhistory";
 	}
 	
-	@GetMapping("/orderhistory2")
-	public String orderhistory2() {
-		return "orderhistory2";
+	@GetMapping("/cs")
+	public String cs() {
+		return "cs";
 	}
 	
+	@GetMapping("/myqna")
+	public String myqna() {
+		return "myqna";
+	}
+	
+	@GetMapping("/ordercomplete")
+	public String ordercomplete() {
+		return "ordercomplete";
+	}
 	
 	
 	

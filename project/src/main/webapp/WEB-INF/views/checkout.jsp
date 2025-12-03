@@ -270,7 +270,7 @@
 					</div>
 					<div class="card-body">
 						<div class="form-group">
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio"style="padding-top:10px;">
 								<input type="radio" class="custom-control-input" name="payment"
 									id="paypal"> <label class="custom-control-label"
 									for="paypal">카드결제</label>
@@ -284,13 +284,6 @@
 							</div>
 							<div class="form-group" id="bankInfo" style="display: none;">
 								<p>국민은행 123-456-7890</p>
-							</div>
-						</div>
-						<div class="">
-							<div class="custom-control custom-radio">
-								<input type="radio" class="custom-control-input" name="payment"
-									id="banktransfer"> <label class="custom-control-label"
-									for="banktransfer">간편결제</label>
 							</div>
 						</div>
 					</div>

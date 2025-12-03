@@ -22,7 +22,7 @@
             // 결제 완료 알림
             alert('결제가 완료되었습니다!');
             // 결제 완료 후 마이페이지로 이동
-            window.location.href = '/mypage';
+            window.location.href = '/ordercomplete';
         }
     </script>
 </body>
