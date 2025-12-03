@@ -9,15 +9,15 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import com.example.chat.ChatMessage;
-import com.example.chat.ChatService;
+import com.example.chat.ChatService2;
 
 @Controller
 public class ChatController1 {
 
 	private final SimpMessagingTemplate messagingTemplate;
-	private final ChatService chatService;  // optional, 히스토리 저장용
+	private final ChatService2 chatService;  // optional, 히스토리 저장용
 	
-	public ChatController1(SimpMessagingTemplate messagingTemplate, ChatService chatService) {
+	public ChatController1(SimpMessagingTemplate messagingTemplate, ChatService2 chatService) {
 		this.messagingTemplate = messagingTemplate;
 		this.chatService = chatService;
 	}

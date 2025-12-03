@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ChatService {
+public class ChatService2 {
 
 	private final Map<String, Deque<ChatMessage>> store = new ConcurrentHashMap<>();
     private final int MAX_HISTORY = 100;
