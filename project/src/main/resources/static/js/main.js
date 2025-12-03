@@ -7,7 +7,7 @@
 			moveSlides: 1,
 			pager: false,
 			controls: true,
-			pause: 3000,
+			pause: 2000,
 			speed: 100,
 			infiniteLoop: true,
 			minSlides: 2,      // 최소 보여줄 슬라이드
@@ -109,4 +109,4 @@
 
 	})
 
-})/*(jQuery);*/
+})(jQuery);
