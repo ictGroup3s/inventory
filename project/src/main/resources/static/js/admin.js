@@ -17,7 +17,7 @@ $(function() {
 			$preview.attr('src', 'img/insert_pic.png');
 		}
 	});
-	
+
 	//상품목록 클릭 했을때
 	$('.item-row').on('click', function() {
 		const $this = $(this);
@@ -60,5 +60,17 @@ $(function() {
 			}
 		});
 	});
+	
+	// 상세보기 버튼 클릭
+	$(".detail-btn").click(function() {
+		var url = $(this).data("url");
+		$("#modalFrame").attr("src", url);
+		$("#overlay, #customModal").fadeIn(200);
+	});
 
+	// 닫기 버튼 혹은 오버레이 클릭
+	$("#closeModal, #overlay").click(function() {
+		$("#overlay, #customModal").fadeOut(200);
+		$("#modalFrame").attr("src", ""); // iframe 초기화
+	});
 });
