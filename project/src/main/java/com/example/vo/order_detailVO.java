@@ -1,0 +1,13 @@
+package com.example.vo;
+
+import lombok.Data;
+
+@Data
+public class order_detailVO {
+	private Integer detail_no;
+	private Integer order_no;
+	private Integer item_no;
+	private Integer item_cnt;
+	
+
+}
