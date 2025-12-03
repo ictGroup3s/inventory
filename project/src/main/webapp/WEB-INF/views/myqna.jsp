@@ -61,7 +61,8 @@
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
-						<li class="nav-item"><a href="/cs" class="nav-link">취소/반품/교환내역</a></li>
+						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link">취소/반품/교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link active">1:1문의내역</a></li>
 					</ul>
 				</nav>
@@ -127,7 +128,7 @@
 							<strong>제목:</strong> 배송 문의
 						</div>
 						<div class="col-md-6">
-							<strong>상태:</strong> <span class="badge badge-success">답변완료</span>
+							<strong>상태:</strong> <span class="badge badge-success" style="background-color:#EDF1FF; color: black;">답변완료</span>
 						</div>
 					</div>
 					<hr>

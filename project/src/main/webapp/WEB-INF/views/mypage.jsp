@@ -71,31 +71,38 @@
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="/orderhistory" class="nav-link active">주문내역</a></li>
-						<li class="nav-item"><a href="/cs" class="nav-link">취소/반품/교환내역</a></li>
+						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link">취소/반품/교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
 					</ul>
 				</nav>
 			</div>
 
 			<!-- Main Content -->
-			<div class="col-lg-10" style="margin-top: 40px; margin-bottom: 80px;">
+			<div class="col-lg-10" style="margin-top: 40px; padding-bottom: 90px;">
 				<div class="text-center mb-4">
 					<h4>주문현황</h4>
 					<hr style="width: 60%; margin: 20px auto;"/>
 					<table align="center" width="600" height="100">
 						<tr>
-							<td align="center"><img src="img/주문확인.png" style="max-width: 80px;"></td>
-							<td align="center"><img src="img/결제완료.png" style="max-width: 80px;"></td>
-							<td align="center"><img src="img/상품준비.png" style="max-width: 80px;"></td>
-							<td align="center"><img src="img/배송중.png" style="max-width: 80px;"></td>
-							<td align="center"><img src="img/픽업완료.png" style="max-width: 80px;"></td>
+							<td align="center"  style="padding-left:40px;"><a href="/orderhistory"><img src="img/주문내역.png" style="max-width: 80px;"></a></td>
+							<td align="center"  style="padding-left:40px;"><a href="/mydelivery"><img src="img/배송내역.png" style="max-width: 80px;"></a></td>
 						</tr>
 						<tr>
-							<td align="center">주문확인 &gt;&gt;</td>
-							<td align="center">결제완료 &gt;&gt;</td>
-							<td align="center">상품준비 &gt;&gt;</td>
-							<td align="center">배송중 &gt;&gt;</td>
-							<td align="center">픽업완료</td>
+							<td align="center" style="padding-left:40px;">주문내역 &gt;&gt;</td>
+							<td align="center" style="padding-left:40px;">배송내역 &gt;&gt;</td>
+						</tr>
+					</table>
+					<hr style="width: 60%; margin: 20px auto; padding-bottom:40px;"/>
+					
+					<table align="center" width="600" height="100">
+						<tr>
+							<td align="center" style="padding-right:40px;"><a href="/mycs"><img src="img/취반교내역.png" style="max-width: 80px;"></a></td>
+							<td align="center"><a href="/myqna"><img src="img/큐엔에이내역.png" style="max-width: 80px;"></a></td>
+						</tr>
+						<tr>
+							<td align="center"  style="padding-right:40px;">취소/반품/교환내역 &gt;&gt;</td>
+							<td align="center">1:1문의내역 &gt;&gt;</td>
 						</tr>
 					</table>
 					<hr style="width: 60%; margin: 20px auto;"/>

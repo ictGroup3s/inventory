@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>취소/반품/교환내역</title>
+<title>배송내역</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <!-- Favicon -->
@@ -61,20 +61,21 @@
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
-						<li class="nav-item"><a href="/cs" class="nav-link active">취소/반품/교환내역</a></li>
+						<li class="nav-item"><a href="/mydelivery" class="nav-link ">배송내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link ">취소/반품/교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
 					</ul>
 				</nav>
 			</div>
 		
 			<!-- Main Content -->
-			<div class="col-lg-12" style="margin-top:-170px;">
-			<div class="text-center mb-4">
-					<h4>취소/반품/교환내역</h4>
+			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
+				<div class="text-center mb-4">
+					<h4>배송내역</h4>
 				</div>
 				
-				<div class="col-lg-8 mx-auto" style="padding-left:50px;">
-				<table class="table table-striped">
+				<div class="col-lg-10 mx-auto">
+					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>주문번호</th>
@@ -92,79 +93,9 @@
 								<td>반품</td>
 								<td>처리중</td>
 								<td>2025-12-01</td>
-								<td>
-									<button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#detailModal">
-										상세보기
-									</button>
-								</td>
 							</tr>
 						</tbody>
 					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- 모달 -->
-	<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="detailModalLabel">취소/반품/교환 상세내역</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="row mb-3">
-						<div class="col-md-6">
-							<strong>주문번호:</strong> 20251202-002
-						</div>
-						<div class="col-md-6">
-							<strong>처리일:</strong> 2025-12-01
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-6">
-							<strong>상품명:</strong> 상품 B
-						</div>
-						<div class="col-md-6">
-							<strong>신청유형:</strong> <span class="badge badge-warning">반품</span>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-12">
-							<strong>상태:</strong> <span class="badge badge-info">처리중</span>
-						</div>
-					</div>
-					<hr>
-					<div class="row mb-3">
-						<div class="col-md-12">
-							<strong>반품 사유:</strong>
-							<p class="mt-2">사이즈가 맞지 않아서 반품 신청합니다.</p>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-6">
-							<strong>환불 예정 금액:</strong> 50,000원
-						</div>
-						<div class="col-md-6">
-							<strong>반품 배송비:</strong> 3,000원
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<strong>처리 상태:</strong>
-							<ul class="mt-2">
-								<li>2025-12-01: 반품 신청 접수</li>
-								<li>2025-12-02: 반품 상품 회수 중</li>
-								<li>처리 완료 예정일: 2025-12-05</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>

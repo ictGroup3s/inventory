@@ -10,8 +10,6 @@
 <meta content="Free HTML Templates" name="description">
 
 <!-- Favicon -->
-
-
 <link href="img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
@@ -61,37 +59,10 @@
 			</a>
 		</div>
 	</div>
-	</div>
 	<!-- Topbar End -->
-
 
 	<!-- Navbar Start -->
 	<div class="container-fluid">
-		<!-- <div class="row border-top px-xl-5">
-		 	<div class="col-lg-3 d-none d-lg-block">
-			<a
-					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
-					data-toggle="collapse" href="#navbar-vertical"
-					style="height: 65px; margin-top: -1px; padding: 0 30px;">
-					<h6 class="m-0">Categories</h6> <i
-					class="fa fa-angle-down text-dark"></i>
-				</a>
-				<nav
-					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
-					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-                        <a href="selectall" class="nav-item nav-link">전체상품</a>
-                        <a href="" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
-                        <a href="" class="nav-item nav-link">국 ．밥 ．면</a>
-                        <a href="" class="nav-item nav-link"> 식단관리 </a>
-                        <a href="" class="nav-item nav-link">분식 ．간식</a>
-                        <a href="" class="nav-item nav-link">베이커리 ．떡</a>
-                        <a href="" class="nav-item nav-link">반찬 ．소스</a>
-                        <a href="" class="nav-item nav-link">레시피</a>
-                        <a href="" class="nav-item nav-link">Shoes</a>
-                    </div>
-				</nav>	
-			</div> -->
 		<div class="col-lg-9" aling="right">
 			<nav
 				class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
@@ -107,17 +78,15 @@
 				<div class="collapse navbar-collapse justify-content-between"
 					id="navbarCollapse">
 					<div class="navbar-nav ml-auto py-0">
-						<a href="login" class="nav-item nav-link">로그인</a> <a
-							href="register" class="nav-item nav-link">회원가입</a> <a
-							href="board" class="nav-item nav-link">고객센터</a>
+						<a href="login" class="nav-item nav-link">로그인</a> 
+						<a href="register" class="nav-item nav-link">회원가입</a> 
+						<a href="board" class="nav-item nav-link">고객센터</a>
 					</div>
 				</div>
 			</nav>
 		</div>
 	</div>
-	</div>
 	<!-- Navbar End -->
-
 
 	<!-- Page Header Start -->
 	<div class="container-fluid bg-secondary mb-5" align="center">
@@ -136,7 +105,6 @@
 	</div>
 	<!-- Page Header End -->
 
-
 	<!-- Checkout Start -->
 	<div class="container-fluid pt-5">
 		<div class="row px-xl-5">
@@ -148,10 +116,6 @@
 							<label>이름</label> <input class="form-control" type="text"
 								id="Name">
 						</div>
-						<!--<div class="col-md-6 form-group">
-							<label>Last Name</label> <input class="form-control" type="text"
-								placeholder="Doe">
-						</div>   -->
 						<div class="col-md-6 form-group">
 							<label>이메일</label> <input class="form-control" type="text">
 						</div>
@@ -163,43 +127,26 @@
 							<label>주 소</label> <input class="form-control" type="text"
 								id="Address">
 						</div>
-						<!-- <div class="col-md-6 form-group">
-							<label>Address Line 2</label> <input class="form-control"
-								type="text" placeholder="123 Street"> -->
 					</div>
 					<div class="col-md-6 form-group">
-						<label>지역선택</label> <select class="custom-select">
+						<label style="padding-right:-50px;">지역선택</label> 
+						<select class="custom-select" style="margin-left:-15px;">
 							<option selected>서울특별시</option>
 							<option>경기도</option>
 							<option>대전광역시</option>
 							<option>광주광역시</option>
 						</select>
-						<!-- 		</div>
-						<div class="col-md-6 form-group">
-							<label>City</label> <input class="form-control" type="text"
-								placeholder="New York">
-						</div>
-						<div class="col-md-6 form-group">
-							<label>State</label> <input class="form-control" type="text"
-								placeholder="New York">
-						</div> 
-						<div class="col-md-6 form-group">
-							<label>ZIP Code</label> <input class="form-control" type="text"
-								placeholder="123">
-						</div>-->
-						<div class="col-md-12 form-group">
+						<div class="col-md-12 form-group" >
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="newaccount"> <label class="custom-control-label"
-									for="newaccount">위 내용과 동일</label>
+								<input type="checkbox" class="custom-control-input" id="newaccount"> 
+									<label class="custom-control-label" for="newaccount" style="margin-top:20px; margin-left:-25px;">위 내용과 동일</label>
 							</div>
 						</div>
 						<div class="col-md-12 form-group">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="shipto">
 								<label class="custom-control-label" for="shipto"
-									data-toggle="collapse" data-target="#shipping-address">수령지
-									주소입력</label>
+									data-toggle="collapse" data-target="#shipping-address" style="margin-top:5px; margin-left:-25px;">수령지주소입력</label>
 							</div>
 						</div>
 					</div>
@@ -208,26 +155,24 @@
 					<h4 class="font-weight-semi-bold mb-4">수령지 주소</h4>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label>이름</label> <input class="form-control" type="text"
-								id="shipName">
+							<label>이름</label> <input class="form-control" type="text" id="shipName">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>핸드폰 번호</label> <input class="form-control" type="text"
-								id="shipPhone">
+							<label>핸드폰 번호</label> <input class="form-control" type="text" id="shipPhone">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>수령주소</label> <input class="form-control" type="text"
-								id="shipAddress">
+							<label>수령주소</label> <input class="form-control" type="text" id="shipAddress">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>메모</label> <select class="custom-select" id="memoSelect">
+							<label>메모</label> 
+							<select class="custom-select" id="memoSelect">
 								<option selected>요청사항</option>
 								<option>문앞에 놓아주세요</option>
 								<option>경비실에 맡겨주세요</option>
 								<option>택배함에 넣어주세요</option>
 								<option value="direct">직접입력</option>
-							</select> <input type="text" class="form-control mt-2" id="memoInput"
-								placeholder="요청사항 입력" style="display: none;">
+							</select> 
+							<input type="text" class="form-control mt-2" id="memoInput" placeholder="요청사항 입력" style="display: none;">
 						</div>
 					</div>
 				</div>
@@ -290,7 +235,6 @@
 					<!-- 1) 기타결제  -->
 					<div class="tab-pane fade show active" id="social" role="tabpanel">
 						<div class="text-center mb-4">
-
 							<!-- SDK 방식 버튼 -->
 							<button id="naverPayBtn"
 								class="btn btn-light border d-block mb-2 py-2 social-btn">
@@ -301,7 +245,6 @@
 								class="btn btn-light border d-block py-2 social-btn">
 								<img src="/img/kakao.png"> KakaoPay로 결제
 							</button>
-
 						</div>
 					</div>
 					<button id="btnOpenModal"
@@ -311,7 +254,6 @@
 		</div>
 	</div>
 	<!-- Checkout End -->
-
 
 	<!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
@@ -409,11 +351,9 @@
 	</div>
 	<!-- Footer End -->
 
-
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
-
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -449,48 +389,50 @@
 		document.getElementById('memoSelect').addEventListener('change', function() {
 		    const memoInput = document.getElementById('memoInput');
 		    if(this.value === 'direct') {
-		        memoInput.style.display = 'block'; // 입력창 보이기
-		        memoInput.focus(); // 포커스 주기
+		        memoInput.style.display = 'block';
+		        memoInput.focus();
 		    } else {
-		        memoInput.style.display = 'none'; // 숨기기
-		        memoInput.value = ''; // 기존 입력값 초기화
+		        memoInput.style.display = 'none';
+		        memoInput.value = '';
 		    }
 		});
 	</script>
 	
-			<!-- 결제 모달 -->
-			<div class="modal fade" id="payModal" tabindex="-1">
-			<div class="modal-dialog modal-dialog-centered modal-lg">
+	<!-- 결제 모달 -->
+	<div class="modal fade" id="payModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 
-			<div class="modal-header bg-primary text-white">
-				<h5 class="modal-title">결제하기</h5>
-				<button type="button" class="close text-white" data-dismiss="modal">
-					&times;</button>
-			</div>
-			
-				<div class="modal-body">
+				<div class="modal-header bg-primary text-white">
+					<h5 class="modal-title">결제하기</h5>
+					<button type="button" class="close text-white" data-dismiss="modal">
+						&times;
+					</button>
+				</div>
 
+				<div class="modal-body">
 					<h5>
 						<b>카드사 선택</b>
 					</h5>
+					
+					<!-- 카드 선택 버튼들 -->
 					<div class="row text-center mt-3">
-
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn">국민</button>
-						</div>
-
-						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn">현대</button>
-						</div>
-
-						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn">농협</button>
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('국민')">국민</button>
 						</div>
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn">카카오뱅크</button>
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('현대')">현대</button>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('농협')">농협</button>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('카카오뱅크')">카카오뱅크</button>
 						</div>
 					</div>
+
+					<!-- 선택한 카드 표시 -->
+					<p id="selectedCardDisplay" class="mt-3" style="color: #D19C97; font-weight: bold;"></p>
 
 					<hr>
 
@@ -498,105 +440,100 @@
 						<b>결제금액</b>
 					</h5>
 					<h4 class="text-primary font-weight-bold">38,000원</h4>
-
 				</div>
-				
-				<!-- 결제 모달 버튼 -->
+
+				<!-- 결제진행 버튼 -->
 				<div class="modal-footer">
-					<button id="btnModalCheckout" type="button"
-						class="btn btn-primary btn-lg btn-block" data-toggle="modal">결제진행</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary btn-lg" onclick="processPayment()">결제진행</button>
 				</div>
-
-				<script>
-					document.addEventListener('DOMContentLoaded', function() {
-					    const btnOpenModal = document.getElementById('btnOpenModal');      // 결제하기 버튼
-					    const btnModalCheckout = document.getElementById('btnModalCheckout'); // 모달 안 결제진행 버튼
-					    const paymentRadios = document.querySelectorAll('input[name="payment"]');
-					    const bankRadio = document.getElementById('directcheck');
-					    const bankInfo = document.getElementById('bankInfo');
-	
-					    // 결제하기 버튼 클릭
-					    btnOpenModal.addEventListener('click', function(e) {
-					        e.preventDefault();
-					        let selected = null;
-					        paymentRadios.forEach(radio => {
-					            if(radio.checked) selected = radio.id;
-					        });
-	
-					        if(!selected) {
-					            alert('결제 방식을 선택해주세요!');
-					            return;
-					        }
-	
-					        if(selected === 'paypal') {
-					            $('#payModal').modal('show'); // 카드결제 모달
-					        } else if(selected === 'directcheck') {
-					            bankInfo.style.display = 'block'; // 계좌이체
-					        } else {
-					            // 간편결제 → payment.jsp로 바로 이동
-					            window.location.href = '/payment.jsp?method=' + selected;
-					        }
-					    });
-	
-					    // 모달 안 카드사 선택 후 결제 진행 버튼
-					    btnModalCheckout.addEventListener('click', function() {
-					        const selectedCardBtn = document.querySelector('.card-btn.btn-primary');
-					        if(!selectedCardBtn) {
-					            alert('카드를 선택해주세요!');
-					            return;
-					        }
-	
-					        const cardName = selectedCardBtn.innerText;
-					        // 실제 결제 로직 삽입 가능
-					        $('#payModal').modal('hide'); // 모달 닫기
-	
-					        // payment.jsp로 이동, 카드사 정보 전달
-					        window.location.href = '/payment.jsp?method=card&card=' + encodeURIComponent(cardName);
-					    });
-	
-					    // 카드 선택 버튼 클릭 시 활성화 표시
-					    const cardButtons = document.querySelectorAll('.card-btn');
-					    cardButtons.forEach(btn => {
-					        btn.addEventListener('click', function() {
-					            cardButtons.forEach(b => b.classList.remove('btn-primary'));
-					            cardButtons.forEach(b => b.classList.add('btn-outline-primary'));
-					            this.classList.remove('btn-outline-primary');
-					            this.classList.add('btn-primary');
-					        });
-					    });
-	
-					    // 계좌이체 선택 시 계좌번호 보이기
-					    paymentRadios.forEach(radio => {
-					        radio.addEventListener('change', function() {
-					            if(bankRadio.checked) {
-					                bankInfo.style.display = 'block';
-					            } else {
-					                bankInfo.style.display = 'none';
-					            }
-					        });
-					    });
-	
-					    // 기타결제 버튼 클릭 → 바로 payment.jsp 이동
-					    const naverBtn = document.getElementById('naverPayBtn');
-					    const kakaoBtn = document.getElementById('kakaoPayBtn');
-	
-					    naverBtn.addEventListener('click', function() {
-					        window.location.href = '/naver';
-					    });
-	
-					  // 카카오페이 결제 버튼
-
-					    kakaoBtn.addEventListener('click', function(e) {
-					    	 window.location.href = '/kakao'; 
-					    	
-					    });
-					        // 기본 href 동작 그대로 실행 (e.preventDefault() 삭제)
-					  });
-				</script>
 
 			</div>
 		</div>
 	</div>
+
+	<script>
+	let selectedCard = null;
+
+	// 카드 선택 (이동 X, 선택만)
+	function selectCard(cardType) {
+	    selectedCard = cardType;
+	    document.getElementById('selectedCardDisplay').innerText = '선택한 카드: ' + cardType;
+	    
+	    // 선택한 버튼 스타일 변경
+	    document.querySelectorAll('.card-btn').forEach(btn => {
+	        btn.classList.remove('btn-primary');
+	        btn.classList.add('btn-outline-primary');
+	    });
+	    event.target.classList.remove('btn-outline-primary');
+	    event.target.classList.add('btn-primary');
+	}
+
+	// 결제진행 버튼 클릭시 이동
+	function processPayment() {
+	    if (!selectedCard) {
+	        alert('카드를 선택해주세요!');
+	        return;
+	    }
+	    
+	    // 세션스토리지에 저장
+	    sessionStorage.setItem('selectedCard', selectedCard);
+	    sessionStorage.setItem('amount', '38000');
+	    
+	    // 결제완료 페이지로 이동
+	    window.location.href = '/ordercomplete';
+	}
+
+	document.addEventListener('DOMContentLoaded', function() {
+	    const btnOpenModal = document.getElementById('btnOpenModal');
+	    const paymentRadios = document.querySelectorAll('input[name="payment"]');
+	    const bankRadio = document.getElementById('directcheck');
+	    const bankInfo = document.getElementById('bankInfo');
+
+	    // 결제하기 버튼 클릭
+	    btnOpenModal.addEventListener('click', function(e) {
+	        e.preventDefault();
+	        let selected = null;
+	        paymentRadios.forEach(radio => {
+	            if(radio.checked) selected = radio.id;
+	        });
+
+	        if(!selected) {
+	            alert('결제 방식을 선택해주세요!');
+	            return;
+	        }
+
+	        if(selected === 'paypal') {
+	            $('#payModal').modal('show'); // 카드결제 모달
+	        } else if(selected === 'directcheck') {
+	            bankInfo.style.display = 'block'; // 계좌이체
+	        }
+	    });
+
+	    // 계좌이체 선택 시 계좌번호 보이기
+	    paymentRadios.forEach(radio => {
+	        radio.addEventListener('change', function() {
+	            if(bankRadio.checked) {
+	                bankInfo.style.display = 'block';
+	            } else {
+	                bankInfo.style.display = 'none';
+	            }
+	        });
+	    });
+
+	    // 기타결제 버튼
+	    const naverBtn = document.getElementById('naverPayBtn');
+	    const kakaoBtn = document.getElementById('kakaoPayBtn');
+
+	    naverBtn.addEventListener('click', function() {
+	        window.location.href = '/naver';
+	    });
+
+	    kakaoBtn.addEventListener('click', function(e) {
+	        window.location.href = '/kakao';
+	    });
+	});
+	</script>
 
 </body>
 </html>

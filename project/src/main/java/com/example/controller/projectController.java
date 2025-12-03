@@ -127,9 +127,9 @@ public class projectController {
 		return "orderhistory";
 	}
 	
-	@GetMapping("/cs")
-	public String cs() {
-		return "cs";
+	@GetMapping("/mycs")
+	public String mycs() {
+		return "mycs";
 	}
 	
 	@GetMapping("/myqna")
@@ -137,9 +137,14 @@ public class projectController {
 		return "myqna";
 	}
 	
-	@GetMapping("/ordercomplete")
-	public String ordercomplete() {
-		return "ordercomplete";
+	/*
+	 * @GetMapping("/ordercomplete") public String ordercomplete() { return
+	 * "ordercomplete"; }
+	 */
+	
+	@GetMapping("/mydelivery")
+	public String mydelivery() {
+		return "mydelivery";
 	}
 	
 	
