@@ -1,8 +1,10 @@
 package com.example.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.model.CheckOutRepository;
 import com.example.vo.ordersVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class CheckOutService {
+	
+	@Autowired
+	private CheckOutRepository checkOutRepository;
 	
     public String requestMerchantPayKey(String productName, int totalPayAmount) {
         // 실제로는 네이버페이 서버 API 호출해서 merchantPayKey 발급
@@ -22,10 +27,9 @@ public class CheckOutService {
     public void savePayment(ordersVO vo) {
 
         // 시퀀스 조회 (Mapper에서 처리)
-        Long seq = CheckOutMapper.getNextOrderId();
-        vo.setOrderId(seq);
+        checkOutRepository.savePayment(vo);
+        //vo.setOrder_no(seq);
 
-        // DB INSERT
-        CheckOutMapper.insertPayment(vo);
+       
     }
 }

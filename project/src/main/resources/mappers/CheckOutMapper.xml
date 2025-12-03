@@ -5,5 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace = "CheckOutMapper">
 
+	<insert id="savePayment" >
+	
+	</insert>
 
 </mapper>
