@@ -105,7 +105,13 @@
 		    <artifactId>netty-socketio</artifactId>
 		    <version>1.7.17</version>
 		</dependency>
-	
+
+<!--		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>eTransaction</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>-->
+		
 	</dependencies>
 
 	<build>
