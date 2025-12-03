@@ -9,4 +9,5 @@ public interface AdminService {
 	List<ProductVO> getItemList(); 
 	public void updateItem(ProductVO vo);
 	public void deleteItem(Integer itemNo) throws Exception;
+	public void updateStock(ProductVO vo);
 }

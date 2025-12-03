@@ -37,4 +37,12 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 
+	@Override
+	public void updateStock(ProductVO vo) {
+		adminRepository.updateStock(vo);
+		
+	}
+	
+	
+
 }

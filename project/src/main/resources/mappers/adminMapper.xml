@@ -63,4 +63,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM product
         WHERE item_no = #{itemNo}
 	</delete>
+	
+	<update id="updateStock" parameterType="ProductVO">
+		UPDATE product
+	    SET 
+	        item_name = #{item_name},
+	        origin_p = #{origin_p},
+	        sales_p = #{sales_p},
+	        stock_cnt = #{stock_cnt}
+	    WHERE item_no = #{item_no}
+	</update>
 </mapper>

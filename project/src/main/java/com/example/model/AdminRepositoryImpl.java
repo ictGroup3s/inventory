@@ -37,4 +37,10 @@ public class AdminRepositoryImpl implements AdminRepository{
 		
 	}
 
+	@Override
+	public void updateStock(ProductVO vo) {
+		sess.update("adminmapper.updateStock",vo);
+		
+	}
+
 }

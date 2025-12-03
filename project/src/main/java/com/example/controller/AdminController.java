@@ -16,15 +16,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.model.vo.ProductVO;
 import com.example.service.AdminService;
-
+import com.example.service.AdminServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class AdminController {
 
+    private final AdminServiceImpl adminServiceImpl;
+
 	@Autowired
 	private AdminService adminService;
+
+    AdminController(AdminServiceImpl adminServiceImpl) {
+        this.adminServiceImpl = adminServiceImpl;
+    }
 
 	// 상품 등록 페이지 + 목록 보여주기
 	@GetMapping("/item")
@@ -88,18 +94,37 @@ public class AdminController {
 
 		return "redirect:/item";
 	}
-	
+
 	@PostMapping("/deleteItem")
 	@ResponseBody
 	public String deleteItem(@RequestParam("itemNo") Integer itemNo) {
-		log.info("받은 item_no: "+ itemNo);
+		log.info("받은 item_no: " + itemNo);
 		try {
 			adminService.deleteItem(itemNo);
 			return "success";
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "fail";
 		}
-		
+
 	}
+	
+	// ***** stock ***** 
+	// 상품 등록 페이지 + 목록 보여주기
+	@GetMapping("/stock")
+	public String showItem(Model m) {
+		List<ProductVO> list = adminService.getItemList();
+		log.info("controller [ " + list + " ]");
+		m.addAttribute("list", list);
+
+		return "stock"; // stock.jsp
+	}
+	
+	@PostMapping("/updateStock")
+	public String updateItemStock(ProductVO vo){
+		adminService.updateStock(vo);
+
+		return "redirect:/stock";
+	}
+
 }

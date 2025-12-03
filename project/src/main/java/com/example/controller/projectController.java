@@ -102,10 +102,10 @@ public class projectController {
 		return "dashboard";
 	}
 	
-	@GetMapping("stock")
-	public String stock() {
-		return "stock";
-	}
+	//@GetMapping("stock")
+	//public String stock() {
+	//	return "stock";
+	//}
 
 	//@GetMapping("item")
 	//public String item() { 
