@@ -82,6 +82,17 @@
 
 			<h3 class="text-center login-title">로그인</h3>
 
+<!--          ------------  개발용 ***  나중에 삭제 *****-------------------------     -->
+			<form action="/doLogin" method="post">
+			<!-- 기존 필드: id, pwd 등 -->
+				<input type="text" name="customer_id" />
+				<input type="password" name="pwd" />
+				<label><input type="checkbox" name="remember" value="1"> 로그인 유지</label>
+				<button type="submit">로그인</button>
+			</form>
+<!--          ------------  개발용 ***  나중에 삭제 *****-------------------------     -->
+		  
+<!-- 
 			<form action="loginAction" method="post">
 				<div class="form-group">
 					<label>아이디</label> <input type="text" name="login_id"
@@ -102,7 +113,7 @@
 				<button type="button" onclick="location.href='register'"
 					class="btn btn-outline-primary btn-block py-2 mt-2">회원가입</button>
 			</form>
-
+-->
 			<hr class="my-4">
 
 			<!-- Social Login -->

@@ -9606,42 +9606,14 @@ a.text-dark:hover, a.text-dark:focus {
     display: none; flex-direction:column; overflow:hidden;
   }
   .chat-header { background:#007bff; color:#fff; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; }
-  .chat-messages {
-  padding: 12px;
-  height: calc(100% - 110px);
-  overflow-y: auto;
-  background: #f7f7f7;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;               /* 메시지 간 간격 */
-}
+  .chat-messages { padding:12px; background:#f7f7f7; overflow-y:auto; flex:1; }
   .chat-input { display:flex; gap:8px; padding:8px; border-top:1px solid #eee; }
   .chat-input input[type="text"]{ flex:1; padding:8px; border-radius:6px; border:1px solid #ddd; }
-  /* 각 메시지 항목: 기본은 왼쪽 정렬 */
-  .msg {
-	  display: flex;
-	  flex-direction: column;
-	  align-items: flex-start; /* 기본: 왼쪽(고객) */
-	  max-width: 100%;
- }
-   /* 관리자는 오른쪽 정렬 */
-  .msg.admin {  align-items: flex-end;  }
-  
-  .msg .meta { font-size:11px; color:#666; margin-bottom: 6px; line-height: 1; }
-  /* 메타 정렬(관리자는 우측) */
-  .msg.admin .meta {  text-align: right; }
-  .msg .text { display: inline-block;
-	  padding: 8px 12px;
-	  border-radius: 10px;
-	  max-width: 75%;          /* 한 줄 넓이 제한 */
-	  word-break: break-word;  /* 긴 단어도 줄바꿈 */
-	  box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-  .msg.customer .text { background:#e9f2ff; color:#044; }
+  .msg { margin-bottom:10px; }
+  .msg .meta { font-size:11px; color:#666; margin-bottom:4px; }
+  .msg .text { display:inline-block; padding:8px 10px; border-radius:8px; max-width:80%; }
+  .msg.customer .text { background:#e9f2ff; color:#044; float:left; }
   .msg.admin .text { background:#007bff; color:#fff; float:right; }
-  /* 메시지 컨테이너가 차지하는 너비 제어 — admin은 우측으로 붙음, customer는 좌측 */
-.msg.customer { justify-content: flex-start; }
-.msg.admin { justify-content: flex-end; }
   /* 데스크탑 */
 .chat-button {
   right: 90px;
@@ -9751,10 +9723,9 @@ a.text-dark:hover, a.text-dark:focus {
  부모 컨테이너가 계속해서 커지는 것을 방지하려면 명시적으로 고정된 높이를 사용하세요.
  maintainAspectRatio가 true이고 aspectRatio가 설정되어 있으면
  Chart.js는 캔버스 크기를 그대로 따릅니다. */
-	
+
 .chart-box { width:100%; height:320px; max-height:60vh; }
-/* 그래프 초기화 상태 메세지 숨기기 */
-.chart-status { display: none !important;}
+
 /* 중간 크기(screen)에서는 비슷한 비율을 유지하되, 차트가 지나치게 길어지지 않도록 최대 높이를 제한합니다. */
 @media (max-width: 992px) {
   .chart-box { height:300px; max-height:55vh; }

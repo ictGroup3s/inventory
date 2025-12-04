@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +32,7 @@
 </head>
 
 <body class ="page-selectBanchan">
+
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> 
@@ -94,7 +97,7 @@
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
 						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
 						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-						<li class="nav-item"><a href="selectRecipe" class="nav-link">레시피</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link active">생수 ．음료</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -127,33 +130,34 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-						<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<a href ="">
-								<img src="img/생선구이.png" width="300px" height="300px"alt="">
-								</a>
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">생선구이</h6>
-								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
-									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
-									</h6>
+					<c:if test="${empty products}">
+						<div class="col-12">
+							<div class="alert alert-info text-center">상품이 없습니다.</div>
+						</div>
+					</c:if>
+
+					<c:forEach var="item" items="${products}">
+						<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
+								<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+									<a href="detail?item_no=${item.item_no}">
+										<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
+									</a>
+								</div>
+								<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+									<h6 class="text-truncate mb-3">${item.item_name}</h6>
+									<div class="d-flex justify-content-center">
+										<h6>${item.sales_p}원</h6>
+										<h6 class="text-muted ml-2"><del>${item.origin_p}원</del></h6>
+									</div>
+								</div>
+								<div class="card-footer d-flex justify-content-between bg-light border">
+									<a href="detail?item_no=${item.item_no}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+									<a href="#" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
 								</div>
 							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
 						</div>
-					</div>
+					</c:forEach>
 					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
 						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div

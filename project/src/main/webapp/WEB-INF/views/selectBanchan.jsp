@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +32,7 @@
 </head>
 
 <body class ="page-selectBanchan">
+
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> 
@@ -37,23 +40,26 @@
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="">
+			<form action="selectall" method="get">
 				<div class="input-group">
-					<input type="text" class="form-control"
-						placeholder="Search for products">
+					<input type="text" name="q" class="form-control"
+						placeholder="Search for products" value="${q}">
 					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
+						<button class="input-group-text bg-transparent text-primary" type="submit">
 							<i class="fa fa-search"></i>
-						</span>
+						</button>
 					</div>
 				</div>
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
-				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+			<a href="" class="btn border"> 
+				<i class="fas fa-heart text-primary"></i> 
+				<span class="badge">0</span>
+			</a> 
+			<a href="cart" class="btn border"> 
+				<i class="fas fa-shopping-cart text-primary"></i> 
+				<span class="badge">0</span>
 			</a>
 		</div>
 	</div>
@@ -86,15 +92,15 @@
             
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-					<h6 class="p-3">상품 카테고리</h6>
+					<h6 class="p-3">Categories</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
 						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
 						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-						<li class="nav-item"><a href="selectRecipe" class="nav-link">레시피</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link active">반찬 ．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -103,14 +109,14 @@
 					<div class="col-12 pb-1">
 						<div
 							class="d-flex align-items-center justify-content-between mb-4">
-							<form action="">
+							<form action="selectBanchan" method="get">
 								<div class="input-group">
 									<input type="text" class="form-control"
-										placeholder="Search by name">
+										placeholder="Search by name" value="${q}">
 									<div class="input-group-append">
-										<span class="input-group-text bg-transparent text-primary">
+										<button class="input-group-text bg-transparent text-primary">
 											<i class="fa fa-search"></i>
-										</span>
+										</button>
 									</div>
 								</div>
 							</form>
@@ -120,10 +126,67 @@
 									aria-expanded="false">Sort by</button>
 								<div class="dropdown-menu dropdown-menu-right"
 									aria-labelledby="triggerId">
-									<a class="dropdown-item" href="#">Latest</a> <a
-										class="dropdown-item" href="#">Popularity</a> <a
-										class="dropdown-item" href="#">Best Rating</a>
+									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}">Latest</a> 
+									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">Popularity</a> 
+									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">Best Rating</a>
 								</div>
+							</div>
+						</div>
+					</div>
+					
+				<!-- 상품 목록 시작 (상품검색시 결과) -->	
+					<c:if test="${empty products}">
+						<div class="col-12">
+							<div class="alert alert-info text-center">상품이 없습니다. 검색어를 변경하거나 관리자에게 문의하세요.</div>
+						</div>
+					</c:if>
+
+					<c:forEach var="item" items="${products}">
+						<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
+								<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+									<a href="detail?item_no=${item.item_no}">
+										<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
+									</a>
+								</div>
+								<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+									<h6 class="text-truncate mb-3">${item.item_name}</h6>
+									<div class="d-flex justify-content-center">
+										<h6>${item.sales_p}원</h6>
+										<h6 class="text-muted ml-2"><del>${item.sales_p}원</del></h6>
+									</div>
+								</div>
+								<div class="card-footer d-flex justify-content-between bg-light border">
+									<a href="detail?item_no=${item.item_no}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+									<a href="#" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				<!-- 상품 목록 끝 (상품검색시 결과) -->
+				
+					<!-- 
+					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+							<div class="card product-item border-0 mb-4" style="width: 280px;">
+							<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+							</div>
+							<div
+								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<div class="d-flex justify-content-center">
+									<h6>19,800원</h6>
+									<h6 class="text-muted ml-2">
+										<del>29,800원</del>
+									</h6>
+								</div>
+							</div>
+							<div
+								class="card-footer d-flex justify-content-between bg-light border">
+								<a href="" class="btn btn-sm text-dark p-0"><i
+									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+									class="btn btn-sm text-dark p-0"><i
+									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
 							</div>
 						</div>
 					</div>
@@ -131,85 +194,6 @@
 						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<a href ="">
-								<img src="img/생선구이.png" width="300px" height="300px"alt="">
-								</a>
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">생선구이</h6>
-								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
-									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-						<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/소곱창.png" width="300px" height="300px" alt="">
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">소곱창/ 한우대창구이</h6>
-								<div class="d-flex justify-content-center">
-									<h6>5,820원</h6>
-									<h6 class="text-muted ml-2">
-										<del>9,700원</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-						<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<a href="fish2Detail">
-									<img src="img/생선구이2.png" width="300px" height="300px"alt="">
-								</a>
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">가시없는 고등어 2개입</h6>
-								<div class="d-flex justify-content-center">
-									<h6>5,940원</h6>
-									<h6 class="text-muted ml-2">
-										<del>9,900원</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="fish2Detail" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 								<img src="img/la갈비.png"width="300px" height="300px" alt="">
 							</div>
 							<div
@@ -230,132 +214,9 @@
 									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
-								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
-									<h6 class="text-muted ml-2">
-										<del>29,800원</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
-								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
-									<h6 class="text-muted ml-2">
-										<del>29,800원</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
-								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
-									<h6 class="text-muted ml-2">
-										<del>29,800원</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
-								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
-									<h6 class="text-muted ml-2">
-										<del>29,800원</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4" style="width: 280px;">
-							<div
-								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
-							</div>
-							<div
-								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
-								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
-									<h6 class="text-muted ml-2">
-										<del>29,800원</del>
-									</h6>
-								</div>
-							</div>
-							<div
-								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
-									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-									class="btn btn-sm text-dark p-0"><i
-									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-							</div>
-						</div>
-					</div>
+					</div>	 -->
+					
+				<!-- 상품 목록 페이지 이동 시작 -->	
 					<div class="col-12 pb-1">
 						<nav aria-label="Page navigation">
 							<ul class="pagination justify-content-center mb-3">
@@ -373,9 +234,11 @@
 							</ul>
 						</nav>
 					</div>
+				<!-- 상품 목록 페이지 이동 끝 -->
+				
 				</div>
 			</div>
-			</div>
+			</div>	
 	</div>
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
 		<div class="row px-xl-5 pt-5">

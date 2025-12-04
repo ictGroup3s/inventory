@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+  pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,7 +112,7 @@ body {
             <li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
             <li class="nav-item"><a href="selectBunsik" class="nav-link">분식．간식</a></li>
             <li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-            <li class="nav-item"><a href="selectRecipe" class="nav-link">레시피</a></li>
+            <li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
           </ul>
         </nav>
       </div>
@@ -138,34 +139,68 @@ body {
         <!-- Shop Detail -->
         <div class="container py-5">
           <div class="d-flex flex-wrap align-items-center">
-            <div class="p-2 flex-shrink-0">
-              <img src="img/fish.png" alt="고등어구이" class="img-fluid" style="max-width: 300px;">
-            </div>
-            <div class="p-2 flex-grow-1">
-              <h3 class="font-weight-semi-bold">고등어구이</h3>
-              <div class="d-flex mb-2 align-items-center">
-                <div class="text-primary mr-2">
-                  <small class="fas fa-star"></small> <small class="fas fa-star"></small>
-                  <small class="fas fa-star"></small> <small class="fas fa-star-half-alt"></small>
-                  <small class="far fa-star"></small>
+            <c:choose>
+              <c:when test="${not empty product}">
+                <div class="p-2 flex-shrink-0">
+                  <img src="/img/product/${product.item_img}" alt="${product.item_name}" class="img-fluid" style="max-width: 300px;" />
                 </div>
-                <small class="pt-1">(50 Reviews)</small>
-              </div>
-              <h4 class="font-weight-semi-bold mb-2">8,000원</h4>
-              <p class="mb-4">전자레인지 또는 후라이팬 조리.<br>전자레인지 30초, 후라이팬 조리 10~15분.</p>
-              <div class="d-flex align-items-center mb-4 pt-2">
-                <div class="input-group quantity mr-3" style="width: 130px;">
-                  <div class="input-group-btn">
-                    <button class="btn btn-primary btn-minus"><i class="fa fa-minus"></i></button>
+                <div class="p-2 flex-grow-1">
+                  <h3 class="font-weight-semi-bold">${product.item_name}</h3>
+                  <div class="d-flex mb-2 align-items-center">
+                    <div class="text-primary mr-2">
+                      <small class="fas fa-star"></small> <small class="fas fa-star"></small>
+                      <small class="fas fa-star"></small> <small class="fas fa-star-half-alt"></small>
+                      <small class="far fa-star"></small>
+                    </div>
+                    <small class="pt-1">(Reviews)</small>
                   </div>
-                  <input type="text" class="form-control bg-secondary text-center" value="1">
-                  <div class="input-group-btn">
-                    <button class="btn btn-primary btn-plus"><i class="fa fa-plus"></i></button>
+                  <h4 class="font-weight-semi-bold mb-2">${product.sales_p}원</h4>
+                  <p class="mb-4">${product.item_content}</p>
+                  <div class="d-flex align-items-center mb-4 pt-2">
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                      <div class="input-group-btn">
+                        <button class="btn btn-primary btn-minus"><i class="fa fa-minus"></i></button>
+                      </div>
+                      <input type="text" class="form-control bg-secondary text-center" value="1">
+                      <div class="input-group-btn">
+                        <button class="btn btn-primary btn-plus"><i class="fa fa-plus"></i></button>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기</button>
                   </div>
                 </div>
-                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기</button>
-              </div>
-            </div>
+              </c:when>
+              <c:otherwise>
+                <div class="p-2 flex-shrink-0">
+                  <img src="img/fish.png" alt="고등어구이" class="img-fluid" style="max-width: 300px;">
+                </div>
+                <div class="p-2 flex-grow-1">
+                  <h3 class="font-weight-semi-bold">고등어구이</h3>
+                  <div class="d-flex mb-2 align-items-center">
+                    <div class="text-primary mr-2">
+                      <small class="fas fa-star"></small> <small class="fas fa-star"></small>
+                      <small class="fas fa-star"></small> <small class="fas fa-star-half-alt"></small>
+                      <small class="far fa-star"></small>
+                    </div>
+                    <small class="pt-1">(50 Reviews)</small>
+                  </div>
+                  <h4 class="font-weight-semi-bold mb-2">8,000원</h4>
+                  <p class="mb-4">전자레인지 또는 후라이팬 조리.<br>전자레인지 30초, 후라이팬 조리 10~15분.</p>
+                  <div class="d-flex align-items-center mb-4 pt-2">
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                      <div class="input-group-btn">
+                        <button class="btn btn-primary btn-minus"><i class="fa fa-minus"></i></button>
+                      </div>
+                      <input type="text" class="form-control bg-secondary text-center" value="1">
+                      <div class="input-group-btn">
+                        <button class="btn btn-primary btn-plus"><i class="fa fa-plus"></i></button>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기</button>
+                  </div>
+                </div>
+              </c:otherwise>
+            </c:choose>
           </div>
 
           <!-- Tab Section -->

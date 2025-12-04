@@ -6,13 +6,6 @@
 <meta charset="UTF-8">
 <title>채팅 팝업 예제</title>
 
-<!--
-  사용자용 채팅 팝업
-  - 화면 우측 하단의 버튼으로 채팅 창을 열고, /ws로 STOMP 연결을 시도합니다.
-  - 관리자와 동일한 토픽(/topic/chat/{roomId})을 구독하여 실시간 메시지를 주고받습니다.
-  - WebSocket 연결이 없을 경우 REST POST /api/chat/send 를 폴백으로 사용합니다.
--->
-
 <!-- STOMP/SockJS 클라이언트 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>

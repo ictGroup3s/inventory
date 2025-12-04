@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,15 +71,13 @@
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
 					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
 					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="selectall" class="nav-item nav-link">전체상품</a> <a href=""
-							class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a href=""
-							class="nav-item nav-link">국 ．밥 ．면</a> <a href=""
-							class="nav-item nav-link"> 식단관리 </a> <a href=""
-							class="nav-item nav-link">분식 ．간식</a> <a href=""
-							class="nav-item nav-link">베이커리 ．떡</a> <a href=""
-							class="nav-item nav-link">반찬 ．소스</a> <a href=""
-							class="nav-item nav-link">레시피</a> <a href=""
-							class="nav-item nav-link">Shoes</a>
+						<a href="selectall" class="nav-item nav-link">전체상품</a> 
+						<a href="" class="nav-item nav-link">구이 ．찜 ．볶음 </a> 
+						<a href="" class="nav-item nav-link">국 ．밥 ．면</a> 
+						<a href="" class="nav-item nav-link"> 식단관리 </a> 
+						<a href="" class="nav-item nav-link">분식 ．간식</a> 
+						<a href="" class="nav-item nav-link">반찬 ．소스</a>
+						<a href="" class="nav-item nav-link">생수 ．음료</a>						
 					</div>
 				</nav>
 			</div>
@@ -109,8 +108,7 @@
 		<div
 			class="d-flex flex-column align-items-center justify-content-center"
 			style="min-height: 300px">
-			<h1 class="font-weight-semi-bold text-uppercase mb-3">Shopping
-				Cart</h1>
+			<h1 class="font-weight-semi-bold text-uppercase mb-3">장바구니</h1>
 			<div class="d-inline-flex">
 				<p class="m-0">
 					<a href="">Home</a>
@@ -129,93 +127,50 @@
 							<th>상품명</th>
 							<th>가격</th>
 							<th>수량</th>
-							<th>가격</th>
+							<th>총액</th>
 							<th>삭제하기</th>
 						</tr>
 					</thead>
 					<tbody class="align-middle">
-						<tr>
-							<td class="align-middle"><img src="img/bunsik.png" alt=""
-								style="width: 50px;"> 떡볶이</td>
-							<td class="align-middle">5,000원</td>
-							<td class="align-middle">
-								<div class="input-group quantity mx-auto" style="width: 100px;">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-minus">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-									<input type="text"
-										class="form-control form-control-sm bg-secondary text-center"
-										value="1">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-plus">
-											<i class="fa fa-plus"></i>
-										</button>
-									</div>
-								</div>
-							</td>
-							<td class="align-middle">5,000원</td>
-							<td class="align-middle"><button
-									class="btn btn-sm btn-primary">
-									<i class="fa fa-times"></i>
-								</button></td>
-						</tr>
-						<tr>
-							<td class="align-middle"><img src="img/fish.png" alt=""
-								style="width: 50px;"> 생선구이</td>
-							<td class="align-middle">7,000원</td>
-							<td class="align-middle">
-								<div class="input-group quantity mx-auto" style="width: 100px;">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-minus">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-									<input type="text"
-										class="form-control form-control-sm bg-secondary text-center"
-										value="1">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-plus">
-											<i class="fa fa-plus"></i>
-										</button>
-									</div>
-								</div>
-							</td>
-							<td class="align-middle">7,000원</td>
-							<td class="align-middle"><button
-									class="btn btn-sm btn-primary">
-									<i class="fa fa-times"></i>
-								</button></td>
-						</tr>
-						<tr>
-							<td class="align-middle"><img src="img/닭가슴살.png" alt=""
-								style="width: 50px;"> 닭가슴살</td>
-							<td class="align-middle">8,000원</td>
-							<td class="align-middle">
-								<div class="input-group quantity mx-auto" style="width: 100px;">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-minus">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-									<input type="text"
-										class="form-control form-control-sm bg-secondary text-center"
-										value="1">
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-primary btn-plus">
-											<i class="fa fa-plus"></i>
-										</button>
-									</div>
-								</div>
-							</td>
-							<td class="align-middle">8,000원</td>
-							<td class="align-middle"><button
-									class="btn btn-sm btn-primary">
-									<i class="fa fa-times"></i>
-								</button></td>
-						</tr>
-				
+						<c:choose>
+							<c:when test="${not empty cartItems}">
+								<c:forEach var="ci" items="${cartItems}">
+									<tr>
+										<td class="align-middle">
+											<img src="/img/product/${ci.product.item_img}" alt=""
+												style="width:50px;"/> ${ci.product.item_name}
+										</td>
+										<td class="align-middle">${ci.product.sales_p}원</td>
+										<td class="align-middle">
+											<div class="input-group quantity mx-auto" style="width: 120px;">
+												<div class="input-group-prepend">
+													<button class="btn btn-sm btn-outline-secondary qty-decrease" data-item="${ci.product.item_no}" type="button">−</button>
+												</div>
+												<input type="text"
+													class="form-control form-control-sm bg-secondary text-center cart-qty-input"
+													data-item="${ci.product.item_no}"
+													value="${ci.qty}" />
+												<div class="input-group-append">
+													<button class="btn btn-sm btn-outline-secondary qty-increase" data-item="${ci.product.item_no}" type="button">+</button>
+												</div>
+											</div>
+										</td>
+										<td class="align-middle"><span class="row-subtotal" data-item="${ci.product.item_no}">${ci.subtotal}</span>원</td>
+										<td class="align-middle">
+											<form method="post" action="/cart/remove">
+												<input type="hidden" name="item_no" value="${ci.product.item_no}" />
+												<button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-times"></i></button>
+											</form>
+										</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td class="text-center" colspan="5">장바구니가 비어있습니다.</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 			</div>
@@ -224,17 +179,23 @@
 					<div class="card-header bg-secondary border-0">
 						<h4 class="font-weight-semi-bold m-0">내 장바구니</h4>
 					</div>
+		<!-- 테이블 생각해서 작업 -->
 					<div class="card-body">
 						<div class="d-flex justify-content-between mb-3 pt-1">
-							<h6 class="font-weight-medium">상품가격</h6>
-							<h6 class="font-weight-medium">000원</h6>
+							<h6 class="font-weight-medium">상품가격 합계</h6>
+							<h6 class="font-weight-medium"><span id="cartTotal">${cartTotal}</span>원</h6>
 						</div>
-						
+					</div>
+					<div class="card-body">
+						<div class="d-flex justify-content-between mb-3 pt-1">
+							<h6 class="font-weight-medium">총 수량</h6>
+							<h6 class="font-weight-medium"><span id="cartCount">${cart_cnt}</span></h6>
+						</div>
 					</div>
 					<div class="card-footer border-secondary bg-transparent">
 						<div class="d-flex justify-content-between mt-2">
 							<h5 class="font-weight-bold">총가격</h5>
-							<h5 class="font-weight-bold">000원</h5>
+							<h5 class="font-weight-bold"><span id="cartTotalFooter">${cartTotal}</span>원</h5>
 						</div>
 						<button class="btn btn-block btn-primary my-3 py-3"
 							onclick="location.href='checkout' ">결제하기</button>
@@ -350,6 +311,83 @@
 	<script src="mail/contact.js"></script>
 
 	<script src="js/main.js"></script>
+
+
+<!-- 장바구니 수량 제어 스크립트 
+전역 JS(main.js)로 처리하면, 장바구니 페이지의 고유 AJAX/동기화 로직과 충돌해 중복 업데이트나 잘못된 표시가 발생
+-->
+	<script>
+		// 장바구니 수량 제어: 감소/증가 버튼 및 AJAX로 서버에 갱신
+		(function(){
+			function updateQtyOnServer(itemNo, qty) {
+				return $.post('/cart/update', { item_no: itemNo, qty: qty });
+			}
+
+			$(document).on('click', '.qty-decrease', function(e){
+				var item = $(this).data('item');
+				var $input = $('.cart-qty-input[data-item="'+item+'"]');
+				var val = parseInt($input.val()) || 0;
+				var next = Math.max(0, val - 1);
+				$input.val(next);
+				updateQtyOnServer(item, next).done(function(resp){
+					if (resp && resp.success) {
+						$('.badge').text(resp.cartCount);
+						$('#cartCount').text(resp.cartCount);
+						if (typeof resp.cartTotal !== 'undefined') {
+							$('#cartTotal').text(resp.cartTotal);
+							$('#cartTotalFooter').text(resp.cartTotal);
+						}
+						if (typeof resp.itemSubtotal !== 'undefined') {
+							$('.row-subtotal[data-item="'+item+'"]').text(resp.itemSubtotal);
+						}
+					}
+				});
+			});
+
+			$(document).on('click', '.qty-increase', function(e){
+				var item = $(this).data('item');
+				var $input = $('.cart-qty-input[data-item="'+item+'"]');
+				var val = parseInt($input.val()) || 0;
+				var next = val + 1;
+				$input.val(next);
+				updateQtyOnServer(item, next).done(function(resp){
+					if (resp && resp.success) {
+						$('.badge').text(resp.cartCount);
+						$('#cartCount').text(resp.cartCount);
+						if (typeof resp.cartTotal !== 'undefined') {
+							$('#cartTotal').text(resp.cartTotal);
+							$('#cartTotalFooter').text(resp.cartTotal);
+						}
+						if (typeof resp.itemSubtotal !== 'undefined') {
+							$('.row-subtotal[data-item="'+item+'"]').text(resp.itemSubtotal);
+						}
+					}
+				});
+			});
+
+	// 장바구니 품목 수량을 직접 입력한 후 포커스가 벗어나면(blur) 서버에 갱신 요청(db반영)
+			$(document).on('blur', '.cart-qty-input', function(){
+				var item = $(this).data('item');
+				var val = parseInt($(this).val()) || 0;
+				if (val < 0) val = 0;
+				$(this).val(val);
+				updateQtyOnServer(item, val).done(function(resp){
+					if (resp && resp.success) {
+						$('.badge').text(resp.cartCount);
+						$('#cartCount').text(resp.cartCount);
+						if (typeof resp.cartTotal !== 'undefined') {
+							$('#cartTotal').text(resp.cartTotal);
+							$('#cartTotalFooter').text(resp.cartTotal);
+						}
+						if (typeof resp.itemSubtotal !== 'undefined') {
+							$('.row-subtotal[data-item="'+item+'"]').text(resp.itemSubtotal);
+						}
+					}
+				});
+			});
+		})();
+	</script>
+
 </body>
 
 </html>

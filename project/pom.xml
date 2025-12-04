@@ -126,12 +126,12 @@
 		    <scope>runtime</scope>
 		</dependency>
 
-		<!-- 추가: Flyway 마이그레이션 -->
+		<!-- 
 		<dependency>
 		    <groupId>org.flywaydb</groupId>
 		    <artifactId>flyway-core</artifactId>
 		</dependency>
-
+추가: Flyway 마이그레이션 -->
 	</dependencies>
 
 	<build>
