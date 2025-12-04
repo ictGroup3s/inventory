@@ -39,9 +39,8 @@ public class SecurityConfig {
         http
             .csrf().disable() // 개발 편의: CSRF 비활성화 (테스트 용도)
             .authorizeHttpRequests(auth -> auth
-                // 보안: 기본적으로 모든 요청은 인증 필요.
-                // 개발 중에만 전체 허용이 필요하면 `SecurityConfigDev` (dev 프로파일)를 사용하세요.
-                .anyRequest().authenticated()
+                // 개발 편의: 모든 요청을 허용합니다. 운영 시에는 적절한 인증 설정으로 되돌리세요.
+                .anyRequest().permitAll()
             );
         return http.build();
     }
