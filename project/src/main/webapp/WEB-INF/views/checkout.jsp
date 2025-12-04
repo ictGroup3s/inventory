@@ -227,8 +227,17 @@
 									id="directcheck"> <label class="custom-control-label"
 									for="directcheck">계좌이체</label>
 							</div>
+<<<<<<< HEAD
 							<div class="form-group" id="bankInfo" style="display: none;">
 								<p>국민은행 123-456-7890</p>
+=======
+						</div>
+						<div class="">
+							<div class="custom-control custom-radio">
+								<input type="radio" class="custom-control-input" name="payment"
+									id="banktransfer"> <label class="custom-control-label"
+									for="banktransfer">간편결제</label>
+>>>>>>> main
 							</div>
 						</div>
 					</div>
@@ -241,6 +250,7 @@
 								<img src="/img/naver.png"> NaverPay로 결제
 							</button>
 
+<<<<<<< HEAD
 							<button id="kakaoPayBtn"
 								class="btn btn-light border d-block py-2 social-btn">
 								<img src="/img/kakao.png"> KakaoPay로 결제
@@ -249,6 +259,20 @@
 					</div>
 					<button id="btnOpenModal"
 						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">결제하기</button>
+=======
+                    <a href="/oauth/naver" class="btn btn-light border d-block mb-2 py-2 social-btn">
+                        <img src="/img/naver.png"> NaverPay로 결제 
+                    </a>
+
+                    <a href="/oauth/kakao" class="btn btn-light border d-block py-2 social-btn">
+                        <img src="/img/kakao.png"> KakaoPay로 결제 
+                    </a>
+                </div>
+            </div>
+					<button
+						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
+						data-toggle="modal" data-target="#payModal">결제하기</button>
+>>>>>>> main
 				</div>
 			</div>
 		</div>
@@ -359,6 +383,7 @@
 		});
 	</script>
 
+<<<<<<< HEAD
 	<!-- 여기는 요청사항 직접입력 칸 -->
 	<script>
 		document.getElementById('memoSelect').addEventListener('change', function() {
@@ -373,12 +398,28 @@
 		});
 	</script>
 	
+=======
+<!-- 여기는 요청사항 직접입력 칸 -->
+<script>
+document.getElementById('memoSelect').addEventListener('change', function() {
+    const memoInput = document.getElementById('memoInput');
+    if(this.value === 'direct') {
+        memoInput.style.display = 'block'; // 입력창 보이기
+        memoInput.focus(); // 포커스 주기
+    } else {
+        memoInput.style.display = 'none'; // 숨기기
+        memoInput.value = ''; // 기존 입력값 초기화
+    }
+});
+</script>
+>>>>>>> main
 	<!-- 결제 모달 -->
 	<div class="modal fade" id="payModal" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 
 				<div class="modal-header bg-primary text-white">
+<<<<<<< HEAD
 					<h5 class="modal-title">결제하기</h5>
 					<button type="button" class="close text-white" data-dismiss="modal">
 						&times;
@@ -409,12 +450,43 @@
 					<!-- 선택한 카드 표시 -->
 					<p id="selectedCardDisplay" class="mt-3" style="color: #D19C97; font-weight: bold;"></p>
 
+=======
+					<h5 class="modal-title">결제 진행</h5>
+					<button type="button" class="close text-white" data-dismiss="modal">
+						&times;</button>
+				</div>
+
+				<div class="modal-body">
+
+					<h5>
+						<b>카드사 선택</b>
+					</h5>
+					<div class="row text-center mt-3">
+
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block card-btn">국민</button>
+						</div>
+
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block card-btn">현대</button>
+						</div>
+
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block card-btn">농협</button>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block card-btn">카카오뱅크</button>
+						</div>
+					</div>
+
+>>>>>>> main
 					<hr>
 
 					<h5 class="mt-3">
 						<b>결제금액</b>
 					</h5>
 					<h4 class="text-primary font-weight-bold">38,000원</h4>
+<<<<<<< HEAD
 				</div>
 
 				<!-- 결제진행 버튼 -->
@@ -423,10 +495,47 @@
 					<button type="button" class="btn btn-primary btn-lg" onclick="processPayment()">결제진행</button>
 				</div>
 
+=======
+
+				</div>
+
+				<div class="modal-footer">
+					<button
+						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
+						data-toggle="modal" data-target="#payModal">결제하기</button>
+				</div>
+
+					<script>
+						let selectedCard = null;  // 선택된 카드 저장
+						
+						// 모든 카드 버튼
+						const cardButtons = document.querySelectorAll('.card-btn');
+						
+						cardButtons.forEach(btn => {
+						    btn.addEventListener('click', function () {
+						
+						        // 1) 모든 버튼에서 active 제거
+						        cardButtons.forEach(b => {
+						            b.classList.remove('btn-primary');
+						            b.classList.add('btn-outline-primary');
+						        });
+						
+						        // 2) 현재 클릭한 버튼에 active 스타일 적용
+						        this.classList.remove('btn-outline-primary');
+						        this.classList.add('btn-primary');
+						
+						        // 3) 선택된 카드 저장
+						        selectedCard = this.innerText;
+						    });
+						});
+				</script>
+
+>>>>>>> main
 			</div>
 		</div>
 	</div>
 
+<<<<<<< HEAD
 	<script>
 			let selectedCard = null;
 			
@@ -512,5 +621,7 @@
 			    });
 			});
 		</script>
+=======
+>>>>>>> main
 </body>
 </html>
