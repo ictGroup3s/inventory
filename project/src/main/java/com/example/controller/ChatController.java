@@ -1,10 +1,8 @@
 package com.example.controller;
 
-import java.util.Map;
+import java.util.List;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.model.vo.ChatVO;
 import com.example.service.ChatService;
@@ -12,21 +10,35 @@ import com.example.service.ChatService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequestMapping("/chat")
 @RequiredArgsConstructor
 public class ChatController {
 
     private final ChatService chatService;
 
-    @PostMapping("/chat/save")
-    public String saveChat(@RequestBody Map<String, String> data) throws Exception {
+    // 사용자 역할 확인
+    @GetMapping("/role/{userId}")
+    public String getUserRole(@PathVariable String userId) {
+        return chatService.getUserRole(userId);
+    }
 
-        ChatVO vo = new ChatVO();
-        vo.setCustomer_id(data.get("userId"));
-        vo.setAdmin_id(data.get("adminId"));
-        //vo.setMessage(data.get("message"));
+    // 채팅방 목록
+    @GetMapping("/rooms/{userId}")
+    public List<ChatVO> getChatRooms(@PathVariable String userId) {
+        String role = chatService.getUserRole(userId);
+        return chatService.getChatRooms(userId, role);
+    }
 
-        chatService.saveChat(vo);
+    // 이전 채팅 불러오기
+    @GetMapping("/history/{chatNo}")
+    public ChatVO getChatHistory(@PathVariable Integer chatNo) {
+        return chatService.getChatById(chatNo);
+    }
 
-        return "OK";
+    // 채팅 저장
+    @PostMapping("/save")
+    public String saveChat(@RequestBody ChatVO chatVO) {
+        chatService.saveChat(chatVO);
+        return "success";
     }
 }

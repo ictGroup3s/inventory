@@ -4,19 +4,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="chatMapper">
-	<!--  <insert id="insertChat" parameterType="ChatVO">
+
+    <insert id="insertChat" parameterType="ChatVO">
         INSERT INTO chat (
-            chat_no,
-            chat_file,
-            chat_time,
-            customer_id,
-            admin_id
-        ) VALUES (
-            chat_seq.NEXTVAL,
-            #{chat_file},
-            SYSDATE,
-            #{customer_id},
-            #{admin_id}
-        )
-    </insert> -->
+	        chat_no
+	        ,chat_file
+	        ,chat_time
+	        ,customer_id
+	        ,admin_id
+	        ,read_flag)
+        VALUES (
+	        chat_seq.NEXTVAL
+	        ,#{chat_file}
+	        ,SYSDATE
+	        ,#{customer_id}
+	        ,#{admin_id}, 'N')
+    </insert>
+
+    <select id="selectRoomsByCustomer" parameterType="string" resultType="ChatVO">
+        SELECT * FROM chat 
+        WHERE customer_id = #{customerId} 
+        ORDER BY chat_time
+    </select>
+
+    <select id="selectRoomsByAdmin" parameterType="string" resultType="com.example.model.vo.ChatVO">
+        SELECT * FROM chat 
+        WHERE admin_id = #{adminId} 
+        ORDER BY chat_time
+    </select>
+
+    <select id="selectChatByNo" parameterType="int" resultType="com.example.model.vo.ChatVO">
+        SELECT * FROM chat 
+        WHERE chat_no = #{chatNo}
+    </select>
+
+    <update id="updateReadFlag" parameterType="int">
+        UPDATE chat 
+        SET read_flag = 'Y' 
+        WHERE chat_no = #{chatNo}
+    </update>
+    
+    <select id="findRoleByUserId" parameterType="string" resultType="string">
+        SELECT ROLE FROM CUSTOMER WHERE customer_id = #{userId} 
+    </select>
+    
 </mapper>

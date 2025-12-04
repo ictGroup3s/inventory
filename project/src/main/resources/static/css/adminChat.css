@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+/* 전체 컨테이너 */
+.admin-chat-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* 메시지 출력 영역 */
+#admin-chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+/* 입력 영역 */
+#admin-chat-input {
+    display: flex;
+    margin-top: 10px;
+}
+
+/* 입력창 */
+#admin-chat-text {
+    flex: 1;
+    padding: 6px 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+/* 전송 버튼 */
+#admin-chat-send {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* 메시지 스타일 */
+.admin-chat-message.self {
+    background-color: #D19C97; /* admin 메시지 */
+    color: #fff;
+    align-self: flex-end;
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin: 4px 0;
+    max-width: 70%;
+}
+
+.admin-chat-message.other {
+    background-color: #e0e0e0; /* user 메시지 */
+    color: #000;
+    align-self: flex-start;
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin: 4px 0;
+    max-width: 70%;
+}

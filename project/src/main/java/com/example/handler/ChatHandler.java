@@ -1,117 +1,102 @@
 package com.example.handler;
 
+import com.example.model.vo.ChatVO;
+import com.example.service.ChatService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import org.springframework.web.client.RestTemplate;
 
-import lombok.extern.slf4j.Slf4j;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
-@Slf4j
+@Component
 public class ChatHandler extends TextWebSocketHandler {
-	
-	private Map<String, WebSocketSession> sessions = new HashMap<>();
+
+    // 채팅방 ID → WebSocketSession 목록
+    private final Map<String, Set<WebSocketSession>> roomSessions = new ConcurrentHashMap<>();
+    // 채팅방 ID → 파일명
+    private final Map<String, String> roomFiles = new ConcurrentHashMap<>();
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private final ChatService chatService;
+
+    private final String CHAT_DIR = "src/main/resources/static/chat/";
+
+    public ChatHandler(ChatService chatService) {
+        this.chatService = chatService;
+    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String userId = getParam(session, "userId");
-        sessions.put(userId, session);
-
-        session.sendMessage(new TextMessage("채팅 연결됨"));
+        System.out.println(session.getId() + " 연결됨");
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        Map<String, Object> chatMsg = objectMapper.readValue(message.getPayload(), Map.class);
+        String customerId = (String) chatMsg.get("customerId");
+        String adminId = (String) chatMsg.get("adminId");
+        String msgContent = (String) chatMsg.get("message");
 
-        String msg = message.getPayload();
-        String userId = getParam(session, "userId");
-        String adminId = getParam(session, "adminId");
+        // 채팅방 ID 생성 (고객ID_관리자ID)
+        String roomId = customerId + "_" + adminId;
 
-        // 1) 저장 요청
-        RestTemplate rest = new RestTemplate();
+        // 방 세션 관리
+        roomSessions.putIfAbsent(roomId, Collections.synchronizedSet(new HashSet<>()));
+        roomSessions.get(roomId).add(session);
 
-        Map<String, String> data = new HashMap<>();
-        data.put("userId", userId);
-        data.put("adminId", adminId);
-        data.put("message", "[" + userId + "] " + msg);
+        // 파일명 관리
+        roomFiles.putIfAbsent(roomId, "chat_" + customerId + "_" + adminId + "_" + System.currentTimeMillis() + ".txt");
+        String fileName = roomFiles.get(roomId);
+        String filePath = CHAT_DIR + fileName;
 
-        rest.postForObject("http://localhost:8080/chat/save", data, String.class);
-
-        // 2) 브로드캐스트
-        for (WebSocketSession s : sessions.values()) {
-            s.sendMessage(new TextMessage(userId + ": " + msg));
-        }
-    }
-
-    private String getParam(WebSocketSession session, String name) {
-        String query = session.getUri().getQuery();
-        for (String p : query.split("&")) {
-            if (p.startsWith(name + "=")) return p.split("=")[1];
-        }
-        return null;
-    }
-	
-	/*
-    private Map<String, WebSocketSession> sessions = new HashMap<>();
-
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String userId = getParam(session, "userId");
-
-        sessions.put(userId, session);
-
-        System.out.println("### 연결됨: " + userId);
-
-        session.sendMessage(new TextMessage("채팅에 연결되었습니다."));
-    }
-
-    @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
-        String msg = message.getPayload();
-        String userId = getParam(session, "userId");
-        String adminId = getParam(session, "adminId");
-
-        // -----------------------------
-        //   📌 1) Controller로 저장 요청
-        // -----------------------------
-        RestTemplate rest = new RestTemplate();
-
-        Map<String, String> data = new HashMap<>();
-        data.put("userId", userId);
-        data.put("adminId", adminId);
-        data.put("message", msg);
-
-        rest.postForObject("http://localhost:8080/chat/save", data, String.class);
-
-
-        // -----------------------------
-        //   📌 2) 웹소켓 사용자들에게 전달
-        // -----------------------------
-        for (WebSocketSession s : sessions.values()) {
-            s.sendMessage(new TextMessage(userId + ": " + msg));
+        File file = new File(filePath);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
         }
 
-        System.out.println("메시지 저장 및 전송 완료: " + msg);
-    }
+        // 메시지 작성 시간
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        String userId = getParam(session, "userId");
-        sessions.remove(userId);
-        System.out.println("### 연결 종료됨: " + userId);
-    }
+        // 1) 파일에 메시지 append
+        try (FileWriter fw = new FileWriter(file, true)) {
+            fw.write("[" + timeStamp + "] " + customerId + ": " + msgContent + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    private String getParam(WebSocketSession session, String name) {
-        String query = Objects.requireNonNull(session.getUri()).getQuery();
+        // 2) DB 저장
+        ChatVO chatVO = new ChatVO();
+        chatVO.setCustomer_id(customerId);
+        chatVO.setAdmin_id(adminId);
+        chatVO.setChat_file(fileName);
+        chatVO.setChat_time(timeStamp);
+        chatService.saveChat(chatVO);
 
-        for (String part : query.split("&")) {
-            if (part.startsWith(name + "=")) {
-                return part.substring((name + "=").length());
+        // 3) 브로드캐스팅
+        TextMessage broadcast = new TextMessage(objectMapper.writeValueAsString(chatMsg));
+        for (WebSocketSession s : roomSessions.get(roomId)) {
+            if (s.isOpen()) {
+                s.sendMessage(broadcast);
             }
         }
-        return null;
     }
-    */
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        roomSessions.values().forEach(set -> set.remove(session));
+        System.out.println(session.getId() + " 연결 종료됨");
+    }
+
+    @Override
+    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+        System.out.println(session.getId() + " 전송 오류: " + exception.getMessage());
+    }
 }
