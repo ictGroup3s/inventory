@@ -113,7 +113,12 @@
 								<td>20,000</td>
 								<td>2025-11-25</td>
 								<td>배송중</td>
-								<td><button class="btn btn-sm btn-info">상세보기</button></td>
+								<!-- 기존 id="detail" → class="detail-btn" -->
+								<td>
+									<button class="btn btn-sm btn-info detail-btn"
+										data-order='{"itemNo":"ORD001","customer":"홍길동","product":"연어","qty":"2","total":"20,000","date":"2025-11-25","status":"배송중"}'>
+										상세보기</button>
+								</td>
 							</tr>
 							<tr>
 								<td>ORD002</td>
@@ -142,12 +147,62 @@
 		</div>
 	</div>
 
+	<!-- 모달 구조 -->
+	<!-- 오버레이 -->
+	<div id="overlay"></div>
+
+	<!-- 모달 -->
+	<!-- 오버레이 -->
+	<div id="overlay"></div>
+
+	<!-- 모달 -->
+	<div id="customModal">
+		<header>
+			<h5>주문 상세정보</h5>
+			<button id="closeModal">&times;</button>
+		</header>
+		<div id="modalContent">
+			<table class="table table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<th>주문번호</th>
+						<th>고객명</th>
+						<th>상품명</th>
+						<th>수량</th>
+						<th>총 금액</th>
+						<th>주문일</th>
+						<th>상태</th>
+						<th>관리</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>123456789</th>
+						<th>홍길동</th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th>
+							<select>
+								<option>배송준비중</option>
+								<option>배송중</option>
+								<option>배송완료</option>
+							</select>
+						</th>
+						<th></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 	<!-- JS -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="js/admin.js"></script>
 
 </body>
 </html>

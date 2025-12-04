@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chatMapper">
+	 <insert id="insertChat" parameterType="ChatVO">
+        INSERT INTO chat (
+            chat_no,
+            chat_file,
+            chat_time,
+            customer_id,
+            admin_id
+        ) VALUES (
+            chat_seq.NEXTVAL,
+            #{chat_file},
+            SYSDATE,
+            #{customer_id},
+            #{admin_id}
+        )
+    </insert>
+</mapper>
