@@ -22,7 +22,7 @@ public class AdminRepositoryImpl implements AdminRepository{
 	@Override
 	public List<ProductVO> getItemList() {
 		System.out.println("[AdminRepositoryImpl] getItemList()");
-		return sess.selectList("adminmapper.getItemList2");		
+		return sess.selectList("adminmapper.getItemList");		
 	}
 
 	@Override
