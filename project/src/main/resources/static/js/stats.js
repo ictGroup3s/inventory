@@ -236,4 +236,6 @@ $(function() {
 		equalizeBottomCardHeights();
 	}, 500);
 
+
+	
 });
