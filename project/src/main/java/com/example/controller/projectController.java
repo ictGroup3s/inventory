@@ -14,6 +14,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class projectController {
 	
 	
+	@GetMapping("header")
+	public String header() {
+		return "header";
+	}
 	@GetMapping("cart")
 	public String cart() {
 		return "cart";
@@ -33,11 +37,6 @@ public class projectController {
 	@GetMapping("selectall")
 	public String selectall() {
 		return "selectall";
-	}
-	
-	@GetMapping("fish2Detail")
-	public String fish2Detail() {
-		return "fish2Detail";
 	}
 	
 	@GetMapping("detail")
@@ -102,16 +101,16 @@ public class projectController {
 		return "dashboard";
 	}
 	
-	@GetMapping("stock")
-	public String stock() {
-		return "stock";
-	}
-	
-	@GetMapping("item")
-	public String item() {
-		return "item";
-	}
-	
+	//@GetMapping("stock")
+	//public String stock() {
+	//	return "stock";
+	//}
+
+	//@GetMapping("item")
+	//public String item() { 
+	//	return "item"; 
+	//}
+	 
 	@GetMapping("order")
 	public String order() {
 		return "order";
@@ -141,6 +140,7 @@ public class projectController {
 	
 	
 
+	
 // 	통계 페이지(연도별*월별 매출 / 지출)	
 	@GetMapping("stats")
 	public String stats(Model model) throws Exception {
