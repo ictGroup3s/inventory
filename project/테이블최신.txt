@@ -1,0 +1,559 @@
+-- 회원
+CREATE TABLE customer (
+	customer_id VARCHAR2(500)  NOT NULL, -- 아이디
+	name        VARCHAR2(800)  NOT NULL, -- 이름
+	role        NUMBER        NOT NULL, -- 구분
+	pwd         VARCHAR2(500)  NOT NULL, -- 비밀번호
+	reg_date    VARCHAR2(500)  NULL,     -- 회원가입일
+	api         VARCHAR2(1000) NULL,     -- API인증
+	admin_bnum    NUMBER        NOT NULL, -- 관리자번호
+	phone       NUMBER        NULL,     -- 전화번호
+	addr        VARCHAR2(1500) NULL,     -- 주소
+	email       VARCHAR2(500)  NULL      -- 이메일
+); 
+
+-- 회원
+ALTER TABLE customer
+	ADD
+		CONSTRAINT PK_customer -- 회원 기본키
+		PRIMARY KEY (
+			customer_id -- 아이디
+		);
+ALTER TABLE customer
+MODIFY phone VARCHAR(11) NOT NULL;
+
+ALTER TABLE customer
+ADD provider VARCHAR2(20) DEFAULT 'local';
+ALTER TABLE customer
+RENAME COLUMN api TO social_id;
+
+-- 게시판
+CREATE TABLE board (
+	board_no    NUMBER       NOT NULL, -- 게시번호 
+	title       VARCHAR2(500) NOT NULL, -- 제목
+	b_content   CLOB    NOT NULL, -- 게시내용
+	b_date      DATE         NOT NULL, -- 작성일
+	customer_id VARCHAR2(500) NOT NULL  -- 아이디
+);
+
+-- 게시판
+ALTER TABLE board
+	ADD
+		CONSTRAINT PK_board -- 게시판 기본키
+		PRIMARY KEY (
+			board_no -- 게시번호 
+		);
+-- 게시판
+ALTER TABLE board
+	ADD
+		CONSTRAINT FK_customer_TO_board -- 회원 -> 게시판
+		FOREIGN KEY (
+			customer_id -- 아이디
+		)
+		REFERENCES customer ( -- 회원
+			customer_id -- 아이디
+		);
+
+-- 장바구니
+CREATE TABLE cart (
+	cart_no     NUMBER       NOT NULL, -- 장바구니번호
+	item_no     NUMBER       NOT NULL, -- 상품번호
+	cart_cnt    NUMBER       NOT NULL, -- 상품수량
+	customer_id VARCHAR2(500) NOT NULL  -- 아이디
+);
+
+-- 장바구니
+ALTER TABLE cart
+	ADD
+		CONSTRAINT PK_cart -- 장바구니 기본키
+		PRIMARY KEY (
+			cart_no -- 장바구니번호
+		);
+-- 장바구니
+ALTER TABLE cart
+	ADD
+		CONSTRAINT FK_product_TO_cart -- 상품 -> 장바구니
+		FOREIGN KEY (
+			item_no -- 상품번호
+		)
+		REFERENCES product ( -- 상품
+			item_no -- 상품번호
+		);
+
+
+-- 장바구니
+ALTER TABLE cart
+	ADD
+		CONSTRAINT FK_customer_TO_cart -- 회원 -> 장바구니
+		FOREIGN KEY (
+			customer_id -- 아이디
+		)
+		REFERENCES customer ( -- 회원
+			customer_id -- 아이디
+		);
+
+-- 주문
+CREATE TABLE orders (
+	order_no     NUMBER        NOT NULL, -- 주문번호
+	order_name   VARCHAR2(300)  NULL,     -- 수령자이름
+	order_addr   VARCHAR2(1500) NULL,     -- 배송주소
+	tracking     NUMBER        NULL,     -- 송장번호
+	order_phone  NUMBER        NULL,     -- 수령자연락처
+	order_status VARCHAR2(500)  NULL,     -- 주문상태
+	payment      VARCHAR2(500)  NULL,     -- 결제수단
+	api_pay      VARCHAR2(300)  NULL,     -- API결제
+	order_date   DATE          NULL,     -- 주문날짜
+	customer_id  VARCHAR2(500)  NOT NULL  -- 아이디
+);
+
+-- 주문
+ALTER TABLE orders
+	ADD
+		CONSTRAINT PK_orders -- 주문 기본키
+		PRIMARY KEY (
+			order_no -- 주문번호
+		);
+-- 주문
+ALTER TABLE orders
+	ADD
+		CONSTRAINT FK_customer_TO_orders -- 회원 -> 주문
+		FOREIGN KEY (
+			customer_id -- 아이디
+		)
+		REFERENCES customer ( -- 회원
+			customer_id -- 아이디
+		);
+
+-- 주문상세
+CREATE TABLE order_detail (
+	detail_no NUMBER NOT NULL, -- 상세번호
+	order_no  NUMBER NULL,     -- 주문번호
+	item_no   NUMBER NULL,     -- 상품번호
+	item_cnt  NUMBER NULL      -- 상품수량
+);
+
+-- 주문상세
+ALTER TABLE order_detail
+	ADD
+		CONSTRAINT PK_order_detail -- 주문상세 기본키
+		PRIMARY KEY (
+			detail_no -- 상세번호
+		);
+-- 주문상세
+ALTER TABLE order_detail
+	ADD
+		CONSTRAINT FK_orders_TO_order_detail -- 주문 -> 주문상세
+		FOREIGN KEY (
+			order_no -- 주문번호
+		)
+		REFERENCES orders ( -- 주문
+			order_no -- 주문번호
+		);
+
+
+-- 주문상세
+ALTER TABLE order_detail
+	ADD
+		CONSTRAINT FK_product_TO_order_detail -- 상품 -> 주문상세
+		FOREIGN KEY (
+			item_no -- 상품번호
+		)
+		REFERENCES product ( -- 상품
+			item_no -- 상품번호
+		);
+ALTER TABLE order_detail
+ADD (item_price NUMBER NOT NULL);
+
+-- 상품
+CREATE TABLE product (
+	item_no      NUMBER       NOT NULL, -- 상품번호
+	item_img     VARCHAR2(500) NOT NULL, -- 상품이미지
+	item_name    VARCHAR2(500) NOT NULL, -- 상품명
+	item_content CLOB   NOT NULL, -- 상품설명
+	origin_p     NUMBER       NOT NULL, -- 원가
+	sales_p      NUMBER       NOT NULL, -- 소비자가
+	stock_cnt    NUMBER       NOT NULL, -- 재고량
+	cate_no      NUMBER       NOT NULL, -- 카테고리번호
+	dis_no       NUMBER       NOT NULL  -- 할인번호
+);
+
+-- 상품
+ALTER TABLE product
+	ADD
+		CONSTRAINT PK_product -- 상품 기본키
+		PRIMARY KEY (
+			item_no -- 상품번호
+		);
+-- 상품
+ALTER TABLE product
+	ADD
+		CONSTRAINT FK_cate_TO_product -- 카테고리 -> 상품
+		FOREIGN KEY (
+			cate_no -- 카테고리번호
+		)
+		REFERENCES cate ( -- 카테고리
+			cate_no -- 카테고리번호
+		);
+-- 상품
+ALTER TABLE product
+	ADD
+		CONSTRAINT FK_discount_TO_product -- 할인 -> 상품
+		FOREIGN KEY (
+			dis_no -- 할인번호
+		)
+		REFERENCES discount ( -- 할인
+			dis_no -- 할인번호
+		);
+
+-- 카테고리
+CREATE TABLE cate (
+	cate_no   NUMBER       NOT NULL , -- 카테고리번호
+	cate_name VARCHAR2(300) NOT NULL  -- 카테고리명
+);
+
+-- 카테고리
+ALTER TABLE cate
+	ADD
+		CONSTRAINT PK_cate -- 카테고리 기본키
+		PRIMARY KEY (
+			cate_no -- 카테고리번호
+		);
+INSERT INTO CATE VALUES (cate_seq.nextval, '구이찜볶음');
+INSERT INTO CATE VALUES (cate_seq.nextval, '국밥면');
+INSERT INTO CATE VALUES (cate_seq.nextval, '식단관리');
+INSERT INTO CATE VALUES (cate_seq.nextval, '분식간식');
+INSERT INTO CATE VALUES (cate_seq.nextval, '반찬소스');
+INSERT INTO CATE VALUES (cate_seq.nextval, '생수음료');
+
+-- 할인
+CREATE TABLE discount (
+	dis_no     NUMBER NOT NULL, -- 할인번호
+	dis_rate   NUMBER NOT NULL, -- 할인률
+	start_date DATE   NOT NULL, -- 시작날
+	end_date   DATE   NOT NULL  -- 끝나는날
+);
+
+-- 할인
+ALTER TABLE discount
+	ADD
+		CONSTRAINT PK_discount -- 할인 기본키
+		PRIMARY KEY (
+			dis_no -- 할인번호
+		);
+
+
+-- 리뷰
+CREATE TABLE review (
+	review_no   NUMBER       NOT NULL, -- 리뷰번호
+	re_title    VARCHAR2(500) NOT NULL, -- 제목
+	re_content  CLOB   NOT NULL, -- 내용
+	re_date     DATE         NOT NULL, -- 작성일
+	item_no     NUMBER       NOT NULL, -- 상품번호
+	customer_id VARCHAR2(500) NOT NULL  -- 아이디
+);
+
+-- 리뷰
+ALTER TABLE review
+	ADD
+		CONSTRAINT PK_review -- 리뷰 기본키
+		PRIMARY KEY (
+			review_no -- 리뷰번호
+		);
+-- 리뷰
+ALTER TABLE review
+	ADD
+		CONSTRAINT FK_product_TO_review -- 상품 -> 리뷰
+		FOREIGN KEY (
+			item_no -- 상품번호
+		)
+		REFERENCES product ( -- 상품
+			item_no -- 상품번호
+		);
+
+
+-- 리뷰
+ALTER TABLE review
+	ADD
+		CONSTRAINT FK_customer_TO_review -- 회원 -> 리뷰
+		FOREIGN KEY (
+			customer_id -- 아이디
+		)
+		REFERENCES customer ( -- 회원
+			customer_id -- 아이디
+		);
+
+-- 재고관리
+CREATE TABLE stock (
+	stock_no  NUMBER NOT NULL, -- 입출고번호
+	stock     NUMBER NULL,     -- 재고
+	stock_in  NUMBER NULL,     -- 입고
+	stock_out NUMBER NULL,     -- 출고
+	in_date   DATE   NOT NULL, -- 등록일자
+	item_no   NUMBER NOT NULL, -- 상품번호
+	order_no  NUMBER NOT NULL  -- 주문번호
+);
+
+-- 재고관리
+ALTER TABLE stock
+	ADD
+		CONSTRAINT PK_stock -- 재고관리 기본키
+		PRIMARY KEY (
+			stock_no -- 입출고번호
+		);
+-- 재고관리
+ALTER TABLE stock
+	ADD
+		CONSTRAINT FK_product_TO_stock -- 상품 -> 재고관리
+		FOREIGN KEY (
+			item_no -- 상품번호
+		)
+		REFERENCES product ( -- 상품
+			item_no -- 상품번호
+		);
+
+
+-- 재고관리
+ALTER TABLE stock
+	ADD
+		CONSTRAINT FK_orders_TO_stock -- 주문 -> 재고관리
+		FOREIGN KEY (
+			order_no -- 주문번호
+		)
+		REFERENCES orders ( -- 주문
+			order_no -- 주문번호
+		);
+
+
+-- 채팅로그
+CREATE TABLE chat (
+	chat_no     NUMBER       NOT NULL, -- 채팅번호
+	chat_file   VARCHAR2(800) NULL,     -- 채팅파일
+	chat_time  DATE         NULL,     -- 시간
+	customer_id VARCHAR2(500) NULL,     -- 회원아이디
+	admin_id    VARCHAR2(500) NULL      -- 업체아이디
+);
+
+-- 채팅로그
+ALTER TABLE chat
+	ADD
+		CONSTRAINT PK_chat -- 채팅로그 기본키
+		PRIMARY KEY (
+			chat_no -- 채팅번호
+		);
+-- 채팅로그
+ALTER TABLE chat
+	ADD
+		CONSTRAINT FK_customer_TO_chat2 -- 회원 -> 채팅로그
+		FOREIGN KEY (
+			customer_id -- 회원아이디
+		)
+		REFERENCES customer ( -- 회원
+			customer_id -- 아이디
+		);
+
+
+-- 채팅로그
+ALTER TABLE chat
+	ADD
+		CONSTRAINT FK_customer_TO_chat -- 회원 -> 채팅로그2
+		FOREIGN KEY (
+			admin_id -- 업체아이디
+		)
+		REFERENCES customer ( -- 회원
+			customer_id -- 아이디
+		);
+
+-- 매출통계
+CREATE TABLE stats (
+	stats_id       NUMBER NOT NULL, -- 통계번호
+	stats_date     DATE   NULL,     -- 통계날짜(연-월-일)
+	total_order    NUMBER NULL,     -- 총 주문 수
+	total_sales    NUMBER NULL,     -- 총 판매수량
+	cancel_cnt     NUMBER NULL,     -- 취소수량
+	return_cnt     NUMBER NULL,     -- 반품수량
+	total_price    NUMBER NULL,     -- 총매출액
+	margin         NUMBER NULL,     -- 마진율
+	total_discount NUMBER NULL,     -- 할인총액
+	store_no       NUMBER NULL      -- 매장번호
+);
+
+-- 매출통계
+ALTER TABLE stats
+	ADD
+		CONSTRAINT PK_stats -- 매출통계 기본키
+		PRIMARY KEY (
+			stats_id -- 통계번호
+		);
+-- 매출통계
+ALTER TABLE stats
+	ADD
+		CONSTRAINT FK_store_TO_stats -- 스토어 -> 매출통계
+		FOREIGN KEY (
+			store_no -- 매장번호
+		)
+		REFERENCES store ( -- 스토어
+			store_no -- 매장번호
+		);
+
+-- 스토어
+CREATE TABLE store (
+	store_no    NUMBER        NOT NULL, -- 매장번호
+	store_name  VARCHAR2(500)  NOT NULL, -- 매장이름
+	store_addr  VARCHAR2(1500) NOT NULL, -- 주소
+	customer_id VARCHAR2(500)  NOT NULL  -- 아이디
+);
+
+-- 스토어
+ALTER TABLE store
+	ADD
+		CONSTRAINT PK_store -- 스토어 기본키
+		PRIMARY KEY (
+			store_no -- 매장번호
+		);
+-- 스토어
+ALTER TABLE store
+	ADD
+		CONSTRAINT FK_customer_TO_store -- 회원 -> 스토어
+		FOREIGN KEY (
+			customer_id -- 아이디
+		)
+		REFERENCES customer ( -- 회원
+			customer_id -- 아이디
+		);
+
+
+-- 취소/반품
+CREATE TABLE cr (
+	cr_no      NUMBER        NOT NULL, -- 요청번호
+	order_no   NUMBER        NOT NULL, -- 주문번호
+	detail_no  NUMBER        NOT NULL, -- 상세번호
+	type       VARCHAR2(500)  NOT NULL, -- 요청상태
+	return_cnt NUMBER        NOT NULL, -- 반품수량
+	status     VARCHAR2(500)  NOT NULL, -- 승인상태
+	reason     VARCHAR2(1500) NOT NULL, -- 반품사유
+	re_date    DATE          NOT NULL  -- 반품일자
+);
+
+-- 취소/반품
+ALTER TABLE cr
+	ADD
+		CONSTRAINT PK_cr -- 취소/반품 기본키
+		PRIMARY KEY (
+			cr_no -- 요청번호
+		);
+-- 취소/반품
+ALTER TABLE cr
+	ADD
+		CONSTRAINT FK_orders_TO_cr -- 주문 -> 취소/반품
+		FOREIGN KEY (
+			order_no -- 주문번호
+		)
+		REFERENCES orders ( -- 주문
+			order_no -- 주문번호
+		);
+
+
+-- 취소/반품
+ALTER TABLE cr
+	ADD
+		CONSTRAINT FK_order_detail_TO_cr -- 주문상세 -> 취소/반품
+		FOREIGN KEY (
+			detail_no -- 상세번호
+		)
+		REFERENCES order_detail ( -- 주문상세
+			detail_no -- 상세번호
+		);
+
+-- board PK 시퀀스
+CREATE SEQUENCE board_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- cart PK 시퀀스
+CREATE SEQUENCE cart_seq
+START WITH 10
+INCREMENT BY 1;
+
+-- orders PK 시퀀스
+CREATE SEQUENCE orders_seq
+START WITH 1000
+INCREMENT BY 3;
+
+-- product PK 시퀀스
+CREATE SEQUENCE product_seq
+START WITH 100
+INCREMENT BY 1;
+
+-- cate PK 시퀀스
+CREATE SEQUENCE cate_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- discount PK 시퀀스
+CREATE SEQUENCE discount_seq
+START WITH 17
+INCREMENT BY 1;
+
+-- review PK 시퀀스
+CREATE SEQUENCE review_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- stock PK 시퀀스
+CREATE SEQUENCE stock_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- chat PK 시퀀스
+CREATE SEQUENCE chat_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- stats PK 시퀀스
+CREATE SEQUENCE stats_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- store PK 시퀀스
+CREATE SEQUENCE store_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- order_detail PK 시퀀스
+CREATE SEQUENCE order_detail_seq
+START WITH 150
+INCREMENT BY 1;
+
+-- cr PK 시퀀스
+CREATE SEQUENCE cr_seq
+START WITH 20
+INCREMENT BY 1;
+
+COMMIT;
+
+SELECT
+			item_no       AS item_no,
+			item_img      AS item_img,
+			item_name     AS item_name,
+			item_content  AS item_content,
+			origin_p      AS origin_p,
+			sales_p       AS sales_p,
+			stock_cnt     AS stock_cnt,
+			cate_no       AS cate_no,
+			dis_no        AS dis_no
+		FROM product
+		WHERE item_no = #{item_no}
