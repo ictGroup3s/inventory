@@ -3,99 +3,110 @@
 
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta charset="utf-8">
-    <title>StockBob</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-    
+<meta charset="utf-8">
+<title>StockBob</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free HTML Templates" name="keywords">
+<meta content="Free HTML Templates" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+	rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+<!-- Libraries Stylesheet -->
+<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+	rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="css/style.css" rel="stylesheet">
+<link href="css/chat.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Topbar Start -->
-    
-        <div class="row align-items-center py-3 px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                <a href="#" class="text-decoration-none">
-                    <img src='../img/logo.png' class='logo'/>
-                    <!-- <h1 class="m-0 display-5 font-weight-semi-bold">
+	<!-- Topbar Start -->
+
+	<div class="row align-items-center py-3 px-xl-5">
+		<div class="col-lg-3 d-none d-lg-block">
+			<a href="#" class="text-decoration-none"> <img
+				src='../img/logo.png' class='logo' /> <!-- <h1 class="m-0 display-5 font-weight-semi-bold">
                     <span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1> -->
-                </a>
-            </div>
-            <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="cart" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
+			</a>
+		</div>
+		<div class="col-lg-6 col-6 text-left">
+			<form action="">
+				<div class="input-group">
+					<input type="text" class="form-control"
+						placeholder="Search for products">
+					<div class="input-group-append">
+						<span class="input-group-text bg-transparent text-primary">
+							<i class="fa fa-search"></i>
+						</span>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-lg-3 col-6 text-right">
+			<a href="" class="btn border"> <i
+				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+			</a> <a href="cart" class="btn border"> <i
+				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+			</a>
+		</div>
+	</div>
+	</div>
+	<!-- Topbar End -->
 
 
-    <!-- Navbar Start -->
-    <div class="container-fluid mb-5">
-        <div class="row border-top px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                    <h6 class="m-0">Categories</h6>
-                    <i class="fa fa-angle-down text-dark"></i>
-                </a>
-                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-                        <a href="selectall" class="nav-item nav-link">전체상품</a>
-                        <a href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
-                        <a href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a>
-                        <a href="selectDiet" class="nav-item nav-link"> 식단관리 </a>
-                        <a href="selectBunsik" class="nav-item nav-link">분식 ．간식</a>
-                        <a href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a>
-                        <a href="selectdrink" class="nav-item nav-link">생수 ．음료</a>
-                    </div>
-                </nav>
-            </div>
-            <div class="col-lg-9">
-                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-                    <a href="" class="text-decoration-none d-block d-lg-none">
-						<img src='../img/logo.png' class='logo'/>
-                    </a>
-                  
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <!-- <div class="navbar-nav mr-auto py-0">
+	<!-- Navbar Start -->
+	<div class="container-fluid mb-5">
+		<div class="row border-top px-xl-5">
+			<div class="col-lg-3 d-none d-lg-block">
+				<a
+					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
+					data-toggle="collapse" href="#navbar-vertical"
+					style="height: 65px; margin-top: -1px; padding: 0 30px;">
+					<h6 class="m-0">Categories</h6> <i
+					class="fa fa-angle-down text-dark"></i>
+				</a>
+				<nav
+					class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
+					id="navbar-vertical">
+					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
+						<a href="selectall" class="nav-item nav-link">전체상품</a> <a
+							href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a
+							href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a> <a
+							href="selectDiet" class="nav-item nav-link"> 식단관리 </a> <a
+							href="selectBunsik" class="nav-item nav-link">분식 ．간식</a> <a
+							href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a> <a
+							href="selectdrink" class="nav-item nav-link">생수 ．음료</a>
+					</div>
+				</nav>
+			</div>
+			<div class="col-lg-9">
+				<nav
+					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+					<a href="" class="text-decoration-none d-block d-lg-none"> <img
+						src='../img/logo.png' class='logo' />
+					</a>
+
+					<button type="button" class="navbar-toggler" data-toggle="collapse"
+						data-target="#navbarCollapse">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<!-- <div class="navbar-nav mr-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">메인</a>
                             <a href="shop" class="nav-item nav-link">상품</a>
                              <div class="nav-item dropdown">
@@ -119,7 +130,7 @@
                         	<a href="mypage" class="nav-item nav-link">마이페이지</a>
                             <a href="board" class="nav-item nav-link">고객센터</a> -->
                             
-                            <!-- 회원 로그인 후 
+                            <!-- 관리자 로그인 후 
                             <a href="" class="nav-item nav-link">홍길동관리자</a>
                         	<a href="" class="nav-item nav-link">로그아웃</a>
                         	<a href="dashboard" class="nav-item nav-link">관리자페이지</a>   -->	
@@ -137,23 +148,25 @@
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
                                     <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div> -->
-                            </div>
-                        </div>
-                        <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="img/main_event2.png" alt="Image">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <!-- <div class="p-3" style="max-width: 700px;">
+							</div>
+						</div>
+						<div class="carousel-item" style="height: 410px;">
+							<img class="img-fluid" src="img/main_event2.png" alt="Image">
+							<div
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								<!-- <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
                                     <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div> -->
-                            </div>
-                        </div>
-                        
-                        <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="img/main_event3.png" alt="Image">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <!-- <div class="p-3" style="max-width: 700px;">
+							</div>
+						</div>
+
+						<div class="carousel-item" style="height: 410px;">
+							<img class="img-fluid" src="img/main_event3.png" alt="Image">
+							<div
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								<!-- <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
                                     <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
@@ -431,9 +444,9 @@
     </div>
     <!-- Products End -->
 
-   	    <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-        <div class="row px-xl-5 pt-3">
+   <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
+				<div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
            
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
@@ -500,15 +513,27 @@
     </div>
     <!-- Footer End -->
 
-
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 <!-- ------------------채팅 관련 추가---------------- -->
-		<!-- 채팅 버튼 -->
-	  <button id="chatToggle" class="chat-button" title="문의">💬</button>
+
+	<div id="chat-box" class="chat-box">
+		<div class="chat-header">
+			상담 채팅 <span id="chat-close">✕</span>
+		</div>
+		<div id="chat-messages" class="chat-messages"></div>
+		<div class="chat-input">
+			<input type="text" id="chat-text" placeholder="메시지 입력...">
+			<button id="chat-send">Send</button>
+		</div>
+	</div>
+
+	<button id="chat-open" class="chat-open-btn">💬</button>
+	<!-- 채팅 버튼 -->
+	<!-- <button id="chatToggle" class="chat-button" title="문의">💬</button>
 	
-	  <!-- 채팅 박스 (초기에는 숨김) -->
+	  채팅 박스 (초기에는 숨김)
 	  <div id="chatBox" class="chat-box" role="dialog" aria-hidden="true" aria-label="고객 상담">
 	    <div class="chat-header">
 	      <span>관리자 채팅</span>
@@ -519,204 +544,32 @@
 	      <input id="messageInput" type="text" placeholder="메시지를 입력하세요..." />
 	      <button id="sendBtn">전송</button>
 	    </div>
-	  </div>
-	  <!-- ------------------채팅 관련 ---------------- -->
+	  </div> -->
+	<!-- ------------------채팅 관련 ---------------- -->
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+	<!-- Contact Javascript File -->
+	<script src="mail/jqBootstrapValidation.min.js"></script>
+	<script src="mail/contact.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-    
-    <!-- SockJS + StompJS -->
-  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+	<!-- Javascript -->
+	<script src="js/main.js"></script>
+	<script src="js/chat.js"></script>
 
-<!-- ------------------채팅 관련 스크립트 시작---------------- -->
-  <script>
-  (function() {
-    // 유틸: UUID (간단)
-    function uuidv4(){
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
-        const r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
-      });
-    }
+	<!-- SockJS + StompJS -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<!--  
 
-    // 클라이언트 id 저장/조회
-    const CLIENT_KEY = 'chat_client_id';
-    let clientId = localStorage.getItem(CLIENT_KEY);
-    if (!clientId) {
-      clientId = 'user-' + uuidv4();
-      localStorage.setItem(CLIENT_KEY, clientId);
-    }
-    
-    function getDefaultSender() {
-    	  const short = (clientId || '').replace(/^user-/, '').slice(0,6);
-    	  return short ? ('손님-' + short) : '손님';
-    	}
-
-    // roomId 전략: 단순히 clientId를 사용 (서버에서 별도 room 생성 API를 쓰려면 그걸 호출해 roomId를 받도록 변경)
-    const roomId = clientId;
-
-    const chatToggle = document.getElementById('chatToggle');
-    const chatBox = document.getElementById('chatBox');
-    const closeBtn = document.getElementById('closeBtn');
-    const sendBtn = document.getElementById('sendBtn');
-    const msgInput = document.getElementById('messageInput');
-    const senderInput = document.getElementById('senderInput');
-    const messagesEl = document.getElementById('messages');
-
-    let stompClient = null;
-    let connected = false;
-
-    function appendMessage(msg) {
-      const el = document.createElement('div');
-      const who = (msg.sender && /관리자|admin/i.test(msg.sender)) ? 'admin' : 'customer';
-      el.className = 'msg ' + who;
-      const meta = document.createElement('div'); meta.className = 'meta';
-      meta.textContent = (msg.sender || '손님') + ' · ' + new Date(msg.timestamp || Date.now()).toLocaleTimeString();
-      const txt = document.createElement('div'); txt.className = 'text';
-      txt.textContent = msg.content;
-      el.appendChild(meta); el.appendChild(txt);
-      messagesEl.appendChild(el);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
-
-    function connect() {
-      // SockJS 엔드포인트는 서버에 맞춰 '/ws' (WebSocketConfig에서 registerStompEndpoints로 등록한 값)
-      const socket = new SockJS(window.location.origin + '/ws');
-      stompClient = Stomp.over(socket);
-      // 디버그 로그 끄기 (원하면 console.log로 변경)
-      stompClient.debug = function(msg){ console.log('STOMP: ' + msg); };
-
-      stompClient.connect({}, function(frame) {
-        connected = true;
-        
-        // 구독: room 전용 토픽
-        stompClient.subscribe('/topic/chat/' + roomId, function(payload) {
-          try {
-            const msg = JSON.parse(payload.body);
-            appendMessage(msg);
-          } catch(e) { console.error(e); }
-        });
-
-        // (옵션) 히스토리 로드: 서버에 /api/chat/history?roomId=... 가 구현되어 있다면 호출
-        fetch('/api/chat/history?roomId=' + encodeURIComponent(roomId))
-          .then(r => r.ok ? r.json() : Promise.reject(r))
-          .then(list => { if (Array.isArray(list)) list.forEach(appendMessage); })
-          .catch(()=>{ /* 히스토리 없으면 무시 */});
-      }, function(err) {
-        console.error('STOMP 연결 실패', err);
-      });
-    }
-
-    function send() {
-    	  try {
-    	    const text = msgInput.value && msgInput.value.trim();
-    	    if (!text) return;
-
-    	    // senderInput이 null일 수 있으므로 안전하게 처리
-    	    // optional chaining 사용 가능: senderInput?.value
-    	    const senderFromInput = (typeof senderInput !== 'undefined' && senderInput && senderInput.value) ? senderInput.value.trim() : '';
-    	    const sender = senderFromInput || getDefaultSender();
-
-    	    const payload = { type:'CHAT', roomId: roomId, sender: sender, content: text, timestamp: Date.now() };
-
-    	    if (stompClient && connected) {
-    	      stompClient.send('/app/chat.send', {}, JSON.stringify(payload));
-    	      msgInput.value = '';
-//    	      appendMessage(payload); // 즉시 로컬에 표시
-    	      console.log('STOMP send ->', payload);
-    	    } else {
-    	      console.warn('WebSocket not connected - using REST fallback');
-    	      fetch('/api/chat/send', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)})
-    	        .then(()=>{ msgInput.value=''; appendMessage(payload); })
-    	        .catch(e => { console.error('REST fallback error', e); alert('메시지 전송 실패'); });
-    	    }
-    	  } catch (err) {
-    	    console.error('send() error', err);
-    	  }
-    	}
-
-    // UI 이벤트
-    chatToggle.addEventListener('click', function(){
-      if (chatBox.style.display === 'flex') {
-        chatBox.style.display = 'none';
-      } else {
-        chatBox.style.display = 'flex';
-        if (!connected) connect();
-      }
-    });
-    closeBtn.addEventListener('click', function(){ chatBox.style.display = 'none'; });
-    sendBtn.addEventListener('click', send);
-    msgInput.addEventListener('keypress', function(e){ if (e.key === 'Enter') send(); });
-
-    // (선택) 페이지 열릴 때 채팅 자동 연결하려면 아래 주석 해제
-    // window.addEventListener('load', connect);
-
-    console.log('chat clientId=', clientId, ' roomId=', roomId);
-  })();
-  </script>
-  <script>
-(function(){
-  const chatBtn = document.getElementById('chatToggle'); // chat 버튼 id
-  const chatBox = document.getElementById('chatBox');   // 채팅 박스 (옵션)
-  const backBtn = document.querySelector('.back-to-top');
-
-  function getBackBottomOffset() {
-    if (!backBtn) return 0;
-    const style = getComputedStyle(backBtn);
-    if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) {
-      return 0;
-    }
-    // backBtn는 fixed 위치이므로 높이만큼 간격 확보
-    const h = backBtn.getBoundingClientRect().height || 0;
-    return h;
-  }
-
-  function adjustChatPosition() {
-    const offset = getBackBottomOffset();
-    const baseGap = 20; // back-to-top과 chat 사이 최소 간격(px)
-    if (chatBtn) {
-      // chat 버튼을 back-to-top 위로 올리거나 아래로 밀고 싶다면 계산식 조정
-      // 여기서는 back-to-top 위에 겹치지 않게 올리는 방식: bottom = offset + baseGap
-      chatBtn.style.bottom = (offset + baseGap) + 'px';
-      // z-index 안전값
-      chatBtn.style.zIndex = 1060;
-    }
-    if (chatBox) {
-      // 채팅 박스(열렸을 때) 위치도 보정
-      // chatBox이 chatBtn 위에 열리도록 충분히 위로 띄움 (예: offset + 100)
-      chatBox.style.bottom = (offset + 100) + 'px';
-      chatBox.style.zIndex = 1060;
-    }
-  }
-
-  // 초기 보정
-  document.addEventListener('DOMContentLoaded', adjustChatPosition);
-  // 창 크기/스크롤 변경 시 보정
-  window.addEventListener('resize', adjustChatPosition);
-  window.addEventListener('scroll', adjustChatPosition);
-
-  // 만약 back-to-top이 스크립트로 보였다/숨겼다 하면 MutationObserver로 모니터링
-  if (backBtn && window.MutationObserver) {
-    const mo = new MutationObserver(adjustChatPosition);
-    mo.observe(backBtn, { attributes: true, attributeFilter: ['style', 'class'] });
-  }
-
-  // 최초 실행(이미 DOM 로드된 경우)
-  adjustChatPosition();
-})();
-</script>
-<!-- ------------------채팅 관련 스크립트 끝---------------- -->
+	<!-- ------------------채팅 관련 스크립트 끝---------------- -->
 
 </body>
 

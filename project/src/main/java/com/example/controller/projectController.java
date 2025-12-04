@@ -101,16 +101,16 @@ public class projectController {
 		return "dashboard";
 	}
 	
-	@GetMapping("stock")
-	public String stock() {
-		return "stock";
-	}
-	
-	@GetMapping("item")
-	public String item() {
-		return "item";
-	}
-	
+	//@GetMapping("stock")
+	//public String stock() {
+	//	return "stock";
+	//}
+
+	//@GetMapping("item")
+	//public String item() { 
+	//	return "item"; 
+	//}
+	 
 	@GetMapping("order")
 	public String order() {
 		return "order";
@@ -119,11 +119,6 @@ public class projectController {
 	@GetMapping("/mypage")
 	public String mypage() {
 		return "mypage";
-	}
-	
-	@GetMapping("/orderhistory")
-	public String orderhistory() {
-		return "orderhistory";
 	}
 	
 	@GetMapping("/mycs")
@@ -135,11 +130,6 @@ public class projectController {
 	public String myqna() {
 		return "myqna";
 	}
-	
-	/*
-	 * @GetMapping("/ordercomplete") public String ordercomplete() { return
-	 * "ordercomplete"; }
-	 */
 	
 	@GetMapping("/mydelivery")
 	public String mydelivery() {
