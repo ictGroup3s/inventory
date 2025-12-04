@@ -22,7 +22,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<ProductVO> getItemList() {
-		return adminRepository.getItemList();
+		//System.out.println("[AdminServiceImpl] getItemList()");
+		return adminRepository.getItemList();		
 	}
 
 	@Override

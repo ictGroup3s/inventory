@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.model.CheckOutRepository;
-import com.example.vo.ordersVO;
+import com.example.model.vo.ordersVO;
 
 import lombok.extern.slf4j.Slf4j;
 
