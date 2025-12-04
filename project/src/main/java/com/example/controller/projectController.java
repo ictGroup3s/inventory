@@ -90,6 +90,10 @@ public class projectController {
 		return "selectSoup";
 	}
 
+	@GetMapping("selectRecipe")
+	public String selectRecipe() {
+		return "selectRecipe";
+	}
 
 	@GetMapping("board")
 	public String board() {
@@ -140,6 +144,15 @@ public class projectController {
 	
 	
 
+	@GetMapping("event1")
+	public String event1() {
+		return "event1";
+	}
+	
+	@GetMapping("event2")
+	public String event2() {
+		return "event2";
+	}
 	
 // 	통계 페이지(연도별*월별 매출 / 지출)	
 	@GetMapping("stats")

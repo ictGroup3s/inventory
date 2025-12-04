@@ -106,12 +106,19 @@
 		    <version>1.7.17</version>
 		</dependency>
 
+<<<<<<< HEAD
 <!--		<dependency>
+=======
+		<!--<dependency>
+>>>>>>> c8dcc47 (j)
 			<groupId>com.example</groupId>
 			<artifactId>eTransaction</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>-->
+<<<<<<< HEAD
 		
+=======
+>>>>>>> c8dcc47 (j)
 	</dependencies>
 
 	<build>
