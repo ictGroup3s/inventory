@@ -1,27 +1,49 @@
 package com.example.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+
+import com.example.model.vo.cartVO;
+import com.example.service.CheckOutService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Slf4j
 @Controller
 public class projectController {
 	
+	@Autowired
+	private CheckOutService service;
 	
 	@GetMapping("header")
 	public String header() {
 		return "header";
 	}
-	@GetMapping("cart")
-	public String cart() {
-		return "cart";
+	
+	@GetMapping("/cart")
+	public String selectCart(Model model) {
+		cartVO vo = new cartVO();
+		vo.setCustomer_id("1");
+		List<cartVO> cartList = service.selectCart(vo); // 여기서 cartList 선언!
+	    model.addAttribute("cartList", cartList);
+	    
+	    log.info("장바구니 목록: {}", cartList);
+	    return "cart";
 	}
+	@GetMapping("/cart/delete")
+	public String deleteCart(cartVO vo) {
+
+	    service.deleteCart(vo);  // 장바구니 삭제 로직 수행
+
+	    return "redirect:/cart";  // 삭제 후 다시 cart 페이지로 이동
+	}
+
 	
 	@GetMapping("shop")
 	public String shop() {
@@ -135,10 +157,6 @@ public class projectController {
 	public String mydelivery() {
 		return "mydelivery";
 	}
-	
-	
-	
-	
 
 	
 // 	통계 페이지(연도별*월별 매출 / 지출)	
