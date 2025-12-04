@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.domain.productVO;
+import com.example.model.CartRepository;
+import com.example.service.CartService;
 import com.example.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,11 +34,11 @@ public class projectController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private com.example.service.CartService cartService;
+    private CartService cartService;
     @Autowired
-    private com.example.model.CartRepository cartRepository;
+    private CartRepository cartRepository;
 	
-	
+/*
     @GetMapping("cart")
     public String cart(Model m, HttpSession session) {
         try {
@@ -134,7 +136,7 @@ public class projectController {
         resp.put("cartCount", totalCount);
         return resp;
     }
-
+*/
 // ----------------- ****** 추후 삭제 ******  개발용 디버그 엔드포인트 시작 -----------------------
 // TODO[DEV-CLEANUP]: 이 블록은 개발용 디버그 엔드포인트--
 // - `/cart/db`, `/cart/items-json`, `/whoami` 등은 진단용
