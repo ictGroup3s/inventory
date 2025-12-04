@@ -97,33 +97,16 @@
 			button.parent().parent().find('input').val(newVal);
 		});
 		//sidebar 클릭
-		const currentPath = window.location.pathname.split('/').pop();
+	const currentPath = window.location.pathname.split('/').pop();
 
-		$('.category-sidebar .nav-link').removeClass('active')
-			.each(function() {
-				const $el = $(this);
-				if ($el.attr('href') === currentPath) {
-					$el.addClass('active');
-				}
-			});
+	$('.category-sidebar .nav-link').removeClass('active') 
+		.each(function() {
+			const $el = $(this);
+			if ($el.attr('href') === currentPath) {
+				$el.addClass('active');
+			}
+		});
 
 	})
 
-	//상품 insert 사진 띄우기
-	$('#uploadFile').on('change', function(event) {
-		const file = event.target.files[0];
-		const $preview = $('#preview');
-
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = function(e) {
-				$preview.attr('src', e.target.result);
-				$preview.show();
-			}
-			reader.readAsDataURL(file);
-		} else {
-			$preview.attr('src', 'img/insert_pic.png'); // 기본 이미지로 복원
-		}
-	});
-
-})/*(jQuery);*/
+})(jQuery);
