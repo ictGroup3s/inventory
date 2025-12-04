@@ -4384,9 +4384,15 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 
 .card-body {
+<<<<<<< HEAD
 	flex: 1 1 auto;
 	min-height: 1px;
 	padding: 1.25rem;
+=======
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+>>>>>>> c8dcc47 (j)
 }
 
 .card-title {
@@ -9197,8 +9203,16 @@ a.text-dark:hover, a.text-dark:focus {
 	right: 0;
 }
 
+<<<<<<< HEAD
 .cat-item .cat-img img, .product-item .product-img img {
 	transition: .5s;
+=======
+.cat-item .cat-img img,
+.product-item .product-img img {
+	height: 250px;
+	object-fit: cover;   
+  transition: .5s;
+>>>>>>> c8dcc47 (j)
 }
 
 .cat-item:hover .cat-img img, .product-item:hover .product-img img {
