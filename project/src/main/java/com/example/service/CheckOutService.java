@@ -17,15 +17,4 @@ public class CheckOutService {
         return "MERCHANT_PAY_KEY_123456";
         
     }
-    // 결제 정보를 DB에 저장
-    @Transactional
-    public void savePayment(ordersVO vo) {
-
-        // 시퀀스 조회 (Mapper에서 처리)
-        Long seq = CheckOutMapper.getNextOrderId();
-        vo.setOrderId(seq);
-
-        // DB INSERT
-        CheckOutMapper.insertPayment(vo);
-    }
 }

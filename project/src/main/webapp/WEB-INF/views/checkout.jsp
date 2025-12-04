@@ -428,87 +428,89 @@
 	</div>
 
 	<script>
-	let selectedCard = null;
-
-	// 카드 선택 (이동 X, 선택만)
-	function selectCard(cardType) {
-	    selectedCard = cardType;
-	    document.getElementById('selectedCardDisplay').innerText = '선택한 카드: ' + cardType;
-	    
-	    // 선택한 버튼 스타일 변경
-	    document.querySelectorAll('.card-btn').forEach(btn => {
-	        btn.classList.remove('btn-primary');
-	        btn.classList.add('btn-outline-primary');
-	    });
-	    event.target.classList.remove('btn-outline-primary');
-	    event.target.classList.add('btn-primary');
-	}
-
-	// 결제진행 버튼 클릭시 이동
-	function processPayment() {
-	    if (!selectedCard) {
-	        alert('카드를 선택해주세요!');
-	        return;
-	    }
-	    
-	    // 세션스토리지에 저장
-	    sessionStorage.setItem('selectedCard', selectedCard);
-	    sessionStorage.setItem('amount', '38000');
-	    
-	    // 결제완료 페이지로 이동
-	    window.location.href = '/ordercomplete';
-	}
-
-	document.addEventListener('DOMContentLoaded', function() {
-	    const btnOpenModal = document.getElementById('btnOpenModal');
-	    const paymentRadios = document.querySelectorAll('input[name="payment"]');
-	    const bankRadio = document.getElementById('directcheck');
-	    const bankInfo = document.getElementById('bankInfo');
-
-	    // 결제하기 버튼 클릭
-	    btnOpenModal.addEventListener('click', function(e) {
-	        e.preventDefault();
-	        let selected = null;
-	        paymentRadios.forEach(radio => {
-	            if(radio.checked) selected = radio.id;
-	        });
-
-	        if(!selected) {
-	            alert('결제 방식을 선택해주세요!');
-	            return;
-	        }
-
-	        if(selected === 'paypal') {
-	            $('#payModal').modal('show'); // 카드결제 모달
-	        } else if(selected === 'directcheck') {
-	            bankInfo.style.display = 'block'; // 계좌이체
-	        }
-	    });
-
-	    // 계좌이체 선택 시 계좌번호 보이기
-	    paymentRadios.forEach(radio => {
-	        radio.addEventListener('change', function() {
-	            if(bankRadio.checked) {
-	                bankInfo.style.display = 'block';
-	            } else {
-	                bankInfo.style.display = 'none';
-	            }
-	        });
-	    });
-
-	    // 기타결제 버튼
-	    const naverBtn = document.getElementById('naverPayBtn');
-	    const kakaoBtn = document.getElementById('kakaoPayBtn');
-
-	    naverBtn.addEventListener('click', function() {
-	        window.location.href = '/naver';
-	    });
-
-	    kakaoBtn.addEventListener('click', function(e) {
-	        window.location.href = '/kakao';
-	    });
-	});
-	</script>
-
+			let selectedCard = null;
+			
+			// 카드 선택 (이동 X, 선택만)
+			function selectCard(cardType) {
+			    selectedCard = cardType;
+			    document.getElementById('selectedCardDisplay').innerText = '선택한 카드: ' + cardType;
+			    
+			    // 선택한 버튼 스타일 변경
+			    document.querySelectorAll('.card-btn').forEach(btn => {
+			        btn.classList.remove('btn-primary');
+			        btn.classList.add('btn-outline-primary');
+			    });
+			    event.target.classList.remove('btn-outline-primary');
+			    event.target.classList.add('btn-primary');
+			}
+			
+			// 결제진행 버튼 클릭시 이동
+			function processPayment() {
+			    if (!selectedCard) {
+			        alert('카드를 선택해주세요!');
+			        return;
+			    }
+			    
+			    // 세션스토리지에 저장
+			    sessionStorage.setItem('selectedCard', selectedCard);
+			    sessionStorage.setItem('amount', '38000');
+			    
+			    // 결제완료 페이지로 이동
+			    window.location.href = '/ordercomplete';
+			}
+			
+			document.addEventListener('DOMContentLoaded', function() {
+			    const btnOpenModal = document.getElementById('btnOpenModal');
+			    const paymentRadios = document.querySelectorAll('input[name="payment"]');
+			    const bankRadio = document.getElementById('directcheck');
+			    const bankInfo = document.getElementById('bankInfo');
+			
+			    // 결제하기 버튼 클릭
+			    btnOpenModal.addEventListener('click', function(e) {
+			        e.preventDefault();
+			        let selected = null;
+			        paymentRadios.forEach(radio => {
+			            if(radio.checked) selected = radio.id;
+			        });
+			
+			        if(!selected) {
+			            alert('결제 방식을 선택해주세요!');
+			            return;
+			        }
+			
+			        if(selected === 'paypal') {
+			            $('#payModal').modal('show'); // 카드결제 모달
+			        } else if(selected === 'directcheck') {
+			            // 계좌이체 선택 시
+			            sessionStorage.setItem('paymentMethod', '계좌이체');
+			            sessionStorage.setItem('amount', '38000');
+			            window.location.href = '/ordercomplete'; // 주문완료 페이지로 이동
+			        }
+			    }); // 여기가 btnOpenModal click 이벤트 닫는 괄호
+			
+			    // 계좌이체 선택 시 계좌번호 보이기
+			    paymentRadios.forEach(radio => {
+			        radio.addEventListener('change', function() {
+			            if(bankRadio.checked) {
+			                bankInfo.style.display = 'block';
+			            } else {
+			                bankInfo.style.display = 'none';
+			            }
+			        });
+			    });
+			
+			    // 기타결제 버튼
+			    const naverBtn = document.getElementById('naverPayBtn');
+			    const kakaoBtn = document.getElementById('kakaoPayBtn');
+			
+			    naverBtn.addEventListener('click', function() {
+			        window.location.href = '/naver';
+			    });
+			
+			    kakaoBtn.addEventListener('click', function(e) {
+			        window.location.href = '/kakao';
+			    });
+			});
+		</script>
 </body>
 </html>
