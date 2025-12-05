@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "projectMapper">
+	<select id="selectProductById" parameterType="int" resultType="productVO">
+		SELECT
+			item_no      AS item_no,
+			item_img     AS item_img,
+			item_name    AS item_name,
+			item_content AS item_content,
+			origin_p     AS origin_p,
+			sales_p      AS sales_p,
+			stock_cnt    AS stock_cnt,
+			cate_no      AS cate_no,
+			dis_no       AS dis_no
+		FROM product
+		WHERE item_no = #{item_no}
+	</select>
+    
+	<select id="selectAllProducts" resultType="productVO">
+		SELECT
+			item_no      AS item_no,
+			item_img     AS item_img,
+			item_name    AS item_name,
+			item_content AS item_content,
+			origin_p     AS origin_p,
+			sales_p      AS sales_p,
+			stock_cnt    AS stock_cnt,
+			cate_no      AS cate_no,
+			dis_no       AS dis_no
+		FROM product
+		ORDER BY item_no DESC
+	</select>
+
+	<select id="selectProducts" parameterType="map" resultType="productVO">
+		SELECT * FROM (
+			SELECT a.*, ROWNUM rn FROM (
+				SELECT
+					item_no      AS item_no,
+					item_img     AS item_img,
+					item_name    AS item_name,
+					item_content AS item_content,
+					origin_p     AS origin_p,
+					sales_p      AS sales_p,
+					stock_cnt    AS stock_cnt,
+					cate_no      AS cate_no,
+					dis_no       AS dis_no
+				FROM product
+				<where>
+					<if test="q != null and q != ''">
+						(item_name LIKE '%' || #{q} || '%' OR item_content LIKE '%' || #{q} || '%')
+					</if>
+					<if test="cate_no != null">
+						AND cate_no = #{cate_no}
+					</if>
+				</where>
+				<choose>
+					<when test="sort == 'price_asc'">ORDER BY sales_p ASC</when>
+					<when test="sort == 'price_desc'">ORDER BY sales_p DESC</when>
+					<otherwise>ORDER BY item_no DESC</otherwise>
+				</choose>
+			) a WHERE ROWNUM &lt;= #{offset} + #{size}
+		)
+		WHERE rn &gt; #{offset}
+	</select>
+
+	<select id="selectProductsCount" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM product
+		<where>
+			<if test="q != null and q != ''">
+				(item_name LIKE '%' || #{q} || '%' OR item_content LIKE '%' || #{q} || '%')
+			</if>
+			<if test="cate_no != null">
+				AND cate_no = #{cate_no}
+			</if>
+		</where>
+	</select>
+</mapper>
