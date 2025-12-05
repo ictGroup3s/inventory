@@ -44,6 +44,11 @@ public class projectController {
 		return "detail";
 	}
 	
+	@GetMapping("itemdetail")
+	public String itemdetail() {
+		return "itemdetail";
+	}
+	
 	@GetMapping("register")
 	public String register() {
 		return "register";

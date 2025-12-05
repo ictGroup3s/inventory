@@ -4,46 +4,34 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>주문관리</title>
+<title>주문내역</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Free HTML Templates" name="keywords">
-<meta content="Free HTML Templates" name="description">
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <!-- Font Awesome -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet">
-
-<!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
-	rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
-
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
-			<a href="/" class="text-decoration-none"> <img
-				src="\img\logo.png" class='logo' />
+			<a href="/" class="text-decoration-none">
+				<img src="\img\logo.png" class='logo' />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
 			<form action="">
 				<div class="input-group">
-					<input type="text" class="form-control"
-						placeholder="Search for products">
+					<input type="text" class="form-control" placeholder="Search for products">
 					<div class="input-group-append">
 						<span class="input-group-text bg-transparent text-primary">
 							<i class="fa fa-search"></i>
@@ -53,210 +41,261 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
-				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+			<a href="" class="btn border">
+				<i class="fas fa-heart text-primary"></i>
+				<span class="badge">0</span>
+			</a>
+			<a href="cart" class="btn border">
+				<i class="fas fa-shopping-cart text-primary"></i>
+				<span class="badge">0</span>
 			</a>
 		</div>
 	</div>
-	<!-- Topbar End -->
 
+	<!-- Main Layout -->
 	<div class="container-fluid">
-		<div class="row border-top px-xl-5">
-			<div class="col-lg-3 d-none d-lg-block">
-				<a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
-					data-toggle="collapse" href="#navbar-vertical"
-					style="height: 65px; margin-top: -1px; padding: 0 30px;">
-					<h6 class="m-0">마이 페이지</h6> <i class="fa fa-angle-down text-dark"></i>
-				</a>
-				<nav
-					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
-					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="" class="nav-item nav-link">주문현황 </a> <a href=""
-							class="nav-item nav-link">취소/반품/교환</a> <a href=""
-							class="nav-item nav-link">회원정보변경</a> <a href=""
-							class="nav-item nav-link">회원탈퇴</a> <a href=""
-							class="nav-item nav-link">최근본상품</a> <a href=""
-							class="nav-item nav-link">1:1 문의내역</a>
-
-
-					</div>
+		<div class="row px-xl-5">
+			<!-- Sidebar -->
+			<div class="col-lg-2">
+				<nav class="category-sidebar">
+					<h6>마이페이지</h6>
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link active">주문내역</a></li>
+						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link">취소/반품/교환내역</a></li>
+						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
+					</ul>
 				</nav>
 			</div>
-			<div class="" style="margin-left: 200px; height: auto">
-				<h2>주문현황</h2>
-				<hr />
-				<table align="center" width="600" height="100">
-					<tr>
-						<td><img src="img/주문확인.png"></td>
-						<td><img src="img/결제완료.png"></td>
-						<td><img src="img/상품준비.png"></td>
-						<td><img src="img/배송중.png"></td>
-						<td><img src="img/픽업완료.png"></td>
-					</tr>
-					<tr>
-						<td>주문확인>></td>
-						<td>결제완료>></td>
-						<td>상품준비>></td>
-						<td>배송중>></td>
-						<td>픽업완료>></td>
-					</tr>
-				</table>
-				<hr />
-				<h2 align='center'>최근 주문 배송내역</h2>
-				 <table class="table table-sm table-striped">
-					
-					<tr align="center">
-						<td>주문번호</td>
-						<td>상품명</td>
-						<td>결제금액</td>
-						<td>주문상태</td>
-						<td>취소/반품/교환</td>
-					</tr>
-					<tr height="30">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr height="30">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr height="30">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
 
-				</table>
+			<!-- Main Content -->
+			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
+				<div class="text-center mb-4">
+					<h4>주문내역</h4>
+				</div>
 
-
+				<div class="col-lg-10 mx-auto">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>주문번호</th>
+								<th>상품명</th>
+								<th>결제금액</th>
+								<th>주문상태</th>
+								<th>처리</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>10001</td>
+								<td>상품명1</td>
+								<td>10,000원</td>
+								<td>결제완료</td>
+								<td>
+									<button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#orderDetailModal">
+										상세보기
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-			<!-- Footer Start -->
-			<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-				<div class="row px-xl-5 pt-5">
-					<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-						<a href="" class="text-decoration-none">
-							<h1 class="mb-4 display-5 font-weight-semi-bold">
-								<span
-									class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-							</h1>
-						</a>
-						<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
-							ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-						<p class="mb-2">
-							<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
-							New York, USA
-						</p>
-						<p class="mb-2">
-							<i class="fa fa-envelope text-primary mr-3"></i>info@example.com
-						</p>
-						<p class="mb-0">
-							<i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890
-						</p>
-					</div>
-					<div class="col-lg-8 col-md-12">
-						<div class="row">
-							<div class="col-md-4 mb-5">
-								<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-								<div class="d-flex flex-column justify-content-start">
-									<a class="text-dark mb-2" href="index.html"><i
-										class="fa fa-angle-right mr-2"></i>Home</a> <a
-										class="text-dark mb-2" href="shop.html"><i
-										class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-										class="text-dark mb-2" href="detail.html"><i
-										class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-										class="text-dark mb-2" href="cart.html"><i
-										class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-										class="text-dark mb-2" href="checkout.html"><i
-										class="fa fa-angle-right mr-2"></i>Checkout</a> <a
-										class="text-dark" href="contact.html"><i
-										class="fa fa-angle-right mr-2"></i>Contact Us</a>
-								</div>
-							</div>
-							<div class="col-md-4 mb-5">
-								<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-								<div class="d-flex flex-column justify-content-start">
-									<a class="text-dark mb-2" href="index.html"><i
-										class="fa fa-angle-right mr-2"></i>Home</a> <a
-										class="text-dark mb-2" href="shop.html"><i
-										class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-										class="text-dark mb-2" href="detail.html"><i
-										class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-										class="text-dark mb-2" href="cart.html"><i
-										class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-										class="text-dark mb-2" href="checkout.html"><i
-										class="fa fa-angle-right mr-2"></i>Checkout</a> <a
-										class="text-dark" href="contact.html"><i
-										class="fa fa-angle-right mr-2"></i>Contact Us</a>
-								</div>
-							</div>
-							<div class="col-md-4 mb-5">
-								<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-								<form action="">
-									<div class="form-group">
-										<input type="text" class="form-control border-0 py-4"
-											placeholder="Your Name" required="required" />
-									</div>
-									<div class="form-group">
-										<input type="email" class="form-control border-0 py-4"
-											placeholder="Your Email" required="required" />
-									</div>
-									<div>
-										<button class="btn btn-primary btn-block border-0 py-3"
-											type="submit">Subscribe Now</button>
-									</div>
-								</form>
-							</div>
+		</div>
+	</div>
+
+	<!-- 주문 상세 모달 -->
+	<div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="orderDetailModalLabel">주문 상세내역</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- 주문 기본 정보 -->
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<strong>주문번호:</strong> 10001
+						</div>
+						<div class="col-md-6">
+							<strong>주문일자:</strong> 2025-12-01 14:30
 						</div>
 					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>주문상태:</strong> <span class="badge badge-warning" style="background-color:#EDF1FF; color: black;">결제완료</span>
+						</div>
+					</div>
+					
+					<hr>
+					
+					<!-- 상품 정보 -->
+					<h6 class="mb-3"><strong>주문 상품</strong></h6>
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>상품명</th>
+									<th>수량</th>
+									<th>가격</th>
+									<th>합계</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>상품명1</td>
+									<td>1개</td>
+									<td>10,000원</td>
+									<td>10,000원</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<hr>
+					
+					<!-- 결제 정보 -->
+					<h6 class="mb-3"><strong>결제 정보</strong></h6>
+					<div class="row mb-2">
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<strong>총 결제 금액:</strong>
+						</div>
+						<div class="col-md-6 text-right">
+							<h5 class="text-primary mb-0">13,000원</h5>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>결제 방법:</strong> 신용카드 (국민카드 **** **** **** 1234)
+						</div>
+					</div>
+					
+					<hr>
+					
+					<!-- 배송 정보 -->
+					<h6 class="mb-3"><strong>배송 정보</strong></h6>
+					<div class="row mb-2">
+						<div class="col-md-12">
+							<strong>받는 사람:</strong> 홍길동
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-12">
+							<strong>연락처:</strong> 010-1234-5678
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-12">
+							<strong>배송지:</strong> 서울시 강남구 테헤란로 123, 101호
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>배송 요청사항:</strong> 문 앞에 놓아주세요
+						</div>
+					</div>
+					
+					<hr>
+					
+					<!-- 주문 진행 상태 -->
+					<h6 class="mb-3"><strong>주문 진행 상태</strong></h6>
+					<ul class="mt-2">
+						<li>2025-12-01 15:00: 결제 완료</li>
+						<li>처리 예정일: 2025-12-02</li>
+					</ul>
 				</div>
-				<div class="row border-top border-light mx-xl-5 py-4">
-					<div class="col-md-6 px-xl-0">
-						<p class="mb-md-0 text-center text-md-left text-dark">
-							&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
-								Site Name</a>. All Rights Reserved. Designed by <a
-								class="text-dark font-weight-semi-bold"
-								href="https://htmlcodex.com">HTML Codex</a><br> Distributed
-							By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-						</p>
-					</div>
-					<div class="col-md-6 px-xl-0 text-center text-md-right">
-						<img class="img-fluid" src="img/payments.png" alt="">
-					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 				</div>
 			</div>
-			<!-- Footer End -->
+		</div>
+	</div>
+
+<!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
+				<div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
+           
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
+                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
+                <h2 class="mb-0">
+   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
+					</h2>
+                       </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
+                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
+                            <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
+                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
+                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a>
+                         </div>
+                    </div>
+                    <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-12 mt-4 mb-5">
+                        <p class="text-dark mb-2">
+                        <span>stockbob 소개</span>
+                            &nbsp;&nbsp; | &nbsp;&nbsp;
+                        <span>이용약관</span>
+                       		&nbsp; | &nbsp;
+                       	<span>개인정보처리방침</span>
+                       		&nbsp; | &nbsp;
+                       	<span>이용안내</span>
+                       	
+                       </p><br>
+                       <p style="color: #999;">
+                       법인명 (상호) : 주식회사 STOCKBOB<br>
+                       사업자등록번호 : 000-11-00000<br>
+						통신판매업 : 제 2025-서울-11111 호<br>
+						주소 : 서울특별시 서대문구 신촌동 00<br>
+						채용문의 : ict.atosoft.com<br>
+						팩스 : 070-0000-0000
+                       </p>
+                      </div>
+                    </div>
+                 
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
+                    by
+                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
+                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="img/payments.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
 
 
-			<!-- Back to Top -->
-			<a href="#" class="btn btn-primary back-to-top"><i
-				class="fa fa-angle-double-up"></i></a>
+	<!-- Back to Top -->
+	<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-			<!-- JavaScript Libraries -->
-			<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-			<script
-				src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-			<script src="lib/easing/easing.min.js"></script>
-			<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-			<!-- Contact Javascript File -->
-			<script src="mail/jqBootstrapValidation.min.js"></script>
-			<script src="mail/contact.js"></script>
-
-			<!-- Template Javascript -->
-			<script src="js/main.js"></script>
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
 </body>
-
-
 </html>
