@@ -12,8 +12,15 @@
 	</select>
 	
 	 <!-- DB 저장 -->
-	 <insert id="insert">
-		INSERT INTO customer (customer_id, name, pwd, phone, social_id, provider, email,role)
-		VALUES (#{customer_id},#{name},#{pwd},#{phone},#{social_id},#{provider}, #{email}, #{role})
+	 <insert id="insertCustomer" parameterType="com.example.model.vo.CustomerVO">
+		INSERT INTO customer (customer_id, pwd, name, social_id, provider, role, email, reg_date)
+					VALUES (
+					#{customer_id}, 
+					#{pwd}, 
+					#{name},
+					#{social_id},
+					#{provider},
+					0,
+					#{email} ,sysdate)
 	</insert>
 </mapper>
