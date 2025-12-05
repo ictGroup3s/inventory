@@ -132,22 +132,17 @@
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 								<a href ="">
-								<img src="img/생선구이.png" width="300px" height="300px"alt="">
+								<img src="img/가자미.png" width="300px" height="300px"alt="">
 								</a>
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">생선구이</h6>
-								<div class="d-flex justify-content-center">
-									<h6>$123.00</h6>
-									<h6 class="text-muted ml-2">
-										<del>$123.00</del>
-									</h6>
-								</div>
+								<h6 class="text-truncate mb-3">가자미구이>&nbsp;&nbsp;<span style="color:#666; margin-left:10px;">20,590원</span></h6>
+								
 							</div>
 							<div
 								class="card-footer d-flex justify-content-between bg-light border">
-								<a href="" class="btn btn-sm text-dark p-0"><i
+								<a href="detail" class="btn btn-sm text-dark p-0"><i
 									class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
 									class="btn btn-sm text-dark p-0"><i
 									class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
@@ -207,18 +202,20 @@
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4" style="width: 280px;">
+						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+								<a href ="">
+								<img src="img/생선구이.png" width="300px" height="300px"alt="">
+								</a>
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<h6 class="text-truncate mb-3">생선구이</h6>
 								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
+									<h6>$123.00</h6>
 									<h6 class="text-muted ml-2">
-										<del>29,800원</del>
+										<del>$123.00</del>
 									</h6>
 								</div>
 							</div>
@@ -257,18 +254,20 @@
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4" style="width: 280px;">
+						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/la갈비.png"width="300px" height="300px" alt="">
+								<a href ="">
+								<img src="img/생선구이.png" width="300px" height="300px"alt="">
+								</a>
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">양념 LA 갈비 750g, 1.5kg</h6>
+								<h6 class="text-truncate mb-3">생선구이</h6>
 								<div class="d-flex justify-content-center">
-									<h6>19,800원</h6>
+									<h6>$123.00</h6>
 									<h6 class="text-muted ml-2">
-										<del>29,800원</del>
+										<del>$123.00</del>
 									</h6>
 								</div>
 							</div>

@@ -25,7 +25,7 @@ public class LogController {
 
 	
 		// 로그인 처리
-	    @PostMapping("/login")
+	    @PostMapping("/loginAction")
 	    public String login(@RequestParam String login_id,
 	                        @RequestParam String login_pass,
 	                        HttpSession session,
