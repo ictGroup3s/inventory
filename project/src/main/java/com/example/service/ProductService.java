@@ -2,11 +2,11 @@ package com.example.service;
 
 import java.util.List;
 import java.util.Map;
-import com.example.domain.productVO;
+import com.example.model.vo.ProductVO;
 
 public interface ProductService {
-    productVO getProductById(Integer item_no);
-    List<productVO> getAllProducts();
-    List<productVO> getProducts(Map<String, Object> params);
+    ProductVO getProductById(Integer item_no);
+    List<ProductVO> getAllProducts();
+    List<ProductVO> getProducts(Map<String, Object> params);
     int getProductsTotal(Map<String, Object> params);
 }

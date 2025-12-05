@@ -37,7 +37,7 @@
 				<form action="selectall" method="get">
 					<div class="input-group">
 						<input type="text" name="q" class="form-control"
-							placeholder="Search for products" value="${q}">
+							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 						<div class="input-group-append">
 							<button class="input-group-text bg-transparent text-primary" type="submit">
 								<i class="fa fa-search"></i>
@@ -103,6 +103,7 @@
 					<div class="col-12 pb-1">
 						<div class="d-flex align-items-center justify-content-between mb-4">
 							<form action="selectall" method="get">
+							<!--  아래 검색창
 								<div class="input-group">
 									<input type="text" name="q" class="form-control"
 										placeholder="Search by name" value="${q}">
@@ -112,6 +113,7 @@
 										</button>
 									</div>
 								</div>
+							 -->	
 								<input type="hidden" name="size" value="${size}" />
 							</form>
 							<div class="dropdown ml-4">

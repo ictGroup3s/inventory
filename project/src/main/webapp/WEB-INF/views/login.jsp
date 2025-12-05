@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,25 +76,24 @@
 			</div>
 		</div>
 	</div>
-
+<c:if test="${not empty message}">
+    <script>
+        alert('${message}');
+    </script>
+</c:if>
 	<!-- Login Form -->
 	<div class="container mb-5">
 		<div class="login-card">
 
 			<h3 class="text-center login-title">로그인</h3>
+			
 
-<!--          ------------  개발용 ***  나중에 삭제 *****-------------------------     -->
-			<form action="/doLogin" method="post">
-			<!-- 기존 필드: id, pwd 등 -->
-				<input type="text" name="customer_id" />
-				<input type="password" name="pwd" />
-				<label><input type="checkbox" name="remember" value="1"> 로그인 유지</label>
-				<button type="submit">로그인</button>
-			</form>
-<!--          ------------  개발용 ***  나중에 삭제 *****-------------------------     -->
-		  
-<!-- 
-			<form action="loginAction" method="post">
+			<form action="login" method="post">
+			 <!-- 로그인 실패 메시지 -->
+			    <c:if test="${not empty loginError}">
+			        <div class="alert alert-danger">${loginError}</div>
+			    </c:if>
+						
 				<div class="form-group">
 					<label>아이디</label> <input type="text" name="login_id"
 						class="form-control" placeholder="아이디를 입력해주세요" required>
@@ -105,7 +105,8 @@
 				</div>
 
 				<div class="text-right mb-2">
-					<a href="#">아이디 찾기 / 비밀번호 찾기</a>
+					<a href="find">아이디 찾기 / 비밀번호 찾기</a>
+					
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-block py-2">로그인</button>
@@ -113,7 +114,7 @@
 				<button type="button" onclick="location.href='register'"
 					class="btn btn-outline-primary btn-block py-2 mt-2">회원가입</button>
 			</form>
--->
+
 			<hr class="my-4">
 
 			<!-- Social Login -->

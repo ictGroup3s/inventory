@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.domain.productVO;
+import com.example.model.vo.ProductVO;
 import com.example.model.ProductRepository;
 
 @Service
@@ -16,17 +16,17 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public productVO getProductById(Integer item_no) {
+    public ProductVO getProductById(Integer item_no) {
         return productRepository.selectProductById(item_no);
     }
 
     @Override
-    public List<productVO> getAllProducts() {
+    public List<ProductVO> getAllProducts() {
         return productRepository.selectAllProducts();
     }
 
     @Override
-    public List<productVO> getProducts(Map<String, Object> params) {
+    public List<ProductVO> getProducts(Map<String, Object> params) {
         return productRepository.selectProducts(params);
     }
 

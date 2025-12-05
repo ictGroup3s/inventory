@@ -7,7 +7,7 @@
 			moveSlides: 1,
 			pager: false,
 			controls: true,
-			pause: 3000,
+			pause: 2000,
 			speed: 100,
 			infiniteLoop: true,
 			minSlides: 2,      // 최소 보여줄 슬라이드
@@ -30,7 +30,7 @@
 		});
 
 
-		// 제휴사(벤더) 캐러셀
+		// Vendor carousel
 		$('.vendor-carousel').owlCarousel({
 			loop: true,
 			margin: 29,
@@ -57,7 +57,7 @@
 		});
 
 
-		// 관련 상품 캐러셀
+		// Related carousel
 		$('.related-carousel').owlCarousel({
 			loop: true,
 			margin: 29,
@@ -80,13 +80,22 @@
 			}
 		});
 
-	// 수량 +- 버튼 동작은 AJAX 업데이트와 서버 동기화를 보장하기 위해 페이지별(cart.jsp)로 처리
-	// ensure AJAX updates and server-side sync. The generic handler that
-	// modified inputs globally caused duplicate/different increments
-	// and interfered with the cart page handlers, producing incorrect
-	// quantities (e.g. showing 2 after delete). Remove the global
-	// handler and let page-specific scripts manage quantity changes.
-		
+
+		// Product Quantity
+		$('.quantity button').on('click', function() {
+			var button = $(this);
+			var oldValue = button.parent().parent().find('input').val();
+			if (button.hasClass('btn-plus')) {
+				var newVal = parseFloat(oldValue) + 1;
+			} else {
+				if (oldValue > 0) {
+					var newVal = parseFloat(oldValue) - 1;
+				} else {
+					newVal = 0;
+				}
+			}
+			button.parent().parent().find('input').val(newVal);
+		});
 		//sidebar 클릭
 	const currentPath = window.location.pathname.split('/').pop();
 

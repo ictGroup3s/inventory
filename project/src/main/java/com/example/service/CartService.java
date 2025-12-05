@@ -4,7 +4,7 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 
-import com.example.domain.CartItemVO;
+import com.example.model.vo.CartItemVO;
 
 public interface CartService {
     void addToCart(Integer itemNo, int qty, HttpSession session) throws Exception;

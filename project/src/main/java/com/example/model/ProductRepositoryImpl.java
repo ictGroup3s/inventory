@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.example.domain.productVO;
+import com.example.model.vo.ProductVO;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -18,17 +18,17 @@ public class ProductRepositoryImpl implements ProductRepository {
     private SqlSessionTemplate sess;
 
     @Override
-    public productVO selectProductById(Integer item_no) {
+    public ProductVO selectProductById(Integer item_no) {
         return sess.selectOne(NAMESPACE + "selectProductById", item_no);
     }
 
     @Override
-    public List<productVO> selectAllProducts() {
+    public List<ProductVO> selectAllProducts() {
         return sess.selectList(NAMESPACE + "selectAllProducts");
     }
 
     @Override
-    public List<productVO> selectProducts(Map<String, Object> params) {
+    public List<ProductVO> selectProducts(Map<String, Object> params) {
         return sess.selectList(NAMESPACE + "selectProducts", params);
     }
 

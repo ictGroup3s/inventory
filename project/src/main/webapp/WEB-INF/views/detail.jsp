@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-  pageEncoding="UTF-8"%>
+  pageEncoding="UTF-8"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -9,6 +9,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
@@ -71,70 +73,89 @@ body {
 }
 </style>
 
+
+<!-- bxSlider CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
 </head>
 <body>
+<!-- ############## 로고 + 검색 + 장바구니 ############################## -->
+	<div class="row align-items-center py-3 px-xl-5">
+		<div class="col-lg-3 d-none d-lg-block">
+			<a href="/" class="text-decoration-none"> <img
+				src="\img\logo.png" class='logo' />
+			</a>
+		</div>
+		<div class="col-lg-6 col-6 text-left">
+			<form action="">
+				<div class="input-group">
+					<input type="text" class="form-control"
+						placeholder="Search for products">
+					<div class="input-group-append">
+						<span class="input-group-text bg-transparent text-primary">
+							<i class="fa fa-search"></i>
+						</span>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-lg-3 col-6 text-right">
+			<a href="#" class="btn border"> <i
+				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+			</a> <a href="cart" class="btn border"> <i
+				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+			</a>
+		</div>
+	</div>
+	</div>
+	<!-- Topbar End -->
 
-<div class="content">
-  <!-- ================= 로고 + 검색 + 장바구니 ================= -->
-  <div class="row align-items-center py-3 px-xl-5">
-    <div class="col-lg-3 d-none d-lg-block">
-      <a href="/" class="text-decoration-none">
-        <img src="img/logo.png" class="logo" />
-      </a>
-    </div>
-    <div class="col-lg-6 col-6 text-left">
-      <form action="">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for products">
-          <div class="input-group-append">
-            <span class="input-group-text bg-transparent text-primary"><i class="fa fa-search"></i></span>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="col-lg-3 col-6 text-right">
-      <a href="#" class="btn border"><i class="fas fa-heart text-primary"></i> <span class="badge">0</span></a>
-      <a href="cart" class="btn border"><i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span></a>
-    </div>
-  </div>
 
-  <!-- ================= Sidebar + Navbar + Shop Detail ================= -->
-  <div class="container-fluid px-xl-5">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-lg-2 col-md-12 d-none d-lg-block">
-        <nav class="category-sidebar">
-          <h6 class="p-3">상품 카테고리</h6>
-          <ul class="nav flex-column">
-            <li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
-            <li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-            <li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
-            <li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
-            <li class="nav-item"><a href="selectBunsik" class="nav-link">분식．간식</a></li>
-            <li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-            <li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
-          </ul>
-        </nav>
-      </div>
+	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
+	<div class="container-fluid">
+		<div class="row border-top px-xl-5">
+			<div class="col-lg-3 d-none d-lg-block">
+				<a
+					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
+					data-toggle="collapse" href="#navbar-vertical"
+					style="height: 65px; margin-top: -1px; padding: 0 30px;">
+					<h6 class="m-0">Categories</h6> <i
+					class="fa fa-angle-down text-dark"></i>
+				</a>
+				<nav
+					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
+					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
+					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
+						<a href="selectall" class="nav-item nav-link">전체상품</a> <a href="selectGui"
+							class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a href="selectSoup"
+							class="nav-item nav-link">국 ．밥 ．면</a> <a href="selectDiet"
+							class="nav-item nav-link"> 식단관리 </a> <a href="selectBunsik"
+							class="nav-item nav-link">분식 ．간식</a> <a href="selectBanchan"
+							class="nav-item nav-link">반찬 ．소스</a> <a href="selectdrink"
+							class="nav-item nav-link">생수 ．음료</a> 
+					</div>
+				</nav>
+			</div>
+			<div class="col-lg-9">
+				<nav
+					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+					<a href="/" class="text-decoration-none d-block d-lg-none"> <img
+						src="\img\logo.png" class='logo' />
+					</a>
+					<button type="button" class="navbar-toggler" data-toggle="collapse"
+						data-target="#navbarCollapse">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
 
-      <!-- Main Content -->
-      <div class="col-lg-10 col-md-12">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-          <a href="/" class="text-decoration-none d-block d-lg-none">
-            <img src="img/logo.png" class="logo" />
-          </a>
-          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-            <div class="navbar-nav ml-auto py-0">
-              <a href="login" class="nav-item nav-link">로그인</a>
-              <a href="register" class="nav-item nav-link">회원가입</a>
-              <a href="board" class="nav-item nav-link">고객센터</a>
-            </div>
-          </div>
-        </nav>
+						<div class="navbar-nav ml-auto py-0">
+							<a href="login" class="nav-item nav-link">로그인</a> 
+							<a href="register" class="nav-item nav-link">회원가입</a> 
+							<a href="board" class="nav-item nav-link">고객센터</a>
+						</div>
+					</div>
+				</nav>
 
         <!-- Shop Detail -->
         <div class="container py-5">
