@@ -121,6 +121,7 @@
 	                     <c:if test="${not empty sessionScope.loginUser}">
 							<span class="nav-item nav-link">안녕하세요, 
 							 ${sessionScope.loginUser.customer_id}님!</span>
+						 
 						  
 						   <c:if test="${sessionScope.loginRole == 0}">
 						    <a href="mypage" class="nav-item nav-link">마이페이지</a>
@@ -129,13 +130,10 @@
 						    <c:if test="${sessionScope.loginRole == 1}">
 					        <a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
 					    	</c:if>
-					 	
-			<c:if test="${empty sessionScope.loginUser}">
-		    <a href="<c:url value='/login'/>" class="nav-item nav-link">로그인</a>
-		    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=http://localhost:8080/oauth/google/callback&response_type=code&scope=email%20profile">
-		        <img src="/img/google.png" alt="Google 로그인" style="height:24px;"/>
-		    </a>
-						</c:if>		                           
+				              <!-- 로그아웃 링크 -->
+    						<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+  						</c:if>                
                         </div>
                     </div>
                 </nav>

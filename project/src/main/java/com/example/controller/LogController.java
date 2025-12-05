@@ -16,14 +16,14 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class LogController {
 
+	
 	private final LogService logservice;
 
-	 
 	public LogController(LogService logservice) {
 		 this.logservice = logservice;
-		
-	 }
+	}
 
+	
 		// 로그인 처리
 	    @PostMapping("/login")
 	    public String login(@RequestParam String login_id,
