@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -27,4 +28,35 @@
 		WHERE customer_id = #{customer_id}
 	</select>
 
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.model.UserRepository">
+
+	<!--  회원가입 -->
+	<insert id="registerUser" parameterType="com.example.model.vo.CustomerVO">
+		INSERT INTO customer(
+			role,customer_id, name, pwd, phone, email, addr, admin_bnum, reg_date)
+		VALUES(
+		  #{role},
+		  #{customer_id},
+	      #{name},
+	      #{pwd},
+	      #{phone},
+	      #{email, jdbcType=VARCHAR},
+	      #{addr, jdbcType=VARCHAR},
+	      #{admin_bnum, jdbcType=NUMERIC},
+	      SYSDATE
+		)
+	</insert>
+
+	<!--  아이디 중복 체크 -->
+	<select id="checkId" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM customer 
+		WHERE customer_id = #{customer_id}
+	</select>
+
+>>>>>>> b91594d1901f5462bbf72445278a27381562ec15
 </mapper>
