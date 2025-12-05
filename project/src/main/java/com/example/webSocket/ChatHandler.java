@@ -17,7 +17,6 @@ import com.example.model.vo.ChatVO;
 import com.example.service.ChatService;
 
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
 
 @Component
 @RequiredArgsConstructor
@@ -36,10 +35,10 @@ public class ChatHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         ChatMessage chatMsg = ChatMessage.fromJson(payload);
 
-        // 파일 저장
+        // 1. 채팅 파일 저장
         String fileName = saveMessageToFile(chatMsg);
 
-        // DB 저장
+        // 2. DB 기록
         ChatVO chatVO = new ChatVO();
         chatVO.setCustomer_id(chatMsg.getCustomerId());
         chatVO.setAdmin_id(chatMsg.getAdminId());
@@ -48,7 +47,7 @@ public class ChatHandler extends TextWebSocketHandler {
         chatVO.setRead_flag("N");
         chatService.saveChat(chatVO);
 
-        // 모든 세션에 메시지 전송
+        // 3. 모든 세션에 메시지 전송
         TextMessage sendMsg = new TextMessage(payload);
         for (WebSocketSession s : sessions) {
             if (s.isOpen()) {
@@ -86,7 +85,7 @@ public class ChatHandler extends TextWebSocketHandler {
         }
 
         public static ChatMessage fromJson(String json) {
-            JSONObject obj = new JSONObject(json);
+            org.json.JSONObject obj = new org.json.JSONObject(json);
             ChatMessage msg = new ChatMessage();
             msg.customerId = obj.optString("customerId", null);
             msg.adminId = obj.optString("adminId", null);

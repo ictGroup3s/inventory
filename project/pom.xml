@@ -109,15 +109,18 @@
 		    <artifactId>netty-socketio</artifactId>
 		    <version>1.7.17</version>
 		</dependency>
-
-<<<<<<< HEAD
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		
 		<dependency>
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20230227</version>
 		</dependency>
-=======
->>>>>>> b91594d1901f5462bbf72445278a27381562ec15
+
 	</dependencies>
 
 	<build>
