@@ -16,15 +16,14 @@ public class AdminChatController {
         this.chatService = chatService;
     }
 
-    // ----------------- 관리자 채팅방 목록 -----------------
+    // 관리자 채팅방 목록
     @GetMapping("/rooms")
     public List<ChatVO> getChatRooms(@RequestParam String adminId) {
         return chatService.getChatRooms(adminId, "admin");
     }
-    
-    //관리자
-    // ----------------- 관리자 채팅 기록 -----------------
-    @GetMapping("/admin/chat/history/{chatNo}") 
+
+    // 이전 채팅 불러오기 (관리자용)
+    @GetMapping("/history/{chatNo}") 
     public ChatVO getChatHistory(@PathVariable Integer chatNo) {
         return chatService.getChatById(chatNo);
     }

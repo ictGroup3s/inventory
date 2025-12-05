@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/chat")
 @RequiredArgsConstructor
-public class ChatController {
+public class UserChatController {
 
     private final ChatService chatService;
 
@@ -29,9 +29,8 @@ public class ChatController {
         return chatService.getChatRooms(userId, role);
     }
 
-    // 이전 채팅 불러오기
-    // 고객
-    @GetMapping("/chat/history/{chatNo}")
+    // 이전 채팅 불러오기 (고객용)
+    @GetMapping("/history/{chatNo}")
     public ChatVO getChatHistory(@PathVariable Integer chatNo) {
         return chatService.getChatById(chatNo);
     }
