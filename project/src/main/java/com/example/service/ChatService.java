@@ -1,7 +1,6 @@
 package com.example.service;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -14,25 +13,27 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatService {
 
-    private final ChatRepository chatRepo;
+    private final ChatRepository chatRepository;
 
-    // 채팅 저장 로직 (파일 + DB)
-    public void saveChat(ChatVO vo) throws Exception {
+    // ChatRepository에 findRoleByUserId가 추가되어 정상 호출됩니다.
+    public String getUserRole(String userId) {
+        return chatRepository.findRoleByUserId(userId);
+    }
 
-        // 1) 채팅 내용 txt 저장
-        String folder = "C:/chat_files/";
-        File dir = new File(folder);
-        if (!dir.exists()) dir.mkdirs();
+    public List<ChatVO> getChatRooms(String userId, String role) {
+        if("customer".equals(role)) {
+            return chatRepository.findRoomsByCustomer(userId);
+        } else {
+            return chatRepository.findRoomsByAdmin(userId);
+        }
+    }
 
-        String fileName = "chat_" + vo.getCustomer_id() + ".txt";
-        String filePath = folder + fileName;
+    // ChatRepository의 findChatByNo가 findChatById로 변경되어 정상 호출됩니다.
+    public ChatVO getChatById(Integer chatNo) {
+        return chatRepository.findChatById(chatNo);
+    }
 
-        FileWriter fw = new FileWriter(filePath, true);
-        //fw.write(vo.getMessage() + "\n");
-        fw.close();
-
-        // 2) DB 저장
-        vo.setChat_file(fileName);
-        chatRepo.saveChat(vo);
+    public void saveChat(ChatVO chatVO) {
+        chatRepository.saveChat(chatVO);
     }
 }

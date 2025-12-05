@@ -4952,7 +4952,7 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-dark .alert-link {
-  color: black;
+	color: black;
 }
 
 @keyframes progress-bar-stripes {
@@ -6035,6 +6035,7 @@ a.close.disabled {
     transform: rotate(360deg);
   }
 }
+
 
 .spinner-border {
   display: inline-block;

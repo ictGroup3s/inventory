@@ -507,44 +507,41 @@
     </div>
     <!-- Footer End -->
 
-    <!-- Back to Top -->
+   <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
 <!-- ------------------채팅 관련 추가---------------- -->
+	<!-- ▣ 채팅 목록 박스 -->
+	<div id="chat-list-box" class="chat-list-box" style="display: none;">
+		<div class="chat-list-header">나의 채팅 목록</div>
+		<div id="chat-list" class="chat-list"></div>
+	</div>
 
-	<div id="chat-box" class="chat-box">
+	<!-- ▣ 채팅창 -->
+	<div id="chat-box" class="chat-box" style="display: none;">
 		<div class="chat-header">
-			상담 채팅 <span id="chat-close">✕</span>
+			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> 
+			<span>상담채팅</span> <span id="chat-close" class="chat-header-close">✕</span>
 		</div>
+
 		<div id="chat-messages" class="chat-messages"></div>
+
 		<div class="chat-input">
 			<input type="text" id="chat-text" placeholder="메시지 입력...">
 			<button id="chat-send">Send</button>
 		</div>
 	</div>
 
+	<!-- ▣ 채팅 열기 버튼 -->
 	<button id="chat-open" class="chat-open-btn">💬</button>
-	<!-- 채팅 버튼 -->
-	<!-- <button id="chatToggle" class="chat-button" title="문의">💬</button>
+
+
 	
-	  채팅 박스 (초기에는 숨김)
-	  <div id="chatBox" class="chat-box" role="dialog" aria-hidden="true" aria-label="고객 상담">
-	    <div class="chat-header">
-	      <span>관리자 채팅</span>
-	      <button id="closeBtn" style="background:none;border:none;color:#fff;font-size:16px">✕</button>
-	    </div>
-	    <div id="messages" class="chat-messages"></div>
-	    <div class="chat-input">	      
-	      <input id="messageInput" type="text" placeholder="메시지를 입력하세요..." />
-	      <button id="sendBtn">전송</button>
-	    </div>
-	  </div> -->
-	<!-- ------------------채팅 관련 ---------------- -->
+	
+	
 
 	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
@@ -554,16 +551,15 @@
 
 	<!-- Javascript -->
 	<script src="js/main.js"></script>
-	<script src="js/chat.js"></script>
+	<!-- 채팅 JS -->
+	<script src="/js/chat.js?v=1"></script>
 
 	<!-- SockJS + StompJS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
-<!--  
-
-	<!-- ------------------채팅 관련 스크립트 끝---------------- -->
+	
 
 </body>
 
