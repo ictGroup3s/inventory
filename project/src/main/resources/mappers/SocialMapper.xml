@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.model.SocialMapper">
+
+	<!-- social_id + provider로 조회 -->
+	<select id="selectBySocialId" resultType="com.example.model.vo.CustomerVO">
+		SELECT *
+		FROM customer
+		WHERE social_id = #{social_id} AND provider = #{provider}
+	</select>
+	
+	 <!-- DB 저장 -->
+	 <insert id="insert">
+		INSERT INTO customer (customer_id, name, pwd, phone, social_id, provider, email,role)
+		VALUES (#{customer_id},#{name},#{pwd},#{phone},#{social_id},#{provider}, #{email}, #{role})
+	</insert>
+</mapper>
