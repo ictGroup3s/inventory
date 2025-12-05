@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.example.model.LogRepository">
+
+	<!-- 로그인 -->
+	<select id="loginUser" resultType="com.example.model.vo.CustomerVO">
+	   	SELECT customer_id,pwd,name,phone,role
+	   	FROM customer
+	   	WHERE customer_id = #{customer_id} AND pwd = #{pwd}
+	</select>
+
+	 <!-- 이름 + 전화번호로 아이디 조회 -->
+	<select id="findByNameAndPhone" resultType="com.example.model.vo.CustomerVO">
+		SELECT customer_id, name, phone
+		FROM customer
+		WHERE name = #{name} AND phone = #{phone}
+	
+	</select>
+	 <!-- 아이디 + 전화번호로 회원 조회 -->
+	<select id="findByIdAndPhone" resultType="com.example.model.vo.CustomerVO">
+		SELECT *
+		FROM customer
+		WHERE customer_id = #{customer_id} AND phone = #{phone}
+	
+	</select>
+	
+	<!-- 임시 비밀번호 업데이트 -->
+	<update id="updatePwd" parameterType="com.example.model.vo.CustomerVO">
+		UPDATE customer
+		SET pwd = #{pwd}
+		WHERE customer_id = #{customer_id}
+	</update>
+</mapper>

@@ -141,7 +141,7 @@
 						</div>
 
 						<div class="col-lg-6 col-md-12">
-							<div class="row" style="margin-top:30px">
+							<div class="row">
 								<div class="col-6 mb-3">
 									<div class="card h-100">
 										<div class="card-body text-center">

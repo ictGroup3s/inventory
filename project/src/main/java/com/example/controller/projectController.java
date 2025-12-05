@@ -13,11 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class projectController {
 	
-	
-	@GetMapping("header")
-	public String header() {
-		return "header";
-	}
 	@GetMapping("cart")
 	public String cart() {
 		return "cart";

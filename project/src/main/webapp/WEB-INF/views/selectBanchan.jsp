@@ -132,12 +132,12 @@
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 								<a href ="">
-								<img src="img/반찬.png" width="300px" height="300px"alt="">
+								<img src="img/생선구이.png" width="300px" height="300px"alt="">
 								</a>
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-								<h6 class="text-truncate mb-3">진미채볶음</h6>
+								<h6 class="text-truncate mb-3">생선구이</h6>
 								<div class="d-flex justify-content-center">
 									<h6>$123.00</h6>
 									<h6 class="text-muted ml-2">
@@ -158,7 +158,7 @@
 						<div class="card product-item border-0 mb-4" style="width: 280px;">
 							<div
 								class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-								<img src="img/.png" width="300px" height="300px" alt="">
+								<img src="img/소곱창.png" width="300px" height="300px" alt="">
 							</div>
 							<div
 								class="card-body border-left border-right text-center p-0 pt-4 pb-3">
