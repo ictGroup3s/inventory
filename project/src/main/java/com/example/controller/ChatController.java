@@ -30,7 +30,8 @@ public class ChatController {
     }
 
     // 이전 채팅 불러오기
-    @GetMapping("/history/{chatNo}")
+    // 고객
+    @GetMapping("/chat/history/{chatNo}")
     public ChatVO getChatHistory(@PathVariable Integer chatNo) {
         return chatService.getChatById(chatNo);
     }
