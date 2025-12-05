@@ -95,6 +95,9 @@
 
 				<div class="text-right mb-2">
 					<a href="find">아이디 찾기 / 비밀번호 찾기</a>
+
+					<a href="#">아이디 찾기 / 비밀번호 찾기</a>
+
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-block py-2">로그인</button>
