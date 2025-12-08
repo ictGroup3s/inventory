@@ -15,4 +15,3 @@ public interface UserRepository{
 		void registerUser(CustomerVO customer); // Mapper XML에 id="registerUser"와 매핑
 		
 	}
-

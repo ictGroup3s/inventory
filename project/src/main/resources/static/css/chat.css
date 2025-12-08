@@ -1,3 +1,4 @@
+/* ▣ 채팅창 */
 .chat-box {
     width: 300px;
     height: 380px;
@@ -7,46 +8,130 @@
     bottom: 90px;
     right: 30px;
     display: none;
+    flex-direction: column;
     border-radius: 10px;
     box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
 
+/* ▣ 채팅 열기 버튼 */
 .chat-open-btn {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: #0d6efd;
+    background: #D19C97;
     color: white;
     border: none;
     width: 55px;
     height: 55px;
     border-radius: 50%;
     font-size: 25px;
+    cursor: pointer;
 }
 
+/* ▣ 채팅 헤더 */
 .chat-header {
-    background: #0d6efd;
+    background: #D19C97;
     color: white;
     padding: 10px;
     border-radius: 10px 10px 0 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+.chat-header-btn {
+    cursor: pointer;
+}
+.chat-header-close {
+    cursor: pointer;
 }
 
+/* ▣ 채팅 메시지창 */
 .chat-messages {
-    height: 280px;
+    flex: 1;
     padding: 10px;
     overflow-y: auto;
-    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
+/* ▣ 채팅 입력 */
 .chat-input {
     display: flex;
+    border-top: 1px solid #ccc;
 }
 .chat-input input {
     flex: 1;
     padding: 5px;
+    border: none;
+    outline: none;
 }
 .chat-input button {
     padding: 5px 10px;
+    border: none;
+    background: #D19C97;
+    color: white;
+    cursor: pointer;
+}
+
+/* ▣ 메시지 스타일 */
+.message {
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+/* 내가 보낸 메시지 */
+.message.self {
+    background-color: #e0e0e0;
+    color: #000;
+    align-self: flex-end;
+}
+
+/* 상대가 보낸 메시지 */
+.message.other {
+    background-color: #D19C97;
+    color: #fff;
+    align-self: flex-start;
+}
+.message .time {
+    font-size: 0.7em;
+    color: #555;
+    margin-right: 5px;
+}
+
+/* ▣ 채팅 목록 박스 */
+.chat-list-box {
+    width: 200px;
+    max-height: 380px;
+    overflow-y: auto;
+    position: fixed;
+    bottom: 90px;
+    right: 350px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: none;
+    flex-direction: column;
+}
+
+.chat-list-header {
+    background: #D19C97;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.chat-list .chat-room {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.chat-list .chat-room:hover {
+    background: #f5f5f5;
 }

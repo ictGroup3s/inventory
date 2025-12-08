@@ -34,12 +34,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		 <!--WebSocket (STOMP 지원)--> 
+		 <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		</dependency>
+		
 		  <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		</dependency>
+		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-websocket</artifactId>
-		  </dependency>
+		</dependency>
 		  
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -47,6 +56,12 @@
 			<version>3.0.5</version>
 		</dependency>
 
+		<!-- Spring Security
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -74,7 +89,7 @@
 			<version>3.0.5</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- jsp 라이브러리 -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -98,20 +113,13 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-		
+
 		<!-- Socket.IO-->
 		<dependency>
 		    <groupId>com.corundumstudio.socketio</groupId>
 		    <artifactId>netty-socketio</artifactId>
 		    <version>1.7.17</version>
 		</dependency>
-
-<!--		<dependency>
-			<groupId>com.example</groupId>
-			<artifactId>eTransaction</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>-->
-		
 	</dependencies>
 
 	<build>
