@@ -1,22 +1,39 @@
 package com.example.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.*;
+import com.example.model.vo.ProductVO;
+import com.example.model.vo.CartItemVO;
+import com.example.model.CartRepository;
+import com.example.service.CartService;
+import com.example.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import java.net.URLEncoder;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class projectController {
-	
-	@GetMapping("cart")
-	public String cart() {
-		return "cart";
-	}
+    @Autowired
+    private ProductService productService;    
 	
 	@GetMapping("shop")
 	public String shop() {
@@ -34,73 +51,186 @@ public class projectController {
 		return "header";
 	}
 	
-	@GetMapping("selectall")
-	public String selectall() {
-		return "selectall";
+	@GetMapping("login")
+	public String login() {
+		return "login";
 	}
+    // 전체 상품 조회 페이지, 검색, 정렬
+    @GetMapping("selectall")
+    public String selectall(Model m,
+                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                            @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                            @RequestParam(value = "q", required = false) String q,
+                            @RequestParam(value = "sort", required = false) String sort) {
+        try {
+            int safePage = Math.max(page, 1);  //
+            int safeSize = Math.max(size, 1);
+            int offset = (safePage - 1) * safeSize;
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("offset", offset);
+            params.put("size", safeSize);
+            params.put("q", q);
+            params.put("sort", sort);
+
+            List<ProductVO> products = productService.getProducts(params);
+            int total = productService.getProductsTotal(params);
+            int totalPages = (int) Math.ceil(total / (double) safeSize);
+
+            m.addAttribute("products", products);
+            m.addAttribute("page", safePage);
+            m.addAttribute("size", safeSize);
+            m.addAttribute("total", total);
+            m.addAttribute("totalPages", totalPages);
+            m.addAttribute("q", q);
+            m.addAttribute("sort", sort);
+        } catch (Exception e) {
+            log.warn("Failed to load products with pagination", e);
+            m.addAttribute("products", new ArrayList<>());
+            m.addAttribute("page", 1);
+            m.addAttribute("size", 9);
+            m.addAttribute("total", 0);
+            m.addAttribute("totalPages", 0);
+        }
+        return "selectall";
+    }
 	
-	@GetMapping("detail")
-	public String detail() {
-		return "detail";
-	}
-	
-	@GetMapping("itemdetail")
-	public String itemdetail() {
-		return "itemdetail";
-	}
+		
+    @GetMapping("detail")
+    public String detail(@RequestParam(value = "item_no", required = false) Integer item_no, Model m) throws Exception {
+        if (item_no != null) {
+            ProductVO p = productService.getProductById(item_no);
+            m.addAttribute("product", p);
+        }
+        return "detail";
+    }
 	
 	@GetMapping("register")
 	public String register() {
 		return "register";
 	}
-
-
-	@GetMapping("login")
-	public String login() {
-		return "login";
-	}
-	
+    
 	@GetMapping("mlist")
 	public String mlist() {
 		return "mlist";
 	}
 	
 	@GetMapping("selectBanchan")
-	public String selectBanchan() {
-		return "selectBanchan";
-	}
-	
-	@GetMapping("selectBunsik")
-	public String selectBunsik() {
-		return "selectBunsik";
-	}
-	
-	@GetMapping("selectDiet")
-	public String selectDiet() {
-		return "selectDiet";
-	}
-	
-	@GetMapping("selectGui")
-	public String selectGui() {
-		return "selectGui";
-	}
-	
-	@GetMapping("selectdrink")
-	public String selectdrink() {
-		return "selectdrink";
-	}
+    public String selectBanchan(Model m,
+                                @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                                @RequestParam(value = "q", required = false) String q,
+                                @RequestParam(value = "sort", required = false) String sort,
+                                @RequestParam(value = "cate", required = false) Integer cate) {
+        // 기본 카테고리 매핑: 반찬 -> 1
+        Integer cateNo = (cate != null) ? cate : 1;
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectBanchan";
+    }
 	
 	@GetMapping("selectSoup")
-	public String selectSoup() {
-		return "selectSoup";
-	}
+    public String selectSoup(Model m,
+                             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                             @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                             @RequestParam(value = "q", required = false) String q,
+                             @RequestParam(value = "sort", required = false) String sort,
+                             @RequestParam(value = "cate", required = false) Integer cate) {
+        Integer cateNo = (cate != null) ? cate : 2; // 국/찌개 기본 2
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectSoup";
+    }
+    
+	@GetMapping("selectGui")
+    public String selectGui(Model m,
+                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                            @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                            @RequestParam(value = "q", required = false) String q,
+                            @RequestParam(value = "sort", required = false) String sort,
+                            @RequestParam(value = "cate", required = false) Integer cate) {
+        Integer cateNo = (cate != null) ? cate : 3; // 구이 기본 3
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectGui";
+    }
+
+	@GetMapping("selectBunsik")
+    public String selectBunsik(Model m,
+                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                               @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                               @RequestParam(value = "q", required = false) String q,
+                               @RequestParam(value = "sort", required = false) String sort,
+                               @RequestParam(value = "cate", required = false) Integer cate) {
+        Integer cateNo = (cate != null) ? cate : 4; // 분식 기본 4
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectBunsik";
+    }
+	
+	@GetMapping("selectDiet")
+    public String selectDiet(Model m,
+                             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                             @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                             @RequestParam(value = "q", required = false) String q,
+                             @RequestParam(value = "sort", required = false) String sort,
+                             @RequestParam(value = "cate", required = false) Integer cate) {
+        Integer cateNo = (cate != null) ? cate : 5; // 식단관리 기본 5
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectDiet";
+    }	
+	
+	@GetMapping("selectdrink")
+	public String selectdrink(Model m,
+						      @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+						      @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+						      @RequestParam(value = "q", required = false) String q,
+						      @RequestParam(value = "sort", required = false) String sort,
+						      @RequestParam(value = "cate", required = false) Integer cate) {
+		Integer cateNo = (cate != null) ? cate : 6; // 음료 6
+		loadCategoryProducts(m, page, size, q, sort, cateNo);
+		return "selectdrink";
+	}	
+
+    // 공통 로직: 카테고리별 상품 로드
+    private void loadCategoryProducts(Model m, int page, int size, String q, String sort, Integer cateNo) {
+        try {
+            int safePage = Math.max(page, 1);
+            int safeSize = Math.max(size, 1);
+            int offset = (safePage - 1) * safeSize;
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("offset", offset);
+            params.put("size", safeSize);
+            params.put("q", q);
+            params.put("sort", sort);
+            params.put("cate_no", cateNo);
+
+            List<ProductVO> products = productService.getProducts(params);
+            int total = productService.getProductsTotal(params);
+            int totalPages = (int) Math.ceil(total / (double) safeSize);
+
+            m.addAttribute("products", products);
+            m.addAttribute("page", safePage);
+            m.addAttribute("size", safeSize);
+            m.addAttribute("total", total);
+            m.addAttribute("totalPages", totalPages);
+            m.addAttribute("q", q);
+            m.addAttribute("sort", sort);
+            m.addAttribute("cate", cateNo);
+        } catch (Exception e) {
+            log.warn("Failed to load category products", e);
+            m.addAttribute("products", new ArrayList<>());
+            m.addAttribute("page", 1);
+            m.addAttribute("size", 9);
+            m.addAttribute("total", 0);
+            m.addAttribute("totalPages", 0);
+            m.addAttribute("cate", cateNo);
+        }
+    }
 
 
 	@GetMapping("board")
 	public String board() {
 		return "board";
 	}
-
+	
 	@GetMapping("dashboard")
 	public String dashboard() {
 		return "dashboard";
@@ -108,7 +238,7 @@ public class projectController {
 	
 	//@GetMapping("stock")
 	//public String stock() {
-	//	return "stock";s
+	//	return "stock";
 	//}
 
 	//@GetMapping("item")
@@ -139,11 +269,7 @@ public class projectController {
 	@GetMapping("/mydelivery")
 	public String mydelivery() {
 		return "mydelivery";
-	}
-	
-	
-	
-	
+	}	
 
 	
 // 	통계 페이지(연도별*월별 매출 / 지출)	
