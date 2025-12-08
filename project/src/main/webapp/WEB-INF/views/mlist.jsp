@@ -86,25 +86,30 @@
 
                 <div class="admin-chat-wrapper">
 
-                    <h3>Admin Chat</h3>
+                    <h3>고객 채팅 관리</h3>
 
                     <div id="admin-chat-container">
 
                         <!-- 좌측 고객 목록 -->
-                        <div id="admin-chat-list">
-                        	<table border=1 style="width:350px; height:490px;">
-                        		<tr>
-                        			<td></td>
-                        		</tr>
-                        	</table>
+                        <div id="admin-chat-list-wrapper">
+                            <div class="chat-list-header">
+                                <span>채팅 목록</span>
+                                <button id="refresh-chat-list" title="새로고침">🔄</button>
+                            </div>
+                            <div id="admin-chat-list">
+                                <!-- JavaScript로 동적 생성 -->
+                            </div>
                         </div>
 
                         <!-- 우측 채팅 -->
                         <div class="admin-chat-panel">
+                            <div class="chat-panel-header">
+                                <span id="current-chat-user">채팅방을 선택해주세요</span>
+                            </div>
                             <div id="admin-chat-messages"></div>
                             <div id="admin-chat-input">
                                 <input type="text" id="admin-chat-text" placeholder="메시지 입력...">
-                                <button id="admin-chat-send">send</button>
+                                <button id="admin-chat-send">Send</button>
                             </div>
                         </div>
 
@@ -201,7 +206,22 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/admin-chat.js"></script>
+    
+    <!-- 관리자 ID 주입 (admin-chat.js보다 먼저 실행) -->
+    <script>
+        const adminId = "${sessionScope.loginUser.customer_id}";
+        const adminRole = "${sessionScope.loginUser.role}";
+        
+        console.log("✅ 관리자 ID:", adminId);
+        console.log("✅ Role:", adminRole);
+        
+        if (!adminId || adminId === "" || adminRole !== "1") {
+            console.error("❌ 관리자 권한이 없습니다.");
+            alert("관리자 권한이 필요합니다.");
+        }
+    </script>
+    
+    <script src="js/AdminChat.js?v=999"></script>
 
 </body>
 </html>

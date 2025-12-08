@@ -88,7 +88,7 @@
 			<h3 class="text-center login-title">로그인</h3>
 			
 
-			<form action="login" method="post">
+			<form action="loginAction" method="post">
 			 <!-- 로그인 실패 메시지 -->
 			    <c:if test="${not empty loginError}">
 			        <div class="alert alert-danger">${loginError}</div>

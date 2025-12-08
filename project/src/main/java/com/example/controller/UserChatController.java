@@ -1,44 +1,34 @@
 package com.example.controller;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.model.vo.ChatVO;
-import com.example.service.ChatService;
-
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/chat")
-@RequiredArgsConstructor
 public class UserChatController {
 
-    private final ChatService chatService;
-
-    // 사용자 역할 확인
-    @GetMapping("/role/{userId}")
-    public String getUserRole(@PathVariable String userId) {
-        return chatService.getUserRole(userId);
-    }
-
-    // 채팅방 목록
-    @GetMapping("/rooms/{userId}")
-    public List<ChatVO> getChatRooms(@PathVariable String userId) {
-        String role = chatService.getUserRole(userId);
-        return chatService.getChatRooms(userId, role);
-    }
-
-    // 이전 채팅 불러오기 (고객용)
-    @GetMapping("/history/{chatNo}")
-    public ChatVO getChatHistory(@PathVariable Integer chatNo) {
-        return chatService.getChatById(chatNo);
-    }
-
-    // 채팅 저장
-    @PostMapping("/save")
-    public String saveChat(@RequestBody ChatVO chatVO) {
-        chatService.saveChat(chatVO);
-        return "success";
+    // 채팅 파일 불러오기
+    @GetMapping(value = "/files/{fileName}", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getChatFile(@PathVariable String fileName) throws IOException {
+        // 파일 경로 (UnifiedChatHandler와 동일해야 함)
+        String filePath = "src/main/resources/static/chat/" + fileName;
+        File file = new File(filePath);
+        
+        System.out.println("📁 파일 경로: " + file.getAbsolutePath());
+        
+        if (!file.exists()) {
+            System.out.println("❌ 파일 없음: " + fileName);
+            return "";
+        }
+        
+        System.out.println("✅ 파일 찾음: " + fileName);
+        String content = Files.readString(file.toPath());
+        System.out.println("📝 파일 내용 길이: " + content.length());
+        
+        return content;
     }
 }

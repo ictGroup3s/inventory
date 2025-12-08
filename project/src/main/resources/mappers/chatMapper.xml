@@ -5,47 +5,96 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="chatMapper">
 
-    <insert id="insertChat" parameterType="ChatVO">
-        INSERT INTO chat (
-	        chat_no
-	        ,chat_file
-	        ,chat_time
-	        ,customer_id
-	        ,admin_id
-	        ,read_flag)
-        VALUES (
-	        chat_seq.NEXTVAL
-	        ,#{chat_file}
-	        ,SYSDATE
-	        ,#{customer_id}
-	        ,#{admin_id}, 'N')
-    </insert>
+	<insert id="insertChat" parameterType="ChatVO">
+		INSERT INTO chat (
+		chat_no
+		,chat_file
+		,chat_time
+		,customer_id
+		,admin_id
+		,read_flag)
+		VALUES (
+		chat_seq.NEXTVAL
+		,#{chat_file}
+		,SYSDATE
+		,#{customer_id}
+		,#{admin_id}, 'N')
+	</insert>
 
-    <select id="selectRoomsByCustomer" parameterType="string" resultType="ChatVO">
-        SELECT * FROM chat 
-        WHERE customer_id = #{customerId} 
-        ORDER BY chat_time
-    </select>
+	<select id="selectRoomsByCustomer" parameterType="string"
+		resultType="ChatVO">
+		SELECT * FROM chat
+		WHERE customer_id = #{customerId}
+		ORDER BY chat_time DESC
+	</select>
 
-    <select id="selectRoomsByAdmin" parameterType="string" resultType="com.example.model.vo.ChatVO">
-        SELECT * FROM chat 
-        WHERE admin_id = #{adminId} 
-        ORDER BY chat_time
-    </select>
+	<select id="selectRoomsByAdmin" parameterType="string"
+		resultType="com.example.model.vo.ChatVO">
+		SELECT * FROM chat
+		WHERE admin_id = #{adminId}
+		ORDER BY chat_time DESC
+	</select>
 
-    <select id="selectChatByNo" parameterType="int" resultType="com.example.model.vo.ChatVO">
-        SELECT * FROM chat 
-        WHERE chat_no = #{chatNo}
-    </select>
+	<select id="selectChatByNo" parameterType="int"
+		resultType="com.example.model.vo.ChatVO">
+		SELECT * FROM chat
+		WHERE chat_no = #{chatNo}
+	</select>
 
-    <update id="updateReadFlag" parameterType="int">
-        UPDATE chat 
-        SET read_flag = 'Y' 
-        WHERE chat_no = #{chatNo}
-    </update>
-    
-    <select id="findRoleByUserId" parameterType="string" resultType="string">
-        SELECT ROLE FROM CUSTOMER WHERE customer_id = #{userId} 
-    </select>
-    
+	<update id="updateReadFlag" parameterType="int">
+		UPDATE chat
+		SET read_flag = 'Y'
+		WHERE chat_no = #{chatNo}
+	</update>
+
+	<select id="findRoleByUserId" parameterType="string"
+		resultType="string">
+		SELECT ROLE FROM CUSTOMER WHERE customer_id = #{userId}
+	</select>
+
+	<!-- ============ 자동 배정 관련 쿼리 추가 ============ -->
+	
+	<!-- 고객의 기존 채팅방 찾기 (이전에 배정된 관리자 확인) -->
+	<select id="findExistingChatRoom" parameterType="string" resultType="com.example.model.vo.ChatVO">
+		SELECT * FROM chat
+		WHERE customer_id = #{customerId}
+		ORDER BY chat_time DESC
+		FETCH FIRST 1 ROW ONLY
+	</select>
+
+	<!-- 특정 관리자 ID 가져오기 (테스트용) -->
+	<select id="findSpecificAdmin" resultType="string">
+		SELECT customer_id FROM customer
+		WHERE role = 1
+		FETCH FIRST 1 ROW ONLY
+	</select>
+
+	<!-- 랜덤 관리자 선택 -->
+	<select id="findRandomAdmin" resultType="string">
+		SELECT customer_id FROM customer
+		WHERE role = 1
+		ORDER BY DBMS_RANDOM.VALUE
+		FETCH FIRST 1 ROW ONLY
+	</select>
+
+	<!-- 채팅 개수가 가장 적은 관리자 선택 (라운드 로빈) -->
+	<select id="findLeastBusyAdmin" resultType="string">
+		SELECT admin_id
+		FROM (
+		    SELECT c.customer_id as admin_id, COUNT(ch.chat_no) as chat_count
+		    FROM customer c
+		    LEFT JOIN chat ch ON c.customer_id = ch.admin_id
+		    WHERE c.role = 1
+		    GROUP BY c.customer_id
+		    ORDER BY chat_count ASC, DBMS_RANDOM.VALUE
+		)
+		WHERE ROWNUM = 1
+	</select>
+
+	<!-- 모든 관리자 목록 -->
+	<select id="findAllAdmins" resultType="string">
+		SELECT customer_id FROM customer
+		WHERE role = 1
+	</select>
+
 </mapper>
