@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,38 +117,39 @@
     <div class="d-flex flex-wrap align-items-center">
         <!-- 이미지 -->
         <div class="p-2 flex-shrink-0">
-            <img src="img/가자미.png" alt="고등어구이" class="img-fluid" style="max-width:300px;">
+            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
         </div>
-
-      <div class="p-2 flex-grow-1">
-            <h3 class="font-weight-semi-bold">가자미구이</h3>
+         <div class="p-2 flex-grow-1">
+            <h3 class="font-weight-semi-bold">${product.item_name}</h3>
+            
             <div class="d-flex mb-2 align-items-center">
-               		<small class="pt-1">(3 Reviews)</small>
-				</div>
-				<h4 class="font-weight-semi-bold mb-2">20,590원</h4>
-				<p class="mb-4">전자레인지 또는 후라이팬 조리. <br>
-				전자레인지 30초 , 후라이팬 조리 10~15분 조리.</p>
+               		<small class="pt-1">(3 Reviews)</small> </div>
+               		
+				<h4 class="font-weight-semi-bold mb-2">가격: ${product.sales_p}원</h4>
+				<p class="mb-4"> </p> <!-- 내용쓰러면 작은글 출력됨 -->
+		
+				
 				<div class="d-flex mb-3">
+			</div>
 			
-				</div>
-				<div class="d-flex align-items-center mb-4 pt-2">
-					<div class="input-group quantity mr-3" style="width: 130px;">
-						<div class="input-group-btn">
-							<button class="btn btn-primary btn-minus">
-								<i class="fa fa-minus"></i>
-							</button>
-						</div>
-						<input type="text" class="form-control bg-secondary text-center"
-							value="1">
-						<div class="input-group-btn">
-							<button class="btn btn-primary btn-plus">
-								<i class="fa fa-plus"></i>
-							</button>
-						</div>
-					</div>
-					<button class="btn btn-primary px-3">
-						<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
-					</button>
+		
+		<form action="/cart/addForm" method="post">
+			<input type="hidden" name="item_no" value="${product.item_no}" />
+
+	 <div class="d-flex align-items-center mb-3">
+	     <!-- 수량 조절 -->
+        <div class="input-group mr-2  quantity" style="width:130px;">		
+        <button type="button" class="btn btn-primary btn-minus">-</button>
+        <input type="text" class="form-control text-center" name="qty" id="qty" value="1">
+        <button type="button" class="btn btn-primary btn-plus">+</button>
+       </div>
+      <!-- 장바구니 담기 버튼 -->   
+       <button type="submit" class="btn btn-primary">
+		<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
+		</button>
+		 
+	</form>
+
 				</div>
 			</div>
 		</div>
@@ -155,19 +157,12 @@
 			<div class="col">
 				<div
 					class="nav nav-tabs justify-content-center border-secondary mb-4">
-					<a class="nav-item nav-link active" data-toggle="tab"
-						href="#tab-pane-1">상품설명</a> <a class="nav-item nav-link"
+					<a class="nav-item nav-link"
 						data-toggle="tab" href="#tab-pane-2">상품정보</a> <a
 						class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">리뷰
 						(0)</a>
 				</div>
 				<div class="tab-content">
-					<div class="tab-pane fade show active" id="tab-pane-1">
-						<h3 class="mb-3">상품 상세설명</h3>
-						<p>냉동(종이포장)</p>
-						<p>중량/용량 : 400g</p>
-						
-					</div>
 					<div class="tab-pane fade" id="tab-pane-2">
 						<h4 class="mb-3">상품 상세정보</h4>
 						<div class="row">
@@ -239,7 +234,7 @@
       <img src="img/bulgogi.jpg" alt="Slider Image 1" />
       <h5 class="slider-title">불고기</h5>
         <p class="slider-price">12,000원</p>
-         <button class="btn btn-primary slider-cart">장바구니 담기</button>
+         <button class="btn btn-primary slider-cart" >장바구니 담기</button>
             </div>
         </li>
         <li>
@@ -248,7 +243,7 @@
      <img src="img/fish.png" alt="Slider Image 2" /></a>
       <h5 class="slider-title">고등어구이</h5>
         <p class="slider-price">12,000원</p>
-         <button class="btn btn-primary slider-cart">장바구니 담기</button>
+         <button class="btn btn-primary slider-cart" >장바구니 담기</button>
             </div>
         </li> 
      <li>
@@ -358,6 +353,36 @@
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
+
+<script>
+//2 장바구니 Ajax
+$('#add-to-cart-btn').click(function(e) {
+    e.preventDefault();
+    var item_no = $(this).data('item-no');
+    var qty = parseInt($('#qty').val());
+
+    $.ajax({
+        url: '/cart/add',
+        type: 'POST',
+        data: { item_no: item_no, qty: qty },
+        success: function(res) {
+            if(res.success) {
+                alert(qty + '개가 장바구니에 추가되었습니다. 총 ' + res.cartCount + '개');
+                // 상단 장바구니 배지 갱신
+                $('.btn .badge').text(res.cartCount);
+            } else {
+                alert('장바구니 추가 실패: ' + res.message);
+            }
+        },
+        error: function() {
+            alert('서버 오류 발생');
+        }
+    });
+});
+
+});
+
+</script>
 </body>
 
 

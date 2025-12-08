@@ -54,6 +54,16 @@ public class projectController {
 	public String login() {
 		return "login";
 	}
+	
+	@GetMapping("event1")
+	public String event1() {
+		return "event1";
+	}
+	
+	@GetMapping("event2")
+	public String event2() {
+		return "event2";
+	}
     // 전체 상품 조회 페이지, 검색, 정렬
     @GetMapping("selectall")
     public String selectall(Model m,
@@ -104,7 +114,12 @@ public class projectController {
         return "detail";
     }
 	
-	@GetMapping("register")
+    @GetMapping("detail2")
+	public String detail2() {
+		return "detail2";
+	}
+	
+    @GetMapping("register")
 	public String register() {
 		return "register";
 	}

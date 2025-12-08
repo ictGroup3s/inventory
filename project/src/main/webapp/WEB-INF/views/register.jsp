@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<c:set var="user_type" value="${user_type != null ? user_type : 'member'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,13 +69,11 @@
 <div class="container mb-5">
     <div class="register-card p-4">
 
-        <h3 class="text-center font-weight-bold mb-4">회원가입</h3>
+        <h3 class="text-center font-weight-bold mb-4" >회원가입</h3>
 
         <!-- Nav Tabs -->
         <ul class="nav nav-tabs mb-4" id="registerTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link ${user_type == null ? 'active' : ''}" id="social-tab" data-toggle="tab" href="#social" role="tab">소셜 로그인</a>
-            </li>
+          
             <li class="nav-item">
                 <a class="nav-link ${user_type == 'member' ? 'active' : ''}" id="user-tab" data-toggle="tab" href="#userForm" role="tab">일반 회원가입</a>
             </li>
@@ -86,24 +84,7 @@
 
         <!-- Tab Content -->
         <div class="tab-content">
-        <!-- 소셜 로그인 -->
-            <div class="tab-pane fade ${user_type == null ? 'show active' : ''}" id="social" role="tabpanel">
-                <div class="text-center mb-4">
-                    <p class="mb-3">간편 인증으로 회원가입</p>
-
-                    <a href="/oauth/google" class="btn btn-light border d-block mb-2 py-2 social-btn">
-                        <img src="/img/google.png"> Google 계정으로 인증
-                    </a>
-
-                    <a href="/oauth/naver" class="btn btn-light border d-block mb-2 py-2 social-btn">
-                        <img src="/img/naver.png"> Naver 계정으로 인증
-                    </a>
-
-                    <a href="/oauth/kakao" class="btn btn-light border d-block py-2 social-btn">
-                        <img src="/img/kakao.png"> Kakao 계정으로 인증
-                    </a>
-                </div>
-            </div>
+      
 
             <!-- 2) 일반 회원가입 폼 -->
 				 <div class="tab-pane fade ${user_type == 'member' ? 'show active' : ''}" id="userForm" role="tabpanel">
