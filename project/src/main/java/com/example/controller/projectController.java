@@ -29,6 +29,11 @@ public class projectController {
 		return "checkout";
 	}
 	
+	@GetMapping("header")
+	public String header() {
+		return "header";
+	}
+	
 	@GetMapping("selectall")
 	public String selectall() {
 		return "selectall";
@@ -96,16 +101,6 @@ public class projectController {
 		return "board";
 	}
 
-	@GetMapping("stock")
-	public String stock() {
-		return "stock";
-	}
-	
-	@GetMapping("item")
-	public String item() {
-		return "item";
-	}
-	
 	@GetMapping("dashboard")
 	public String dashboard() {
 		return "dashboard";
