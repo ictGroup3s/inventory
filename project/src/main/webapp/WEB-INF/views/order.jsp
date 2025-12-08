@@ -146,11 +146,6 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- 모달 구조 -->
-	<!-- 오버레이 -->
-	<div id="overlay"></div>
-
 	<!-- 모달 -->
 	<!-- 오버레이 -->
 	<div id="overlay"></div>

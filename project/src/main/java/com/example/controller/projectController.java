@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
@@ -7,20 +8,34 @@ import org.springframework.ui.Model;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+
+import com.example.model.vo.cartVO;
+import com.example.service.CheckOutService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Slf4j
 @Controller
 public class projectController {
 	
+	@Autowired
+	private CheckOutService service;
 	
 	@GetMapping("header")
 	public String header() {
 		return "header";
 	}
-	@GetMapping("cart")
-	public String cart() {
-		return "cart";
+	
+	@GetMapping("/cart")
+	public String cart(Model model) {
+	    cartVO vo = new cartVO();
+	    vo.setCustomer_id("1"); // 또는 로그인한 사용자 ID
+	    
+	    List<cartVO> cartList = service.selectCart(vo);
+	    model.addAttribute("cartList", cartList);
+	    
+	    log.info("장바구니 목록: {}", cartList);
+	    
+	    return "cart";
 	}
 	
 	@GetMapping("shop")
