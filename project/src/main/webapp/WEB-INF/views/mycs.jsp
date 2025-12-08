@@ -60,7 +60,7 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
+						<li class="nav-item"><a href="/mypage" class="nav-link">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery"class="nav-link">배송내역</a></li>
 						<li class="nav-item"><a href="/mycs" class="nav-link active">취소/반품/교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>

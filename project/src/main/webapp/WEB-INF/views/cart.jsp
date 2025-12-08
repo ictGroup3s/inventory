@@ -29,97 +29,125 @@
 </head>
 
 <body>
-	 <div class="container-fluid pt-5">
-        <div class="row px-xl-5">
-            <div class="col-lg-8 table-responsive mb-5">
-                <table class="table table-bordered text-center mb-0">
-                    <thead class="bg-secondary text-dark">
-                        <tr>
-                            <th>상품명</th>
-                            <th>가격</th>
-                            <th>수량</th>
-                            <th>총 가격</th>
-                            <th>삭제하기</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-middle">
-                        <c:forEach var="item" items="${cartList}">
-                        <tr>
-                            <td class="align-middle">
-                                <img src="${item.item_img}" alt="" style="width: 50px;">
-                                ${item.item_name}
-                            </td>
-                            <td class="align-middle">
-                                <fmt:formatNumber value="${item.sales_p}" pattern="#,###"/>원
-                            </td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary text-center" value="${item.cart_cnt}">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">
-                                <fmt:formatNumber value="${item.total_price}" pattern="#,###"/>원
-                            </td>
-                            <td class="align-middle">
-                                <button class="btn btn-sm btn-primary" onclick="deleteCart(${item.cart_no})">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        </c:forEach>
-                        
-                        <!-- 장바구니가 비어있을 때 -->
-                        <c:if test="${empty cartList}">
-                        <tr>
-                            <td colspan="5" class="text-center py-5">
-                                장바구니가 비어있습니다.
-                            </td>
-                        </tr>
-                        </c:if>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="col-lg-4">
-                <div class="card border-secondary mb-5">
-                    <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">내 장바구니</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-3 pt-1">
-                            <h6 class="font-weight-medium">상품가격</h6>
-                            <h6 class="font-weight-medium">
-                                <c:set var="totalPrice" value="0"/>
-                                <c:forEach var="item" items="${cartList}">
-                                    <c:set var="totalPrice" value="${totalPrice + item.total_price}"/>
-                                </c:forEach>
-                                <fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원
-                            </h6>
-                        </div>
-                    </div>
-                    <div class="card-footer border-secondary bg-transparent">
-                        <div class="d-flex justify-content-between mt-2">
-                            <h5 class="font-weight-bold">총가격</h5>
-                            <h5 class="font-weight-bold">
-                                <fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원
-                            </h5>
-                        </div>
-                        <button class="btn btn-block btn-primary my-3 py-3" onclick="location.href='checkout'">결제하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="row align-items-center py-3 px-xl-5">
+		<div class="col-lg-3 d-none d-lg-block">
+			<a href="/" class="text-decoration-none"> <img
+				src='../img/logo.png' class='logo' />
+			</a>
+		</div>
+		<div class="col-lg-6 col-6 text-left">
+			<form action="">
+				<div class="input-group">
+					<input type="text" class="form-control"
+						placeholder="Search for products">
+					<div class="input-group-append">
+						<span class="input-group-text bg-transparent text-primary">
+							<i class="fa fa-search"></i>
+						</span>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-lg-3 col-6 text-right">
+			<a href="" class="btn border"> <i
+				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+			</a> <a href="cart" class="btn border"> <i
+				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+			</a>
+		</div>
+	</div>
+	<div class="container-fluid pt-5">
+		<div class="row px-xl-5">
+			<div class="col-lg-8 table-responsive mb-5">
+				<table class="table table-bordered text-center mb-0">
+					<thead class="bg-secondary text-dark">
+						<tr>
+							<th>상품명</th>
+							<th>가격</th>
+							<th>수량</th>
+							<th>총 가격</th>
+							<th>삭제하기</th>
+						</tr>
+					</thead>
+					<tbody class="align-middle">
+						<c:forEach var="item" items="${cartList}">
+							<tr>
+								<td class="align-middle"><img src="${item.item_img}" alt=""
+									style="width: 50px;"> ${item.item_name}</td>
+								<td class="align-middle"><fmt:formatNumber
+										value="${item.sales_p}" pattern="#,###" />원</td>
+								<td class="align-middle">
+									<div class="input-group quantity mx-auto" style="width: 100px;">
+										<div class="input-group-btn">
+											<button class="btn btn-sm btn-primary btn-minus">
+												<i class="fa fa-minus"></i>
+											</button>
+										</div>
+										<input type="text"
+											class="form-control form-control-sm bg-secondary text-center"
+											value="${item.cart_cnt}">
+										<div class="input-group-btn">
+											<button class="btn btn-sm btn-primary btn-plus">
+												<i class="fa fa-plus"></i>
+											</button>
+										</div>
+									</div>
+								</td>
+								<td class="align-middle"><fmt:formatNumber
+										value="${item.total_price}" pattern="#,###" />원</td>
+								<td class="align-middle">
+									<button class="btn btn-sm btn-primary"
+										onclick="deleteCart(${item.cart_no})">
+										<i class="fa fa-times"></i>
+									</button>
+								</td>
+							</tr>
+						</c:forEach>
+
+						<!-- 장바구니가 비어있을 때 -->
+						<c:if test="${empty cartList}">
+							<tr>
+								<td colspan="5" class="text-center py-5">장바구니가 비어있습니다.</td>
+							</tr>
+						</c:if>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-lg-4">
+				<div class="card border-secondary mb-5">
+					<div class="card-header bg-secondary border-0">
+						<h4 class="font-weight-semi-bold m-0">내 장바구니</h4>
+					</div>
+					<div class="card-body">
+						<div class="d-flex justify-content-between mb-3 pt-1">
+							<h6 class="font-weight-medium">상품가격</h6>
+							<h6 class="font-weight-medium">
+								<c:set var="totalPrice" value="0" />
+								<c:forEach var="item" items="${cartList}">
+									<c:set var="totalPrice"
+										value="${totalPrice + item.total_price}" />
+								</c:forEach>
+								<fmt:formatNumber value="${totalPrice}" pattern="#,###" />
+								원
+							</h6>
+						</div>
+					</div>
+					<div class="card-footer border-secondary bg-transparent">
+						<div class="d-flex justify-content-between mt-2">
+							<h5 class="font-weight-bold">총가격</h5>
+							<h5 class="font-weight-bold">
+								<fmt:formatNumber value="${totalPrice}" pattern="#,###" />
+								원
+							</h5>
+						</div>
+						<button class="btn btn-block btn-primary my-3 py-3"
+							onclick="location.href='checkout'">결제하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
 		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
@@ -198,6 +226,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- footer start -->
 		<div class="row border-top border-light mx-xl-5 py-4">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
@@ -230,6 +259,14 @@
 	<script src="mail/contact.js"></script>
 
 	<script src="js/main.js"></script>
+	<script>
+    function deleteCart(cart_no) {
+        if(confirm('장바구니에서 삭제하시겠습니까?')) {
+            location.href = '/cart/delete?cart_no=' + cart_no;
+            
+        }
+    }
+    </script>
 </body>
 
 </html>

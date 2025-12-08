@@ -3,6 +3,7 @@ package com.example.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +27,9 @@ public class projectController {
 	}
 	
 	@GetMapping("/cart")
-	public String cart(Model model) {
+	public String selectCart(Model model) {
 	    cartVO vo = new cartVO();
-	    vo.setCustomer_id("1"); // 또는 로그인한 사용자 ID
+	    vo.setCustomer_id("1");
 	    
 	    List<cartVO> cartList = service.selectCart(vo);
 	    model.addAttribute("cartList", cartList);
@@ -37,6 +38,14 @@ public class projectController {
 	    
 	    return "cart";
 	}
+	@GetMapping("/cart/delete")
+	public String deleteCart(cartVO vo) {
+
+	    service.deleteCart(vo);  // 장바구니 삭제 로직 수행
+
+	    return "redirect:/cart";  // 삭제 후 다시 cart 페이지로 이동
+	}
+
 	
 	@GetMapping("shop")
 	public String shop() {
@@ -150,10 +159,6 @@ public class projectController {
 	public String mydelivery() {
 		return "mydelivery";
 	}
-	
-	
-	
-	
 
 	
 // 	통계 페이지(연도별*월별 매출 / 지출)	
