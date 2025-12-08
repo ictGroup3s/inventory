@@ -122,7 +122,7 @@
 		</dependency>
 
 		
-		<!--<dependency>
+		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
@@ -131,7 +131,7 @@
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20230227</version>
-		</dependency>-->
+		</dependency>
 
 
 	</dependencies>
