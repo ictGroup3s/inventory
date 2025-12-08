@@ -95,6 +95,16 @@ public class projectController {
 	public String board() {
 		return "board";
 	}
+
+	@GetMapping("stock")
+	public String stock() {
+		return "stock";
+	}
+	
+	@GetMapping("item")
+	public String item() {
+		return "item";
+	}
 	
 	@GetMapping("dashboard")
 	public String dashboard() {
@@ -103,7 +113,7 @@ public class projectController {
 	
 	//@GetMapping("stock")
 	//public String stock() {
-	//	return "stock";
+	//	return "stock";s
 	//}
 
 	//@GetMapping("item")
