@@ -2,9 +2,13 @@ package com.example.service;
 
 import java.util.List;
 
+import org.springframework.ui.Model;
+
 import jakarta.servlet.http.HttpSession;
 
 import com.example.model.vo.CartItemVO;
+
+
 
 public interface CartService {
     void addToCart(Integer itemNo, int qty, HttpSession session) throws Exception;

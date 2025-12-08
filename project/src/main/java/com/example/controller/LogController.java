@@ -9,7 +9,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.model.vo.CustomerVO;
 import com.example.service.LogService;
-import com.example.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -35,7 +34,7 @@ public class LogController {
 	        CustomerVO user = logservice.loginUser(login_id, login_pass);
 
 	        if (user !=null) { 
-	        	session.setAttribute("loginUser", user); 	       //세션저장
+	        	session.setAttribute("loginUser", user);//세션저장
 	        	session.setAttribute("loginRole", user.getRole());
 	           return "redirect:/header"; // 로그인 성공 시 메인으로
 	           

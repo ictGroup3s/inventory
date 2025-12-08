@@ -170,7 +170,17 @@
 							<h5 class="font-weight-bold">총가격</h5>
 							<h5 class="font-weight-bold"><span id="cartTotalFooter">${cartTotal}</span>원</h5>
 						</div>
-						<button class="btn btn-block btn-primary my-3 py-3"
+						<form action="/payment" method="post">
+							<c:forEach var="ci" items="${cartItems}">
+								<!-- 상품번호와 수량을 hidden으로 전달 -->
+								<input type="hidden" name="item_no"
+									value="${ci.product.item_no}">
+								<input type="hidden" name="qty" value="${ci.qty}">
+							</c:forEach>
+							<input type="hidden" name="cartTotal" value="${cartTotal}">
+						</form>
+						
+							<button class="btn btn-block btn-primary my-3 py-3"
 							onclick="location.href='checkout' ">결제하기</button>
 					</div>
 				</div>
