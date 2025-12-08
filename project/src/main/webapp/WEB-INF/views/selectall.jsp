@@ -350,4 +350,8 @@
 	</script>
 </body>
 
+<<<<<<< HEAD
 </html>		
+=======
+</html>		
+>>>>>>> origin/main

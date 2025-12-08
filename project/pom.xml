@@ -36,6 +36,11 @@
 		</dependency>
 
 		 <!--WebSocket (STOMP 지원)--> 
+		 <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		</dependency>
+		
 		  <dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-websocket</artifactId>
@@ -51,6 +56,12 @@
 			<version>3.0.5</version>
 		</dependency>
 
+		<!-- Spring Security
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -109,7 +120,6 @@
 		    <artifactId>netty-socketio</artifactId>
 		    <version>1.7.17</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
