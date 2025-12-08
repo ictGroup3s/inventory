@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>고객관리</title>
+<title>상품등록</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <!-- Favicon -->
@@ -25,13 +25,14 @@
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	rel="stylesheet">
+<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+	rel="stylesheet">
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
-
 	<!-- Topbar -->
 	<div class="row align-items-center py-3 px-xl-5 bg-light">
 		<div class="col-lg-3 d-none d-lg-block">
@@ -53,10 +54,11 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="#" class="btn border"><i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span></a>
-			<a href="cart" class="btn border"><i
-				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span></a>
+			<a href="#" class="btn border"> <i
+				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+			</a> <a href="cart" class="btn border"> <i
+				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+			</a>
 		</div>
 	</div>
 
@@ -69,92 +71,134 @@
 					<h6>관리자 페이지</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="dashboard" class="nav-link">대쉬보드</a></li>
-						<li class="nav-item"><a href="item" class="nav-link">상품관리</a></li>
+						<li class="nav-item"><a href="item" class="nav-link active">상품관리</a></li>
 						<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
 						<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
 						<li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
-						<li class="nav-item"><a href="mlist" class="nav-link active">고객관리</a></li>
+						<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
 						<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
 					</ul>
 				</nav>
 			</div>
-			<!-- Content -->
-			<div class="col-lg-10 dashboard-content">
-				<h3 class="mb-4">고객관리</h3>
+			<!-- Dashboard Content -->
+			<div class="col-lg-10">
+				<!-- Mobile toggler for sidebar -->
+				<nav class="navbar navbar-light bg-light d-lg-none">
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#sidebarMenu">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+				</nav>
 
-				<h4>우수고객 (VIP)</h4>
-				<div class="table-responsive mb-4">
-					<table class="table table-bordered text-center">
-						<thead class="thead-light">
-							<tr>
-								<th>고객번호</th>
-								<th>고객명</th>
-								<th>주소</th>
-								<th>총 구매금액</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>096</td>
-								<td>김철수</td>
-								<td>서울 강남구</td>
-								<td>2,500,000원</td>
-							</tr>
-							<tr>
-								<td>078</td>
-								<td>이영희</td>
-								<td>서울 송파구</td>
-								<td>1,980,000원</td>
-							</tr>
-							<tr>
-								<td>011</td>
-								<td>박민수</td>
-								<td>경기 수원시</td>
-								<td>1,500,000원</td>
-							</tr>
-						</tbody>
-					</table>
+				<div class="container-fluid py-5">
+
+					<!-- 상품 등록 영역 -->
+					<div class="row px-xl-5">
+						<!-- 좌측: 상품 이미지 -->
+						<div class="col-lg-5 pb-5 text-center">
+							<img src="img/fish.png" alt="상품 이미지" class="img-fluid"
+								style="width: 600px; height: 500px;">
+						</div>
+
+						<!-- 우측: 상품 등록 폼 -->
+						<div class="col-lg-7 pb-5">
+							<h3 class="font-weight-semi-bold mb-4">상품등록</h3>
+
+							<form>
+								<!-- 상품 정보 입력 테이블 -->
+								<table class="table table-bordered">
+									<tr>
+										<td>상품명</td>
+										<td><input type="text" class="form-control"></td>
+									</tr>
+									<tr>
+										<td>수량</td>
+										<td><input type="text" class="form-control"></td>
+									</tr>
+									<tr>
+										<td>카테고리</td>
+										<td><select class="form-control">
+												<option value="">선택하세요</option>
+												<option value="">카테고리1</option>
+												<option value="">카테고리2</option>
+												<option value="">카테고리3</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td>원산지</td>
+										<td><input type="text" class="form-control"></td>
+									</tr>
+									<tr>
+										<td>원가</td>
+										<td><input type="text" class="form-control"></td>
+									</tr>
+									<tr>
+										<td>소비자가</td>
+										<td><input type="text" class="form-control"></td>
+									</tr>
+								</table>
+
+								<!-- 등록/수정/삭제 버튼 -->
+								<div class="d-flex align-items-center mb-4 pt-2">
+									<button class="btn btn-primary mr-2" type="submit">등록</button>
+									<button class="btn btn-warning mr-2" type="button">수정</button>
+									<button class="btn btn-danger" type="button">삭제</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- 상품 등록 row 끝 -->
+
+					<!-- 상품 목록 테이블 영역 -->
+					<div class="row px-xl-5 mt-4">
+						<div class="col-lg-12">
+							<h4 class="mb-3">상품 목록</h4>
+							<!-- 상품 목록 테이블: 가로 전체(w-100) -->
+							<table class="table table-bordered w-100">
+								<thead class="thead-light">
+									<tr>
+										<th>상품코드</th>
+										<th>상품명</th>
+										<th>카테고리</th>
+										<th>원가</th>
+										<th>소비자가</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>001</td>
+										<td>연어</td>
+										<td>생선류</td>
+										<td>10,000</td>
+										<td>15,000</td>
+									</tr>
+									<tr>
+										<td>002</td>
+										<td>참치</td>
+										<td>생선류</td>
+										<td>12,000</td>
+										<td>18,000</td>
+									</tr>
+									<tr>
+										<td>003</td>
+										<td>광어</td>
+										<td>생선류</td>
+										<td>9,000</td>
+										<td>14,000</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- 상품 목록 row 끝 -->
+
 				</div>
-
-				<h4>휴면고객</h4>
-				<div class="table-responsive mb-4">
-					<table class="table table-bordered text-center">
-						<thead class="thead-light">
-							<tr>
-								<th>고객번호</th>
-								<th>고객명</th>
-								<th>주소</th>
-								<th>총 구매금액</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>001</td>
-								<td>최지훈</td>
-								<td>서울 마포구</td>
-								<td>120,000원</td>
-							</tr>
-							<tr>
-								<td>002</td>
-								<td>정수민</td>
-								<td>인천 부평구</td>
-								<td>85,000원</td>
-							</tr>
-							<tr>
-								<td>003</td>
-								<td>한예진</td>
-								<td>대전 서구</td>
-								<td>60,000원</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
+				<!-- container-fluid 끝 -->
 			</div>
 		</div>
 	</div>
 
-	<!-- Footer (기존 그대로) -->
+	<!-- Footer -->
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
 		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
@@ -166,16 +210,6 @@
 				</a>
 				<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
 					ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-				<p class="mb-2">
-					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
-					New York, USA
-				</p>
-				<p class="mb-2">
-					<i class="fa fa-envelope text-primary mr-3"></i>info@example.com
-				</p>
-				<p class="mb-0">
-					<i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890
-				</p>
 			</div>
 			<div class="col-lg-8 col-md-12">
 				<div class="row">
@@ -185,30 +219,16 @@
 							<a class="text-dark mb-2" href="#"><i
 								class="fa fa-angle-right mr-2"></i>Home</a> <a
 								class="text-dark mb-2" href="#"><i
-								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-								class="text-dark mb-2" href="#"><i
-								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-								class="text-dark mb-2" href="#"><i
-								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-								class="text-dark mb-2" href="#"><i
-								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
-								href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+								class="fa fa-angle-right mr-2"></i>Our Shop</a>
 						</div>
 					</div>
 					<div class="col-md-4 mb-5">
 						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
 						<div class="d-flex flex-column justify-content-start">
 							<a class="text-dark mb-2" href="#"><i
-								class="fa fa-angle-right mr-2"></i>Home</a> <a
-								class="text-dark mb-2" href="#"><i
-								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-								class="text-dark mb-2" href="#"><i
 								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
 								class="text-dark mb-2" href="#"><i
-								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-								class="text-dark mb-2" href="#"><i
-								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
-								href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+								class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
 						</div>
 					</div>
 					<div class="col-md-4 mb-5">
@@ -224,13 +244,11 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
-
 </body>
 </html>
