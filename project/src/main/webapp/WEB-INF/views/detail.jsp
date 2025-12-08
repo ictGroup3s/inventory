@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
 <!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
+<link href="${pageContext.request.contextPath}/img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -26,11 +26,11 @@
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="${pageContext.request.contextPath}/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
 <!-- bxSlider CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
@@ -42,14 +42,14 @@
 	<div class="row align-items-center py-3 px-xl-5" style="height:150px;">
 		 <div class="col-lg-3 d-none d-lg-block"><!-- 큰 화면에서는 3/12, 작은 화면에서는 숨김 -->
 			<a href="/" class="text-decoration-none"> <img
-				src="\img\logo.png" class='logo' />
+				src="${pageContext.request.contextPath}/img/logo.png" class='logo' />
 			</a>
 		</div>
 		
 		<div class="col-lg-6 col-6 text-left">
 			<form action="">
 				<div class="input-group">
-					<input type="text" class="form-control"	placeholder="Search for products">
+					<input type="text" class="form-control" 	placeholder="Search for products">
 					<div class="input-group-append">
 						<span class="input-group-text bg-transparent text-primary">
 							<i class="fa fa-search"></i>
@@ -94,7 +94,7 @@
 			 <div class="col-lg-10 col-md-12 p-0 m-0" >
 				<nav class="navbar navbar-expand-lg bg-light navbar-light py-0 py-lg-0 px-0">
 					<a href="/" class="text-decoration-none d-block d-lg-none p-0 m-0"> 
-					<img src="\img\logo.png" class='logo' />
+					<img src="${pageContext.request.contextPath}/img/logo.png" class='logo' />
 					</a>
 					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
 						<span class="navbar-toggler-icon"></span>
@@ -113,7 +113,7 @@
     <div class="d-flex flex-wrap align-items-center">
         <!-- 이미지 -->
         <div class="p-2 flex-shrink-0">
-            <img src="img/가자미.png" alt="고등어구이" class="img-fluid" style="max-width:300px;">
+            <img src="${pageContext.request.contextPath}/img/가자미.png" alt="고등어구이" class="img-fluid" style="max-width:300px;">
         </div>
 
       <div class="p-2 flex-grow-1">
@@ -189,7 +189,7 @@
 							<div class="col-md-6">
 								<h4 class="mb-4">1 review for "최고에요"</h4>
 								<div class="media mb-4">
-									<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
+									<img src="${pageContext.request.contextPath}/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
 										style="width: 45px;">
 									<div class="media-body">
 										<h6>
@@ -233,7 +233,7 @@
     <ul class="bxslider">
     <li>
     <div class="slider-card">
-      <img src="img/bulgogi.jpg" alt="Slider Image 1" />
+      <img src="${pageContext.request.contextPath}/img/bulgogi.jpg" alt="Slider Image 1" />
       <h5 class="slider-title">불고기</h5>
         <p class="slider-price">12,000원</p>
          <button class="btn btn-primary slider-cart">장바구니 담기</button>
@@ -242,7 +242,7 @@
         <li>
     <div class="slider-card">
      <a href="productDetail.jsp?id=1">
-     <img src="img/fish.png" alt="Slider Image 2" /></a>
+     <img src="${pageContext.request.contextPath}/img/fish.png" alt="Slider Image 2" /></a>
       <h5 class="slider-title">고등어구이</h5>
         <p class="slider-price">12,000원</p>
          <button class="btn btn-primary slider-cart">장바구니 담기</button>
@@ -250,7 +250,7 @@
         </li> 
      <li>
     <div class="slider-card">
-       <img src="img/egg.png" alt="Slider Image 3" />
+       <img src="${pageContext.request.contextPath}/img/egg.png" alt="Slider Image 3" />
       <h5 class="slider-title">계란세트</h5>
         <p class="slider-price">12,000원</p>
          <button class="btn btn-primary slider-cart">장바구니 담기</button>
@@ -258,7 +258,7 @@
         </li> 
      <li>
     <div class="slider-card">
-       <img src="img/oven.png" alt="Slider Image 4" />
+       <img src="${pageContext.request.contextPath}/img/oven.png" alt="Slider Image 4" />
       <h5 class="slider-title">파스타</h5>
         <p class="slider-price">12,000원</p>
          <button class="btn btn-primary slider-cart">장바구니 담기</button>
@@ -331,7 +331,7 @@
                 </p>
             </div>
             <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
+                <img class="img-fluid" src="${pageContext.request.contextPath}/img/payments.png" alt="">
             </div>
         </div>
     </div>
@@ -346,15 +346,15 @@
 	<!-- JavaScript Libraries -->
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/easing/easing.min.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Contact Javascript File -->
-	<script src="mail/jqBootstrapValidation.min.js"></script>
-	<script src="mail/contact.js"></script>
+	<script src="${pageContext.request.contextPath}/mail/jqBootstrapValidation.min.js"></script>
+	<script src="${pageContext.request.contextPath}/mail/contact.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/js/main.js"></script>
 </body>
 
 

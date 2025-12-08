@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -11,21 +11,27 @@
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
 
+<!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
+<!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"    rel="stylesheet">
 
+<!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
+<!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
+<!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
-
+<!-- 채팅 관련 -->
+<link href="css/chat.css" rel="stylesheet">
 
 </head>
 
-<body class ="page-selectall">
+<body>
 
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
@@ -102,8 +108,9 @@
 				<div class="row pb-3">
 					<div class="col-12 pb-1">
 						<div class="d-flex align-items-center justify-content-between mb-4">
+						<!--  아래 검색창
 							<form action="selectall" method="get">
-							<!--  아래 검색창
+							
 								<div class="input-group">
 									<input type="text" name="q" class="form-control"
 										placeholder="Search by name" value="${q}">
@@ -113,18 +120,19 @@
 										</button>
 									</div>
 								</div>
-							 -->	
+							 	
 								<input type="hidden" name="size" value="${size}" />
 							</form>
+						-->
 							<div class="dropdown ml-4">
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">Sort by</button>
+									aria-expanded="false">정렬 기준</button>
 								<div class="dropdown-menu dropdown-menu-right"
 									aria-labelledby="triggerId">
-									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}">Latest</a>
-									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">Price: High to Low</a>
-									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">Price: Low to High</a>
+									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}">최신순</a>
+									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">가격 높은순</a>
+									<a class="dropdown-item" href="selectall?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">가격 낮은순</a>
 								</div>
 							</div>
 						</div>
@@ -181,7 +189,7 @@
 								<li class="page-item ${page <= 1 ? 'disabled' : ''}">
 									<a class="page-link" href="selectall?page=${page-1}&size=${size}&q=${fn:escapeXml(q)}&sort=${sort}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
-										<span class="sr-only">Previous</span>
+										<span class="sr-only">이전</span>
 									</a>
 								</li>
 								<c:forEach var="i" begin="1" end="${totalPages}">
@@ -192,7 +200,7 @@
 								<li class="page-item ${page >= totalPages ? 'disabled' : ''}">
 									<a class="page-link" href="selectall?page=${page+1}&size=${size}&q=${fn:escapeXml(q)}&sort=${sort}" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
-										<span class="sr-only">Next</span>
+										<span class="sr-only">다음</span>
 									</a>
 								</li>
 							</ul>
@@ -202,98 +210,127 @@
 
 				</div>
 			</div>
-			</div>
-	</div>
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-		<div class="row px-xl-5 pt-5">
-			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-				<a href="" class="text-decoration-none">
-					<h1 class="mb-4 display-5 font-weight-semi-bold">
-						<span
-							class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-						</h1>
-				</a>
-				<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
-					ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-				<p class="mb-2">
-					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
-					New York, USA
-				</p>
-				<p class="mb-2">
-					<i class="fa fa-envelope text-primary mr-3"></i>info@example.com
-				</p>
-				<p class="mb-0">
-					<i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890
-				</p>
-			</div>
-			<div class="col-lg-8 col-md-12">
-				<div class="row">					
-					<div class="col-md-4 mb-5">
-						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="index.html"><i
-								class="fa fa-angle-right mr-2"></i>Home</a> <a
-								class="text-dark mb-2" href="shop.html"><i
-								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-								class="text-dark mb-2" href="detail.html"><i
-								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-								class="text-dark mb-2" href="cart.html"><i
-								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-								class="text-dark mb-2" href="checkout.html"><i
-								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
-								href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact
-								Us</a>
-						</div>
-					</div>
-					<div class="col-md-4 mb-5">
-						<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-						<form action="">
-							<div class="form-group">
-								<input type="text" class="form-control border-0 py-4"
-									placeholder="Your Name" required="required" />
-							</div>
-							<div class="form-group">
-								<input type="email" class="form-control border-0 py-4"
-									placeholder="Your Email" required="required" />
-							</div>
-							<div>
-								<button class="btn btn-primary btn-block border-0 py-3"
-									type="submit">Subscribe Now</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row border-top border-light mx-xl-5 py-4">
-			<div class="col-md-6 px-xl-0">
-				<p class="mb-md-0 text-center text-md-left text-dark">
-					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
-						Site Name</a>. All Rights Reserved. Designed by <a
-						class="text-dark font-weight-semi-bold"
-						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
-					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-				</p>
-			</div>
-			<div class="col-md-6 px-xl-0 text-center text-md-right">
-				<img class="img-fluid" src="img/payments.png" alt="">
-			</div>
 		</div>
 	</div>
-	<a href="#" class="btn btn-primary back-to-top"><i
-		class="fa fa-angle-double-up"></i></a>
+	
+	<!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
+				<div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
+           
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
+                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
+                <h2 class="mb-0">
+   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
+					</h2>
+                       </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
+                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
+                     <!--  <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
+                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
+                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->      
+                         </div>
+                    </div>
+                    <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-12 mt-4 mb-5">
+                        <p class="text-dark mb-2">
+                        <span>stockbob 소개</span>
+                            &nbsp;&nbsp; | &nbsp;&nbsp;
+                        <span>이용약관</span>
+                       		&nbsp; | &nbsp;
+                       	<span>개인정보처리방침</span>
+                       		&nbsp; | &nbsp;
+                       	<span>이용안내</span>
+                       	
+                       </p><br>
+                       <p style="color: #999;">
+                       법인명 (상호) : 주식회사 STOCKBOB<br>
+                       사업자등록번호 : 000-11-00000<br>
+						통신판매업 : 제 2025-서울-11111 호<br>
+						주소 : 서울특별시 서대문구 신촌동 00<br>
+						채용문의 : ict.atosoft.com<br>
+						팩스 : 070-0000-0000
+                       </p>
+                      </div>
+                    </div>
+                 
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
+                    by
+                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
+                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="img/payments.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+   <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+<!-- ------------------채팅 관련 추가---------------- -->
+	<!-- ▣ 채팅 목록 박스 -->
+	<div id="chat-list-box" class="chat-list-box" style="display: none;">
+		<div class="chat-list-header">나의 채팅 목록</div>
+		<div id="chat-list" class="chat-list"></div>
+	</div>
+
+	<!-- ▣ 채팅창 -->
+	<div id="chat-box" class="chat-box" style="display: none;">
+		<div class="chat-header">
+			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> 
+			<span>상담채팅</span> <span id="chat-close" class="chat-header-close">✕</span>
+		</div>
+
+		<div id="chat-messages" class="chat-messages"></div>
+
+		<div class="chat-input">
+			<input type="text" id="chat-text" placeholder="메시지 입력...">
+			<button id="chat-send">Send</button>
+		</div>
+	</div>
+
+	<!-- ▣ 채팅 열기 버튼 -->
+	<button id="chat-open" class="chat-open-btn">💬</button>
 
 
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
+	<!-- Contact Javascript File -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
-	<script src="/js/main.js"></script>
+	<!-- Javascript -->
+	<script src="js/main.js"></script>
+	<!-- 채팅 JS -->
+	<script src="/js/chat.js?v=1"></script>
+
+	<!-- SockJS + StompJS -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+		
 	<script>
 		// `main.js`에서 addToCart를 정의하지 않았을 때를 대비한 폴백 전역 함수 ("undefined" 오류 방지)
 		if (typeof window.addToCart !== 'function') {
@@ -310,7 +347,9 @@
 					}).then(function(json){
 						if (json && json.success) {
 							// 페이지 이동 대신 간단한 피드백을 보여줍니다
-							try { console.log('fallback addToCart success', json); alert('장바구니에 담겼습니다.'); } catch(e){}
+							try { console.log('fallback addToCart success', json); 
+								alert('장바구니에 담겼습니다.'); 
+								} catch(e){}
 						} else {
 							alert('장바구니에 추가하지 못했습니다.');
 						}
