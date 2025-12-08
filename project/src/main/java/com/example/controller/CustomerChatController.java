@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/chat")
 @RequiredArgsConstructor
-public class UserChatController {
+public class CustomerChatController {
 
     private final ChatService chatService;
 
