@@ -129,6 +129,7 @@
 						    <c:if test="${sessionScope.loginRole == 1}">
 					        <a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
 					    	</c:if>
+					    	</c:if>
 					 	
 			<c:if test="${empty sessionScope.loginUser}">
 		    <a href="<c:url value='/login'/>" class="nav-item nav-link">로그인</a>

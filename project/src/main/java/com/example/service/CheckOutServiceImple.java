@@ -21,4 +21,10 @@ public class CheckOutServiceImple {
 		log.info("[CheckOutService-selectCart()]");
 		return repo.selectCart(vo);
 	}
+	
+	 public List<cartVO> deleteCart(cartVO vo){
+		 log.info("[CheckOutService-deleteCart]");
+		 return repo.deleteCart(vo);
+		 
+	 }
 }

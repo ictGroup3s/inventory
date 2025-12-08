@@ -40,10 +40,9 @@
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="">
+			<form action="/loginAction" method ="post">
 				<div class="input-group">
-					<input type="text" class="form-control"
-						placeholder="Search for products">
+					<input type="text" class="form-control" placeholder="Search for products">
 					<div class="input-group-append">
 						<span class="input-group-text bg-transparent text-primary">
 							<i class="fa fa-search"></i>
@@ -88,7 +87,7 @@
 			<h3 class="text-center login-title">로그인</h3>
 			
 
-			<form action="login" method="post">
+			<form action="/loginAction" method="post">
 			 <!-- 로그인 실패 메시지 -->
 			    <c:if test="${not empty loginError}">
 			        <div class="alert alert-danger">${loginError}</div>
