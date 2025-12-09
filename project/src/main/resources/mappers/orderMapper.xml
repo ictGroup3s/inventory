@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "orderMapper">
+<mapper namespace ="orderMapper">
 
 	<!-- 주문 저장 -->
 	<insert id="insertOrder" parameterType="ordersVO" useGeneratedKeys="true" keyProperty="order_no">

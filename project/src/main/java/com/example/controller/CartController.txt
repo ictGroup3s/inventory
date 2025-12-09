@@ -161,16 +161,6 @@ public class CartController {
         }
         return resp;
     }
-    @GetMapping("/checkout")
-	public String checkoutPage(HttpSession session, Model model) throws Exception {
-	    List<CartItemVO> cartItems = cartService.getCartItems(session);
-	    int cartTotal = cartService.getCartTotal(session);
-	
-	    model.addAttribute("cartItems", cartItems);
-	    model.addAttribute("cartTotal", cartTotal);
-	
-	    return "checkout";  // checkout.jsp
-	}
 
 
     

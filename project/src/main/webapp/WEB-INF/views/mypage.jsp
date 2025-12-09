@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,7 +67,12 @@
 					</ul>
 				</nav>
 			</div>
-		
+
+			<!-- 세션에서 checkout 데이터 가져오기 -->
+			<c:set var="cartItems" value="${sessionScope.cartItems}" />
+			<c:set var="cartCount" value="${sessionScope.cartCount}" />
+			<c:set var="cartTotal" value="${sessionScope.cartTotal}" />
+
 			<!-- Main Content -->
 			<div class="col-lg-10" style="margin-top: 30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
@@ -95,7 +100,7 @@
 									<td>결제대기</td>
 									<td>${ci.product.createDate}</td>
 									<!-- 실제 주문일자 있으면 변경 -->
-								</tr>
+							</tr>
 							</c:forEach>
 						</tbody>
 					</table>

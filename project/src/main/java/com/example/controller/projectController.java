@@ -232,25 +232,35 @@ public class projectController {
 		return "order";
 	}
 	
+	/* 주문내역 */
 	@GetMapping("/mypage")
 	public String mypage() {
 		return "mypage";
 	}
 	
+	/* 취소,반품,교환내역 */
 	@GetMapping("/mycs")
 	public String mycs() {
 		return "mycs";
 	}
 	
+	 /* 1:1문의내역 */
 	@GetMapping("/myqna")
 	public String myqna() {
 		return "myqna";
 	}
 	
+	 /* 배송내역 */
 	@GetMapping("/mydelivery")
 	public String mydelivery() {
 		return "mydelivery";
 	}	
+	
+    /* 결제완료 */
+		@GetMapping("/ordercomplete")
+		public String ordercomplete() {
+			return "ordercomplete";
+	}
 
 	
 // 	통계 페이지(연도별*월별 매출 / 지출)	

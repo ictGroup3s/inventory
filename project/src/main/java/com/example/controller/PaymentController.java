@@ -20,9 +20,4 @@ public class PaymentController {
 	    public String naverPay() {
 	        return "naver"; // WEB-INF/views/payment/naver.jsp
 	    }
-	    /* 결제완료페이지 */
-		@GetMapping("/ordercomplete")
-		public String ordercomplete() {
-			return "ordercomplete";
-		}
 	}
