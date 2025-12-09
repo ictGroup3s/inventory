@@ -62,7 +62,7 @@
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="/mypage" class="nav-link">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery"class="nav-link">배송내역</a></li>
-						<li class="nav-item"><a href="/mycs" class="nav-link active">취소/반품/교환내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link active">취소·반품·교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
 					</ul>
 				</nav>
@@ -71,7 +71,10 @@
 			<!-- Main Content -->
 			<div class="col-lg-10" style="margin-top: 30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
-					<h4>취소/반품/교환내역</h4>
+					<h4>취소·반품·교환내역</h4>
+					<form>
+						<button style="margin-left:850px;">취소·반품·교환신청</button>
+					</form>
 				</div>
 				
 				<div class="col-lg-10 mx-auto">

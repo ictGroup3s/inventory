@@ -3,17 +3,13 @@ package com.example.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.example.model.CheckOutRepository;
 import com.example.model.vo.cartVO;
-import com.example.model.vo.ordersVO;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
 public class CheckOutService {
 	
 	@Autowired
@@ -28,7 +24,6 @@ public class CheckOutService {
     public List<cartVO> deleteCart(cartVO vo){
         return repo.deleteCart(vo);
     }
-
     /*
      * // 예시: 결제 처리 (필요 시 구현)
      * @Transactional

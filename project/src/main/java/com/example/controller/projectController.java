@@ -9,24 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.example.model.vo.ProductVO;
-import com.example.model.vo.CartItemVO;
-import com.example.model.CartRepository;
-import com.example.service.CartService;
 import com.example.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Cookie;
-import java.net.URLEncoder;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,7 +25,6 @@ public class projectController {
 	@GetMapping("shop")
 	public String shop() {
 		return "shop";
-		
 	}
 
 	@GetMapping("header")

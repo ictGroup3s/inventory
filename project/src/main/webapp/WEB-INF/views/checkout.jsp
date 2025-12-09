@@ -319,7 +319,7 @@
 							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('농협')">농협</button>
 						</div>
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('카카오뱅크')">카카오뱅크</button>
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('카카오뱅크')" style="margin-bottom:20px;">카카오뱅크</button>
 						</div>
 					</div>
 					<p id="selectedCardDisplay" class="mt-3" style="color: #D19C97; font-weight: bold;"></p>

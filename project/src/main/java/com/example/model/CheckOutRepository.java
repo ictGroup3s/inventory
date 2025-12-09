@@ -25,5 +25,5 @@ public class CheckOutRepository {
 		log.info("[CheckOutRepository-selectCart()]");
 		return sess.selectList("com.example.model.CheckOutRepository.deleteCart", vo);
 	
-}
+	}
 }

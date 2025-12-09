@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.model.CartRepository;
 import com.example.model.vo.CartItemVO;
-import com.example.model.vo.CustomerVO;
 import com.example.model.vo.ProductVO;
 import com.example.service.CartService;
 import com.example.service.ProductService;
@@ -31,8 +29,6 @@ public class CartController {
     private ProductService productService;
 	@Autowired
     private CartService cartService;
-    @Autowired
-    private CartRepository cartRepository;
     
     @GetMapping("cart")
     public String cart(Model m, HttpSession session) {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "orderMapper">
+
+	<!-- 주문 저장 -->
+	<insert id="insertOrder" parameterType="ordersVO" useGeneratedKeys="true" keyProperty="order_no">
+	    INSERT INTO orders (
+	        order_name, order_addr, tracking, order_phone, 
+	        order_status, payment, api_pay, order_date, customer_id
+	    ) VALUES (
+	        #{order_name}, #{order_addr}, #{tracking}, #{order_phone},
+	        #{order_status}, #{payment}, #{api_pay}, NOW(), #{customer_id}
+	    )
+	</insert>
+	
+	<!-- 주문 상세 저장 -->
+	<insert id="insertOrderDetail" parameterType="order_detailVO">
+	    INSERT INTO order_detail (
+	        order_no, item_no, item_cnt, item_price
+	    ) VALUES (
+	        #{order_no}, #{item_no}, #{item_cnt}, #{item_price}
+	    )
+	</insert>
+	
+	<!-- 주문 내역 조회 -->
+	<select id="selectOrders" parameterType="String" resultType="map">
+	    SELECT 
+	        o.order_no,
+	        o.order_date,
+	        o.payment,
+	        o.order_status,
+	        d.item_no,
+	        d.item_cnt,
+	        d.item_price
+	    FROM orders o
+	    JOIN order_detail d ON o.order_no = d.order_no
+	    WHERE o.customer_id = #{customer_id}
+	    ORDER BY o.order_date DESC
+	</select>
+
+
+</mapper>

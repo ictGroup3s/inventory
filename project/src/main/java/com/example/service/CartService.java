@@ -2,8 +2,6 @@ package com.example.service;
 
 import java.util.List;
 
-import org.springframework.ui.Model;
-
 import jakarta.servlet.http.HttpSession;
 
 import com.example.model.vo.CartItemVO;

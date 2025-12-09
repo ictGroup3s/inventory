@@ -18,12 +18,12 @@ public class CheckOutServiceImple {
 	private CheckOutRepository repo;
 
 	public List<cartVO> selectCart(cartVO vo) {
-		log.info("[CheckOutService-selectCart()]");
+		log.info("[CheckOutService-selectCart()]",vo);
 		return repo.selectCart(vo);
 	}
 	
 	 public List<cartVO> deleteCart(cartVO vo){
-		 log.info("[CheckOutService-deleteCart]");
+		 log.info("[CheckOutService-deleteCart]",vo);
 		 return repo.deleteCart(vo);
 		 
 	 }
