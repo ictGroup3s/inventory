@@ -1,23 +1,23 @@
 package com.example.config;
 
+import com.example.webSocket.UnifiedChatHandler;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic"); // 메시지 브로커 설정
-        config.setApplicationDestinationPrefixes("/app");
+    private final UnifiedChatHandler unifiedChatHandler;
+
+    public WebSocketConfig(UnifiedChatHandler unifiedChatHandler) {
+        this.unifiedChatHandler = unifiedChatHandler;
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").withSockJS(); // 클라이언트 연결 엔드포인트
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        // 통합 핸들러 사용 (관리자 + 고객 모두)
+        registry.addHandler(unifiedChatHandler, "/ws/chat")
+                .setAllowedOrigins("*");
     }
 }
