@@ -1,102 +1,110 @@
-/* ▣ 채팅창 */
+/* ▣ 채팅창 전체 */
 .chat-box {
-    width: 300px;
-    height: 380px;
-    background: white;
-    border: 1px solid #ccc;
-    position: fixed;
-    bottom: 90px;
-    right: 30px;
-    display: none;
-    flex-direction: column;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    width: 300px;                  /* 채팅창 가로 */
+    height: 380px;                 /* 채팅창 세로 */
+    background: white;             /* 배경 흰색 */
+    border: 1px solid #ccc;        /* 테두리 */
+    position: fixed;               /* 화면 고정 */
+    bottom: 90px;                  /* 화면 아래에서 위치 */
+    right: 30px;                   /* 화면 오른쪽 위치 */
+    display: none;                 /* 초기 숨김 */
+    flex-direction: column;        /* 내부 배치 세로 */
+    border-radius: 10px;           /* 모서리 둥글게 */
+    box-shadow: 0 0 8px rgba(0,0,0,0.2); /* 그림자 */
+    z-index: 9998;                 /* 다른 요소 위 */
 }
 
 /* ▣ 채팅 열기 버튼 */
 .chat-open-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: #D19C97;
-    color: white;
-    border: none;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    font-size: 25px;
-    cursor: pointer;
+    position: fixed;               /* 화면 고정 */
+    bottom: 30px;                  /* 아래에서 위치 */
+    right: 100px;                   /* 오른쪽 위치 */
+    background: #D19C97;           /* 배경색 */
+    color: white;                  /* 글자색 */
+    border: none;                  /* 테두리 없음 */
+    width: 55px;                   /* 가로 */
+    height: 55px;                  /* 세로 */
+    border-radius: 50%;            /* 둥근 버튼 */
+    font-size: 25px;               /* 글자 크기 */
+    cursor: pointer;               /* 마우스 포인터 */
+    z-index: 9999;                 /* 항상 최상단 */
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ▣ 채팅 헤더 */
 .chat-header {
-    background: #D19C97;
-    color: white;
-    padding: 10px;
-    border-radius: 10px 10px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background: #D19C97;           /* 헤더 배경 */
+    color: white;                  /* 글자색 */
+    padding: 10px;                 /* 안쪽 여백 */
+    border-radius: 10px 10px 0 0;  /* 상단만 둥글게 */
+    display: flex;                 /* flex 배치 */
+    justify-content: space-between;/* 좌우 배치 */
+    align-items: center;           /* 수직 중앙 */
 }
 .chat-header-btn {
-    cursor: pointer;
+    cursor: pointer;               /* 클릭 가능 */
 }
 .chat-header-close {
-    cursor: pointer;
+    cursor: pointer;               /* 클릭 가능 */
 }
 
 /* ▣ 채팅 메시지창 */
 .chat-messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    display: flex;
+    flex: 1;                       /* 높이 자동 확장 */
+    padding: 10px;                 /* 안쪽 여백 */
+    overflow-y: auto;              /* 스크롤 */
+    display: flex;                 
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-end;     /* 메시지 아래 정렬 */
 }
 
-/* ▣ 채팅 입력 */
+/* ▣ 채팅 입력창 */
 .chat-input {
-    display: flex;
-    border-top: 1px solid #ccc;
+    display: flex;                 
+    border-top: 1px solid #ccc;    
 }
 .chat-input input {
-    flex: 1;
-    padding: 5px;
+    flex: 1;                       /* 입력창 가로 채우기 */
+    padding: 5px;                  
     border: none;
     outline: none;
 }
 .chat-input button {
-    padding: 5px 10px;
+    padding: 5px 10px;             
     border: none;
-    background: #D19C97;
+    background: #D19C97;           
     color: white;
     cursor: pointer;
 }
 
 /* ▣ 메시지 스타일 */
 .message {
-    padding: 8px 12px;
-    margin: 5px 0;
-    border-radius: 15px;
-    max-width: 80%;
-    word-wrap: break-word;
-    font-size: 14px;
+    padding: 8px 12px;            
+    margin: 5px 0;                
+    border-radius: 15px;          
+    max-width: 80%;               
+    word-wrap: break-word;        
+    font-size: 14px;              
 }
 
 /* 내가 보낸 메시지 */
 .message.self {
-    background-color: #e0e0e0;
+    background-color: #e0e0e0;    
     color: #000;
-    align-self: flex-end;
+    align-self: flex-end;         /* 오른쪽 정렬 */
 }
 
 /* 상대가 보낸 메시지 */
 .message.other {
-    background-color: #D19C97;
+    background-color: #D19C97;    
     color: #fff;
-    align-self: flex-start;
+    align-self: flex-start;       /* 왼쪽 정렬 */
 }
+
+/* 메시지 시간 */
 .message .time {
     font-size: 0.7em;
     color: #555;
@@ -105,19 +113,21 @@
 
 /* ▣ 채팅 목록 박스 */
 .chat-list-box {
-    width: 200px;
-    max-height: 380px;
-    overflow-y: auto;
-    position: fixed;
-    bottom: 90px;
-    right: 350px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    display: none;
+    width: 200px;                  
+    max-height: 380px;             
+    overflow-y: auto;              
+    position: fixed;               
+    bottom: 90px;                  
+    right: 350px;                  /* 채팅창 옆에 위치 */
+    background: #fff;              
+    border: 1px solid #ccc;        
+    border-radius: 10px;           
+    display: none;                 
     flex-direction: column;
+    z-index: 9997;                 /* 채팅창 아래 */
 }
 
+/* 채팅 목록 헤더 */
 .chat-list-header {
     background: #D19C97;
     color: white;
@@ -126,12 +136,61 @@
     font-weight: bold;
 }
 
+/* 채팅 목록 아이템 */
 .chat-list .chat-room {
     padding: 12px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
 }
-
 .chat-list .chat-room:hover {
     background: #f5f5f5;
 }
+
+/* 날짜 구분선 */
+.date-divider {
+    text-align: center;
+    margin: 15px 0;
+    color: #888;
+    font-size: 12px;
+    position: relative;
+}
+
+.date-divider::before,
+.date-divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 20%;
+    height: 1px;
+    background: #ddd;
+}
+
+.date-divider::before {
+    left: 10%;
+}
+
+.date-divider::after {
+    right: 10%;
+}
+
+/* 메시지 시간 */
+.message .time {
+    font-size: 10px;
+    color: #999;
+    margin-left: 8px;
+}
+
+/* 안읽은 메시지 표시 (빨간 점) */
+.chat-open-btn.has-unread::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 12px;
+    height: 12px;
+    background: red;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+
