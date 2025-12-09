@@ -87,14 +87,16 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>20251202-002</td>
-								<td>상품 B</td>
-								<td>2개</td>
-								<td><span class="badge badge-info" style="background-color:#EDF1FF; color: black;">배송중</span></td>
-								<td>2025-12-01</td>
-								<td>
-							</tr>
+							<c:forEach var="ci" items="${cartItems}">
+								<tr>
+									<td>${ci.product.item_no}</td>
+									<td>${ci.product.item_name}</td>
+									<td>${ci.qty}개</td>
+									<td>결제대기</td>
+									<td>${ci.product.createDate}</td>
+									<!-- 실제 주문일자 있으면 변경 -->
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

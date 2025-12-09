@@ -15,6 +15,7 @@ public interface CartService {
     void removeFromCart(Integer itemNo, HttpSession session) throws Exception;
     List<CartItemVO> getCartItems(HttpSession session) throws Exception;
     int getCartTotal(HttpSession session) throws Exception;
+
     // 세션 장바구니에 저장된 모든 항목을 로그인한 사용자의 DB 장바구니로 병합
     // 로그인전 남은 장바구니 내역이 로그인후 db에 반영
     void mergeSessionCartToDb(HttpSession session) throws Exception;

@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.model.vo.CartItemVO;
+
 @Repository
 public class CartRepositoryImpl implements CartRepository {
 
@@ -55,4 +57,7 @@ public class CartRepositoryImpl implements CartRepository {
         Integer cnt = sess.selectOne(NAMESPACE + "countByCustomer", customerId);
         return cnt == null ? 0 : cnt;
     }
+
+    
+    
 }

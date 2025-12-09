@@ -34,18 +34,14 @@ import lombok.extern.slf4j.Slf4j;
 public class projectController {
     @Autowired
     private ProductService productService;    
-	
+   
+    
 	@GetMapping("shop")
 	public String shop() {
 		return "shop";
 		
 	}
-	
-	@GetMapping("checkout")
-	public String checkout() {
-		return "checkout";
-	}
-	
+
 	@GetMapping("header")
 	public String header() {
 		return "header";

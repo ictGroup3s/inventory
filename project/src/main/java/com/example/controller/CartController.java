@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.model.CartRepository;
 import com.example.model.vo.CartItemVO;
+import com.example.model.vo.CustomerVO;
 import com.example.model.vo.ProductVO;
 import com.example.service.CartService;
 import com.example.service.ProductService;
@@ -177,5 +178,24 @@ public class CartController {
         }
         return resp;
     }
+    @GetMapping("/checkout")
+    public String checkout(HttpSession session, Model model) {
+        try {
+            // 로그인 여부에 상관없이 세션이나 DB에서 장바구니 항목 조회
+            List<CartItemVO> cartItems = cartService.getCartItems(session);
+            int cartTotal = cartService.getCartTotal(session);
+            int cartCount = cartItems.stream().mapToInt(CartItemVO::getQty).sum();
 
-}
+            model.addAttribute("cartItems", cartItems);
+            model.addAttribute("cartTotal", cartTotal);
+            model.addAttribute("cartCount", cartCount);
+        } catch (Exception e) {
+            model.addAttribute("cartItems", new ArrayList<>());
+            model.addAttribute("cartTotal", 0);
+            model.addAttribute("cartCount", 0);
+        }
+        return "checkout"; // checkout.jsp로 이동
+    }
+
+    	
+    }
