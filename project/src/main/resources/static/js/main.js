@@ -16,6 +16,8 @@
 	            slideWidth: 250,
 	            slideMargin: 10
 	        });
+			
+			
 	    } else {
 	        console.error('bxSlider가 로드되지 않았습니다.');
 	    }
@@ -59,7 +61,7 @@
 			}
 		});
 
-
+	
 		// Related carousel
 		$('.related-carousel').owlCarousel({
 			loop: true,
@@ -99,6 +101,8 @@
 			}
 			button.parent().parent().find('input').val(newVal);
 		});
+		
+		
 		//sidebar 클릭
 	const currentPath = window.location.pathname.split('/').pop();
 
@@ -285,4 +289,33 @@
 		addToCart(itemNo);
 	});
 
+	//디테일 장바구니 Ajax
+	$('#add-to-cart-btn').click(function(e) {
+	    e.preventDefault();
+	    var item_no = $(this).data('item-no');
+	    var qty = parseInt($('#qty').val());
+
+	    $.ajax({
+	        url: '/cart/add',
+	        type: 'POST',
+	        data: { item_no: item_no, qty: qty },
+	        success: function(res) {
+	            if(res.success) {
+	                alert(qty + '개가 장바구니에 추가되었습니다. 총 ' + res.cartCount + '개');
+	                // 상단 장바구니 배지 갱신
+	                $('.btn .badge').text(res.cartCount);
+	            } else {
+	                alert('장바구니 추가 실패: ' + res.message);
+	            }
+	        },
+	        error: function() {
+	            alert('서버 오류 발생');
+	        }
+	    });
+		});
+	
+	
+	
+	
+	
 })(jQuery);

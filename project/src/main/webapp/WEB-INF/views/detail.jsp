@@ -228,15 +228,16 @@
 	
 <!-- Image Slider Start -->
 <div class="container py-5">
-    <ul class="bxslider">
+   <ul class="bxslider">
     <li>
-    <div class="slider-card">
-      <img src="img/bulgogi.jpg" alt="Slider Image 1" />
-      <h5 class="slider-title">불고기</h5>
-        <p class="slider-price">12,000원</p>
-         <button class="btn btn-primary slider-cart" >장바구니 담기</button>
-            </div>
-        </li>
+        <div class="slider-card" data-item-no="129">
+           <img src="/img/product/1764664988078_감자채볶음.png" alt="감자채볶음" />
+            <h5 class="slider-title">햄감자채볶음</h5>
+            <p class="slider-price">4,000원</p>
+        
+        <button class="btn btn-primary slider-cart" data-item-no="129">장바구니 담기</button>
+        </div>
+    </li>
         <li>
     <div class="slider-card">
      <a href="productDetail.jsp?id=1">
@@ -354,35 +355,7 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 
-<script>
-//2 장바구니 Ajax
-$('#add-to-cart-btn').click(function(e) {
-    e.preventDefault();
-    var item_no = $(this).data('item-no');
-    var qty = parseInt($('#qty').val());
 
-    $.ajax({
-        url: '/cart/add',
-        type: 'POST',
-        data: { item_no: item_no, qty: qty },
-        success: function(res) {
-            if(res.success) {
-                alert(qty + '개가 장바구니에 추가되었습니다. 총 ' + res.cartCount + '개');
-                // 상단 장바구니 배지 갱신
-                $('.btn .badge').text(res.cartCount);
-            } else {
-                alert('장바구니 추가 실패: ' + res.message);
-            }
-        },
-        error: function() {
-            alert('서버 오류 발생');
-        }
-    });
-});
-
-});
-
-</script>
 </body>
 
 
