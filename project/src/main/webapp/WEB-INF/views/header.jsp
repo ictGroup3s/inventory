@@ -1,103 +1,115 @@
-<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta charset="utf-8">
-    <title>StockBob</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-    
+<meta charset="utf-8">
+<title>StockBob</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free HTML Templates" name="keywords">
+<meta content="Free HTML Templates" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+	rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+	rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="css/style.css" rel="stylesheet">
+<link href="css/chat.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Topbar Start -->
-    
-        <div class="row align-items-center py-3 px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                <a href="#" class="text-decoration-none">
-                    <img src='../img/logo.png' class='logo'/>
-                    <!-- <h1 class="m-0 display-5 font-weight-semi-bold">
+	<!-- Topbar Start -->
+
+	<div class="row align-items-center py-3 px-xl-5">
+		<div class="col-lg-3 d-none d-lg-block">
+			<a href="#" class="text-decoration-none"> <img
+				src='../img/logo.png' class='logo' /> <!-- <h1 class="m-0 display-5 font-weight-semi-bold">
                     <span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1> -->
-                </a>
-            </div>
-            <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="cart" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
+			</a>
+		</div>
+		<div class="col-lg-6 col-6 text-left">
+			<form action="">
+				<div class="input-group">
+					<input type="text" class="form-control"
+						placeholder="Search for products">
+					<div class="input-group-append">
+						<span class="input-group-text bg-transparent text-primary">
+							<i class="fa fa-search"></i>
+						</span>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-lg-3 col-6 text-right">
+			<a href="" class="btn border"> <i
+				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+			</a> <a href="cart" class="btn border"> <i
+				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+			</a>
+		</div>
+	</div>
+	</div>
+	<!-- Topbar End -->
 
 
-    <!-- Navbar Start -->
-    <div class="container-fluid mb-5">
-        <div class="row border-top px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                    <h6 class="m-0">Categories</h6>
-                    <i class="fa fa-angle-down text-dark"></i>
-                </a>
-                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-                        <a href="selectall" class="nav-item nav-link">전체상품</a>
-                        <a href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
-                        <a href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a>
-                        <a href="selectDiet" class="nav-item nav-link"> 식단관리 </a>
-                        <a href="selectBunsik" class="nav-item nav-link">분식 ．간식</a>
-                        <a href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a>
-                        <a href="selectdrink" class="nav-item nav-link">생수 ．음료</a>
-                    </div>
-                </nav>
-            </div>
-            <div class="col-lg-9">
-                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-                    <a href="" class="text-decoration-none d-block d-lg-none">
-						<img src='../img/logo.png' class='logo'/>
-                    </a>
-                  
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <!-- <div class="navbar-nav mr-auto py-0">
+	<!-- Navbar Start -->
+	<div class="container-fluid mb-5">
+		<div class="row border-top px-xl-5">
+			<div class="col-lg-3 d-none d-lg-block">
+				<a
+					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
+					data-toggle="collapse" href="#navbar-vertical"
+					style="height: 65px; margin-top: -1px; padding: 0 30px;">
+					<h6 class="m-0">Categories</h6> <i
+					class="fa fa-angle-down text-dark"></i>
+				</a>
+				<nav
+					class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
+					id="navbar-vertical">
+					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
+						<a href="selectall" class="nav-item nav-link">전체상품</a> <a
+							href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a
+							href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a> <a
+							href="selectDiet" class="nav-item nav-link"> 식단관리 </a> <a
+							href="selectBunsik" class="nav-item nav-link">분식 ．간식</a> <a
+							href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a> <a
+							href="selectdrink" class="nav-item nav-link">생수 ．음료</a>
+					</div>
+				</nav>
+			</div>
+			<div class="col-lg-9">
+				<nav
+					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+					<a href="" class="text-decoration-none d-block d-lg-none"> <img
+						src='../img/logo.png' class='logo' />
+					</a>
+
+					<button type="button" class="navbar-toggler" data-toggle="collapse"
+						data-target="#navbarCollapse">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<!-- <div class="navbar-nav mr-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">메인</a>
                             <a href="shop" class="nav-item nav-link">상품</a>
                              <div class="nav-item dropdown">
@@ -109,626 +121,564 @@
                             </div>
                              
                         </div> -->
-                        <div class="navbar-nav ml-auto py-0">
-                        	<!-- 로그인전 -->
-                        <c:if test="${empty sessionScope.loginUser}">
-                        	<a href="login" class="nav-item nav-link">로그인</a>
-                        	<a href="register" class="nav-item nav-link">회원가입</a>
-                            <a href="board" class="nav-item nav-link">고객센터</a>
-                		</c:if>
-                		
-                            <!-- 회원 로그인 후   -->	
-	                     <c:if test="${not empty sessionScope.loginUser}">
-							<span class="nav-item nav-link">안녕하세요, 
-							 ${sessionScope.loginUser.customer_id}님!</span>
-						  
-						   <c:if test="${sessionScope.loginRole == 0}">
-						    <a href="mypage" class="nav-item nav-link">마이페이지</a>
-						    </c:if>
-						   
-						    <c:if test="${sessionScope.loginRole == 1}">
-					        <a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
-					    	</c:if>
-					 	
-			<c:if test="${empty sessionScope.loginUser}">
-		    <a href="<c:url value='/login'/>" class="nav-item nav-link">로그인</a>
-		    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=http://localhost:8080/oauth/google/callback&response_type=code&scope=email%20profile">
-		        <img src="/img/google.png" alt="Google 로그인" style="height:24px;"/>
-		    </a>
-						</c:if>		                           
-                        </div>
-                    </div>
-                </nav>
-                <div id="header-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" style="height: 410px;">
-                            <img class="img-fluid" src="img/main_event1.png" alt="Image">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <!-- <div class="p-3" style="max-width: 700px;">
+						<div class="navbar-nav ml-auto py-0">
+							<!-- 로그인전 -->
+							<c:if test="${empty sessionScope.loginUser}">
+								<a href="login" class="nav-item nav-link">로그인</a>
+								<a href="register" class="nav-item nav-link">회원가입</a>
+								<a href="board" class="nav-item nav-link">고객센터</a>
+							</c:if>
+
+							<!-- 회원 로그인 후   -->
+							<c:if test="${not empty sessionScope.loginUser}">
+								<span class="nav-item nav-link">안녕하세요,
+									${sessionScope.loginUser.customer_id}님!</span>
+
+
+								<c:if test="${sessionScope.loginRole == 0}">
+									<a href="mypage" class="nav-item nav-link">마이페이지</a>
+								</c:if>
+
+								<c:if test="${sessionScope.loginRole == 1}">
+									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+								</c:if>
+								<!-- 로그아웃 링크 -->
+								<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+							</c:if>
+						</div>
+					</div>
+				</nav>
+				<div id="header-carousel" class="carousel slide"
+					data-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active" style="height: 410px;">
+							<img class="img-fluid" src="img/main_event1.png" alt="Image">
+							<div
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								<!-- <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
                                     <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div> -->
-                            </div>
-                        </div>
-                        <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="img/main_event2.png" alt="Image">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <!-- <div class="p-3" style="max-width: 700px;">
+							</div>
+						</div>
+						<div class="carousel-item" style="height: 410px;">
+							<img class="img-fluid" src="img/main_event2.png" alt="Image">
+							<div
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								<!-- <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
                                     <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div> -->
-                            </div>
-                        </div>
-                        
-                        <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="img/main_event3.png" alt="Image">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <!-- <div class="p-3" style="max-width: 700px;">
+							</div>
+						</div>
+
+						<div class="carousel-item" style="height: 410px;">
+							<img class="img-fluid" src="img/main_event3.png" alt="Image">
+							<div
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								<!-- <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
                                     <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div> -->
-                            </div>
-                        </div>
-                    </div>
-                   <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                            <span class="carousel-control-prev-icon mb-n2"></span>
-                        </div>
-                    </a>
-                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                            <span class="carousel-control-next-icon mb-n2"></span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Navbar End -->
+							</div>
+						</div>
+					</div>
+					<a class="carousel-control-prev" href="#header-carousel"
+						data-slide="prev">
+						<div class="btn btn-dark" style="width: 45px; height: 45px;">
+							<span class="carousel-control-prev-icon mb-n2"></span>
+						</div>
+					</a> <a class="carousel-control-next" href="#header-carousel"
+						data-slide="next">
+						<div class="btn btn-dark" style="width: 45px; height: 45px;">
+							<span class="carousel-control-next-icon mb-n2"></span>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Navbar End -->
 
-    <!-- Categories Start -->
-    <div class="container-fluid pt-5">
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="selectGui" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/gui.png" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">구이 ．찜 ．볶음</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="selectSoup" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/soup.png" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">국 ．밥 ．면</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="selectDiet" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/diet.png" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">식단관리</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="selectBunsik" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/bunsik.png" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">분식 ．간식</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="selectBanchan" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/banchan.png" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">반찬 ．소스</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="selectRecipe" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/recipe.png" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">레시피</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Categories End -->
-
-
-   <!-- Offer Start -->
-    <div class="container-fluid offer pt-5">
-        <div class="row px-xl-5">
-            <div class="col-md-6 pb-4">
-                <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5">
-                    <img src="img/bingsu.png" alt="">
-                    <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">season off</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">20%</h1>
-                      </div>
-                        <a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
-
-                </div>
-            </div>
-            <div class="col-md-6 pb-4">
-                <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5">
-                    <img src="img/boong1.png" alt="">
-                    <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">new arrival</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">New arrival</h1>
-                        <a href="event2" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
-                
-                         
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Offer End -->
+	<!-- Categories Start -->
+	<div class="container-fluid pt-5">
+		<div class="row px-xl-5 pb-3">
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectGui"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/gui.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">구이 ．찜 ．볶음</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectSoup"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/soup.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">국 ．밥 ．면</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectDiet"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/diet.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">식단관리</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectBunsik"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/bunsik.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">분식 ．간식</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectBanchan"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/banchan.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">반찬 ．소스</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectRecipe"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/recipe.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">레시피</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Categories End -->
 
 
+	<!-- Offer Start -->
+	<div class="container-fluid offer pt-5">
+		<div class="row px-xl-5">
+			<div class="col-md-6 pb-4">
+				<div
+					class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5">
+					<img src="img/bingsu.png" alt="">
+					<div class="position-relative" style="z-index: 1;">
+						<h5 class="text-uppercase text-primary mb-3">season off</h5>
+						<h1 class="mb-4 font-weight-semi-bold">20%</h1>
+					</div>
+					<a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop
+						Now</a>
 
-    <!-- Products Start -->
-    <div class="container-fluid pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Trandy Products</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/삼계탕.png" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">삼계탕</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>7,000원</h6><h6 class="text-muted ml-2"><del>0.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/쉐이크파우치.png" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">프로틴 쉐이트 5개입</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>8,970원</h6><h6 class="text-muted ml-2"><del>14,950원</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/스리라차.png" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">스리라차 핫 칠리 시즈닝, 255g, 1개</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>4,560원</h6><h6 class="text-muted ml-2"><del></del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/호떡.png" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">호떡 5개입, 2종</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>5,100원</h6><h6 class="text-muted ml-2"><del>8,500원</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    <!-- Products End -->
+				</div>
+			</div>
+			<div class="col-md-6 pb-4">
+				<div
+					class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5">
+					<img src="img/boong1.png" alt="">
+					<div class="position-relative" style="z-index: 1;">
+						<h5 class="text-uppercase text-primary mb-3">new arrival</h5>
+						<h1 class="mb-4 font-weight-semi-bold">New arrival</h1>
+						<a href="event2" class="btn btn-outline-primary py-md-2 px-md-3">Shop
+							Now</a>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Offer End -->
 
 
 
-    <!-- Products Start -->
-    <div class="container-fluid pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Just Arrived</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/삼계탕.png" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">삼계탕</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>7,000원</h6><h6 class="text-muted ml-2"><del>0.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/쉐이크파우치.png" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">프로틴 쉐이트 5개입</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>8,970원</h6><h6 class="text-muted ml-2"><del>14,950원</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/스리라차.png" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">스리라차 핫 칠리 시즈닝, 255g, 1개</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>4,560원</h6><h6 class="text-muted ml-2"><del></del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/호떡.png" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">호떡 5개입, 2종</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>5,100원</h6><h6 class="text-muted ml-2"><del>8,500원</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    <!-- Products End -->
+	<!-- Products Start -->
+	<div class="container-fluid pt-5">
+		<div class="text-center mb-4">
+			<h2 class="section-title px-5">
+				<span class="px-2">Trandy Products</span>
+			</h2>
+		</div>
+		<div class="row px-xl-5 pb-3">
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="card product-item border-0 mb-4">
+					<div
+						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+						<img class="img-fluid w-100" src="img/삼계탕.png" alt="">
+					</div>
+					<div
+						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+						<h6 class="text-truncate mb-3">삼계탕</h6>
+						<div class="d-flex justify-content-center">
+							<h6>7,000원</h6>
+							<h6 class="text-muted ml-2">
+								<del>0.00</del>
+							</h6>
+						</div>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between bg-light border">
+						<a href="" class="btn btn-sm text-dark p-0"><i
+							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+							class="btn btn-sm text-dark p-0"><i
+							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="card product-item border-0 mb-4">
+					<div
+						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+						<img class="img-fluid w-100" src="img/쉐이크파우치.png" alt="">
+					</div>
+					<div
+						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+						<h6 class="text-truncate mb-3">프로틴 쉐이트 5개입</h6>
+						<div class="d-flex justify-content-center">
+							<h6>8,970원</h6>
+							<h6 class="text-muted ml-2">
+								<del>14,950원</del>
+							</h6>
+						</div>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between bg-light border">
+						<a href="" class="btn btn-sm text-dark p-0"><i
+							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+							class="btn btn-sm text-dark p-0"><i
+							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="card product-item border-0 mb-4">
+					<div
+						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+						<img class="img-fluid w-100" src="img/스리라차.png" alt="">
+					</div>
+					<div
+						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+						<h6 class="text-truncate mb-3">스리라차 핫 칠리 시즈닝, 255g, 1개</h6>
+						<div class="d-flex justify-content-center">
+							<h6>4,560원</h6>
+							<h6 class="text-muted ml-2">
+								<del></del>
+							</h6>
+						</div>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between bg-light border">
+						<a href="" class="btn btn-sm text-dark p-0"><i
+							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+							class="btn btn-sm text-dark p-0"><i
+							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="card product-item border-0 mb-4">
+					<div
+						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+						<img class="img-fluid w-100" src="img/호떡.png" alt="">
+					</div>
+					<div
+						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+						<h6 class="text-truncate mb-3">호떡 5개입, 2종</h6>
+						<div class="d-flex justify-content-center">
+							<h6>5,100원</h6>
+							<h6 class="text-muted ml-2">
+								<del>8,500원</del>
+							</h6>
+						</div>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between bg-light border">
+						<a href="" class="btn btn-sm text-dark p-0"><i
+							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+							class="btn btn-sm text-dark p-0"><i
+							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-   	    <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-        <div class="row px-xl-5 pt-3">
-            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
-           
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
-                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
-                <h2 class="mb-0">
-   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
-					</h2>
-                       </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
-                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-                            <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a>
-                         </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-12 mt-4 mb-5">
-                        <p class="text-dark mb-2">
-                        <span>stockbob 소개</span>
-                            &nbsp;&nbsp; | &nbsp;&nbsp;
-                        <span>이용약관</span>
-                       		&nbsp; | &nbsp;
-                       	<span>개인정보처리방침</span>
-                       		&nbsp; | &nbsp;
-                       	<span>이용안내</span>
-                       	
-                       </p><br>
-                       <p style="color: #999;">
-                       법인명 (상호) : 주식회사 STOCKBOB<br>
-                       사업자등록번호 : 000-11-00000<br>
-						통신판매업 : 제 2025-서울-11111 호<br>
-						주소 : 서울특별시 서대문구 신촌동 00<br>
-						채용문의 : ict.atosoft.com<br>
-						팩스 : 070-0000-0000
-                       </p>
-                      </div>
-                    </div>
-                 
-                    </div>
-                  
-                </div>
-            </div>
-        </div>
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
+	</div>
+	<!-- Products End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
-<!-- ------------------채팅 관련 추가---------------- -->
-		<!-- 채팅 버튼 -->
-	  <button id="chatToggle" class="chat-button" title="문의">💬</button>
-	
-	  <!-- 채팅 박스 (초기에는 숨김) -->
-	  <div id="chatBox" class="chat-box" role="dialog" aria-hidden="true" aria-label="고객 상담">
-	    <div class="chat-header">
-	      <span>관리자 채팅</span>
-	      <button id="closeBtn" style="background:none;border:none;color:#fff;font-size:16px">✕</button>
-	    </div>
-	    <div id="messages" class="chat-messages"></div>
-	    <div class="chat-input">	      
-	      <input id="messageInput" type="text" placeholder="메시지를 입력하세요..." />
-	      <button id="sendBtn">전송</button>
-	    </div>
-	  </div>
-	  <!-- ------------------채팅 관련 ---------------- -->
+	<!-- Products Start -->
+	<div class="container-fluid pt-5">
+		<div class="text-center mb-4">
+			<h2 class="section-title px-5">
+				<span class="px-2">Just Arrived</span>
+			</h2>
+		</div>
+		<div class="row px-xl-5 pb-3">
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="card product-item border-0 mb-4">
+					<div
+						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+						<img class="img-fluid w-100" src="img/삼계탕.png" alt="">
+					</div>
+					<div
+						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+						<h6 class="text-truncate mb-3">삼계탕</h6>
+						<div class="d-flex justify-content-center">
+							<h6>7,000원</h6>
+							<h6 class="text-muted ml-2">
+								<del>0.00</del>
+							</h6>
+						</div>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between bg-light border">
+						<a href="" class="btn btn-sm text-dark p-0"><i
+							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+							class="btn btn-sm text-dark p-0"><i
+							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="card product-item border-0 mb-4">
+					<div
+						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+						<img class="img-fluid w-100" src="img/쉐이크파우치.png" alt="">
+					</div>
+					<div
+						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+						<h6 class="text-truncate mb-3">프로틴 쉐이트 5개입</h6>
+						<div class="d-flex justify-content-center">
+							<h6>8,970원</h6>
+							<h6 class="text-muted ml-2">
+								<del>14,950원</del>
+							</h6>
+						</div>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between bg-light border">
+						<a href="" class="btn btn-sm text-dark p-0"><i
+							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+							class="btn btn-sm text-dark p-0"><i
+							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="card product-item border-0 mb-4">
+					<div
+						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+						<img class="img-fluid w-100" src="img/스리라차.png" alt="">
+					</div>
+					<div
+						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+						<h6 class="text-truncate mb-3">스리라차 핫 칠리 시즈닝, 255g, 1개</h6>
+						<div class="d-flex justify-content-center">
+							<h6>4,560원</h6>
+							<h6 class="text-muted ml-2">
+								<del></del>
+							</h6>
+						</div>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between bg-light border">
+						<a href="" class="btn btn-sm text-dark p-0"><i
+							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+							class="btn btn-sm text-dark p-0"><i
+							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="card product-item border-0 mb-4">
+					<div
+						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+						<img class="img-fluid w-100" src="img/호떡.png" alt="">
+					</div>
+					<div
+						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+						<h6 class="text-truncate mb-3">호떡 5개입, 2종</h6>
+						<div class="d-flex justify-content-center">
+							<h6>5,100원</h6>
+							<h6 class="text-muted ml-2">
+								<del>8,500원</del>
+							</h6>
+						</div>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between bg-light border">
+						<a href="" class="btn btn-sm text-dark p-0"><i
+							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
+							class="btn btn-sm text-dark p-0"><i
+							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	</div>
+	<!-- Products End -->
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+	<!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+		<div class="row px-xl-5 pt-3">
+			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-    
-    <!-- SockJS + StompJS -->
-  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+				<p class="mb-2">
+					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
+					Seoul, KOREA
+				</p>
+				<p class="mb-2">
+					<i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com
+				</p>
+				<p>
+					<i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전
+					9시30분~5시30분
+				</p>
+				<h2 class="mb-0">
+					<i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
+				</h2>
+			</div>
+			<div class="col-lg-8 col-md-12">
+				<div class="row">
+					<div class="col-md-4 mb-3">
+						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-dark mb-2" href="/"><i
+								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
+								class="text-dark mb-2" href="selectall"><i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
+								class="text-dark mb-2" href="mlist"><i
+								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
+								class="text-dark mb-2" href="cart"><i
+								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
+								class="text-dark mb-2" href="checkout"><i
+								class="fa fa-angle-right mr-2"></i>결제</a>
+						</div>
+					</div>
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-md-12 mt-4 mb-5">
+								<p class="text-dark mb-2">
+									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
 
-<!-- ------------------채팅 관련 스크립트 시작---------------- -->
-  <script>
-  (function() {
-    // 유틸: UUID (간단)
-    function uuidv4(){
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
-        const r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
-      });
-    }
+								</p>
+								<br>
+								<p style="color: #999;">
+									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+								</p>
+							</div>
+						</div>
 
-    // 클라이언트 id 저장/조회
-    const CLIENT_KEY = 'chat_client_id';
-    let clientId = localStorage.getItem(CLIENT_KEY);
-    if (!clientId) {
-      clientId = 'user-' + uuidv4();
-      localStorage.setItem(CLIENT_KEY, clientId);
-    }
-    
-    function getDefaultSender() {
-    	  const short = (clientId || '').replace(/^user-/, '').slice(0,6);
-    	  return short ? ('손님-' + short) : '손님';
-    	}
+					</div>
 
-    // roomId 전략: 단순히 clientId를 사용 (서버에서 별도 room 생성 API를 쓰려면 그걸 호출해 roomId를 받도록 변경)
-    const roomId = clientId;
+				</div>
+			</div>
+		</div>
+		<div class="row border-top border-light mx-xl-5 py-4">
+			<div class="col-md-6 px-xl-0">
+				<p class="mb-md-0 text-center text-md-left text-dark">
+					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						Site Name</a>. All Rights Reserved. Designed by <a
+						class="text-dark font-weight-semi-bold"
+						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
+					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+				</p>
+			</div>
+			<div class="col-md-6 px-xl-0 text-center text-md-right">
+				<img class="img-fluid" src="img/payments.png" alt="">
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
 
-    const chatToggle = document.getElementById('chatToggle');
-    const chatBox = document.getElementById('chatBox');
-    const closeBtn = document.getElementById('closeBtn');
-    const sendBtn = document.getElementById('sendBtn');
-    const msgInput = document.getElementById('messageInput');
-    const senderInput = document.getElementById('senderInput');
-    const messagesEl = document.getElementById('messages');
 
-    let stompClient = null;
-    let connected = false;
+	<!-- Back to Top -->
+	<a href="#" class="btn btn-primary back-to-top"><i
+		class="fa fa-angle-double-up"></i></a>
 
-    function appendMessage(msg) {
-      const el = document.createElement('div');
-      const who = (msg.sender && /관리자|admin/i.test(msg.sender)) ? 'admin' : 'customer';
-      el.className = 'msg ' + who;
-      const meta = document.createElement('div'); meta.className = 'meta';
-      meta.textContent = (msg.sender || '손님') + ' · ' + new Date(msg.timestamp || Date.now()).toLocaleTimeString();
-      const txt = document.createElement('div'); txt.className = 'text';
-      txt.textContent = msg.content;
-      el.appendChild(meta); el.appendChild(txt);
-      messagesEl.appendChild(el);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
+	<!-- ------------------채팅 관련 추가---------------- -->
+	<!-- ▣ 채팅 목록 박스 -->
+	<div id="chat-list-box" class="chat-list-box" style="display: none;">
+		<div class="chat-list-header">나의 채팅 목록</div>
+		<div id="chat-list" class="chat-list"></div>
+	</div>
 
-    function connect() {
-      // SockJS 엔드포인트는 서버에 맞춰 '/ws' (WebSocketConfig에서 registerStompEndpoints로 등록한 값)
-      const socket = new SockJS(window.location.origin + '/ws');
-      stompClient = Stomp.over(socket);
-      // 디버그 로그 끄기 (원하면 console.log로 변경)
-      stompClient.debug = function(msg){ console.log('STOMP: ' + msg); };
+	<!-- ▣ 채팅창 -->
+	<div id="chat-box" class="chat-box" style="display: none;">
+		<div class="chat-header">
+			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+			<span id="chat-close" class="chat-header-close">✕</span>
+		</div>
 
-      stompClient.connect({}, function(frame) {
-        connected = true;
-        
-        // 구독: room 전용 토픽
-        stompClient.subscribe('/topic/chat/' + roomId, function(payload) {
-          try {
-            const msg = JSON.parse(payload.body);
-            appendMessage(msg);
-          } catch(e) { console.error(e); }
-        });
+		<div id="chat-messages" class="chat-messages"></div>
 
-        // (옵션) 히스토리 로드: 서버에 /api/chat/history?roomId=... 가 구현되어 있다면 호출
-        fetch('/api/chat/history?roomId=' + encodeURIComponent(roomId))
-          .then(r => r.ok ? r.json() : Promise.reject(r))
-          .then(list => { if (Array.isArray(list)) list.forEach(appendMessage); })
-          .catch(()=>{ /* 히스토리 없으면 무시 */});
-      }, function(err) {
-        console.error('STOMP 연결 실패', err);
-      });
-    }
+		<div class="chat-input">
+			<input type="text" id="chat-text" placeholder="메시지 입력...">
+			<button id="chat-send">Send</button>
+		</div>
+	</div>
 
-    function send() {
-    	  try {
-    	    const text = msgInput.value && msgInput.value.trim();
-    	    if (!text) return;
+	<!-- ▣ 채팅 열기 버튼 -->
+	<button id="chat-open" class="chat-open-btn">💬</button>
 
-    	    // senderInput이 null일 수 있으므로 안전하게 처리
-    	    // optional chaining 사용 가능: senderInput?.value
-    	    const senderFromInput = (typeof senderInput !== 'undefined' && senderInput && senderInput.value) ? senderInput.value.trim() : '';
-    	    const sender = senderFromInput || getDefaultSender();
 
-    	    const payload = { type:'CHAT', roomId: roomId, sender: sender, content: text, timestamp: Date.now() };
 
-    	    if (stompClient && connected) {
-    	      stompClient.send('/app/chat.send', {}, JSON.stringify(payload));
-    	      msgInput.value = '';
-//    	      appendMessage(payload); // 즉시 로컬에 표시
-    	      console.log('STOMP send ->', payload);
-    	    } else {
-    	      console.warn('WebSocket not connected - using REST fallback');
-    	      fetch('/api/chat/send', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)})
-    	        .then(()=>{ msgInput.value=''; appendMessage(payload); })
-    	        .catch(e => { console.error('REST fallback error', e); alert('메시지 전송 실패'); });
-    	    }
-    	  } catch (err) {
-    	    console.error('send() error', err);
-    	  }
-    	}
 
-    // UI 이벤트
-    chatToggle.addEventListener('click', function(){
-      if (chatBox.style.display === 'flex') {
-        chatBox.style.display = 'none';
-      } else {
-        chatBox.style.display = 'flex';
-        if (!connected) connect();
-      }
-    });
-    closeBtn.addEventListener('click', function(){ chatBox.style.display = 'none'; });
-    sendBtn.addEventListener('click', send);
-    msgInput.addEventListener('keypress', function(e){ if (e.key === 'Enter') send(); });
 
-    // (선택) 페이지 열릴 때 채팅 자동 연결하려면 아래 주석 해제
-    // window.addEventListener('load', connect);
 
-    console.log('chat clientId=', clientId, ' roomId=', roomId);
-  })();
-  </script>
-  <script>
-(function(){
-  const chatBtn = document.getElementById('chatToggle'); // chat 버튼 id
-  const chatBox = document.getElementById('chatBox');   // 채팅 박스 (옵션)
-  const backBtn = document.querySelector('.back-to-top');
+	<!-- JavaScript Libraries -->
+	<!-- jQuery 먼저 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-  function getBackBottomOffset() {
-    if (!backBtn) return 0;
-    const style = getComputedStyle(backBtn);
-    if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) {
-      return 0;
-    }
-    // backBtn는 fixed 위치이므로 높이만큼 간격 확보
-    const h = backBtn.getBoundingClientRect().height || 0;
-    return h;
-  }
+	<!-- Bootstrap JS -->
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-  function adjustChatPosition() {
-    const offset = getBackBottomOffset();
-    const baseGap = 20; // back-to-top과 chat 사이 최소 간격(px)
-    if (chatBtn) {
-      // chat 버튼을 back-to-top 위로 올리거나 아래로 밀고 싶다면 계산식 조정
-      // 여기서는 back-to-top 위에 겹치지 않게 올리는 방식: bottom = offset + baseGap
-      chatBtn.style.bottom = (offset + baseGap) + 'px';
-      // z-index 안전값
-      chatBtn.style.zIndex = 1060;
-    }
-    if (chatBox) {
-      // 채팅 박스(열렸을 때) 위치도 보정
-      // chatBox이 chatBtn 위에 열리도록 충분히 위로 띄움 (예: offset + 100)
-      chatBox.style.bottom = (offset + 100) + 'px';
-      chatBox.style.zIndex = 1060;
-    }
-  }
+	<!-- Contact JS -->
+	<script src="mail/jqBootstrapValidation.min.js"></script>
+	<script src="mail/contact.js"></script>
 
-  // 초기 보정
-  document.addEventListener('DOMContentLoaded', adjustChatPosition);
-  // 창 크기/스크롤 변경 시 보정
-  window.addEventListener('resize', adjustChatPosition);
-  window.addEventListener('scroll', adjustChatPosition);
+	<!-- 로그인 ID 주입 (chat.js보다 위에) -->
+	<script>
+		const myId = "${sessionScope.loginUser.customer_id}";
+		console.log("✅ myId 확인:", myId);
+	</script>
 
-  // 만약 back-to-top이 스크립트로 보였다/숨겼다 하면 MutationObserver로 모니터링
-  if (backBtn && window.MutationObserver) {
-    const mo = new MutationObserver(adjustChatPosition);
-    mo.observe(backBtn, { attributes: true, attributeFilter: ['style', 'class'] });
-  }
+	<!-- Chat JS -->
+	<script src="/js/CustomerChat.js?v=999"></script>
 
-  // 최초 실행(이미 DOM 로드된 경우)
-  adjustChatPosition();
-})();
-</script>
-<!-- ------------------채팅 관련 스크립트 끝---------------- -->
+	<!-- Main JS -->
+	<script src="js/main.js" defer></script>
+
+	<!-- SockJS + STOMPJS (chat.js보다 위에) -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
 
 </body>
 

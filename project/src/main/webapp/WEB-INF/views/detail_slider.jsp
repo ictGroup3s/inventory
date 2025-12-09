@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +32,7 @@
 </head>
 
 <body>
-
+<!-- ############## 로고부분 ############################## -->
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
@@ -65,7 +64,7 @@
 	<!-- Topbar End -->
 
 
-	<!-- Navbar Start -->
+	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
 	<div class="container-fluid">
 		<div class="row border-top px-xl-5">
 			<div class="col-lg-3 d-none d-lg-block">
@@ -80,13 +79,15 @@
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
 					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
 					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="selectall" class="nav-item nav-link">전체상품</a>
-                        <a href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
-                        <a href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a>
-                        <a href="selectDiet" class="nav-item nav-link"> 식단관리 </a>
-                        <a href="selectBunsik" class="nav-item nav-link">분식 ．간식</a>
-                        <a href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a>
-                        <a href="selectdrink" class="nav-item nav-link">생수 ．음료</a>
+						<a href="selectall" class="nav-item nav-link">전체상품</a> <a href=""
+							class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a href=""
+							class="nav-item nav-link">국 ．밥 ．면</a> <a href=""
+							class="nav-item nav-link"> 식단관리 </a> <a href=""
+							class="nav-item nav-link">분식 ．간식</a> <a href=""
+							class="nav-item nav-link">베이커리 ．떡</a> <a href=""
+							class="nav-item nav-link">반찬 ．소스</a> <a href=""
+							class="nav-item nav-link">레시피</a> <a href=""
+							class="nav-item nav-link">Shoes</a>
 					</div>
 				</nav>
 			</div>
@@ -115,44 +116,48 @@
 	</div>
 	<!-- Navbar End -->
 
-	<!-- Shop Detail Start -->
+	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
 	<div class="container-fluid py-5">
 		<div class="row px-xl-5">
 			<div class="col-lg-5 pb-5">
-				<div id="product-carousel" class="carousel slide" data-ride="carousel">
+				<div id="product-carousel" class="carousel slide"
+					data-ride="carousel">
 					<div class="carousel-inner border">
 						<div class="carousel-item active">
-							<img class="w-100 h-100" src="/img/product/${item.item_img}" alt="Image">
+							<img src="img/fish.png" alt="Image" 
+							style="width:300px; height:300px; margin-left:150px;" >
+						</div>
+				<!-- <div class="carousel-item">
+							<img class="w-100 h-50" src="img/fish.png" alt="Image">
 						</div>
 						<div class="carousel-item">
-							<img class="w-100 h-100" src="/img/product/${item.item_img}" alt="Image">
+							<img class="w-100 h-50" src="img/fish.png" alt="Image">
 						</div>
 						<div class="carousel-item">
-							<img class="w-100 h-100" src="/img/product/${item.item_img}" alt="Image">
-						</div>
-						<div class="carousel-item">
-							<img class="w-100 h-100" src="/img/product/${item.item_img}" alt="Image">
-						</div>
-					</div>
+							<img class="w-100 h-50" src="img/fish.png" alt="Image">
+						</div>-->	
+					</div> 	
 					<a class="carousel-control-prev" href="#product-carousel"
 						data-slide="prev"> <i class="fa fa-2x fa-angle-left text-dark"></i>
 					</a> <a class="carousel-control-next" href="#product-carousel"
-						data-slide="next"> <i class="fa fa-2x fa-angle-right text-dark"></i>
+						data-slide="next"> <i
+						class="fa fa-2x fa-angle-right text-dark"></i>
 					</a>
 				</div>
-			</div>				
+			</div>
+
 			<div class="col-lg-7 pb-5">
-				<h3 class="font-weight-semi-bold">${item.item_name}</h3>
+				<h3 class="font-weight-semi-bold">고등어구이</h3>
 				<div class="d-flex mb-3">
 					<div class="text-primary mr-2">
 						<small class="fas fa-star"></small> <small class="fas fa-star"></small>
-						<small class="fas fa-star"></small> <small class="fas fa-star-half-alt"></small> 
-						<small class="far fa-star"></small>
+						<small class="fas fa-star"></small> <small
+							class="fas fa-star-half-alt"></small> <small class="far fa-star"></small>
 					</div>
 					<small class="pt-1">(50 Reviews)</small>
 				</div>
-				<h3 class="font-weight-semi-bold mb-4">${item.sales_p}원</h3>
-				<p class="mb-4">${item.item_content}</p>
+				<h3 class="font-weight-semi-bold mb-4">8,000원</h3>
+				<p class="mb-4">전자레인지 또는 후라이팬 조리. 전자레인지 30초 , 후라이팬 조리 10~15분 조리.</p>
 				<div class="d-flex mb-3">
 					<!-- <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
 					<form>
@@ -242,14 +247,14 @@
 				<div
 					class="nav nav-tabs justify-content-center border-secondary mb-4">
 					<a class="nav-item nav-link active" data-toggle="tab"
-						href="#tab-pane-1">제품 상세</a> <a class="nav-item nav-link"
+						href="#tab-pane-1">Description</a> <a class="nav-item nav-link"
 						data-toggle="tab" href="#tab-pane-2">Information</a> <a
 						class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews
 						(0)</a>
 				</div>
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="tab-pane-1">
-						<h4 class="mb-3">제품 상세</h4>
+						<h4 class="mb-3">Product Description</h4>
 						<p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam
 							sea. Consetetur vero aliquyam invidunt duo dolores et duo sit.
 							Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur
@@ -268,7 +273,7 @@
 							takimata justo et amet magna et.</p>
 					</div>
 					<div class="tab-pane fade" id="tab-pane-2">
-						<h4 class="mb-3">제품 정보</h4>
+						<h4 class="mb-3">Additional Information</h4>
 						<p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam
 							sea. Consetetur vero aliquyam invidunt duo dolores et duo sit.
 							Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur
