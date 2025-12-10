@@ -3,7 +3,7 @@ package com.example.model.vo;
 import lombok.Data;
 
 @Data
-public class reviewVO {
+public class ReviewVO {
 
 	private Integer review_no;
 	private String re_title;
