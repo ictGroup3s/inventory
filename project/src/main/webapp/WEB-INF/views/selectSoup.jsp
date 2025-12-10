@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>국 ．밥 ．면</title>
+<title>구이 ．찜 ．볶음</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
@@ -40,13 +40,13 @@
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="selectSoup" method="get">
+			<form action="selectGui" method="get">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
-							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
 						<button class="input-group-text bg-transparent text-primary" type="submit">
-							<i class="fa fa-search"></i>
+								<i class="fa fa-search"></i>
 						</button>
 					</div>
 				</div>
@@ -97,8 +97,8 @@
 					<h6 class="p-3">Categories</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link active">국 ．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link active">구이 ．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
 						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
 						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
@@ -134,9 +134,9 @@
 									aria-expanded="false">정렬 기준</button>
 								<div class="dropdown-menu dropdown-menu-right"
 									aria-labelledby="triggerId">
-									<a class="dropdown-item" href="selectSoup?page=1&size=${size}&q=${fn:escapeXml(q)}">최신순</a> 
-									<a class="dropdown-item" href="selectSoup?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">가격 높은순</a> 
-									<a class="dropdown-item" href="selectSoup?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">가격 낮은순</a>
+									<a class="dropdown-item" href="selectGui?page=1&size=${size}&q=${fn:escapeXml(q)}">최신순</a> 
+									<a class="dropdown-item" href="selectGui?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">가격 높은순</a> 
+									<a class="dropdown-item" href="selectGui?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">가격 낮은순</a>
 								</div>
 							</div>
 						</div>
@@ -191,18 +191,18 @@
 						<nav aria-label="Page navigation">
 							<ul class="pagination justify-content-center mb-3">
 								<li class="page-item ${page <= 1 ? 'disabled' : ''}">
-									<a class="page-link" href="selectSoup?page=${page-1}&size=${size}&q=${fn:escapeXml(q)}&sort=${sort}" aria-label="Previous">
+									<a class="page-link" href="selectGui?page=${page-1}&size=${size}&q=${fn:escapeXml(q)}&sort=${sort}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 										<span class="sr-only">이전</span>
 									</a>
 								</li>
 								<c:forEach var="i" begin="1" end="${totalPages}">
 									<li class="page-item ${i == page ? 'active' : ''}">
-										<a class="page-link" href="selectSoup?page=${i}&size=${size}&q=${fn:escapeXml(q)}&sort=${sort}">${i}</a>
+										<a class="page-link" href="selectGui?page=${i}&size=${size}&q=${fn:escapeXml(q)}&sort=${sort}">${i}</a>
 									</li>
 								</c:forEach>
 								<li class="page-item ${page >= totalPages ? 'disabled' : ''}">
-									<a class="page-link" href="selectSoup?page=${page+1}&size=${size}&q=${fn:escapeXml(q)}&sort=${sort}" aria-label="Next">
+									<a class="page-link" href="selectGui?page=${page+1}&size=${size}&q=${fn:escapeXml(q)}&sort=${sort}" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 										<span class="sr-only">다음</span>
 									</a>
