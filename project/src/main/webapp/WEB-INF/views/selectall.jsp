@@ -63,6 +63,9 @@
 			</a>
 		</div>
 	</div>
+	<!-- Topbar End -->
+	
+	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
 	<div class="container-fluid">
 		<div class="row border-top px-xl-5">
 			<div class="col-lg-12">
@@ -87,9 +90,11 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<div class="container-fluid pt-5">
-		<div class="row px-xl-5">
-            
+		<div class="row px-xl-5">            
+            <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
 					<h6 class="p-3">Categories</h6>
@@ -215,7 +220,7 @@
 	
 	<!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
-				<div class="row px-xl-5 pt-5">
+		<div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
            
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
@@ -237,7 +242,7 @@
                             <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->      
                          </div>
                     </div>
-                    <div class="col-lg-8 col-md-12">
+                    
                 <div class="row">
                     <div class="col-md-12 mt-4 mb-5">
                         <p class="text-dark mb-2">
@@ -261,7 +266,7 @@
                       </div>
                     </div>
                  
-                    </div>
+                    
                   
                 </div>
             </div>
@@ -326,10 +331,8 @@
 	<script src="/js/chat.js?v=1"></script>
 
 	<!-- SockJS + StompJS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 	<!-- 
 	<script>
 		// `main.js`에서 addToCart를 정의하지 않았을 때를 대비한 폴백 전역 함수 ("undefined" 오류 방지)

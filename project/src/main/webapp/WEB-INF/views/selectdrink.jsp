@@ -43,12 +43,12 @@
 		<div class="col-lg-6 col-6 text-left">
 			<form action="selectdrink" method="get">
 				<div class="input-group">
-					<input type="text" class="form-control"
+					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
-							<i class="fa fa-search"></i>
-						</span>
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
+						</button>
 					</div>
 				</div>
 			</form>
