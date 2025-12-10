@@ -1,0 +1,3 @@
+[2025-12-08 17:47:51] ${sessionScope.loginUser.customer_id}: 1
+[2025-12-08 17:48:51] ${sessionScope.loginUser.customer_id}: 1
+[2025-12-08 17:50:38] ${sessionScope.loginUser.customer_id}: 1

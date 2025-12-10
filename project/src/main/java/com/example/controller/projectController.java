@@ -9,10 +9,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.example.model.vo.ProductVO;
+import com.example.model.vo.CartItemVO;
+import com.example.model.CartRepository;
+import com.example.service.CartService;
 import com.example.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import java.net.URLEncoder;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,21 +34,55 @@ import lombok.extern.slf4j.Slf4j;
 public class projectController {
     @Autowired
     private ProductService productService;    
-   
-    
+
+	@GetMapping("/")
+	public String home() {
+		return "header"; // header.jsp로 이동
+	}
+	
 	@GetMapping("shop")
 	public String shop() {
 		return "shop";
 	}
-
+  
 	@GetMapping("header")
 	public String header() {
 		return "header";
 	}
 	
+	@GetMapping("delete")
+	public String delete() {
+		return "delete";
+	}
+	
+	@GetMapping("update")
+	public String update() {
+		return "update";
+	}
+	
+	@GetMapping("goodbye")
+	public String goodbye() {
+		return "goodbye";
+	}
+	
 	@GetMapping("login")
 	public String login() {
 		return "login";
+	}
+	
+	 @GetMapping("register")
+	public String register() {
+		return "register";
+	}
+	 
+	@GetMapping("event1")
+	public String event1() {
+		return "event1";
+	}
+	
+	@GetMapping("event2")
+	public String event2() {
+		return "event2";
 	}
     // 전체 상품 조회 페이지, 검색, 정렬
     @GetMapping("selectall")
@@ -86,85 +134,84 @@ public class projectController {
         return "detail";
     }
 	
-	@GetMapping("register")
-	public String register() {
-		return "register";
+    @GetMapping("detail2")
+	public String detail2() {
+		return "detail2";
 	}
-    
-	@GetMapping("mlist")
+	
+   	@GetMapping("mlist")
 	public String mlist() {
 		return "mlist";
 	}
 	
+	@GetMapping("selectGui")	
+    public String selectGui(Model m,
+                    @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                    @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                    @RequestParam(value = "q", required = false) String q,
+                    @RequestParam(value = "sort", required = false) String sort,
+                    @RequestParam(value = "cate", required = false) Integer cate) {
+        Integer cateNo = (cate != null) ? cate : 1;	// 기본 카테고리 매핑: 구이 -> 1
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectGui";
+    }
+	
+	@GetMapping("selectSoup")	
+    public String selectSoup(Model m,
+	                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+	                 @RequestParam(value = "size", required = false, defaultValue = "9") int size,	//9개 상품 목록
+	                 @RequestParam(value = "q", required = false) String q,
+	                 @RequestParam(value = "sort", required = false) String sort,
+	                 @RequestParam(value = "cate", required = false) Integer cate) {
+        Integer cateNo = (cate != null) ? cate : 2;	// 기본 카테고리 매핑: 국/찌개 -> 2
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectSoup";
+    }
+
+	@GetMapping("selectDiet")
+    public String selectDiet(Model m,
+                     @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                     @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                     @RequestParam(value = "q", required = false) String q,
+                     @RequestParam(value = "sort", required = false) String sort,
+                     @RequestParam(value = "cate", required = false) Integer cate) {
+        Integer cateNo = (cate != null) ? cate : 3; // 기본 카테고리 매핑: 식단관리 -> 3
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectDiet";
+    }
+    
+	@GetMapping("selectBunsik")
+    public String selectBunsik(Model m,
+                   @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                   @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                   @RequestParam(value = "q", required = false) String q,
+                   @RequestParam(value = "sort", required = false) String sort,
+                   @RequestParam(value = "cate", required = false) Integer cate) {
+        Integer cateNo = (cate != null) ? cate : 4; // 기본 카테고리 매핑: 분식 -> 4
+        loadCategoryProducts(m, page, size, q, sort, cateNo);
+        return "selectBunsik";
+    }		
+
 	@GetMapping("selectBanchan")
     public String selectBanchan(Model m,
-                                @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                @RequestParam(value = "size", required = false, defaultValue = "9") int size,
-                                @RequestParam(value = "q", required = false) String q,
-                                @RequestParam(value = "sort", required = false) String sort,
-                                @RequestParam(value = "cate", required = false) Integer cate) {
-        // 기본 카테고리 매핑: 반찬 -> 1
-        Integer cateNo = (cate != null) ? cate : 1;
+                    @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                    @RequestParam(value = "size", required = false, defaultValue = "9") int size,	//9개 상품 목록(페이지당)
+                    @RequestParam(value = "q", required = false) String q,
+                    @RequestParam(value = "sort", required = false) String sort,
+                    @RequestParam(value = "cate", required = false) Integer cate) {        
+        Integer cateNo = (cate != null) ? cate : 5;		// 기본 카테고리 매핑: 반찬 -> 5
         loadCategoryProducts(m, page, size, q, sort, cateNo);
         return "selectBanchan";
     }
 	
-	@GetMapping("selectSoup")
-    public String selectSoup(Model m,
-                             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                             @RequestParam(value = "size", required = false, defaultValue = "9") int size,
-                             @RequestParam(value = "q", required = false) String q,
-                             @RequestParam(value = "sort", required = false) String sort,
-                             @RequestParam(value = "cate", required = false) Integer cate) {
-        Integer cateNo = (cate != null) ? cate : 2; // 국/찌개 기본 2
-        loadCategoryProducts(m, page, size, q, sort, cateNo);
-        return "selectSoup";
-    }
-    
-	@GetMapping("selectGui")
-    public String selectGui(Model m,
-                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                            @RequestParam(value = "size", required = false, defaultValue = "9") int size,
-                            @RequestParam(value = "q", required = false) String q,
-                            @RequestParam(value = "sort", required = false) String sort,
-                            @RequestParam(value = "cate", required = false) Integer cate) {
-        Integer cateNo = (cate != null) ? cate : 3; // 구이 기본 3
-        loadCategoryProducts(m, page, size, q, sort, cateNo);
-        return "selectGui";
-    }
-
-	@GetMapping("selectBunsik")
-    public String selectBunsik(Model m,
-                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                               @RequestParam(value = "size", required = false, defaultValue = "9") int size,
-                               @RequestParam(value = "q", required = false) String q,
-                               @RequestParam(value = "sort", required = false) String sort,
-                               @RequestParam(value = "cate", required = false) Integer cate) {
-        Integer cateNo = (cate != null) ? cate : 4; // 분식 기본 4
-        loadCategoryProducts(m, page, size, q, sort, cateNo);
-        return "selectBunsik";
-    }
-	
-	@GetMapping("selectDiet")
-    public String selectDiet(Model m,
-                             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                             @RequestParam(value = "size", required = false, defaultValue = "9") int size,
-                             @RequestParam(value = "q", required = false) String q,
-                             @RequestParam(value = "sort", required = false) String sort,
-                             @RequestParam(value = "cate", required = false) Integer cate) {
-        Integer cateNo = (cate != null) ? cate : 5; // 식단관리 기본 5
-        loadCategoryProducts(m, page, size, q, sort, cateNo);
-        return "selectDiet";
-    }	
-	
 	@GetMapping("selectdrink")
 	public String selectdrink(Model m,
-						      @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-						      @RequestParam(value = "size", required = false, defaultValue = "9") int size,
-						      @RequestParam(value = "q", required = false) String q,
-						      @RequestParam(value = "sort", required = false) String sort,
-						      @RequestParam(value = "cate", required = false) Integer cate) {
-		Integer cateNo = (cate != null) ? cate : 6; // 음료 6
+				      @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+				      @RequestParam(value = "size", required = false, defaultValue = "9") int size,	//9개 상품 목록(페이지당)
+				      @RequestParam(value = "q", required = false) String q,
+				      @RequestParam(value = "sort", required = false) String sort,
+				      @RequestParam(value = "cate", required = false) Integer cate) {
+		Integer cateNo = (cate != null) ? cate : 6; // 기본 카테고리 매핑: 음료 -> 6
 		loadCategoryProducts(m, page, size, q, sort, cateNo);
 		return "selectdrink";
 	}	
@@ -199,7 +246,7 @@ public class projectController {
             log.warn("Failed to load category products", e);
             m.addAttribute("products", new ArrayList<>());
             m.addAttribute("page", 1);
-            m.addAttribute("size", 9);
+            m.addAttribute("size", 9);	//9개 상품 목록(페이지당)
             m.addAttribute("total", 0);
             m.addAttribute("totalPages", 0);
             m.addAttribute("cate", cateNo);
@@ -232,35 +279,25 @@ public class projectController {
 		return "order";
 	}
 	
-	/* 주문내역 */
 	@GetMapping("/mypage")
 	public String mypage() {
 		return "mypage";
 	}
 	
-	/* 취소,반품,교환내역 */
 	@GetMapping("/mycs")
 	public String mycs() {
 		return "mycs";
 	}
 	
-	 /* 1:1문의내역 */
 	@GetMapping("/myqna")
 	public String myqna() {
 		return "myqna";
 	}
 	
-	 /* 배송내역 */
 	@GetMapping("/mydelivery")
 	public String mydelivery() {
 		return "mydelivery";
 	}	
-	
-    /* 결제완료 */
-		@GetMapping("/ordercomplete")
-		public String ordercomplete() {
-			return "ordercomplete";
-	}
 
 	
 // 	통계 페이지(연도별*월별 매출 / 지출)	
