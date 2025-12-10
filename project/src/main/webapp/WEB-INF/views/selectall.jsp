@@ -322,7 +322,7 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 		
-	<script>
+<!--  	<script>
 		// `main.js`에서 addToCart를 정의하지 않았을 때를 대비한 폴백 전역 함수 ("undefined" 오류 방지)
 		if (typeof window.addToCart !== 'function') {
 			window.addToCart = function(itemNo, qty) {
@@ -377,7 +377,7 @@
 				}
 			} catch(err){ console.error('debug click listener error', err); }
 		}, true);
-	</script>
+	</script>-->
 </body>
 
 </html>		

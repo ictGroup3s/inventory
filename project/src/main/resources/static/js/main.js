@@ -289,7 +289,7 @@
 		addToCart(itemNo);
 	});
 
-	//디테일 장바구니 Ajax
+	//디테일page 장바구니 Ajax
 	$('#add-to-cart-btn').click(function(e) {
 	    e.preventDefault();
 	    var item_no = $(this).data('item-no');

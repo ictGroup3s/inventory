@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,7 +123,7 @@
             <h3 class="font-weight-semi-bold">${product.item_name}</h3>
             
             <div class="d-flex mb-2 align-items-center">
-               		<small class="pt-1">(3 Reviews)</small> </div>
+               		<small class="pt-1"></small> </div>
                		
 				<h4 class="font-weight-semi-bold mb-2">가격: ${product.sales_p}원</h4>
 				<p class="mb-4"> </p> <!-- 내용쓰러면 작은글 출력됨 -->
@@ -160,7 +160,7 @@
 					<a class="nav-item nav-link"
 						data-toggle="tab" href="#tab-pane-2">상품정보</a> <a
 						class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">리뷰
-						(0)</a>
+						</a>
 				</div>
 				<div class="tab-content">
 					<div class="tab-pane fade" id="tab-pane-2">
@@ -168,9 +168,8 @@
 						<div class="row">
 							<div class="col-md-6">
 								<ul class="list-group list-group-flush">
-									<li class="list-group-item px-0">알레르기 정보</li>
-									<li class="list-group-item px-0">밀,계란 함유</li>
-										<li class="list-group-item px-0">대추, 고등어, 게, 새우, 오징어, 조개류(굴,전복,홍합포함)와 같은 시설에서 제조</li>
+									<li class="list-group-item px-0"> ${product.item_content}</li>
+								
 								</ul>
 							</div>
 							<div class="col-md-6">
@@ -185,39 +184,44 @@
 					<div class="tab-pane fade" id="tab-pane-3">
 						<div class="row">
 							<div class="col-md-6">
-								<h4 class="mb-4">1 review for "최고에요"</h4>
-								<div class="media mb-4">
-									<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-										style="width: 45px;">
-									<div class="media-body">
+								<h4 class="mb-4">리뷰 목록</h4>
+<!-- Ajax로 리뷰를 넣을 영역 --><div id="review-list"> 
+					            </div>
+					</div>
+					   <!--  <c:if test="${not empty reviews}">
+								<c:forEach var="review" items="${reviews}">
+								 <div class="mb-3">
 										<h6>
-											홍길동<small> - <i>01 Jan 2025</i></small>
+											${review.customer_id}<small><i>${review.re_date}</i></small>
 										</h6>
-										<p>정말 바삭하고 맛있어요.</p>
+										<p>${review.re_content}</p>
 									</div>
 								</div>
-							</div>
+								</c:forEach>
+								 </c:if>
+								<c:if test="${empty reviews}">
+								<p>등록된 리뷰가 없습니다.</p>
+								</c:if> -->        
 							<div class="col-md-6">
-								<h4 class="mb-4">리뷰 작성</h4>
-								<form>
-									<div class="form-group">
-										<label for="message">내 리뷰작성 *</label>
-										<textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+				<h4 class="mb-4">리뷰 작성</h4>
+		<form action="/product/review" method="post">
+	<input type="hidden" name="item_no" value="${product.item_no}" />
+    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
+				<div class="form-group">
+					<label for="re_content">내 리뷰작성 *</label>
+						<textarea id="re_content"  name="re_content" cols="30" rows="5" class="form-control"></textarea>
 									</div>
-									<div class="form-group">
-										<label for="name">이름 *</label> <input type="text"
-											class="form-control" id="name">
-									</div>
-									<div class="form-group">
-										<label for="email">이메일 *</label> <input type="email"
-											class="form-control" id="email">
-									</div>
-									<div class="form-group mb-0">
-										<input type="submit" value="리뷰 남기기"
-											class="btn btn-primary px-3">
-									</div>
-								</form>
-							</div>
+				<div class="form-group">
+					<label for="re_title">제목 *</label> 
+					<input type="text" id="re_title" name="re_title" class="form-control" id="name">
+				</div>
+				
+				<div class="form-group mb-0">
+					<input type="submit" value="리뷰 남기기" class="btn btn-primary px-3">
+				</div>
+								
+				</form>
+			</div>
 						</div>
 					</div>
 				</div>
@@ -234,8 +238,10 @@
            <img src="/img/product/1764664988078_감자채볶음.png" alt="감자채볶음" />
             <h5 class="slider-title">햄감자채볶음</h5>
             <p class="slider-price">4,000원</p>
-        
-        <button class="btn btn-primary slider-cart" data-item-no="129">장바구니 담기</button>
+    <!--      <button type="button" class="btn btn-sm text-dark p-0 add-to-cart-btn" data-item-no="129" style="background:none;border:0;padding:0;">
+					<i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기
+										</button>  -->  
+<button class="btn btn-primary slider-cart" data-item-no="129">장바구니 담기</button>    
         </div>
     </li>
         <li>
@@ -355,6 +361,55 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 
+<script>
+
+$(document).ready(function() {
+	var item_no = <c:out value="${product.item_no}" default="0"/>;
+
+   	// '리뷰' 눌렸을때 이벤트함수
+$(document).on('shown.bs.tab','a[href="#tab-pane-3"]',function(){
+	var reviewlist = $('#review-list');
+	reviewlist.html('<p>리뷰를 불러오는 중...</p>');
+
+    $.ajax({
+        url: '/review/list',
+        type: 'GET',
+        data: { item_no: item_no },
+        success: function(reviews){ 
+        	 reviewlist.empty(); // 기존 내용 삭제
+        }
+       		//console.log(reviews);
+        	//console.log(reviews[0].re_content);
+        	// 동적으로 화면 만들기
+  			// reviews 배열이라서 반복문 구동
+            //var temp = $('<div/>').text(reviews[0].re_content);
+            if (reviews && reviews.length > 0) {
+                reviews.forEach(function(r) {
+                    var customer = r.customer_id || r.customerId || '익명';
+                    var date = r.re_date || r.date || '';
+                    var content = r.re_content || r.content || '';
+
+                    var temp = $(`
+                        <div class="mb-3">
+                            <h6>${customer} <small><i>${date}</i></small></h6>
+                            <p>${content}</p>
+                        </div>
+                    `);
+
+                    reviewlist.append(temp); // 반복문 안에서 append
+                });
+            } else {
+                reviewlist.html('<p>등록된 리뷰가 없습니다.</p>');
+            }
+        },
+        error: function(err) {
+            console.error(err);
+            reviewlist.html('<p>리뷰를 불러올 수 없습니다.</p>');
+        }
+    });
+});
+});
+</script>
 
 </body>
 
