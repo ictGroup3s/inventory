@@ -44,12 +44,7 @@ public class projectController {
 	public String shop() {
 		return "shop";
 	}
-	
-	@GetMapping("checkout")
-	public String checkout() {
-		return "checkout";
-	}
-	
+  
 	@GetMapping("header")
 	public String header() {
 		return "header";

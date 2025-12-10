@@ -60,16 +60,16 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
+						<li class="nav-item"><a href="/mypage" class="nav-link">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
-						<li class="nav-item"><a href="/mycs" class="nav-link">취소/반품/교환내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link">취소·반품·교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link active">1:1문의내역</a></li>
 					</ul>
 				</nav>
 			</div>
 
 			<!-- Main Content -->
-			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
+			<div class="col-lg-10" style="margin-top: 30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
 					<h4>1:1문의내역</h4>
 				</div>
@@ -167,7 +167,7 @@
 		</div>
 	</div>
 
-<!-- Footer Start -->
+	<!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
 				<div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
@@ -235,7 +235,7 @@
         </div>
     </div>
     <!-- Footer End -->
-
+    
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 

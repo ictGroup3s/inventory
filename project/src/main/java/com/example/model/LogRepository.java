@@ -16,4 +16,3 @@ public interface LogRepository {
 	
 	void updatePwd(CustomerVO vo);
 }
-
