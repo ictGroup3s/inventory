@@ -50,13 +50,13 @@ $(function() {
 			success: function(response) {
 				if (response === "success") {
 					row.remove();
-					alert("정말로 삭제하시겠습니까?")
+					showToast("정말로 삭제하시겠습니까?")
 				} else {
-					alert('삭제 실패');
+					showToast('삭제 실패');
 				}
 			},
 			error: function() {
-				alert('삭제 실패');
+				showToast('삭제 실패');
 			}
 		});
 	});

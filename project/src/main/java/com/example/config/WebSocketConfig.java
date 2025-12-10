@@ -1,7 +1,6 @@
 package com.example.config;
 
-import com.example.webSocket.AdminChatHandler;
-import com.example.webSocket.CustomerChatHandler;
+import com.example.webSocket.UnifiedChatHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.*;
 
@@ -9,17 +8,16 @@ import org.springframework.web.socket.config.annotation.*;
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
-    private final AdminChatHandler adminChatHandler;
-    private final CustomerChatHandler customerChatHandler;
+    private final UnifiedChatHandler unifiedChatHandler;
 
-    public WebSocketConfig(AdminChatHandler adminChatHandler, CustomerChatHandler customerChatHandler) {
-        this.adminChatHandler = adminChatHandler;
-        this.customerChatHandler = customerChatHandler;
+    public WebSocketConfig(UnifiedChatHandler unifiedChatHandler) {
+        this.unifiedChatHandler = unifiedChatHandler;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(adminChatHandler, "/ws/admin/chat").setAllowedOrigins("*");
-        registry.addHandler(customerChatHandler, "/ws/customer/chat").setAllowedOrigins("*");
+        // 통합 핸들러 사용 (관리자 + 고객 모두)
+        registry.addHandler(unifiedChatHandler, "/ws/chat")
+                .setAllowedOrigins("*");
     }
 }
