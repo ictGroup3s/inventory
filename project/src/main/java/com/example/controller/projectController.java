@@ -34,6 +34,11 @@ import lombok.extern.slf4j.Slf4j;
 public class projectController {
     @Autowired
     private ProductService productService;    
+
+	@GetMapping("/")
+	public String home() {
+		return "header"; // header.jsp로 이동
+	}
 	
 	@GetMapping("shop")
 	public String shop() {
@@ -375,3 +380,4 @@ public class projectController {
         return "stats";
     }
 }
+
