@@ -74,13 +74,11 @@ body {
 }
  */
  
-body {
-  width: 100%;          /* 너비를 100%로 설정하여 화면 크기에 맞게 늘어나게 함 */
-  max-width: 1500px;    /* 최대 너비를 1500px로 제한 */
-  height: 800px;        /* 높이는 고정 (필요에 따라 수정 가능) */
-  margin: 0 auto;       /* 페이지 중앙에 배치 */
+ body {
+  width: 1500px;    /* 페이지의 너비를 고정 */
+  height: 800px;    /* 페이지의 높이를 고정 */
+  margin: 0 auto;   /* 페이지가 화면 중앙에 배치되도록 설정 */
 }
-
 
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -9482,16 +9480,16 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
  .slider-card img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    margin-bottom: 10px;
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
   }
   
  .slider-card {
-    text-align: center;
-    padding: 10px;
-}
+            text-align: center;
+            padding: 10px;
+        }
 
 /********** Custom CSS ************/
 .font-weight-medium {

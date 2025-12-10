@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +31,8 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
+
+    
 
     @Override
     public void addToCart(Integer itemNo, int qty, HttpSession session) {
@@ -266,4 +270,5 @@ public class CartServiceImpl implements CartService {
         } catch (Exception e) {}
         return m;
     }
+    
 }

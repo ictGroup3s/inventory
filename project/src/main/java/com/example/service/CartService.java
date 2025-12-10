@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpSession;
 
 import com.example.model.vo.CartItemVO;
 
+
+
 public interface CartService {
     void addToCart(Integer itemNo, int qty, HttpSession session);
     void removeFromCart(Integer itemNo, HttpSession session);

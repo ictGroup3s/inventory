@@ -16,14 +16,6 @@
 			slideMargin: 10    // 슬라이드 간격
 		});
 
-		$(document).ready(function() {
-		    if ($.fn.bxSlider) {  // bxSlider가 로드되었는지 확인
-		        $('.slider').bxSlider();
-		    } else {
-		        console.log('bxSlider 플러그인이 로드되지 않았습니다.');
-		    }
-		});
-		
 		// 상단으로 이동 버튼
 		$(window).scroll(function() {
 			if ($(this).scrollTop() > 100) {

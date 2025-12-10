@@ -77,5 +77,18 @@
     FROM cart 
     WHERE customer_id = #{customerId}
   </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+  <select id="getCartTotal" parameterType="string" resultType="int">
+    SELECT NVL(SUM(p.sales_p * c.cart_cnt), 0)
+    FROM cart c
+    LEFT JOIN product p ON p.item_no = c.item_no
+    WHERE c.customer_id = #{userId}
+</select>
+
+
+
+  
+  
+  
 
 </mapper>
