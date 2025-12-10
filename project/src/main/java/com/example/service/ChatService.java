@@ -96,4 +96,12 @@ public class ChatService {
 			return chatRepository.findActiveRoomsByAdmin(userId);
 		}
 	}
+
+	public void deleteChat(int chatNo) {
+		chatRepository.deleteChat(chatNo);
+	}
+
+	public List<ChatVO> getAllRoomsByAdmin(String adminId) {
+		return chatRepository.findAllRoomsByAdmin(adminId);
+	}
 }

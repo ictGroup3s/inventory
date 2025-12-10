@@ -637,16 +637,17 @@
 			<input type="text" id="chat-text" placeholder="메시지 입력...">
 			<button id="chat-send">Send</button>
 		</div>
+		<button id="new-chat-btn"
+			style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+			새 채팅 시작</button>
 	</div>
 
 	<!-- ▣ 채팅 열기 버튼 -->
 	<button id="chat-open" class="chat-open-btn">💬</button>
 
-
-
-
-
-
+	<div class="toast-container" id="toast-container"></div>
+	
+	
 	<!-- JavaScript Libraries -->
 	<!-- jQuery 먼저 -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -679,7 +680,7 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
-
+	
 </body>
 
 </html>

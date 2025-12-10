@@ -25,21 +25,21 @@ $(function () {
                 },
                 cache: false,
                 success: function () {
-                    $('#success').html("<div class='alert alert-success'>");
-                    $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                    $('#success').html("<div class='showToast showToast-success'>");
+                    $('#success > .showToast-success').html("<button type='button' class='close' data-dismiss='showToast' aria-hidden='true'>&times;")
                             .append("</button>");
-                    $('#success > .alert-success')
+                    $('#success > .showToast-success')
                             .append("<strong>Your message has been sent. </strong>");
-                    $('#success > .alert-success')
+                    $('#success > .showToast-success')
                             .append('</div>');
                     $('#contactForm').trigger("reset");
                 },
                 error: function () {
-                    $('#success').html("<div class='alert alert-danger'>");
-                    $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                    $('#success').html("<div class='showToast showToast-danger'>");
+                    $('#success > .showToast-danger').html("<button type='button' class='close' data-dismiss='showToast' aria-hidden='true'>&times;")
                             .append("</button>");
-                    $('#success > .alert-danger').append($("<strong>").text("Sorry " + name + ", it seems that our mail server is not responding. Please try again later!"));
-                    $('#success > .alert-danger').append('</div>');
+                    $('#success > .showToast-danger').append($("<strong>").text("Sorry " + name + ", it seems that our mail server is not responding. Please try again later!"));
+                    $('#success > .showToast-danger').append('</div>');
                     $('#contactForm').trigger("reset");
                 },
                 complete: function () {

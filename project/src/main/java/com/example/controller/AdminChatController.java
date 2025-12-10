@@ -16,10 +16,10 @@ public class AdminChatController {
 		this.chatService = chatService;
 	}
 
-	// 관리자 채팅방 목록
+	// 관리자 채팅방 목록 (종료된 것 포함)
 	@GetMapping("/rooms")
 	public List<ChatVO> getChatRooms(@RequestParam String adminId) {
-		return chatService.getChatRooms(adminId, "admin");
+	    return chatService.getAllRoomsByAdmin(adminId);
 	}
 
 	// 이전 채팅 불러오기 (관리자용)
@@ -50,5 +50,11 @@ public class AdminChatController {
 	@PostMapping("/close/{chatNo}")
 	public void closeChat(@PathVariable int chatNo) {
 	    chatService.closeChat(chatNo);
+	}
+	
+	// 채팅 삭제
+	@DeleteMapping("/delete/{chatNo}")
+	public void deleteChat(@PathVariable int chatNo) {
+	    chatService.deleteChat(chatNo);
 	}
 }

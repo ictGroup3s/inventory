@@ -218,11 +218,7 @@
 
 		console.log("✅ 관리자 ID:", adminId);
 		console.log("✅ Role:", adminRole);
-
-		if (!adminId || adminId === "" || adminRole !== "1") {
-			console.error("❌ 관리자 권한이 없습니다.");
-			alert("관리자 권한이 필요합니다.");
-		}
+		
 	</script>
 
 	<script src="js/AdminChat.js?v=999"></script>

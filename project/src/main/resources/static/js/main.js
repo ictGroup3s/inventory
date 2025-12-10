@@ -97,15 +97,15 @@
 			button.parent().parent().find('input').val(newVal);
 		});
 		//sidebar 클릭
-		const currentPath = window.location.pathname.split('/').pop();
+	const currentPath = window.location.pathname.split('/').pop();
 
-		$('.category-sidebar .nav-link').removeClass('active')
-			.each(function() {
-				const $el = $(this);
-				if ($el.attr('href') === currentPath) {
-					$el.addClass('active');
-				}
-			});
+	$('.category-sidebar .nav-link').removeClass('active') 
+		.each(function() {
+			const $el = $(this);
+			if ($el.attr('href') === currentPath) {
+				$el.addClass('active');
+			}
+		});
 
 	})
 
@@ -113,8 +113,8 @@
 	// 서버에 장바구니 수량을 요청하여 배지 업데이트
 	function updateCartBadge() {
 		$.get('/cart/count', function(res) {
-			try {
-				var count = (res && res.cartCount) ? res.cartCount : 0;
+				try {
+					var count = (res && res.cartCount) ? res.cartCount : 0;
 				// 모든 장바구니 아이콘의 부모를 찾아 그 자식 .badge를 업데이트합니다
 				$('.fa-shopping-cart').each(function() {
 					var $icon = $(this);
@@ -126,12 +126,12 @@
 						}
 					}
 				});
-			} catch (e) { console.error('updateCartBadge error', e); }
+			} catch(e) { console.error('updateCartBadge error', e); }
 		}, 'json').fail(function() { console.warn('Failed to fetch /cart/count'); });
 	}
 
 	// 페이지 로드 시 초기 배지 업데이트
-	try { updateCartBadge(); } catch (e) {/*ignore*/ }
+	try { updateCartBadge(); } catch(e){/*ignore*/}
 
 	// 간단한 토스트 알림 헬퍼 (비차단)
 	function createToast(message, timeout) {
@@ -150,8 +150,8 @@
 			});
 			$('body').append($toast);
 			$toast.hide().fadeIn(150);
-			setTimeout(function() { $toast.fadeOut(300, function() { $toast.remove(); }); }, t);
-		} catch (e) { console.warn('createToast failed', e); }
+			setTimeout(function() { $toast.fadeOut(300, function(){ $toast.remove(); }); }, t);
+		} catch(e) { console.warn('createToast failed', e); }
 	}
 
 	// 상품명과 '장바구니 보기' 버튼을 포함한 풍부한 장바구니 토스트
@@ -171,15 +171,15 @@
 				'max-width': '320px'
 			});
 			var imgHtml = '';
-			if (imageUrl) imgHtml = '<img src="' + imageUrl + '" style="width:48px;height:48px;object-fit:cover;margin-right:8px;float:left;border-radius:4px;"/>';
-			var title = productName ? ('<strong style="display:block;margin-bottom:6px;">' + productName + '</strong>') : '';
-			var body = '<div style="overflow:hidden;">' + imgHtml + '<div style="margin-left:56px;">' + title + '장바구니에 담겼습니다. 총 <strong>' + (count || 0) + '</strong>개</div></div>';
+			if (imageUrl) imgHtml = '<img src="'+imageUrl+'" style="width:48px;height:48px;object-fit:cover;margin-right:8px;float:left;border-radius:4px;"/>';
+			var title = productName ? ('<strong style="display:block;margin-bottom:6px;">'+productName+'</strong>') : '';
+			var body = '<div style="overflow:hidden;">'+imgHtml+'<div style="margin-left:56px;">'+title+'장바구니에 담겼습니다. 총 <strong>'+ (count||0) +'</strong>개</div></div>';
 			var actions = '<div style="margin-top:8px;text-align:right;"><a href="/cart" class="btn btn-sm btn-primary" style="color:#fff;text-decoration:none;padding:6px 10px;border-radius:4px;">장바구니 보기</a></div>';
-			$toast.html(body + actions);
+			$toast.html(body+actions);
 			$('body').append($toast);
 			$toast.hide().fadeIn(150);
-			setTimeout(function() { $toast.fadeOut(300, function() { $toast.remove(); }); }, t);
-		} catch (e) { console.warn('showAddToast failed', e); }
+			setTimeout(function() { $toast.fadeOut(300, function(){ $toast.remove(); }); }, t);
+		} catch(e) { console.warn('showAddToast failed', e); }
 	}
 
 	// 장바구니 추가 폼 제출을 가로채서 AJAX로 추가하고 배지 업데이트를 수행합니다
@@ -189,7 +189,7 @@
 		var itemNo = $form.find('input[name="item_no"]').val();
 		var qty = $form.find('input[name="qty"]').val() || 1;
 		if (!itemNo) { createToast('item_no가 필요합니다.'); return; }
-		$.post('/cart/add', { item_no: itemNo, qty: qty }, function(res) {
+			$.post('/cart/add', { item_no: itemNo, qty: qty }, function(res) {
 			if (res && res.success) {
 				// 배지를 업데이트하고 간단한 피드백을 표시합니다
 				updateCartBadge();
@@ -198,7 +198,7 @@
 				try {
 					var $card = $form.closest('.product-item');
 					if ($card && $card.length) productName = $card.find('.text-truncate').first().text().trim();
-				} catch (e) { }
+				} catch(e){}
 				showAddToast(productName, res.cartCount);
 			} else {
 				createToast('장바구니에 추가하지 못했습니다.');
@@ -209,7 +209,7 @@
 	});
 
 	// `.add-to-cart-btn` 직접 클릭도 지원합니다
-	$(document).on('click', '.add-to-cart-btn', function(e) {
+	$(document).on('click', '.add-to-cart-btn', function(e){
 		var $btn = $(this);
 		e.preventDefault();
 		// data 속성을 우선 사용하고, 없으면 주변 폼 입력값을 사용합니다
@@ -228,7 +228,7 @@
 			if ($card && $card.length) {
 				productName = $card.find('.text-truncate').first().text().trim();
 			}
-		} catch (e) { /* ignore */ }
+		} catch(e) { /* ignore */ }
 		$.post('/cart/add', { item_no: itemNo, qty: qty }, function(res) {
 			if (res && res.success) {
 				updateCartBadge();
@@ -236,7 +236,7 @@
 			} else {
 				createToast('장바구니에 추가하지 못했습니다.');
 			}
-		}, 'json').fail(function(jqxhr, status, err) {
+		}, 'json').fail(function(jqxhr, status, err){
 			console.error('/cart/add failed (click)', status, err, jqxhr && jqxhr.responseText);
 			createToast('네트워크 오류.');
 		});
@@ -253,12 +253,12 @@
 		// data-item-no 속성이 있는 요소에서 상품명을 시도하여 찾습니다
 		var productName = null;
 		try {
-			var $el = $('[data-item-no="' + itemNo + '"]').first();
+			var $el = $('[data-item-no="'+itemNo+'"]').first();
 			if ($el && $el.length) {
 				var $card = $el.closest('.product-item');
 				if ($card && $card.length) productName = $card.find('.text-truncate').first().text().trim();
 			}
-		} catch (e) { }
+		} catch(e){}
 		$.post('/cart/add', { item_no: itemNo, qty: qty || 1 }, function(res) {
 			if (res && res.success) {
 				// 페이지 이동 대신 배지 업데이트 및 상품 토스트를 표시합니다

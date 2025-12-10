@@ -6,22 +6,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="chatMapper">
 
 	<insert id="insertChat" parameterType="ChatVO">
-		MERGE INTO chat c
-		USING (
-		SELECT #{customer_id} as customer_id, #{admin_id} as admin_id FROM
-		dual
-		) src
-		ON (c.customer_id = src.customer_id AND c.admin_id =
-		src.admin_id)
-		WHEN MATCHED THEN
-		UPDATE SET
-		chat_file = #{chat_file},
-		chat_time = SYSDATE,
-		read_flag = #{read_flag}
-		WHEN NOT MATCHED THEN
-		INSERT (chat_no, chat_file, chat_time, customer_id, admin_id, read_flag)
-		VALUES (chat_seq.NEXTVAL, #{chat_file}, SYSDATE, #{customer_id},
-		#{admin_id}, #{read_flag})
+	    MERGE INTO chat c
+	    USING (
+	        SELECT #{customer_id} as customer_id, #{admin_id} as admin_id FROM dual
+	    ) src
+	    ON (c.customer_id = src.customer_id AND c.admin_id = src.admin_id AND (c.status IS NULL OR c.status = 'ACTIVE'))
+	    WHEN MATCHED THEN
+	        UPDATE SET
+	            chat_file = #{chat_file},
+	            chat_time = SYSDATE,
+	            read_flag = #{read_flag}
+	    WHEN NOT MATCHED THEN
+	        INSERT (chat_no, chat_file, chat_time, customer_id, admin_id, read_flag, status)
+	        VALUES (chat_seq.NEXTVAL, #{chat_file}, SYSDATE, #{customer_id}, #{admin_id}, #{read_flag}, 'ACTIVE')
 	</insert>
 
 	<select id="selectRoomsByCustomer" parameterType="string"
@@ -33,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectRoomsByAdmin" parameterType="string"
-		resultType="com.example.model.vo.ChatVO">
+		resultType="ChatVO">
 		SELECT * FROM chat
 		WHERE admin_id = #{adminId}
 		ORDER BY
@@ -41,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectChatByNo" parameterType="int"
-		resultType="com.example.model.vo.ChatVO">
+		resultType="ChatVO">
 		SELECT * FROM chat
 		WHERE chat_no = #{chatNo}
 	</select>
@@ -53,21 +50,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE chat_no = #{chatNo}
 	</update>
 
-	<select id="findRoleByUserId" parameterType="string"
-		resultType="string">
+	<select id="findRoleByUserId" parameterType="string" resultType="string">
 		SELECT ROLE FROM CUSTOMER WHERE customer_id = #{userId}
 	</select>
 
 	<!-- ============ 자동 배정 관련 쿼리 추가 ============ -->
 
-	<!-- 고객의 기존 채팅방 찾기 (이전에 배정된 관리자 확인) -->
-	<select id="findExistingChatRoom" parameterType="string"
-		resultType="com.example.model.vo.ChatVO">
+	<select id="findExistingChatRoom" parameterType="string" resultType="ChatVO">
 		SELECT * FROM chat
-		WHERE customer_id = #{customerId}
-		ORDER BY
-		chat_time DESC
-		FETCH FIRST 1 ROW ONLY
+	    WHERE customer_id = #{customerId}
+	    AND (status IS NULL OR status = 'ACTIVE')
+	    ORDER BY chat_time DESC
+	    FETCH FIRST 1 ROW ONLY
 	</select>
 
 	<!-- 특정 관리자 ID 가져오기 (테스트용) -->
@@ -119,8 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- 안읽은 메시지 개수 조회 (관리자용 - 고객이 보낸 메시지 중 안읽은 것) -->
-	<select id="countUnreadForAdmin" parameterType="string"
-		resultType="int">
+	<select id="countUnreadForAdmin" parameterType="string" resultType="int">
 		SELECT COUNT(*) FROM chat
 		WHERE admin_id = #{adminId}
 		AND
@@ -152,14 +145,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="int">
 		SELECT COUNT(*) FROM chat
 		WHERE admin_id = #{adminId}
-		AND customer_id = #{customerId}
+		AND
+		customer_id = #{customerId}
 		AND read_flag = 'N'
 	</select>
 
 	<!-- 채팅 종료 처리 -->
 	<update id="closeChat" parameterType="int">
 		UPDATE chat
-		SET status = 'CLOSED'
+		SET status =
+		'CLOSED'
 		WHERE chat_no = #{chatNo}
 	</update>
 
@@ -168,7 +163,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="ChatVO">
 		SELECT * FROM chat
 		WHERE customer_id = #{customerId}
-		AND (status IS NULL OR status = 'ACTIVE')
+		AND
+		(status IS NULL OR status = 'ACTIVE')
 		ORDER BY chat_time DESC
 	</select>
 
@@ -177,9 +173,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="ChatVO">
 		SELECT * FROM chat
 		WHERE admin_id = #{adminId}
-		AND (status IS NULL OR status = 'ACTIVE')
+		AND (status IS
+		NULL OR status = 'ACTIVE')
 		ORDER BY chat_time DESC
 	</select>
-
-
+	
+	<!-- 채팅 삭제 -->
+	<delete id="deleteChat" parameterType="int">
+	    DELETE FROM chat 
+	    WHERE chat_no = #{chatNo}
+	</delete>
+	
+	<!-- 관리자용 모든 채팅방 조회 (종료된 것 포함) -->
+	<select id="selectAllRoomsByAdmin" parameterType="string" resultType="ChatVO">
+	    SELECT * FROM chat
+	    WHERE admin_id = #{adminId}
+	    ORDER BY 
+	        CASE WHEN status = 'ACTIVE' OR status IS NULL THEN 0 ELSE 1 END,
+	        chat_time DESC
+	</select>
 </mapper>

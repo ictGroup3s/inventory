@@ -23,17 +23,26 @@ public class CustomerChatController {
 		return chatService.getUserRole(userId);
 	}
 
-	// 채팅방 목록 (진행 중인 것만)
+	// 채팅방 목록 (종료된 것 포함)
 	@GetMapping("/rooms/{userId}")
 	public List<ChatVO> getChatRooms(@PathVariable String userId) {
-		String role = chatService.getUserRole(userId);
-		return chatService.getActiveRooms(userId, role);
+	    String role = chatService.getUserRole(userId);
+	    return chatService.getChatRooms(userId, role);  
 	}
 
 	// 이전 채팅 불러오기 (고객용)
 	@GetMapping("/history/{chatNo}")
 	public ChatVO getChatHistory(@PathVariable Integer chatNo) {
 		return chatService.getChatById(chatNo);
+	}
+
+	// 채팅 상태 확인
+	@GetMapping("/status/{chatNo}")
+	public String getChatStatus(@PathVariable int chatNo) {
+		ChatVO chat = chatService.getChatById(chatNo);
+		if (chat == null)
+			return "NOT_FOUND";
+		return chat.getStatus() != null ? chat.getStatus() : "ACTIVE";
 	}
 
 	// ============ 자동 배정 API ============
@@ -60,4 +69,16 @@ public class CustomerChatController {
 		chatService.markAsReadForCustomer(customerId);
 	}
 
+	// 모든 채팅방 목록 (종료된 것 포함)
+	@GetMapping("/rooms/all/{userId}")
+	public List<ChatVO> getAllChatRooms(@PathVariable String userId) {
+		String role = chatService.getUserRole(userId);
+		return chatService.getChatRooms(userId, role);
+	}
+	
+	// 채팅 삭제
+	@DeleteMapping("/delete/{chatNo}")
+	public void deleteChat(@PathVariable int chatNo) {
+	    chatService.deleteChat(chatNo);
+	}
 }
