@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +33,11 @@
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
+<!-- jQuery CDN (최신 버전) -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- main.js -->
+<script src="/js/main.js"></script>
+<script src="/js/admin.js"></script>
 
 </head>
 <body>
@@ -96,53 +104,71 @@
 					<div class="row px-xl-5">
 						<!-- 좌측: 상품 이미지 -->
 						<div class="col-lg-5 pb-5 text-center">
-							<img src="img/fish.png" alt="상품 이미지" class="img-fluid"
-								style="width: 600px; height: 500px;">
+							<img id="preview" src="img/insert_pic.png" alt="상품 이미지"
+								class="img-fluid" style="width: 600px; height: 500px;">
 						</div>
 
 						<!-- 우측: 상품 등록 폼 -->
 						<div class="col-lg-7 pb-5">
-							<h3 class="font-weight-semi-bold mb-4">상품등록</h3>
+							<h3 class="font-weight-semi-bold mb-4">상품관리</h3>
 
-							<form>
+							<form action="saveItem" method="post"
+								enctype="multipart/form-data">
 								<!-- 상품 정보 입력 테이블 -->
 								<table class="table table-bordered">
 									<tr>
+										<td><input type="hidden" name="item_no"></td>
+									</tr>
+									<tr>
 										<td>상품명</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="text" class="form-control"
+											name="item_name" placeholder="상품명"></td>
 									</tr>
 									<tr>
 										<td>수량</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="number" class="form-control"
+											name="stock_cnt" placeholder="수량"></td>
 									</tr>
 									<tr>
 										<td>카테고리</td>
-										<td><select class="form-control">
+										<td><select class="form-control" name="cate_no">
 												<option value="">선택하세요</option>
-												<option value="">카테고리1</option>
-												<option value="">카테고리2</option>
-												<option value="">카테고리3</option>
+												<option value="1">구이찜볶음</option>
+												<option value="2">국밥면</option>
+												<option value="3">식단관리</option>
+												<option value="4">분식간식</option>
+												<option value="5">반찬소스</option>
+												<option value="6">생수음료</option>
 										</select></td>
 									</tr>
 									<tr>
-										<td>원산지</td>
-										<td><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
 										<td>원가</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="number" class="form-control"
+											name="origin_p" placeholder="원가"></td>
 									</tr>
 									<tr>
-										<td>소비자가</td>
-										<td><input type="text" class="form-control"></td>
+										<td>판매가</td>
+										<td><input type="number" class="form-control"
+											name="sales_p" placeholder="판매가"></td>
+									</tr>
+									<tr>
+										<td>이미지 업로드</td>
+										<td><input type="file" id="uploadFile"
+											class="form-control" name="item_imgFile"></td>
+									</tr>
+									<tr>
+										<td>상품 상세설명</td>
+										<td><textarea class="form-control" name="item_content"
+												rows="6" placeholder="상품 상세설명을 입력하세요"></textarea></td>
 									</tr>
 								</table>
 
 								<!-- 등록/수정/삭제 버튼 -->
 								<div class="d-flex align-items-center mb-4 pt-2">
 									<button class="btn btn-primary mr-2" type="submit">등록</button>
-									<button class="btn btn-warning mr-2" type="button">수정</button>
-									<button class="btn btn-danger" type="button">삭제</button>
+									<button class="btn btn-warning mr-2" type="submit"
+										formaction="/itemUpdate">수정</button>
+									
 								</div>
 							</form>
 						</div>
@@ -165,27 +191,23 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>001</td>
-										<td>연어</td>
-										<td>생선류</td>
-										<td>10,000</td>
-										<td>15,000</td>
-									</tr>
-									<tr>
-										<td>002</td>
-										<td>참치</td>
-										<td>생선류</td>
-										<td>12,000</td>
-										<td>18,000</td>
-									</tr>
-									<tr>
-										<td>003</td>
-										<td>광어</td>
-										<td>생선류</td>
-										<td>9,000</td>
-										<td>14,000</td>
-									</tr>
+									<c:forEach items="${list}" var="item">
+										<tr class="item-row" data-item_no="${item.item_no}"
+											data-item_name="${item.item_name}"
+											data-origin_p="${item.origin_p}"
+											data-sales_p="${item.sales_p}" 
+											data-cate_no="${item.cate_no}"
+											data-stock_cnt="${item.stock_cnt}"
+											data-item_content="${item.item_content}"
+											data-item_img="${item.item_img}">
+											<td>${item.item_no}</td>
+											<td>${item.item_name}</td>
+											<td>${item.cate_name}</td>
+											<td>${item.origin_p}</td>
+											<td>${item.sales_p}</td>
+											<td><button class="btn btn-danger delete-btn" data-itemno="${item.item_no}">삭제</button></td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>

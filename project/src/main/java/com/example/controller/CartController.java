@@ -34,39 +34,42 @@ public class CartController {
     public String cart(Model m, HttpSession session) {
         try {
             // 사용자가 방금 로그인했거나 세션에 장바구니 항목이 있으면, 먼저 세션 장바구니를 DB의 장바구니와 병합
-            try {
-                cartService.mergeSessionCartToDb(session);
-            } catch (Exception e) {
-                log.warn("장바구니: 세션 장바구니를 DB와 병합하지 못했습니다", e);
-            }
-           
-            try {
-                Object u = session.getAttribute("user");
-                log.info("cart() 호출 - sessionId={}, user={}", session.getId(), u);
-            } catch (Exception ex) {
-                log.warn("cart() 디버그 로그 기록에 실패했습니다", ex);
-            }
-            java.util.List<CartItemVO> items = cartService.getCartItems(session);
-            int totalPrice = cartService.getCartTotal(session);
-            int cartCount = 0;
-            for (CartItemVO ci : items) cartCount += ci.getQty();
-            m.addAttribute("cartItems", items);
-            m.addAttribute("cartTotal", totalPrice);
-            m.addAttribute("cart_cnt", cartCount);
-        } catch (Exception e) {
+	            try {
+	                cartService.mergeSessionCartToDb(session);
+	            } catch (Exception e) {
+	                log.warn("장바구니: 세션 장바구니를 DB와 병합하지 못했습니다", e);
+	            }
+	           
+	            try {
+	                Object u = session.getAttribute("user");
+	                log.info("cart() 호출 - sessionId={}, user={}", session.getId(), u);
+	            } catch (Exception ex) {
+	                log.warn("cart() 디버그 로그 기록에 실패했습니다", ex);
+	            }
+	            
+	            List<CartItemVO> items = cartService.getCartItems(session);
+	            int totalPrice = cartService.getCartTotal(session);
+	            int cartCount = 0;
+	            for (CartItemVO ci : items) cartCount += ci.getQty();
+	            m.addAttribute("cartItems", items);
+	            m.addAttribute("cartTotal", totalPrice);
+	            m.addAttribute("cart_cnt", cartCount);
+        	} catch (Exception e) {
             m.addAttribute("cartItems", new ArrayList<>());
             m.addAttribute("cartTotal", 0);
             m.addAttribute("cart_cnt", 0);
-        }
-        return "cart";
+		        }
+		        return "cart";
     }
 
     @PostMapping("/cart/add")
     @ResponseBody
-    public Map<String, Object> addToCart(@RequestParam("item_no") Integer item_no,
-                                         @RequestParam(value = "qty", required = false) Integer qty,
-                                         HttpSession session) {
+    public Map<String, Object> addToCart(
+							@RequestParam("item_no") Integer item_no,
+                            @RequestParam(value = "qty", required = false) Integer qty,
+                            HttpSession session) {
         log.info("/cart/add called: item_no={}, qty={}", item_no, qty);
+        
         Map<String, Object> resp = new HashMap<>();
         if (item_no == null) {
             resp.put("success", false);
@@ -84,8 +87,8 @@ public class CartController {
             log.warn("Failed to add to cart", ex);
             resp.put("success", false);
             resp.put("message", "추가 실패");
-        }
-        return resp;
+          }
+        	return resp;
     }
 
     @PostMapping("/cart/remove")
@@ -100,22 +103,25 @@ public class CartController {
             }
         } catch (Exception e) {
             log.warn("장바구니 삭제 처리 중 예외 발생", e);
-        }
-        return "redirect:/cart";
+          }
+        	return "redirect:/cart";
     }
 
     @PostMapping("/cart/addForm")
-    public String addToCartForm(@RequestParam("item_no") Integer item_no,
-                                @RequestParam(value = "qty", required = false) Integer qty,
-                                HttpSession session) {
-        if (item_no == null) return "redirect:/selectall";
+    public String addToCartForm(
+    				@RequestParam("item_no") Integer item_no,
+                    @RequestParam(value = "qty", required = false) Integer qty,
+                    HttpSession session) {
+        if (item_no == null) 
+        	return "redirect:/selectall";
+        
         int addQty = (qty == null || qty <= 0) ? 1 : qty;
         try {
             cartService.addToCart(item_no, addQty, session);
         } catch (Exception e) {
             log.warn("장바구니 추가 실패 (form)", e);
-        }
-        return "redirect:/cart";
+	      }
+	        return "redirect:/cart";
     }
 
     @GetMapping("/cart/count")
@@ -127,22 +133,24 @@ public class CartController {
             totalCount = cartService.getCartItems(session).stream().mapToInt(CartItemVO::getQty).sum();
         } catch (Exception e) {
             log.warn("카트 수량 계산 실패", e);
-        }
+          }
         resp.put("cartCount", totalCount);
         return resp;
     }
     
     @PostMapping("/cart/update")
     @ResponseBody
-    public Map<String, Object> updateCartQuantity(@RequestParam("item_no") Integer item_no,
-                                                  @RequestParam("qty") Integer qty,
-                                                  HttpSession session) {
+    public Map<String, Object> updateCartQuantity(
+    							@RequestParam("item_no") Integer item_no,
+                                @RequestParam("qty") Integer qty,
+                                HttpSession session) {
         Map<String, Object> resp = new HashMap<>();
         if (item_no == null || qty == null || qty < 0) {
             resp.put("success", false);
             resp.put("message", "invalid parameters");
             return resp;
         }
+        
         try {
             if (qty == 0) {
                 cartService.removeFromCart(item_no, session);
@@ -153,7 +161,8 @@ public class CartController {
                 cartService.removeFromCart(item_no, session);
                 if (qty > 0) cartService.addToCart(item_no, qty, session);
             }
-            java.util.List<CartItemVO> items = cartService.getCartItems(session);
+            
+            List<CartItemVO> items = cartService.getCartItems(session);
             int totalCount = items.stream().mapToInt(CartItemVO::getQty).sum();
             int cartTotal = items.stream().mapToInt(ci -> ci.getSubtotal()).sum();
             // 변경된 항목의 소계를 계산
@@ -172,8 +181,9 @@ public class CartController {
             resp.put("success", false);
             resp.put("message", "failed to update");
         }
-        return resp;
+        	return resp;
     }
+  
     @GetMapping("/checkout")
     public String checkout(HttpSession session, Model model) {
         try {

@@ -18,42 +18,42 @@ public class CartRepositoryImpl implements CartRepository {
     private SqlSessionTemplate sess;
 
     @Override
-    public Map<String,Object> findByCustomerAndItem(String customerId, Integer itemNo) throws Exception {
+    public Map<String,Object> findByCustomerAndItem(String customerId, Integer itemNo) {
         return sess.selectOne(NAMESPACE + "selectCartByCustomerAndItem", Map.of("customerId", customerId, "itemNo", itemNo));
     }
 
     @Override
-    public int insertCartItem(Map<String,Object> params) throws Exception {
+    public int insertCartItem(Map<String,Object> params) {
         return sess.insert(NAMESPACE + "insertCartItem", params);
     }
 
     @Override
-    public int increaseCartCntByCartNo(Map<String,Object> params) throws Exception {
+    public int increaseCartCntByCartNo(Map<String,Object> params) {
         return sess.update(NAMESPACE + "increaseCartCntByCartNo", params);
     }
 
     @Override
-    public int updateCartCntByCartNo(Map<String,Object> params) throws Exception {
+    public int updateCartCntByCartNo(Map<String,Object> params) {
         return sess.update(NAMESPACE + "updateCartCntByCartNo", params);
     }
 
     @Override
-    public int deleteCartByCartNo(Integer cartNo) throws Exception {
+    public int deleteCartByCartNo(Integer cartNo) {
         return sess.delete(NAMESPACE + "deleteCartByCartNo", cartNo);
     }
 
     @Override
-    public int deleteCartByCustomerAndItem(Map<String,Object> params) throws Exception {
+    public int deleteCartByCustomerAndItem(Map<String,Object> params) {
         return sess.delete(NAMESPACE + "deleteCartByCustomerAndItem", params);
     }
 
     @Override
-    public List<Map<String,Object>> findByCustomer(String customerId) throws Exception {
+    public List<Map<String,Object>> findByCustomer(String customerId) {
         return sess.selectList(NAMESPACE + "selectCartByCustomer", customerId);
     }
 
     @Override
-    public int countByCustomer(String customerId) throws Exception {
+    public int countByCustomer(String customerId) {
         Integer cnt = sess.selectOne(NAMESPACE + "countByCustomer", customerId);
         return cnt == null ? 0 : cnt;
     }

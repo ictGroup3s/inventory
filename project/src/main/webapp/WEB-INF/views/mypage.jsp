@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,61 +55,170 @@
 	<!-- Main Layout -->
 	<div class="container-fluid">
 		<div class="row px-xl-5">
+			<!-- Sidebar -->
 			<div class="col-lg-2">
-				<!-- Sidebar -->
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="/mypage" class="nav-link">주문내역</a></li>
-						<li class="nav-item"><a href="/mydelivery" class="nav-link ">배송내역</a></li>
-						<li class="nav-item"><a href="/mycs" class="nav-link ">취소·반품·교환내역</a></li>
+						<li class="nav-item"><a class="nav-link active">주문내역</a></li>
+						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link">취소/반품/교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
+						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
+						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
 					</ul>
 				</nav>
 			</div>
 
-			<!-- 세션에서 checkout 데이터 가져오기 -->
-			<c:set var="cartItems" value="${sessionScope.cartItems}" />
-			<c:set var="cartCount" value="${sessionScope.cartCount}" />
-			<c:set var="cartTotal" value="${sessionScope.cartTotal}" />
-
 			<!-- Main Content -->
-			<div class="col-lg-10" style="margin-top: 30px; margin-bottom: 50px;">
+			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
 					<h4>주문내역</h4>
 				</div>
-				
+
 				<div class="col-lg-10 mx-auto">
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>주문번호</th>
 								<th>상품명</th>
-								<th>수량</th>
-								<th>상태</th>
-								<th>주문일</th>
-								<th></th>
+								<th>결제금액</th>
+								<th>주문상태</th>
+								<th>처리</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="ci" items="${cartItems}">
-								<tr>
-									<td>${ci.product.item_no}</td>
-									<td>${ci.product.item_name}</td>
-									<td>${ci.qty}개</td>
-									<td>결제대기</td>
-									<td>${ci.product.createDate}</td>
-									<!-- 실제 주문일자 있으면 변경 -->
+							<tr>
+								<td>10001</td>
+								<td>상품명1</td>
+								<td>10,000원</td>
+								<td>결제완료</td>
+								<td>
+									<button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#orderDetailModal">
+										상세보기
+									</button>
+								</td>
 							</tr>
-							</c:forEach>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<!-- Footer Start -->
+
+	<!-- 주문 상세 모달 -->
+	<div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="orderDetailModalLabel">주문 상세내역</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- 주문 기본 정보 -->
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<strong>주문번호:</strong> 10001
+						</div>
+						<div class="col-md-6">
+							<strong>주문일자:</strong> 2025-12-01 14:30
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>주문상태:</strong> <span class="badge badge-warning" style="background-color:#EDF1FF; color: black;">결제완료</span>
+						</div>
+					</div>
+					
+					<hr>
+					
+					<!-- 상품 정보 -->
+					<h6 class="mb-3"><strong>주문 상품</strong></h6>
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>상품명</th>
+									<th>수량</th>
+									<th>가격</th>
+									<th>합계</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>상품명1</td>
+									<td>1개</td>
+									<td>10,000원</td>
+									<td>10,000원</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<hr>
+					
+					<!-- 결제 정보 -->
+					<h6 class="mb-3"><strong>결제 정보</strong></h6>
+					<div class="row mb-2">
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<strong>총 결제 금액:</strong>
+						</div>
+						<div class="col-md-6 text-right">
+							<h5 class="text-primary mb-0">13,000원</h5>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>결제 방법:</strong> 신용카드 (국민카드 **** **** **** 1234)
+						</div>
+					</div>
+					
+					<hr>
+					
+					<!-- 배송 정보 -->
+					<h6 class="mb-3"><strong>배송 정보</strong></h6>
+					<div class="row mb-2">
+						<div class="col-md-12">
+							<strong>받는 사람:</strong> 홍길동
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-12">
+							<strong>연락처:</strong> 010-1234-5678
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-12">
+							<strong>배송지:</strong> 서울시 강남구 테헤란로 123, 101호
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>배송 요청사항:</strong> 문 앞에 놓아주세요
+						</div>
+					</div>
+					
+					<hr>
+					
+					<!-- 주문 진행 상태 -->
+					<h6 class="mb-3"><strong>주문 진행 상태</strong></h6>
+					<ul class="mt-2">
+						<li>2025-12-01 15:00: 결제 완료</li>
+						<li>처리 예정일: 2025-12-02</li>
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
 				<div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
@@ -177,6 +286,7 @@
         </div>
     </div>
     <!-- Footer End -->
+
 
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
