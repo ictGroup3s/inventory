@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,32 +98,41 @@
 					<div class="row px-xl-5">
 						<!-- 좌측: 상품 이미지 -->
 						<div class="col-lg-5 pb-5 text-center">
-							<img src="img/fish.png" alt="상품 이미지" class="img-fluid"
-								style="width: 600px; height: 500px;">
+							<img id="preview" src="img/insert_pic.png" alt="상품 이미지"
+								class="img-fluid" style="width: 600px; height: 500px;">
 						</div>
 
 						<!-- 우측: 상품 등록 폼 -->
 						<div class="col-lg-7 pb-5">
 							<h3 class="font-weight-semi-bold mb-4">상품입고</h3>
 
-							<form>
+							<form action="updateStock" method="post">
 								<!-- 상품 정보 입력 테이블 -->
 								<table class="table table-bordered">
 									<tr>
 										<td>상품코드</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="number" class="form-control"
+											name="item_no" placeholder="상품코드"></td>
 									</tr>
 									<tr>
 										<td>상품명</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="text" class="form-control"
+											name="item_name" placeholder="상품명"></td>
 									</tr>
 									<tr>
 										<td>원가</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="number" class="form-control"
+											name="origin_p" placeholder="원가"></td>
 									</tr>
 									<tr>
 										<td>소비자가</td>
-										<td><input type="text" class="form-control"></td>
+										<td><input type="number" class="form-control"
+											name="sales_p" placeholder="소비자가"></td>
+									</tr>
+									<tr>
+										<td>입고수량</td>
+										<td><input type="number" class="form-control"
+											name="stock_cnt" placeholder="입고수량"></td>
 									</tr>
 								</table>
 
@@ -145,36 +156,25 @@
 										<th>상품코드</th>
 										<th>상품명</th>
 										<th>원가</th>
-										<th>마진율</th>
 										<th>입고수량</th>
 										<th>재고수량</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>001</td>
-										<td>연어</td>
-										<td>10,000</td>
-										<td>15,000</td>
-										<td>100</td>
-										<td>49</td>
-									</tr>
-									<tr>
-										<td>002</td>
-										<td>참치</td>
-										<td>12,000</td>
-										<td>18,000</td>
-										<td>99</td>
-										<td>87</td>
-									</tr>
-									<tr>
-										<td>003</td>
-										<td>광어</td>
-										<td>9,000</td>
-										<td>14,000</td>
-										<td>50</td>
-										<td>10</td>
-									</tr>
+									<c:forEach items="${list}" var="item">
+										<tr class="item-row" data-item_no="${item.item_no}"
+											data-item_name="${item.item_name}"
+											data-origin_p="${item.origin_p}"
+											data-sales_p="${item.sales_p}"
+											data-stock_cnt="${item.stock_cnt}"
+											data-item_img="${item.item_img}">
+											<td>${item.item_no }</td>
+											<td>${item.item_name }</td>
+											<td>${item.origin_p }</td>
+											<td>${item.stock_cnt }</td>
+											<td>${item.stock_cnt }</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -237,5 +237,6 @@
 					src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 				<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 				<script src="js/main.js"></script>
+				<script src="js/admin.js"></script>
 </body>
 </html>
