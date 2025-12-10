@@ -120,7 +120,7 @@
                             <!-- 회원 로그인 후   -->	
 	                     <c:if test="${not empty sessionScope.loginUser}">
 							<span class="nav-item nav-link">안녕하세요, 
-							 ${sessionScope.loginUser.customer_id}님!</span>
+							 ${sessionScope.loginUser.name}님!</span>
 						 
 						  
 						   <c:if test="${sessionScope.loginRole == 0}">

@@ -381,13 +381,10 @@ $(document).on('shown.bs.tab','a[href="#tab-pane-3"]',function(){
        		//console.log(reviews);
         	//console.log(reviews[0].re_content);
         	// 동적으로 화면 만들기
-  			// reviews 배열이라서 반복문 구동
-            //var temp = $('<div/>').text(reviews[0].re_content);
-            if (reviews && reviews.length > 0) {
-                reviews.forEach(function(r) {
-                    var customer = r.customer_id || r.customerId || '익명';
-                    var date = r.re_date || r.date || '';
-                    var content = r.re_content || r.content || '';
+  			
+        	// reviews 배열이라서 반복문 구동
+           var temp = $('<div/>').text(reviews[0].re_content);
+          
 
                     var temp = $(`
                         <div class="mb-3">
