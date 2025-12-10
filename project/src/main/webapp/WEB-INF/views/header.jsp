@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 
@@ -73,26 +74,18 @@
 	<!-- Navbar Start -->
 	<div class="container-fluid mb-5">
 		<div class="row border-top px-xl-5">
-			<div class="col-lg-3 d-none d-lg-block">
-				<a
-					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
-					data-toggle="collapse" href="#navbar-vertical"
-					style="height: 65px; margin-top: -1px; padding: 0 30px;">
-					<h6 class="m-0">Categories</h6> <i
-					class="fa fa-angle-down text-dark"></i>
-				</a>
-				<nav
-					class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
-					id="navbar-vertical">
-					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-						<a href="selectall" class="nav-item nav-link">전체상품</a> <a
-							href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a> <a
-							href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a> <a
-							href="selectDiet" class="nav-item nav-link"> 식단관리 </a> <a
-							href="selectBunsik" class="nav-item nav-link">분식 ．간식</a> <a
-							href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a> <a
-							href="selectdrink" class="nav-item nav-link">생수 ．음료</a>
-					</div>
+			<div class="col-lg-2 col-md-12 d-none d-lg-block">
+				<nav class="category-sidebar">
+					<h6 class="p-3">Categories</h6>
+					<ul class="nav flex-column">
+						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
+					</ul>
 				</nav>
 			</div>
 			<div class="col-lg-9">
@@ -636,14 +629,15 @@
 			<input type="text" id="chat-text" placeholder="메시지 입력...">
 			<button id="chat-send">Send</button>
 		</div>
+		<button id="new-chat-btn"
+			style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+			새 채팅 시작</button>
 	</div>
 
 	<!-- ▣ 채팅 열기 버튼 -->
 	<button id="chat-open" class="chat-open-btn">💬</button>
 
-
-
-
+	<div class="toast-container" id="toast-container"></div>
 
 
 	<!-- JavaScript Libraries -->

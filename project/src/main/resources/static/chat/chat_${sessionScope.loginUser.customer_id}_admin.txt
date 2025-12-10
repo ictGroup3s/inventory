@@ -11,3 +11,8 @@
 [2025-12-08 17:06:24] ${sessionScope.loginUser.customer_id}: 1
 [2025-12-08 17:18:32] ${sessionScope.loginUser.customer_id}: 1
 [2025-12-08 17:23:45] ${sessionScope.loginUser.customer_id}: 1
+[2025-12-08 11:43:16] ${sessionScope.loginUser.customer_id}: ㅁㄻㄹ
+[2025-12-08 11:46:35] ${sessionScope.loginUser.customer_id}: 1
+[2025-12-08 11:48:39] ${sessionScope.loginUser.customer_id}: 111
+[2025-12-08 11:50:41] ${sessionScope.loginUser.customer_id}: 1
+

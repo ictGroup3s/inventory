@@ -14,125 +14,162 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * 관리자와 고객 간 실시간 채팅을 위한 통합 WebSocket 핸들러
- * roomId를 기준으로 관리자-고객 세션을 함께 관리
- */
 @Component
 public class UnifiedChatHandler extends TextWebSocketHandler {
 
-    // roomId별 세션 관리 (관리자 + 고객 세션 모두 포함)
-    private static final Map<String, Set<WebSocketSession>> roomSessions = new ConcurrentHashMap<>();
-    
-    // roomId별 파일명 관리
-    private static final Map<String, String> roomFiles = new ConcurrentHashMap<>();
-    
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private final ChatService chatService;
-    private final String CHAT_DIR = "src/main/resources/static/chat/";
+	private static final Map<String, Set<WebSocketSession>> roomSessions = new ConcurrentHashMap<>();
+	private static final Map<String, String> roomFiles = new ConcurrentHashMap<>();
 
-    public UnifiedChatHandler(ChatService chatService) {
-        this.chatService = chatService;
-    }
+	private final ObjectMapper objectMapper = new ObjectMapper();
+	private final ChatService chatService;
+	private final String CHAT_DIR = "src/main/resources/static/chat/";
 
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        System.out.println("✅ WebSocket 연결됨: " + session.getId());
-    }
+	public UnifiedChatHandler(ChatService chatService) {
+		this.chatService = chatService;
+	}
 
-    @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        try {
-            Map<String, Object> chatMsg = objectMapper.readValue(message.getPayload(), Map.class);
-            String customerId = (String) chatMsg.get("customerId");
-            String adminId = (String) chatMsg.get("adminId");
-            String msgContent = (String) chatMsg.get("message");
-            String sender = (String) chatMsg.get("sender"); // "admin" 또는 "customer"
+	@Override
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		System.out.println("✅ WebSocket 연결됨: " + session.getId());
+	}
 
-            // roomId 생성 (항상 동일한 형식으로)
-            String roomId = customerId + "_" + adminId;
+	@Override
+	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		try {
+			Map<String, Object> chatMsg = objectMapper.readValue(message.getPayload(), Map.class);
+			String customerId = (String) chatMsg.get("customerId");
+			String adminId = (String) chatMsg.get("adminId");
+			String msgContent = (String) chatMsg.get("message");
+			String sender = (String) chatMsg.get("sender");
 
-            // 세션 추가 (관리자든 고객이든 같은 roomId에 추가)
-            roomSessions.putIfAbsent(roomId, Collections.synchronizedSet(new HashSet<>()));
-            roomSessions.get(roomId).add(session);
+			String roomId = customerId + "_" + adminId;
 
-            System.out.println("📬 [" + roomId + "] " + sender + " -> " + msgContent);
-            System.out.println("🔗 현재 세션 수: " + roomSessions.get(roomId).size());
+			// 세션 추가
+			roomSessions.putIfAbsent(roomId, Collections.synchronizedSet(new HashSet<>()));
+			roomSessions.get(roomId).add(session);
 
-            // 파일명 생성 (한 번만)
-            roomFiles.putIfAbsent(roomId, "chat_" + roomId + "_" + System.currentTimeMillis() + ".txt");
-            String fileName = roomFiles.get(roomId);
-            String filePath = CHAT_DIR + fileName;
+			// JOIN 메시지는 세션만 등록하고 저장/브로드캐스트 안 함
+			if ("__JOIN__".equals(msgContent)) {
+				System.out.println("🚪 " + sender + " 방 입장 (세션 등록만)");
+				return;
+			}
 
-            // 디렉토리 생성
-            File file = new File(filePath);
-            if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
-            }
+			// CLOSE 메시지는 종료 알림만 전송 (파일/DB 저장 안 함)
+			if ("__CLOSE__".equals(msgContent)) {
+				System.out.println("🔒 채팅 종료 알림 전송: " + roomId);
 
-            // 타임스탬프
-            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+				// 캐시에서 파일명 제거 (새 채팅 시 새 파일 생성되도록)
+				roomFiles.remove(roomId);
 
-            // 파일에 저장
-            try (FileWriter fw = new FileWriter(file, true)) {
-                String senderName = "admin".equals(sender) ? adminId : customerId;
-                fw.write("[" + timeStamp + "] " + senderName + ": " + msgContent + "\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+				Map<String, Object> closeMsg = new HashMap<>();
+				closeMsg.put("customerId", customerId);
+				closeMsg.put("adminId", adminId);
+				closeMsg.put("message", "__CLOSE__");
+				closeMsg.put("sender", "system");
+				closeMsg.put("type", "close");
 
-            // DB 저장 (중복 저장 방지 - 마지막 메시지만 업데이트)
-            ChatVO chatVO = new ChatVO();
-            chatVO.setCustomer_id(customerId);
-            chatVO.setAdmin_id(adminId);
-            chatVO.setChat_file(fileName);
-            chatVO.setChat_time(timeStamp);
+				TextMessage broadcast = new TextMessage(objectMapper.writeValueAsString(closeMsg));
 
-            // ========== 디버깅 로그 ==========
-            System.out.println("=== DB 저장 직전 데이터 ===");
-            System.out.println("customer_id: [" + customerId + "]");
-            System.out.println("admin_id: [" + adminId + "]");
-            System.out.println("chat_file: [" + fileName + "]");
-            System.out.println("==========================");
-            
-            chatService.saveChat(chatVO);
+				for (WebSocketSession s : roomSessions.get(roomId)) {
+					if (s.isOpen()) {
+						s.sendMessage(broadcast);
+					}
+				}
+				return;
+			}
 
-            // 응답 메시지 생성
-            Map<String, Object> responseMsg = new HashMap<>();
-            responseMsg.put("customerId", customerId);
-            responseMsg.put("adminId", adminId);
-            responseMsg.put("message", msgContent);
-            responseMsg.put("timestamp", timeStamp);
-            responseMsg.put("sender", sender);
+			System.out.println("📬 [" + roomId + "] " + sender + " -> " + msgContent);
+			System.out.println("🔗 현재 세션 수: " + roomSessions.get(roomId).size());
 
-            TextMessage broadcast = new TextMessage(objectMapper.writeValueAsString(responseMsg));
+			// 파일명 결정 (기존 채팅방 있으면 그 파일 사용)
+			String fileName;
+			if (roomFiles.containsKey(roomId)) {
+				fileName = roomFiles.get(roomId);
+			} else {
+				// DB에서 기존 채팅방 파일 찾기
+				ChatVO existingChat = chatService.getExistingChatRoom(customerId);
+				if (existingChat != null && existingChat.getChat_file() != null && existingChat.getAdmin_id() != null
+						&& existingChat.getAdmin_id().equals(adminId)) {
+					fileName = existingChat.getChat_file();
+					System.out.println("📂 기존 파일 사용: " + fileName);
+				} else {
+					fileName = "chat_" + roomId + "_" + System.currentTimeMillis() + ".txt";
+					System.out.println("📂 새 파일 생성: " + fileName);
+				}
+				roomFiles.put(roomId, fileName);
+			}
 
-            // 같은 roomId의 모든 세션에 브로드캐스트 (관리자 + 고객 모두)
-            int successCount = 0;
-            for (WebSocketSession s : roomSessions.get(roomId)) {
-                if (s.isOpen()) {
-                    s.sendMessage(broadcast);
-                    successCount++;
-                }
-            }
-            
-            System.out.println("✉️ " + successCount + "개 세션에 메시지 전송 완료");
+			String filePath = CHAT_DIR + fileName;
 
-        } catch (Exception e) {
-            System.err.println("❌ 메시지 처리 중 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
+			// 디렉토리 생성
+			File file = new File(filePath);
+			if (!file.getParentFile().exists()) {
+				file.getParentFile().mkdirs();
+			}
 
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        // 모든 방에서 해당 세션 제거
-        roomSessions.values().forEach(set -> set.remove(session));
-        System.out.println("🔌 WebSocket 연결 종료: " + session.getId());
-    }
+			// 타임스탬프
+			String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-    @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        System.err.println("⚠️ WebSocket 전송 오류: " + exception.getMessage());
-    }
+			// 파일에 저장
+			try (FileWriter fw = new FileWriter(file, true)) {
+				String senderName = "admin".equals(sender) ? adminId : customerId;
+				fw.write("[" + timeStamp + "] " + senderName + ": " + msgContent + "\n");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// DB 저장 (MERGE - 있으면 UPDATE, 없으면 INSERT)
+			ChatVO chatVO = new ChatVO();
+			chatVO.setCustomer_id(customerId);
+			chatVO.setAdmin_id(adminId);
+			chatVO.setChat_file(fileName);
+			chatVO.setChat_time(timeStamp);
+
+			// 관리자가 보낸 메시지면 read_flag = 'N' (고객이 안읽음)
+			// 고객이 보낸 메시지면 read_flag = 'Y' (본인이 보낸 거니까)
+			if ("admin".equals(sender)) {
+				chatVO.setRead_flag("N");
+			} else {
+				chatVO.setRead_flag("Y");
+			}
+
+			chatService.saveChat(chatVO);
+
+			// 응답 메시지 생성
+			Map<String, Object> responseMsg = new HashMap<>();
+			responseMsg.put("customerId", customerId);
+			responseMsg.put("adminId", adminId);
+			responseMsg.put("message", msgContent);
+			responseMsg.put("timestamp", timeStamp);
+			responseMsg.put("sender", sender);
+
+			TextMessage broadcast = new TextMessage(objectMapper.writeValueAsString(responseMsg));
+
+			// 브로드캐스트
+			int successCount = 0;
+			for (WebSocketSession s : roomSessions.get(roomId)) {
+				if (s.isOpen()) {
+					s.sendMessage(broadcast);
+					successCount++;
+				}
+			}
+
+			System.out.println("✉️ " + successCount + "개 세션에 메시지 전송 완료");
+
+		} catch (Exception e) {
+			System.err.println("❌ 메시지 처리 중 오류: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+		roomSessions.values().forEach(set -> set.remove(session));
+		System.out.println("🔌 WebSocket 연결 종료: " + session.getId());
+	}
+
+	@Override
+	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+		System.err.println("⚠️ WebSocket 전송 오류: " + exception.getMessage());
+	}
 }
