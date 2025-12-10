@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{sales_p},
 		#{stock_cnt},
 		#{cate_no},
-		17
+		1
 		)
 	</insert>
 
