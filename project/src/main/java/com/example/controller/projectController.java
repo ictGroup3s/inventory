@@ -50,11 +50,31 @@ public class projectController {
 		return "header";
 	}
 	
+	@GetMapping("delete")
+	public String delete() {
+		return "delete";
+	}
+	
+	@GetMapping("update")
+	public String update() {
+		return "update";
+	}
+	
+	@GetMapping("goodbye")
+	public String goodbye() {
+		return "goodbye";
+	}
+	
 	@GetMapping("login")
 	public String login() {
 		return "login";
 	}
 	
+	 @GetMapping("register")
+	public String register() {
+		return "register";
+	}
+	 
 	@GetMapping("event1")
 	public String event1() {
 		return "event1";
@@ -119,12 +139,7 @@ public class projectController {
 		return "detail2";
 	}
 	
-    @GetMapping("register")
-	public String register() {
-		return "register";
-	}
-    
-	@GetMapping("mlist")
+   	@GetMapping("mlist")
 	public String mlist() {
 		return "mlist";
 	}

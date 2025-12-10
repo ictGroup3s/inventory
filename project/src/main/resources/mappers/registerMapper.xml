@@ -27,4 +27,32 @@
 		WHERE customer_id = #{customer_id}
 	</select>
 
+	<!--  회원 삭제(탈퇴) -->
+	<delete id="deleteById" parameterType="string">
+		DELETE FROM customer 
+		WHERE customer_id = #{customer_id}
+	</delete>
+	
+	<!--  회원정보 수정 -->
+	<update id="updateUser" parameterType="com.example.model.vo.CustomerVO">
+		UPDATE customer
+		SET name = #{name}
+			,pwd = #{pwd}
+			,phone = #{phone}
+			,email = #{email}
+			,addr = #{addr}
+		WHERE customer_id = #{customer_id}
+	</update>
+	
+	<!--  회원 조회 -->
+	<select id="selectAllById" parameterType="String" resultType="com.example.model.vo.CustomerVO">
+		SELECT *
+		FROM customer
+		WHERE customer_id = #{customer_id}
+	</select>
+	
+
+
+
+
 </mapper>

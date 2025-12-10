@@ -2,6 +2,7 @@ package com.example.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -9,30 +10,31 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.model.vo.CustomerVO;
 import com.example.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
 	
-	private final UserService service;
+	private final UserService service; //서비스단 (서비스실행>레포정보불러옴>매퍼)
 	
-	public UserController(UserService service) {
-		this.service = service;
+	public UserController(UserService service) { //생성자 서비스 주입받음
+		this.service = service; //변경불가
 	}
 	
 	@PostMapping("/registerAction")
 	public String register(
-			@RequestParam String user_type, // "member" or "admin"
-			@RequestParam String customer_id,
-			@RequestParam String pwd,
-			@RequestParam String pwd2,
-			@RequestParam String name,
-			@RequestParam String phone, 
-			@RequestParam(required = false) String email,
-			@RequestParam(required = false) String addr,
-			@RequestParam(required = false) Integer admin_bnum,
-			Model m) {
+		@RequestParam String user_type, // "member" or "admin"
+		@RequestParam String customer_id,
+		@RequestParam String pwd,
+		@RequestParam String pwd2,
+		@RequestParam String name,
+		@RequestParam String phone, 
+		@RequestParam(required = false) String email,
+		@RequestParam(required = false) String addr,
+		@RequestParam(required = false) Integer admin_bnum
+				,	Model m) {
 	
-    
-	    CustomerVO vo = new CustomerVO();
+ 	    CustomerVO vo = new CustomerVO();
 			vo.setCustomer_id(customer_id);
 			vo.setPwd(pwd);
 			vo.setName(name);
@@ -50,8 +52,6 @@ public class UserController {
 		        return "register"; // JSP 파일 이름
 		    }
 		    
-			    
-		    
 		    //회원가입
 			boolean success = service.registerUser(vo);
 			
@@ -66,5 +66,53 @@ public class UserController {
 			 // 성공
 				m.addAttribute("message", "회원가입 성공! 로그인하세요.");
 				return "login"; // 로그인 페이지
+			}//register end
+
+		@PostMapping("/delete")
+		public String deleteById(@RequestParam String customer_id, 
+								HttpSession session) {
+				service.deleteById(customer_id); //위에 선언된 서비스 호출
+				session.invalidate(); // 세션 무효화 -> 로그아웃 처리
+					
+			return "redirect:/goodbye";
+		}	
+		
+		//회원 수정 폼(get)
+		@GetMapping("/updateUser")
+		public String updateForm(HttpSession session, Model m) {
+			
+			//세션에서 로그인된 아이디 가져오기
+			String loginId = (String) session.getAttribute("customer_id");
+			
+			//로그인 안되어 있으면 로그인 페이지로 이동
+			if(loginId == null) {
+				return "redirect:login";
 			}
+			// 서비스에서 회원 정보 조회
+			CustomerVO customer = service.getUserById(loginId);
+			//조회한 회원정보 모델에 담아서 jsp 전달
+			m.addAttribute("customer", customer); //jsp에서 사용할이름=${customer.name}
+			
+			return "update"; //update.jsp로 리턴
+		}
+		
+		// 회원 수정 처리(post)
+		@PostMapping("/updateUser")
+		public String updateSubmit(CustomerVO customer,HttpSession session) {
+			String loginId = (String) session.getAttribute("customer_id");
+			
+			//로그인 안되어 있으면 로그인 페이지로 이동
+			if(loginId == null) {
+				return "redirect:/login";
+			}
+			
+			//아이디는 세션 기준으로 강제실행
+			customer.setCustomer_id(loginId);
+			
+			//DB 업데이트 실행
+			service.updateUser(customer);
+			
+			//수정 완료 후 마이페이지로 
+			return "redirect:/mypage";
+		}
 	}
