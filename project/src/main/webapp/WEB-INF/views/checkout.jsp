@@ -34,8 +34,8 @@
 <body>
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
-			<a href="/" class="text-decoration-none"> 
-				<img src='../img/logo.png' class='logo' />
+			<a href="/" class="text-decoration-none"> <img
+				src='../img/logo.png' class='logo' />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
@@ -50,7 +50,7 @@
 					</div>
 				</div>
 			</form>
-		</div> 
+		</div>
 		<div class="col-lg-3 col-6 text-right">
 			<a href="" class="btn border"> <i
 				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
@@ -59,63 +59,34 @@
 			</a>
 		</div>
 	</div>
-	</div>
 	<!-- Topbar End -->
 
-
 	<!-- Navbar Start -->
- <div class="container-fluid">
-	<!-- <div class="row border-top px-xl-5">
-		 	<div class="col-lg-3 d-none d-lg-block">
-			<a
-					class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
-					data-toggle="collapse" href="#navbar-vertical"
-					style="height: 65px; margin-top: -1px; padding: 0 30px;">
-					<h6 class="m-0">Categories</h6> <i
-					class="fa fa-angle-down text-dark"></i>
+	<div class="container-fluid">
+		<div class="col-lg-9" aling="right">
+			<nav
+				class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+				<a href="" class="text-decoration-none d-block d-lg-none">
+					<h1 class="m-0 display-5 font-weight-semi-bold">
+						<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
+					</h1>
 				</a>
-				<nav
-					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
-					id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-					<div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-                        <a href="selectall" class="nav-item nav-link">전체상품</a>
-                        <a href="" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
-                        <a href="" class="nav-item nav-link">국 ．밥 ．면</a>
-                        <a href="" class="nav-item nav-link"> 식단관리 </a>
-                        <a href="" class="nav-item nav-link">분식 ．간식</a>
-                        <a href="" class="nav-item nav-link">베이커리 ．떡</a>
-                        <a href="" class="nav-item nav-link">반찬 ．소스</a>
-                        <a href="" class="nav-item nav-link">레시피</a>
-                        <a href="" class="nav-item nav-link">Shoes</a>
-                    </div>
-				</nav>	
-			</div> -->
-			<div class="col-lg-9" aling="right">
-				<nav
-					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-					<a href="" class="text-decoration-none d-block d-lg-none">
-						<h1 class="m-0 display-5 font-weight-semi-bold">
-							<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
-						</h1>
-					</a>
-					<button type="button" class="navbar-toggler" data-toggle="collapse"
-						data-target="#navbarCollapse">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
-						 <div class="navbar-nav ml-auto py-0">
-							<a href="login" class="nav-item nav-link">로그인</a> 
-							<a href="register" class="nav-item nav-link">회원가입</a> 
-							<a href="board" class="nav-item nav-link">고객센터</a>
-						</div>
+				<button type="button" class="navbar-toggler" data-toggle="collapse"
+					data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-between"
+					id="navbarCollapse">
+					<div class="navbar-nav ml-auto py-0">
+						<a href="login" class="nav-item nav-link">로그인</a> 
+						<a href="register" class="nav-item nav-link">회원가입</a> 
+						<a href="board" class="nav-item nav-link">고객센터</a>
 					</div>
-				</nav>
-			</div>
+				</div>
+			</nav>
 		</div>
 	</div>
 	<!-- Navbar End -->
-
 
 	<!-- Page Header Start -->
 	<div class="container-fluid bg-secondary mb-5" align="center">
@@ -134,7 +105,6 @@
 	</div>
 	<!-- Page Header End -->
 
-
 	<!-- Checkout Start -->
 	<div class="container-fluid pt-5">
 		<div class="row px-xl-5">
@@ -143,57 +113,40 @@
 					<h4 class="font-weight-semi-bold mb-4">주소 입력</h4>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label>이름</label> <input class="form-control" type="text" id="Name">
+							<label>이름</label> <input class="form-control" type="text"
+								id="Name">
 						</div>
-						<!--<div class="col-md-6 form-group">
-							<label>Last Name</label> <input class="form-control" type="text"
-								placeholder="Doe">
-						</div>   -->
 						<div class="col-md-6 form-group">
 							<label>이메일</label> <input class="form-control" type="text">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>전화번호</label> <input class="form-control" type="text" id="Phone">
+							<label>전화번호</label> <input class="form-control" type="text"
+								id="Phone">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>주 소</label> <input class="form-control" type="text" id="Address">
+							<label>주 소</label> <input class="form-control" type="text"
+								id="Address">
 						</div>
-					<!-- <div class="col-md-6 form-group">
-							<label>Address Line 2</label> <input class="form-control"
-								type="text" placeholder="123 Street"> -->	
-						</div>
-						<div class="col-md-6 form-group">
-							<label>지역선택</label> <select class="custom-select">
-								<option selected>서울특별시</option>
-								<option>경기도</option>
-								<option>대전광역시</option>
-								<option>광주광역시</option>
-							</select>
-			<!-- 		</div>
-						<div class="col-md-6 form-group">
-							<label>City</label> <input class="form-control" type="text"
-								placeholder="New York">
-						</div>
-						<div class="col-md-6 form-group">
-							<label>State</label> <input class="form-control" type="text"
-								placeholder="New York">
-						</div> 
-						<div class="col-md-6 form-group">
-							<label>ZIP Code</label> <input class="form-control" type="text"
-								placeholder="123">
-						</div>-->	
-						<div class="col-md-12 form-group">
+					</div>
+					<div class="col-md-6 form-group">
+						<label style="padding-right:-50px;">지역선택</label> 
+						<select class="custom-select" style="margin-left:-15px;">
+							<option selected>서울특별시</option>
+							<option>경기도</option>
+							<option>대전광역시</option>
+							<option>광주광역시</option>
+						</select>
+						<div class="col-md-12 form-group" >
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="newaccount"> <label class="custom-control-label"
-									for="newaccount">위 내용과 동일</label>
+								<input type="checkbox" class="custom-control-input" id="newaccount"> 
+									<label class="custom-control-label" for="newaccount" style="margin-top:20px; margin-left:-25px;">위 내용과 동일</label>
 							</div>
 						</div>
 						<div class="col-md-12 form-group">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="shipto">
 								<label class="custom-control-label" for="shipto"
-									data-toggle="collapse" data-target="#shipping-address">수령지 주소입력</label>
+									data-toggle="collapse" data-target="#shipping-address" style="margin-top:5px; margin-left:-25px;">수령지주소입력</label>
 							</div>
 						</div>
 					</div>
@@ -204,27 +157,27 @@
 						<div class="col-md-6 form-group">
 							<label>이름</label> <input class="form-control" type="text" id="shipName">
 						</div>
-							<div class="col-md-6 form-group">
+						<div class="col-md-6 form-group">
 							<label>핸드폰 번호</label> <input class="form-control" type="text" id="shipPhone">
 						</div>
 						<div class="col-md-6 form-group">
 							<label>수령주소</label> <input class="form-control" type="text" id="shipAddress">
 						</div>
 						<div class="col-md-6 form-group">
-							<label>메모</label>
-							 <select class="custom-select" id="memoSelect">
+							<label>메모</label> 
+							<select class="custom-select" id="memoSelect">
 								<option selected>요청사항</option>
 								<option>문앞에 놓아주세요</option>
 								<option>경비실에 맡겨주세요</option>
 								<option>택배함에 넣어주세요</option>
 								<option value="direct">직접입력</option>
-							</select>
-							<input type="text" class="form-control mt-2" id="memoInput" placeholder="요청사항 입력" style="display:none;">
+							</select> 
+							<input type="text" class="form-control mt-2" id="memoInput" placeholder="요청사항 입력" style="display: none;">
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4" >
+			<div class="col-lg-4">
 				<div class="card border-secondary mb-5">
 					<div class="card-header bg-secondary border-0">
 						<h4 class="font-weight-semi-bold m-0">주문서</h4>
@@ -262,7 +215,7 @@
 					</div>
 					<div class="card-body">
 						<div class="form-group">
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio"style="padding-top:10px;">
 								<input type="radio" class="custom-control-input" name="payment"
 									id="paypal"> <label class="custom-control-label"
 									for="paypal">카드결제</label>
@@ -274,139 +227,108 @@
 									id="directcheck"> <label class="custom-control-label"
 									for="directcheck">계좌이체</label>
 							</div>
-						</div>
-						<div class="">
-							<div class="custom-control custom-radio">
-								<input type="radio" class="custom-control-input" name="payment"
-									id="banktransfer"> <label class="custom-control-label"
-									for="banktransfer">간편결제</label>
+							<div class="form-group" id="bankInfo" style="display: none;">
+								<p>국민은행 123-456-7890</p>
 							</div>
 						</div>
 					</div>
-				 <!-- 1) 기타결제  -->
-            <div class="tab-pane fade show active" id="social" role="tabpanel">
-                <div class="text-center mb-4">
+					<!-- 1) 기타결제  -->
+					<div class="tab-pane fade show active" id="social" role="tabpanel">
+						<div class="text-center mb-4">
+							<!-- SDK 방식 버튼 -->
+							<button id="naverPayBtn"
+								class="btn btn-light border d-block mb-2 py-2 social-btn">
+								<img src="/img/naver.png"> NaverPay로 결제
+							</button>
 
-                    <a href="/oauth/naver" class="btn btn-light border d-block mb-2 py-2 social-btn">
-                        <img src="/img/naver.png"> NaverPay로 결제 
-                    </a>
-
-                    <a href="/oauth/kakao" class="btn btn-light border d-block py-2 social-btn">
-                        <img src="/img/kakao.png"> KakaoPay로 결제 
-                    </a>
-                </div>
-            </div>
-					<button
-						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
-						data-toggle="modal" data-target="#payModal">결제하기</button>
+							<button id="kakaoPayBtn"
+								class="btn btn-light border d-block py-2 social-btn">
+								<img src="/img/kakao.png"> KakaoPay로 결제
+							</button>
+						</div>
+					</div>
+					<button id="btnOpenModal"
+						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">결제하기</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Checkout End -->
 
+<!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+        <div class="row px-xl-5 pt-3">
+            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
+           
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
+                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
+                <h2 class="mb-0">
+   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
+					</h2>
+                       </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
+                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
+                            <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
+                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
+                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a>
+                         </div>
+                    </div>
+                    <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-12 mt-4 mb-5">
+                        <p class="text-dark mb-2">
+                        <span>stockbob 소개</span>
+                            &nbsp;&nbsp; | &nbsp;&nbsp;
+                        <span>이용약관</span>
+                       		&nbsp; | &nbsp;
+                       	<span>개인정보처리방침</span>
+                       		&nbsp; | &nbsp;
+                       	<span>이용안내</span>
+                       	
+                       </p><br>
+                       <p style="color: #999;">
+                       법인명 (상호) : 주식회사 STOCKBOB<br>
+                       사업자등록번호 : 000-11-00000<br>
+						통신판매업 : 제 2025-서울-11111 호<br>
+						주소 : 서울특별시 서대문구 신촌동 00<br>
+						채용문의 : ict.atosoft.com<br>
+						팩스 : 070-0000-0000
+                       </p>
+                      </div>
+                    </div>
+                 
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
+                    by
+                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
+                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="img/payments.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
 
-	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-		<div class="row px-xl-5 pt-5">
-			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-				<a href="" class="text-decoration-none">
-					<h1 class="mb-4 display-5 font-weight-semi-bold">
-						<span
-							class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-					</h1>
-				</a>
-				<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
-					ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-				<p class="mb-2">
-					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
-					New York, USA
-				</p>
-				<p class="mb-2">
-					<i class="fa fa-envelope text-primary mr-3"></i>info@example.com
-				</p>
-				<p class="mb-0">
-					<i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890
-				</p>
-			</div>
-			<div class="col-lg-8 col-md-12">
-				<div class="row">
-					<div class="col-md-4 mb-5">
-						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="index.html"><i
-								class="fa fa-angle-right mr-2"></i>Home</a> <a
-								class="text-dark mb-2" href="shop.html"><i
-								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-								class="text-dark mb-2" href="detail.html"><i
-								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-								class="text-dark mb-2" href="cart.html"><i
-								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-								class="text-dark mb-2" href="checkout.html"><i
-								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
-								href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact
-								Us</a>
-						</div>
-					</div>
-					<div class="col-md-4 mb-5">
-						<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="index.html"><i
-								class="fa fa-angle-right mr-2"></i>Home</a> <a
-								class="text-dark mb-2" href="shop.html"><i
-								class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-								class="text-dark mb-2" href="detail.html"><i
-								class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-								class="text-dark mb-2" href="cart.html"><i
-								class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-								class="text-dark mb-2" href="checkout.html"><i
-								class="fa fa-angle-right mr-2"></i>Checkout</a> <a class="text-dark"
-								href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact
-								Us</a>
-						</div>
-					</div>
-					<div class="col-md-4 mb-5">
-						<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-						<form action="">
-							<div class="form-group">
-								<input type="text" class="form-control border-0 py-4"
-									placeholder="Your Name" required="required" />
-							</div>
-							<div class="form-group">
-								<input type="email" class="form-control border-0 py-4"
-									placeholder="Your Email" required="required" />
-							</div>
-							<div>
-								<button class="btn btn-primary btn-block border-0 py-3"
-									type="submit">Subscribe Now</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row border-top border-light mx-xl-5 py-4">
-			<div class="col-md-6 px-xl-0">
-				<p class="mb-md-0 text-center text-md-left text-dark">
-					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
-						Site Name</a>. All Rights Reserved. Designed by <a
-						class="text-dark font-weight-semi-bold"
-						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
-					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-				</p>
-			</div>
-			<div class="col-md-6 px-xl-0 text-center text-md-right">
-				<img class="img-fluid" src="img/payments.png" alt="">
-			</div>
-		</div>
-	</div>
-	<!-- Footer End -->
 
 
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
-
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -422,67 +344,70 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 
-<!-- 여기서부터 체크박스 복사 스크립트 작성 -->
-<script>
-document.getElementById('newaccount').addEventListener('change', function() {
-    if(this.checked) {
-        document.getElementById('shipName').value = document.getElementById('Name').value;
-        document.getElementById('shipPhone').value = document.getElementById('Phone').value;
-        document.getElementById('shipAddress').value = document.getElementById('Address').value;
-    } else {
-        document.getElementById('shipName').value = '';
-        document.getElementById('shipPhone').value = '';
-        document.getElementById('shipAddress').value = '';
-    }
-});
-</script>
+	<!-- 여기서부터 체크박스 복사 스크립트 작성 -->
+	<script>
+		document.getElementById('newaccount').addEventListener('change', function() {
+		    if(this.checked) {
+		        document.getElementById('shipName').value = document.getElementById('Name').value;
+		        document.getElementById('shipPhone').value = document.getElementById('Phone').value;
+		        document.getElementById('shipAddress').value = document.getElementById('Address').value;
+		    } else {
+		        document.getElementById('shipName').value = '';
+		        document.getElementById('shipPhone').value = '';
+		        document.getElementById('shipAddress').value = '';
+		    }
+		});
+	</script>
 
-<!-- 여기는 요청사항 직접입력 칸 -->
-<script>
-document.getElementById('memoSelect').addEventListener('change', function() {
-    const memoInput = document.getElementById('memoInput');
-    if(this.value === 'direct') {
-        memoInput.style.display = 'block'; // 입력창 보이기
-        memoInput.focus(); // 포커스 주기
-    } else {
-        memoInput.style.display = 'none'; // 숨기기
-        memoInput.value = ''; // 기존 입력값 초기화
-    }
-});
-</script>
+	<!-- 여기는 요청사항 직접입력 칸 -->
+	<script>
+		document.getElementById('memoSelect').addEventListener('change', function() {
+		    const memoInput = document.getElementById('memoInput');
+		    if(this.value === 'direct') {
+		        memoInput.style.display = 'block';
+		        memoInput.focus();
+		    } else {
+		        memoInput.style.display = 'none';
+		        memoInput.value = '';
+		    }
+		});
+	</script>
+	
 	<!-- 결제 모달 -->
 	<div class="modal fade" id="payModal" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 
 				<div class="modal-header bg-primary text-white">
-					<h5 class="modal-title">결제 진행</h5>
+					<h5 class="modal-title">결제하기</h5>
 					<button type="button" class="close text-white" data-dismiss="modal">
-						&times;</button>
+						&times;
+					</button>
 				</div>
 
 				<div class="modal-body">
-
 					<h5>
 						<b>카드사 선택</b>
 					</h5>
+					
+					<!-- 카드 선택 버튼들 -->
 					<div class="row text-center mt-3">
-
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn">국민</button>
-						</div>
-
-						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn">현대</button>
-						</div>
-
-						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn">농협</button>
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('국민')">국민</button>
 						</div>
 						<div class="col-4">
-							<button class="btn btn-outline-primary btn-block card-btn">카카오뱅크</button>
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('현대')">현대</button>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('농협')">농협</button>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-outline-primary btn-block card-btn" onclick="selectCard('카카오뱅크')">카카오뱅크</button>
 						</div>
 					</div>
+
+					<!-- 선택한 카드 표시 -->
+					<p id="selectedCardDisplay" class="mt-3" style="color: #D19C97; font-weight: bold;"></p>
 
 					<hr>
 
@@ -490,43 +415,102 @@ document.getElementById('memoSelect').addEventListener('change', function() {
 						<b>결제금액</b>
 					</h5>
 					<h4 class="text-primary font-weight-bold">38,000원</h4>
-
 				</div>
 
+				<!-- 결제진행 버튼 -->
 				<div class="modal-footer">
-					<button
-						class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
-						data-toggle="modal" data-target="#payModal">결제하기</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary btn-lg" onclick="processPayment()">결제진행</button>
 				</div>
-
-					<script>
-						let selectedCard = null;  // 선택된 카드 저장
-						
-						// 모든 카드 버튼
-						const cardButtons = document.querySelectorAll('.card-btn');
-						
-						cardButtons.forEach(btn => {
-						    btn.addEventListener('click', function () {
-						
-						        // 1) 모든 버튼에서 active 제거
-						        cardButtons.forEach(b => {
-						            b.classList.remove('btn-primary');
-						            b.classList.add('btn-outline-primary');
-						        });
-						
-						        // 2) 현재 클릭한 버튼에 active 스타일 적용
-						        this.classList.remove('btn-outline-primary');
-						        this.classList.add('btn-primary');
-						
-						        // 3) 선택된 카드 저장
-						        selectedCard = this.innerText;
-						    });
-						});
-				</script>
 
 			</div>
 		</div>
 	</div>
 
+	<script>
+			let selectedCard = null;
+			
+			// 카드 선택 (이동 X, 선택만)
+			function selectCard(cardType) {
+			    selectedCard = cardType;
+			    document.getElementById('selectedCardDisplay').innerText = '선택한 카드: ' + cardType;
+			    
+			    // 선택한 버튼 스타일 변경
+			    document.querySelectorAll('.card-btn').forEach(btn => {
+			        btn.classList.remove('btn-primary');
+			        btn.classList.add('btn-outline-primary');
+			    });
+			    event.target.classList.remove('btn-outline-primary');
+			    event.target.classList.add('btn-primary');
+			}
+			
+			// 결제진행 버튼 클릭시 이동
+			function processPayment() {
+			    if (!selectedCard) {
+			        alert('카드를 선택해주세요!');
+			        return;
+			    }
+			    
+			    // 세션스토리지에 저장
+			    sessionStorage.setItem('selectedCard', selectedCard);
+			    sessionStorage.setItem('amount', '38000');
+			    
+			    // 결제완료 페이지로 이동
+			    window.location.href = '/ordercomplete';
+			}
+			
+			document.addEventListener('DOMContentLoaded', function() {
+			    const btnOpenModal = document.getElementById('btnOpenModal');
+			    const paymentRadios = document.querySelectorAll('input[name="payment"]');
+			    const bankRadio = document.getElementById('directcheck');
+			    const bankInfo = document.getElementById('bankInfo');
+			
+			    // 결제하기 버튼 클릭
+			    btnOpenModal.addEventListener('click', function(e) {
+			        e.preventDefault();
+			        let selected = null;
+			        paymentRadios.forEach(radio => {
+			            if(radio.checked) selected = radio.id;
+			        });
+			
+			        if(!selected) {
+			            alert('결제 방식을 선택해주세요!');
+			            return;
+			        }
+			
+			        if(selected === 'paypal') {
+			            $('#payModal').modal('show'); // 카드결제 모달
+			        } else if(selected === 'directcheck') {
+			            // 계좌이체 선택 시
+			            sessionStorage.setItem('paymentMethod', '계좌이체');
+			            sessionStorage.setItem('amount', '38000');
+			            window.location.href = '/ordercomplete'; // 주문완료 페이지로 이동
+			        }
+			    }); // 여기가 btnOpenModal click 이벤트 닫는 괄호
+			
+			    // 계좌이체 선택 시 계좌번호 보이기
+			    paymentRadios.forEach(radio => {
+			        radio.addEventListener('change', function() {
+			            if(bankRadio.checked) {
+			                bankInfo.style.display = 'block';
+			            } else {
+			                bankInfo.style.display = 'none';
+			            }
+			        });
+			    });
+			
+			    // 기타결제 버튼
+			    const naverBtn = document.getElementById('naverPayBtn');
+			    const kakaoBtn = document.getElementById('kakaoPayBtn');
+			
+			    naverBtn.addEventListener('click', function() {
+			        window.location.href = '/naver';
+			    });
+			
+			    kakaoBtn.addEventListener('click', function(e) {
+			        window.location.href = '/kakao';
+			    });
+			});
+		</script>
 </body>
 </html>

@@ -9480,16 +9480,16 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
  .slider-card img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    margin-bottom: 10px;
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
   }
   
  .slider-card {
-    text-align: center;
-    padding: 10px;
-}
+            text-align: center;
+            padding: 10px;
+        }
 
 /********** Custom CSS ************/
 .font-weight-medium {
