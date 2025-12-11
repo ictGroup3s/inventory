@@ -8,6 +8,7 @@ public class order_detailVO {
 	private Integer order_no;
 	private Integer item_no;
 	private Integer item_cnt;
+	private Integer item_price;
 	
 
 }

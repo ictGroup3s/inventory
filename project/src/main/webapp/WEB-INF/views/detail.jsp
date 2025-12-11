@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,13 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- bxSlider CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+<!-- bxSlider JS -->
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
 <!-- Favicon -->
@@ -31,9 +38,6 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
-
-<!-- bxSlider CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 
 </head>
 
@@ -67,31 +71,15 @@
 			</a>
 		</div>
 	</div>
-	</div>
+	
 	<!-- Topbar End -->
 
 
 	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
-	<div class="container-fluid pt-5" >
-		<div class="row px-xl-5">
-		 <!-- ================== 왼쪽 카테고리 ================== -->
-            <div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar">
-					<h6 class="p-3">상품 카테고리</h6>
-					<ul class="nav flex-column">
-						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
-						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
-						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-						<li class="nav-item"><a href="selectRecipe" class="nav-link">레시피</a></li>
-					</ul>
-				</nav>
-			</div>
-
-			 <div class="col-lg-10 col-md-12 p-0 m-0" >
-			 <div class="col-lg-10 col-md-12 p-0 m-0" >
+	
+	<div class="container-fluid">
+		<div class="row border-top px-xl-5">
+			<div class="col-lg-12">
 				<nav class="navbar navbar-expand-lg bg-light navbar-light py-0 py-lg-0 px-0">
 					<a href="/" class="text-decoration-none d-block d-lg-none p-0 m-0"> 
 					<img src="\img\logo.png" class='logo' />
@@ -108,71 +96,88 @@
 					</div>
 				</nav>
 			</div>
-	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
-<div class="container py-4">
-    <div class="d-flex flex-wrap align-items-center">
-        <!-- 이미지 -->
-        <div class="p-2 flex-shrink-0">
-            <img src="img/가자미.png" alt="고등어구이" class="img-fluid" style="max-width:300px;">
-        </div>
-
-      <div class="p-2 flex-grow-1">
-            <h3 class="font-weight-semi-bold">가자미구이</h3>
-            <div class="d-flex mb-2 align-items-center">
-               		<small class="pt-1">(3 Reviews)</small>
-				</div>
-				<h4 class="font-weight-semi-bold mb-2">20,590원</h4>
-				<p class="mb-4">전자레인지 또는 후라이팬 조리. <br>
-				전자레인지 30초 , 후라이팬 조리 10~15분 조리.</p>
-				<div class="d-flex mb-3">
+		</div>	
+	</div>		
+	<div class="container-fluid pt-5" >
+		<div class="row px-xl-5">
+		 <!-- ================== 왼쪽 카테고리 ================== -->
+            <div class="col-lg-2 col-md-12 d-none d-lg-block">
+				<nav class="category-sidebar">
+					<h6 class="p-3">상품 카테고리</h6>
+					<ul class="nav flex-column">
+						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
+					</ul>
+				</nav>
+			</div>
 			
-				</div>
-				<div class="d-flex align-items-center mb-4 pt-2">
-					<div class="input-group quantity mr-3" style="width: 130px;">
-						<div class="input-group-btn">
-							<button class="btn btn-primary btn-minus">
-								<i class="fa fa-minus"></i>
-							</button>
-						</div>
-						<input type="text" class="form-control bg-secondary text-center"
-							value="1">
-						<div class="input-group-btn">
-							<button class="btn btn-primary btn-plus">
-								<i class="fa fa-plus"></i>
-							</button>
+
+		<div class="col-lg-10 col-md-12 p-0 m-0" >			 
+			 
+	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
+		<div class="container py-4">
+		    <div class="d-flex flex-wrap align-items-center">
+		        <!-- 이미지 -->
+		        <div class="p-2 flex-shrink-0">
+		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
+		        </div>
+		         <div class="p-2 flex-grow-1">
+		            <h3 class="font-weight-semi-bold">${product.item_name}</h3>
+		            
+		            <div class="d-flex mb-2 align-items-center">
+		               		<small class="pt-1"></small> </div>
+		               		
+						<h4 class="font-weight-semi-bold mb-2">가격: ${product.sales_p}원</h4>
+						<p class="mb-4"> </p> <!-- 내용쓰러면 작은글 출력됨 -->
+				
+						
+						<div class="d-flex mb-3">
+					</div>
+					
+				
+				<form action="/cart/addForm" method="post">
+					<input type="hidden" name="item_no" value="${product.item_no}" />
+		
+				 <div class="d-flex align-items-center mb-3">
+				     <!-- 수량 조절 -->
+			        <div class="input-group mr-2  quantity" style="width:130px;">		
+			        <button type="button" class="btn btn-primary btn-minus">-</button>
+			        <input type="text" class="form-control text-center" name="qty" id="qty" value="1">
+			        <button type="button" class="btn btn-primary btn-plus">+</button>
+			       </div>
+			      <!-- 장바구니 담기 버튼 -->   
+			       <button type="submit" class="btn btn-primary">
+					<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
+					</button>
+					 
+				</form>
+		
 						</div>
 					</div>
-					<button class="btn btn-primary px-3">
-						<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
-					</button>
 				</div>
 			</div>
-		</div>
 		<div class="row px-xl-5">
 			<div class="col">
 				<div
 					class="nav nav-tabs justify-content-center border-secondary mb-4">
-					<a class="nav-item nav-link active" data-toggle="tab"
-						href="#tab-pane-1">상품설명</a> <a class="nav-item nav-link"
+					<a class="nav-item nav-link"
 						data-toggle="tab" href="#tab-pane-2">상품정보</a> <a
 						class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">리뷰
-						(0)</a>
+						</a>
 				</div>
 				<div class="tab-content">
-					<div class="tab-pane fade show active" id="tab-pane-1">
-						<h3 class="mb-3">상품 상세설명</h3>
-						<p>냉동(종이포장)</p>
-						<p>중량/용량 : 400g</p>
-						
-					</div>
 					<div class="tab-pane fade" id="tab-pane-2">
 						<h4 class="mb-3">상품 상세정보</h4>
 						<div class="row">
 							<div class="col-md-6">
 								<ul class="list-group list-group-flush">
-									<li class="list-group-item px-0">알레르기 정보</li>
-									<li class="list-group-item px-0">밀,계란 함유</li>
-										<li class="list-group-item px-0">대추, 고등어, 게, 새우, 오징어, 조개류(굴,전복,홍합포함)와 같은 시설에서 제조</li>
+									<li class="list-group-item px-0"> ${product.item_content}</li>
+								
 								</ul>
 							</div>
 							<div class="col-md-6">
@@ -187,40 +192,46 @@
 					<div class="tab-pane fade" id="tab-pane-3">
 						<div class="row">
 							<div class="col-md-6">
-								<h4 class="mb-4">1 review for "최고에요"</h4>
-								<div class="media mb-4">
-									<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-										style="width: 45px;">
-									<div class="media-body">
-										<h6>
-											홍길동<small> - <i>01 Jan 2025</i></small>
-										</h6>
-										<p>정말 바삭하고 맛있어요.</p>
-									</div>
-								</div>
+								<h4 class="mb-4">리뷰 목록</h4>
+	<!-- Ajax로 리뷰를 넣을 영역 --> <div id="review-list">
+									<c:if test="${empty reviews}">
+										<p>등록된 리뷰가 없습니다.</p>
+									</c:if>									
+										<c:forEach var="review" items="${reviews}">
+											 <div class="mb-3">
+												<a href="detail?item_no=${review.item_no}" />
+												<h6 class="text-truncate mb-3">${review.re_title}</h6>
+												
+												<small><i>작성자: ${review.customer_id} | 작성일: ${review.re_date}</i></small>
+												
+												<p>${review.re_content}</p>
+											</div>								
+										</c:forEach>
+									 
+						        </div>
 							</div>
-							<div class="col-md-6">
-								<h4 class="mb-4">리뷰 작성</h4>
-								<form>
-									<div class="form-group">
-										<label for="message">내 리뷰작성 *</label>
-										<textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-									</div>
-									<div class="form-group">
-										<label for="name">이름 *</label> <input type="text"
-											class="form-control" id="name">
-									</div>
-									<div class="form-group">
-										<label for="email">이메일 *</label> <input type="email"
-											class="form-control" id="email">
-									</div>
-									<div class="form-group mb-0">
-										<input type="submit" value="리뷰 남기기"
-											class="btn btn-primary px-3">
-									</div>
-								</form>
+					          
+						<div class="col-md-6">
+							<h4 class="mb-4">리뷰 작성</h4>
+							<form action="/product/review" method="post">
+								<input type="hidden" name="item_no" value="${product.item_no}" />
+							    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
+							<div class="form-group">
+								<label for="re_content">내 리뷰작성 *</label>
+									<textarea id="re_content"  name="re_content" cols="30" rows="5" class="form-control"></textarea>
 							</div>
+							<div class="form-group">
+								<label for="re_title">제목 *</label> 
+								<input type="text" id="re_title" name="re_title" class="form-control" id="name">
+							</div>
+							
+							<div class="form-group mb-0">
+								<input type="submit" value="리뷰 남기기" class="btn btn-primary px-3">
+							</div>
+											
+							</form>
 						</div>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -230,22 +241,25 @@
 	
 <!-- Image Slider Start -->
 <div class="container py-5">
-    <ul class="bxslider">
+   <ul class="bxslider">
     <li>
-    <div class="slider-card">
-      <img src="img/bulgogi.jpg" alt="Slider Image 1" />
-      <h5 class="slider-title">불고기</h5>
-        <p class="slider-price">12,000원</p>
-         <button class="btn btn-primary slider-cart">장바구니 담기</button>
-            </div>
-        </li>
+        <div class="slider-card" data-item-no="129">
+           <img src="/img/product/1764664988078_감자채볶음.png" alt="감자채볶음" />
+            <h5 class="slider-title">햄감자채볶음</h5>
+            <p class="slider-price">4,000원</p>
+    <!--      <button type="button" class="btn btn-sm text-dark p-0 add-to-cart-btn" data-item-no="129" style="background:none;border:0;padding:0;">
+					<i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기
+										</button>  -->  
+<button class="btn btn-primary slider-cart" data-item-no="129">장바구니 담기</button>    
+        </div>
+    </li>
         <li>
     <div class="slider-card">
      <a href="productDetail.jsp?id=1">
      <img src="img/fish.png" alt="Slider Image 2" /></a>
       <h5 class="slider-title">고등어구이</h5>
         <p class="slider-price">12,000원</p>
-         <button class="btn btn-primary slider-cart">장바구니 담기</button>
+         <button class="btn btn-primary slider-cart" >장바구니 담기</button>
             </div>
         </li> 
      <li>
@@ -355,8 +369,33 @@
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
+
+<script>
+$(document).ready(function() {
+	var item_no = <c:out value="${product.item_no}" default="0"/>;
+
+	// '리뷰' 탭이 보여질 때 리뷰를 로드
+	$(document).on('shown.bs.tab', 'a[href="#tab-pane-3"]', function() {
+		var reviewlist = $('#review-list');
+		reviewlist.html('<p>리뷰를 불러오는 중...</p>');
+
+		$.ajax({
+			url: '/review/list',
+			type: 'GET',
+			data: { item_no: item_no },
+			success: function(html) {
+				// 서버에서 완성된 HTML을 반환하므로 그대로 삽입
+				reviewlist.html(html);
+			},
+			error: function(err) {
+				console.error(err);
+				reviewlist.html('<p>리뷰를 불러올 수 없습니다.</p>');
+			}
+		});
+	});
+});
+</script>
+
 </body>
-
-
 
 </html>
