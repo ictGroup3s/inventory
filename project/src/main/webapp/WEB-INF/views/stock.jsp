@@ -207,6 +207,7 @@
 										<th>상품명</th>
 										<th>원가</th>
 										<th>입고수량</th>
+										<th>출고</th>
 										<th>재고수량</th>
 									</tr>
 								</thead>
@@ -222,6 +223,7 @@
 											<td>${item.item_name}</td>
 											<td>${item.origin_p}</td>
 											<td>${item.stock_cnt}</td>
+											<td></td>
 											<td>${item.stock_cnt}</td>
 											<td>
 												<c:if test="${item.stock_cnt < 10}">

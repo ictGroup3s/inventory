@@ -112,26 +112,30 @@
 						<div class="col-lg-7 pb-5">
 							<h3 class="font-weight-semi-bold mb-4">상품관리</h3>
 
-							<form action="saveItem" method="post"
-								enctype="multipart/form-data">
+							<form action="saveItem" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="item_no">
 								<!-- 상품 정보 입력 테이블 -->
 								<table class="table table-bordered">
 									<tr>
-										<td><input type="hidden" name="item_no"></td>
-									</tr>
-									<tr>
 										<td>상품명</td>
-										<td><input type="text" class="form-control"
-											name="item_name" placeholder="상품명"></td>
+										<td>
+											<input type="text" class="form-control required-field" 
+												name="item_name" placeholder="상품명"> 
+											<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
 									</tr>
+
 									<tr>
 										<td>수량</td>
-										<td><input type="number" class="form-control"
-											name="stock_cnt" placeholder="수량"></td>
+										<td>
+											<input type="number" class="form-control required-field" 
+												name="stock_cnt" placeholder="수량"> 
+											<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
 									</tr>
+
 									<tr>
 										<td>카테고리</td>
-										<td><select class="form-control" name="cate_no">
+										<td>
+											<select class="form-control required-field" name="cate_no">
 												<option value="">선택하세요</option>
 												<option value="1">구이찜볶음</option>
 												<option value="2">국밥면</option>
@@ -139,34 +143,50 @@
 												<option value="4">분식간식</option>
 												<option value="5">반찬소스</option>
 												<option value="6">생수음료</option>
-										</select></td>
+										</select> 
+										<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
 									</tr>
+
 									<tr>
 										<td>원가</td>
-										<td><input type="number" class="form-control"
-											name="origin_p" placeholder="원가"></td>
+										<td>
+											<input type="number" class="form-control required-field" 
+												name="origin_p" placeholder="원가"> 
+											<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small>
+										</td>
 									</tr>
+
 									<tr>
 										<td>판매가</td>
-										<td><input type="number" class="form-control"
-											name="sales_p" placeholder="판매가"></td>
+										<td>
+											<input type="number" class="form-control required-field" 
+												name="sales_p" placeholder="판매가"> 
+											<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small>
+										</td>
 									</tr>
+
 									<tr>
 										<td>이미지 업로드</td>
-										<td><input type="file" id="uploadFile"
-											class="form-control" name="item_imgFile"></td>
+										<td>
+											<input type="file" id="uploadFile" class="form-control required-field" name="item_imgFile">
+											<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small>
+										</td>
 									</tr>
+
 									<tr>
 										<td>상품 상세설명</td>
-										<td><textarea class="form-control" name="item_content"
-												rows="6" placeholder="상품 상세설명을 입력하세요"></textarea></td>
+										<td>
+											<textarea class="form-control required-field"
+												name="item_content" rows="6" placeholder="상품 상세설명을 입력하세요"></textarea>
+											<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small>
+										</td>
 									</tr>
 								</table>
 
 								<!-- 등록/수정/삭제 버튼 -->
 								<div class="d-flex align-items-center mb-4 pt-2">
-									<button class="btn btn-primary mr-2" type="submit">등록</button>
-									<button class="btn btn-warning mr-2" type="submit"
+									<button class="btn btn-primary mr-2 submit-btn register">등록</button>
+									<button class="btn btn-warning mr-2 submit-btn update"
 										formaction="/itemUpdate">수정</button>
 
 								</div>
@@ -178,7 +198,8 @@
 					<!-- 상품 목록 테이블 영역 -->
 					<div class="row px-xl-5 mt-4">
 						<div class="col-lg-12">
-							<div class="d-flex justify-content-between align-items-center mb-3">
+							<div
+								class="d-flex justify-content-between align-items-center mb-3">
 								<h4 class="mb-0">등록된 상품 목록</h4>
 								<div class="d-flex">
 									<input type="text" id="itemSearch" class="form-control mr-2"
@@ -287,5 +308,8 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+
+	<div id="toast"></div>
+
 </body>
 </html>

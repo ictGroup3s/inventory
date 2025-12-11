@@ -3,6 +3,7 @@ package com.example.model;
 import java.util.List;
 
 import com.example.model.vo.ProductVO;
+import com.example.model.vo.StockVO;
 
 public interface AdminRepository {
 
@@ -11,4 +12,6 @@ public interface AdminRepository {
 	public void updateItem(ProductVO vo);
 	public void deleteItem(Integer itemNo) throws Exception;
 	public void updateStock(ProductVO vo);
+	public void insertStockHistory(StockVO vo);
+	public ProductVO getProductByNo(Integer itemNo);
 }

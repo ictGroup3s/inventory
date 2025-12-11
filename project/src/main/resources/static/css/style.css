@@ -9871,3 +9871,10 @@ a.text-dark:hover, a.text-dark:focus {
     color: #6c757d;
     font-weight: 500;
 }
+
+.input-error {
+    border: 2px solid #e74c3c; /* 진한 빨간색 테두리 */
+    background-color: #fdecea; /* 연한 빨간 배경 */
+}
+ 
+    
