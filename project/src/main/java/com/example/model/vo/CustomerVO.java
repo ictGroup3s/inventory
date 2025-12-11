@@ -15,6 +15,5 @@ public class CustomerVO {
 	private String phone;
 	private String addr;
 	private String email;
-	
 
 }

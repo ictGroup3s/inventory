@@ -71,11 +71,33 @@
 			</a>
 		</div>
 	</div>
-	</div>
+	
 	<!-- Topbar End -->
 
 
 	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
+	
+	<div class="container-fluid">
+		<div class="row border-top px-xl-5">
+			<div class="col-lg-12">
+				<nav class="navbar navbar-expand-lg bg-light navbar-light py-0 py-lg-0 px-0">
+					<a href="/" class="text-decoration-none d-block d-lg-none p-0 m-0"> 
+					<img src="\img\logo.png" class='logo' />
+					</a>
+					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+						<div class="navbar-nav ml-auto py-0 p-0 m-0">
+							<a href="login" class="nav-item nav-link py-1">로그인</a> 
+							<a href="register" class="nav-item nav-link py-1" >회원가입</a> 
+							<a href="board" class="nav-item nav-link py-1">고객센터</a>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>	
+	</div>		
 	<div class="container-fluid pt-5" >
 		<div class="row px-xl-5">
 		 <!-- ================== 왼쪽 카테고리 ================== -->
@@ -93,66 +115,52 @@
 					</ul>
 				</nav>
 			</div>
+			
 
-			 <div class="col-lg-10 col-md-12 p-0 m-0" >
-			 <div class="col-lg-10 col-md-12 p-0 m-0" >
-				<nav class="navbar navbar-expand-lg bg-light navbar-light py-0 py-lg-0 px-0">
-					<a href="/" class="text-decoration-none d-block d-lg-none p-0 m-0"> 
-					<img src="\img\logo.png" class='logo' />
-					</a>
-					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-						<span class="navbar-toggler-icon"></span>
+		<div class="col-lg-10 col-md-12 p-0 m-0" >			 
+			 
+	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
+		<div class="container py-4">
+		    <div class="d-flex flex-wrap align-items-center">
+		        <!-- 이미지 -->
+		        <div class="p-2 flex-shrink-0">
+		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
+		        </div>
+		         <div class="p-2 flex-grow-1">
+		            <h3 class="font-weight-semi-bold">${product.item_name}</h3>
+		            
+		            <div class="d-flex mb-2 align-items-center">
+		               		<small class="pt-1"></small> </div>
+		               		
+						<h4 class="font-weight-semi-bold mb-2">가격: ${product.sales_p}원</h4>
+						<p class="mb-4"> </p> <!-- 내용쓰러면 작은글 출력됨 -->
+				
+						
+						<div class="d-flex mb-3">
+					</div>
+					
+				
+				<form action="/cart/addForm" method="post">
+					<input type="hidden" name="item_no" value="${product.item_no}" />
+		
+				 <div class="d-flex align-items-center mb-3">
+				     <!-- 수량 조절 -->
+			        <div class="input-group mr-2  quantity" style="width:130px;">		
+			        <button type="button" class="btn btn-primary btn-minus">-</button>
+			        <input type="text" class="form-control text-center" name="qty" id="qty" value="1">
+			        <button type="button" class="btn btn-primary btn-plus">+</button>
+			       </div>
+			      <!-- 장바구니 담기 버튼 -->   
+			       <button type="submit" class="btn btn-primary">
+					<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
 					</button>
-					<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-						<div class="navbar-nav ml-auto py-0 p-0 m-0">
-							<a href="login" class="nav-item nav-link py-1">로그인</a> 
-							<a href="register" class="nav-item nav-link py-1" >회원가입</a> 
-							<a href="board" class="nav-item nav-link py-1">고객센터</a>
+					 
+				</form>
+		
 						</div>
 					</div>
-				</nav>
-			</div>
-	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
-<div class="container py-4">
-    <div class="d-flex flex-wrap align-items-center">
-        <!-- 이미지 -->
-        <div class="p-2 flex-shrink-0">
-            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
-        </div>
-         <div class="p-2 flex-grow-1">
-            <h3 class="font-weight-semi-bold">${product.item_name}</h3>
-            
-            <div class="d-flex mb-2 align-items-center">
-               		<small class="pt-1"></small> </div>
-               		
-				<h4 class="font-weight-semi-bold mb-2">가격: ${product.sales_p}원</h4>
-				<p class="mb-4"> </p> <!-- 내용쓰러면 작은글 출력됨 -->
-		
-				
-				<div class="d-flex mb-3">
-			</div>
-			
-		
-		<form action="/cart/addForm" method="post">
-			<input type="hidden" name="item_no" value="${product.item_no}" />
-
-	 <div class="d-flex align-items-center mb-3">
-	     <!-- 수량 조절 -->
-        <div class="input-group mr-2  quantity" style="width:130px;">		
-        <button type="button" class="btn btn-primary btn-minus">-</button>
-        <input type="text" class="form-control text-center" name="qty" id="qty" value="1">
-        <button type="button" class="btn btn-primary btn-plus">+</button>
-       </div>
-      <!-- 장바구니 담기 버튼 -->   
-       <button type="submit" class="btn btn-primary">
-		<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
-		</button>
-		 
-	</form>
-
 				</div>
 			</div>
-		</div>
 		<div class="row px-xl-5">
 			<div class="col">
 				<div
@@ -185,44 +193,45 @@
 						<div class="row">
 							<div class="col-md-6">
 								<h4 class="mb-4">리뷰 목록</h4>
-<!-- Ajax로 리뷰를 넣을 영역 --><div id="review-list"> 
-					            </div>
-					</div>
-					   <!--  <c:if test="${not empty reviews}">
-								<c:forEach var="review" items="${reviews}">
-								 <div class="mb-3">
-										<h6>
-											${review.customer_id}<small><i>${review.re_date}</i></small>
-										</h6>
-										<p>${review.re_content}</p>
-									</div>
-								</div>
-								</c:forEach>
-								 </c:if>
-								<c:if test="${empty reviews}">
-								<p>등록된 리뷰가 없습니다.</p>
-								</c:if> -->        
-							<div class="col-md-6">
-				<h4 class="mb-4">리뷰 작성</h4>
-		<form action="/product/review" method="post">
-	<input type="hidden" name="item_no" value="${product.item_no}" />
-    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
-				<div class="form-group">
-					<label for="re_content">내 리뷰작성 *</label>
-						<textarea id="re_content"  name="re_content" cols="30" rows="5" class="form-control"></textarea>
-									</div>
-				<div class="form-group">
-					<label for="re_title">제목 *</label> 
-					<input type="text" id="re_title" name="re_title" class="form-control" id="name">
-				</div>
-				
-				<div class="form-group mb-0">
-					<input type="submit" value="리뷰 남기기" class="btn btn-primary px-3">
-				</div>
-								
-				</form>
-			</div>
+	<!-- Ajax로 리뷰를 넣을 영역 --> <div id="review-list">
+									<c:if test="${empty reviews}">
+										<p>등록된 리뷰가 없습니다.</p>
+									</c:if>									
+										<c:forEach var="review" items="${reviews}">
+											 <div class="mb-3">
+												<a href="detail?item_no=${review.item_no}" />
+												<h6 class="text-truncate mb-3">${review.re_title}</h6>
+												
+												<small><i>작성자: ${review.customer_id} | 작성일: ${review.re_date}</i></small>
+												
+												<p>${review.re_content}</p>
+											</div>								
+										</c:forEach>
+									 
+						        </div>
+							</div>
+					          
+						<div class="col-md-6">
+							<h4 class="mb-4">리뷰 작성</h4>
+							<form action="/product/review" method="post">
+								<input type="hidden" name="item_no" value="${product.item_no}" />
+							    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
+							<div class="form-group">
+								<label for="re_content">내 리뷰작성 *</label>
+									<textarea id="re_content"  name="re_content" cols="30" rows="5" class="form-control"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="re_title">제목 *</label> 
+								<input type="text" id="re_title" name="re_title" class="form-control" id="name">
+							</div>
+							
+							<div class="form-group mb-0">
+								<input type="submit" value="리뷰 남기기" class="btn btn-primary px-3">
+							</div>
+											
+							</form>
 						</div>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -362,54 +371,31 @@
 	<script src="js/main.js"></script>
 
 <script>
-
 $(document).ready(function() {
 	var item_no = <c:out value="${product.item_no}" default="0"/>;
 
-   	// '리뷰' 눌렸을때 이벤트함수
-$(document).on('shown.bs.tab','a[href="#tab-pane-3"]',function(){
-	var reviewlist = $('#review-list');
-	reviewlist.html('<p>리뷰를 불러오는 중...</p>');
+	// '리뷰' 탭이 보여질 때 리뷰를 로드
+	$(document).on('shown.bs.tab', 'a[href="#tab-pane-3"]', function() {
+		var reviewlist = $('#review-list');
+		reviewlist.html('<p>리뷰를 불러오는 중...</p>');
 
-    $.ajax({
-        url: '/review/list',
-        type: 'GET',
-        data: { item_no: item_no },
-        success: function(reviews){ 
-        	 reviewlist.empty(); // 기존 내용 삭제
-        }
-       		//console.log(reviews);
-        	//console.log(reviews[0].re_content);
-        	// 동적으로 화면 만들기
-  			
-        	// reviews 배열이라서 반복문 구동
-           var temp = $('<div/>').text(reviews[0].re_content);
-          
-
-                    var temp = $(`
-                        <div class="mb-3">
-                            <h6>${customer} <small><i>${date}</i></small></h6>
-                            <p>${content}</p>
-                        </div>
-                    `);
-
-                    reviewlist.append(temp); // 반복문 안에서 append
-                });
-            } else {
-                reviewlist.html('<p>등록된 리뷰가 없습니다.</p>');
-            }
-        },
-        error: function(err) {
-            console.error(err);
-            reviewlist.html('<p>리뷰를 불러올 수 없습니다.</p>');
-        }
-    });
-});
+		$.ajax({
+			url: '/review/list',
+			type: 'GET',
+			data: { item_no: item_no },
+			success: function(html) {
+				// 서버에서 완성된 HTML을 반환하므로 그대로 삽입
+				reviewlist.html(html);
+			},
+			error: function(err) {
+				console.error(err);
+				reviewlist.html('<p>리뷰를 불러올 수 없습니다.</p>');
+			}
+		});
+	});
 });
 </script>
 
 </body>
-
-
 
 </html>

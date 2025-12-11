@@ -11,16 +11,22 @@
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
 
+<!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
+<!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"    rel="stylesheet">
 
+<!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
+<!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
+<!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
+<!-- 채팅 관련 -->
 <link href="css/chat.css" rel="stylesheet">
 
 </head>
@@ -57,6 +63,9 @@
 			</a>
 		</div>
 	</div>
+	<!-- Topbar End -->
+	
+	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
 	<div class="container-fluid">
 		<div class="row border-top px-xl-5">
 			<div class="col-lg-12">
@@ -81,9 +90,11 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<div class="container-fluid pt-5">
-		<div class="row px-xl-5">
-            
+		<div class="row px-xl-5">            
+            <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
 					<h6 class="p-3">Categories</h6>
@@ -158,7 +169,10 @@
 									<a href="detail?item_no=${item.item_no}" class="btn btn-sm text-dark p-0">
 										<i class="fas fa-eye text-primary mr-1"></i>상세정보
 									</a>
-					<button type="button" class="btn btn-sm text-dark p-0 add-to-cart-btn" data-item-no="${item.item_no}" style="background:none;border:0;padding:0;">
+									<form method="post" action="/cart/addForm" style="display:inline;">
+										<input type="hidden" name="item_no" value="${item.item_no}" />
+										<input type="hidden" name="qty" value="1" />
+										<button type="button" class="btn btn-sm text-dark p-0 add-to-cart-btn" data-item-no="${item.item_no}" style="background:none;border:0;padding:0;">
 											<i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기
 										</button>
 										<noscript>
@@ -166,7 +180,7 @@
 												<i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기
 											</button>
 										</noscript>
-							
+									</form>
 								</div>
 							</div>
 						</div>
@@ -206,7 +220,7 @@
 	
 	<!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
-				<div class="row px-xl-5 pt-5">
+		<div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
            
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
@@ -228,7 +242,7 @@
                             <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->      
                          </div>
                     </div>
-                    <div class="col-lg-8 col-md-12">
+                    
                 <div class="row">
                     <div class="col-md-12 mt-4 mb-5">
                         <p class="text-dark mb-2">
@@ -252,7 +266,7 @@
                       </div>
                     </div>
                  
-                    </div>
+                    
                   
                 </div>
             </div>
@@ -312,72 +326,14 @@
 	<script src="mail/contact.js"></script>
 
 	<!-- Javascript -->
-	<script src="js/main.js"></script>
+	<script src="/js/main.js"></script>
 	<!-- 채팅 JS -->
 	<script src="/js/chat.js?v=1"></script>
 
 	<!-- SockJS + StompJS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
-		
-<!--  	<script>
-		// `main.js`에서 addToCart를 정의하지 않았을 때를 대비한 폴백 전역 함수 ("undefined" 오류 방지)
-		if (typeof window.addToCart !== 'function') {
-			window.addToCart = function(itemNo, qty) {
-				try {
-					console.log('fallback addToCart called', itemNo, qty);
-					if (!itemNo) { alert('itemNo required'); return; }
-					fetch('/cart/add', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-						body: 'item_no=' + encodeURIComponent(itemNo) + '&qty=' + encodeURIComponent(qty || 1)
-					}).then(function(res){
-						return res.json().catch(function(){ return null; });
-					}).then(function(json){
-						if (json && json.success) {
-							// 페이지 이동 대신 간단한 피드백을 보여줍니다
-							try { console.log('fallback addToCart success', json); 
-								alert('장바구니에 담겼습니다.'); 
-								} catch(e){}
-						} else {
-							alert('장바구니에 추가하지 못했습니다.');
-						}
-					}).catch(function(err){
-						console.error('fallback addToCart error', err);
-						alert('네트워크 오류');
-					});
-				} catch(e) { console.error(e); }
-			};
-		}
-	</script>
-	<script>
-		// 네이티브 클릭 핸들러: 버튼 내부(아이콘/텍스트) 어디를 눌러도 안정적으로 처리합니다
-		document.addEventListener('click', function(e){
-			try {
-				var target = e.target;
-				// 가장 가까운 'add-to-cart-btn' 클래스를 가진 요소를 찾습니다
-				var btn = target.closest ? target.closest('.add-to-cart-btn') : null;
-				if (!btn && target.classList && target.classList.contains('add-to-cart-btn')) btn = target;
-				if (btn) {
-					// 버튼 요소로부터 data-item-no 속성값을 읽습니다
-					var itemNo = btn.getAttribute('data-item-no') || btn.dataset && btn.dataset.itemNo;
-					console.log('Native click on add-to-cart-btn (resolved)', itemNo);
-					// 전역 addToCart 함수가 있으면 이를 우선 호출합니다
-					if (typeof window.addToCart === 'function') {
-						// 기본 폼/버튼 동작을 막습니다
-						e.preventDefault();
-						try { window.addToCart(itemNo, 1); } catch(err) { console.error('addToCart call failed', err); }
-					} else {
-						// 폴백: JS 핸들러가 없으면 둘러싼 폼을 제출합니다
-						var form = btn.closest ? btn.closest('form') : null;
-						if (form) form.submit();
-					}
-				}
-			} catch(err){ console.error('debug click listener error', err); }
-		}, true);
-	</script>-->
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
 </body>
 
 </html>		

@@ -40,6 +40,11 @@ public class projectController {
 		return "shop";
 	}
 	
+	@GetMapping("kakaolog")
+	public String kakaolog() {
+		return "kakaolog";
+	}
+	
 	@GetMapping("checkout")
 	public String checkout() {
 		return "checkout";
@@ -56,7 +61,7 @@ public class projectController {
 	}
 	
 	@GetMapping("update")
-	public String update() {
+	public String updateUser() {
 		return "update";
 	}
 	
