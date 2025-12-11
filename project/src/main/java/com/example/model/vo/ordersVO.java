@@ -11,7 +11,7 @@ public class ordersVO {
 	private String order_name;
 	private String order_addr;
 	private Integer tracking;
-	private Integer order_phone;
+	private Long order_phone;
 	private String order_status;
 	private String payment;
 	private String api_pay;
