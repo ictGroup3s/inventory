@@ -97,6 +97,12 @@ public class PaymentController {
 	                    item.getQty(), 
 	                    item.getProduct().getSales_p());
 	            }
+	            // ⭐ 총 결제 금액 계산
+	            int totalAmount = 0;
+	            for (CartItemVO item : cartItems) {
+	                totalAmount += item.getProduct().getSales_p() * item.getQty();
+	            }
+	            log.info("총 결제 금액: {}", totalAmount);
 	            
 	            // 3. 전화번호 처리
 	            String cleanPhone = phone.replaceAll("[^0-9]", "");
@@ -120,6 +126,7 @@ public class PaymentController {
 	            order.setPayment(cardType != null ? cardType : "카드결제");
 	            order.setOrder_status("결제완료");
 	            order.setCustomer_id(customerId);
+	            order.setTotal_amount(totalAmount); 
 	            
 	            log.info("생성된 주문 객체: {}", order);
 	            log.info("DB 저장 시도...");
@@ -136,6 +143,7 @@ public class PaymentController {
 	            
 	            result.put("success", true);
 	            result.put("orderNo", orderNo);
+	            result.put("totalAmount", totalAmount); 
 	            log.info("========== 결제 처리 완료 ==========");
 	            
 	            return result;

@@ -42,7 +42,7 @@ public class orderRepository {
 	            }
 
 	            // 2. orders 테이블에 INSERT (전체 정보 저장)
-	            String insertSql = "INSERT INTO orders (order_no, customer_id, order_name, order_addr, order_phone, order_date, order_status, payment) VALUES (?, ?, ?, ?, ?, SYSDATE, ?, ?)";
+	            String insertSql = "INSERT INTO orders (order_no, customer_id, order_name, order_addr, order_phone, order_date, order_status, payment, total_amount) VALUES (?, ?, ?, ?, ?, SYSDATE, ?, ?,?)";
 	            try (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {
 	                pstmt.setInt(1, orderNo);
 	                pstmt.setString(2, order.getCustomer_id());
@@ -51,6 +51,7 @@ public class orderRepository {
 	                pstmt.setInt(5, order.getOrder_phone());
 	                pstmt.setString(6, order.getOrder_status());
 	                pstmt.setString(7, order.getPayment());
+	                pstmt.setInt(8, order.getTotal_amount()); 
 	                pstmt.executeUpdate();
 	            }
 	            
@@ -151,16 +152,21 @@ public class orderRepository {
 	 // 주문 상세 저장
 	    public void insertOrderDetail(int orderNo, List<CartItemVO> cartItems) throws SQLException {
 	        // ⭐ DETAIL_NO를 시퀀스에서 가져오도록 수정
-	        String sql = "INSERT INTO order_detail (detail_no, order_no, item_no, item_cnt, item_price) " +
-	                     "VALUES (order_detail_seq.NEXTVAL, ?, ?, ?, ?)";
+	        String sql = "INSERT INTO order_detail (detail_no, order_no, item_no, item_cnt, item_price, amount) " +
+	                     "VALUES (order_detail_seq.NEXTVAL, ?, ?, ?, ?,?)";
 	        
 	        try (Connection conn = dataSource.getConnection();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            for (CartItemVO item : cartItems) {
+	            	int itemPrice = item.getProduct().getSales_p();
+	                int itemCnt = item.getQty();
+	                int amount = itemPrice * itemCnt;  // ⭐ 총 금액 계산
+	                
 	                pstmt.setInt(1, orderNo);
 	                pstmt.setInt(2, item.getProduct().getItem_no());
 	                pstmt.setInt(3, item.getQty());
 	                pstmt.setInt(4, item.getProduct().getSales_p());
+	                pstmt.setInt(5, amount); 
 	                pstmt.addBatch();
 	            }
 	            pstmt.executeBatch();
@@ -172,7 +178,7 @@ public class orderRepository {
 	        List<order_detailVO> list = new ArrayList<>();
 	        String sql = """
 	            SELECT od.detail_no, od.order_no, od.item_no, od.item_cnt, od.item_price,
-	                   (od.item_cnt * od.item_price) AS amount,
+	                   od.amount,
 	                   p.item_name, TO_CHAR(o.order_date,'YYYY-MM-DD HH24:MI:SS') AS order_date,
 	                   o.order_status
 	            FROM order_detail od
@@ -194,7 +200,7 @@ public class orderRepository {
 	                d.setItem_no(rs.getInt("item_no"));
 	                d.setItem_cnt(rs.getInt("item_cnt"));
 	                d.setItem_price(rs.getInt("item_price"));
-	                d.setAmount(rs.getInt("amount"));  // ⭐ 추가
+	                d.setAmount(rs.getInt("amount"));
 	                d.setItem_name(rs.getString("item_name"));
 	                d.setOrder_date(rs.getString("order_date"));
 	                d.setOrder_status(rs.getString("order_status"));

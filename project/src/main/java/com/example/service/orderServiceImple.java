@@ -30,6 +30,15 @@ public class orderServiceImple implements orderService {
 	    public int createOrder(ordersVO order, List<CartItemVO> cartItems) {
 	        try {
 	        	 log.info("========== 주문 생성 시작 ==========");
+	        	// ⭐ 총 금액 계산
+	             int totalAmount = 0;
+	             for (CartItemVO item : cartItems) {
+	                 totalAmount += item.getProduct().getSales_p() * item.getQty();
+	             }
+	             
+	             order.setTotal_amount(totalAmount);  // ⭐ 총 금액 설정
+	             
+	             log.info("총 주문 금액: {}", totalAmount);
 	             log.info("주문자 정보: {}", order);
 	             log.info("장바구니 아이템 수: {}", cartItems != null ? cartItems.size() : 0);
 	             

@@ -20,4 +20,5 @@ public class ordersVO {
 
 	// 주문 상세 리스트 추가!
 	private List<order_detailVO> detailList;
+	private Integer total_amount; 
 }
