@@ -15,5 +15,7 @@ public class ordersVO {
 	private String api_pay;
 	private String order_date;
 	private String customer_id;
+	
+	private Integer amount;
 
 }

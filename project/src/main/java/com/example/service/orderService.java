@@ -1,6 +1,8 @@
 package com.example.service;
 
 import java.util.List;
+
+import com.example.model.vo.CartItemVO;
 import com.example.model.vo.ordersVO;
 
 public interface orderService {

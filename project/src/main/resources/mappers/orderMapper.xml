@@ -42,7 +42,8 @@
             order_phone,
             order_date,
             order_status,
-            payment
+            payment,
+            amount 
         ) VALUES (
             #{order_no},
             #{customer_id},
@@ -51,12 +52,13 @@
             #{order_phone},
             SYSDATE,
             #{order_status},
-            #{payment}
+            #{payment},
+            #{amount}
         )
     </insert>
 
     <!-- 주문 상세 저장 -->
-    <insert id="insertOrderDetail" parameterType="map">
+    <insert id="insertOrderDetail">
         INSERT INTO order_detail (
             detail_no,
             order_no,

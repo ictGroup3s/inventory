@@ -15,5 +15,6 @@ public class order_detailVO {
 	private String order_date;
 	private String order_status;
 	
+	
 
 }

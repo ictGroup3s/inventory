@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.model.vo.CustomerVO;
 import com.example.model.vo.ordersVO;
 import com.example.service.orderService;
 
@@ -80,19 +81,25 @@ public class PaymentController {
 	            order.setOrder_status("결제완료");
 	            
 	            // 세션에서 사용자 ID 가져오기 (로그인 되어 있다면)
-	            String loginUser = (String) session.getAttribute("loginUser");
+	            CustomerVO loginUser = (CustomerVO) session.getAttribute("loginUser");
+
 	            if (loginUser != null) {
-	                order.setCustomer_id(loginUser);
+	                String customerId = loginUser.getCustomer_id();
+	                order.setCustomer_id(customerId);
+	                log.info("세션에서 가져온 customerId: {}", customerId);
+	            } else {
+	                log.info("로그인된 사용자 없음 → customerId는 null");
 	            }
-	            log.info("세션에서 가져온 loginUser: {}", loginUser);
+	            
+	            log.info("세션에서 가져온 customerId: {}", loginUser);
 		        log.info("세션 ID: {}", session.getId());
-	            log.info("생성된 주문 객체: {}", order);
 	            log.info("DB 저장 시도...");
 	            
 	            // 주문 저장
 	            int orderNo = orderService.createOrder(order);
-	            
 	            log.info("✅ DB 저장 성공! 주문번호: {}", orderNo);
+	            log.info("생성된 주문 객체: {}", order);
+	        
 	            // 장바구니 비우기
 	            session.removeAttribute("cartItems");
 	            session.removeAttribute("cartTotal");
@@ -116,32 +123,4 @@ public class PaymentController {
 	            return result;
 	        }
 	    }
-	    
-		/*
-		 * @PostMapping("/processPayment") public String processPayment(
-		 * 
-		 * @RequestParam String name,
-		 * 
-		 * @RequestParam String phone,
-		 * 
-		 * @RequestParam String address,
-		 * 
-		 * @RequestParam String shipName,
-		 * 
-		 * @RequestParam String shipPhone,
-		 * 
-		 * @RequestParam String shipAddress,
-		 * 
-		 * @RequestParam String memo, HttpSession session ) { // ordersVO 객체 생성 및 데이터 설정
-		 * ordersVO order = new ordersVO(); order.setOrder_name(shipName != null &&
-		 * !shipName.isEmpty() ? shipName : name);
-		 * order.setOrder_phone(Integer.parseInt(phone.replaceAll("-", "")));
-		 * order.setOrder_addr(shipAddress != null && !shipAddress.isEmpty() ?
-		 * shipAddress : address); order.setPayment(memo);
-		 * order.setOrder_status("결제완료");
-		 * 
-		 * // 주문 저장 (ordersVO만 전달) int orderNo = orderService.createOrder(order);
-		 * 
-		 * // 주문 완료 페이지로 리다이렉트 return "redirect:/ordercomplete?orderNo=" + orderNo; }
-		 */
 	}

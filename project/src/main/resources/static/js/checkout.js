@@ -13,6 +13,7 @@ document.getElementById('newaccount').addEventListener('change', function() {
     }
 });
 
+
 /*요청사항 직접입력*/
 document.getElementById('memoSelect').addEventListener('change', function() {
     const memoInput = document.getElementById('memoInput');
@@ -64,37 +65,39 @@ function processPayment() {
     }
 
     // 서버로 주문 데이터 전송
-    $.ajax({
-        url: '/processPayment',
-        method: 'POST',
-        data: {
-            name: name,
-            phone: phone,
-            address: address,
-            shipName: shipName,
-            shipPhone: shipPhone,
-            shipAddress: shipAddress,
-            memo: memo,
-            cardType: selectedCard
-        },
-		xhrFields: {
-		            withCredentials: true  // ⭐ 추가! 세션 쿠키 전송
-		},
-        success: function(response) {
-            $('#payModal').modal('hide');
-            
-            // sessionStorage에도 저장 (필요시)
-            sessionStorage.setItem('selectedCard', selectedCard);
-            sessionStorage.setItem('amount', '${cartTotal}');
-            
-            // 주문 완료 페이지로 이동
-            window.location.href = '/ordercomplete?orderNo=' + response.orderNo;
-        },
-        error: function(error) {
-            alert('결제 처리 중 오류가 발생했습니다.');
-            console.error(error);
-        }
-    });
+	$.ajax({
+	    url: '/processPayment',
+	    method: 'POST',
+	    data: {
+	        name: name,
+	        phone: phone,
+	        address: address,
+	        shipName: shipName,
+	        shipPhone: shipPhone,
+	        shipAddress: shipAddress,
+	        memo: memo,
+	        cardType: selectedCard,
+			amount: '${cartTotal}' 
+	    },
+	    xhrFields: {
+	        withCredentials: true  // ★ 세션 쿠키 전송
+	    },
+	    crossDomain: true,          // ★ jQuery에서 credentials 사용 시 필수
+	    success: function(response) {
+	        $('#payModal').modal('hide');
+
+	        // sessionStorage에도 저장 (필요시)
+	        sessionStorage.setItem('selectedCard', selectedCard);
+	        sessionStorage.setItem('amount', '${cartTotal}');
+
+	        // 주문 완료 페이지로 이동
+	        window.location.href = '/ordercomplete?orderNo=' + response.orderNo;
+	    },
+	    error: function(error) {
+	        alert('결제 처리 중 오류가 발생했습니다.');
+	        console.error(error);
+	    }
+	});
 }
 
 document.addEventListener('DOMContentLoaded', function() {
