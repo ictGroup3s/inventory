@@ -80,11 +80,11 @@ public class PaymentController {
 	            order.setOrder_status("결제완료");
 	            
 	            // 세션에서 사용자 ID 가져오기 (로그인 되어 있다면)
-	            String customerId = (String) session.getAttribute("customerId");
-	            if (customerId != null) {
-	                order.setCustomer_id(customerId);
+	            String loginUser = (String) session.getAttribute("loginUser");
+	            if (loginUser != null) {
+	                order.setCustomer_id(loginUser);
 	            }
-	            log.info("세션에서 가져온 customerId: {}", customerId);
+	            log.info("세션에서 가져온 loginUser: {}", loginUser);
 		        log.info("세션 ID: {}", session.getId());
 	            log.info("생성된 주문 객체: {}", order);
 	            log.info("DB 저장 시도...");

@@ -1,45 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderMapper">
 
-<mapper namespace ="orderMapper">
+    <!-- ordersVO ResultMap -->
+    <resultMap id="OrderResult" type="com.example.model.vo.ordersVO">
+        <id property="order_no" column="order_no" />
+        <result property="order_name" column="order_name" />
+        <result property="order_addr" column="order_addr" />
+        <result property="order_phone" column="order_phone" />
+        <result property="order_status" column="order_status" />
+        <result property="payment" column="payment" />
+        <result property="tracking" column="tracking" />
+        <result property="api_pay" column="api_pay" />
+        <result property="order_date" column="order_date" />
+        <result property="customer_id" column="customer_id" />
+    </resultMap>
 
-	<!-- 주문 저장 -->
-	<insert id="insertOrder" parameterType="ordersVO" useGeneratedKeys="true" keyProperty="order_no">
-	    INSERT INTO orders (
-	        order_name, order_addr, tracking, order_phone, 
-	        order_status, payment, api_pay, order_date, customer_id
-	    ) VALUES (
-	        #{order_name}, #{order_addr}, #{tracking}, #{order_phone},
-	        #{order_status}, #{payment}, #{api_pay}, NOW(), #{customer_id}
-	    )
-	</insert>
-	
-	<!-- 주문 상세 저장 -->
-	<insert id="insertOrderDetail" parameterType="order_detailVO">
-	    INSERT INTO order_detail (
-	        order_no, item_no, item_cnt, item_price
-	    ) VALUES (
-	        #{order_no}, #{item_no}, #{item_cnt}, #{item_price}
-	    )
-	</insert>
-	
-	<!-- 주문 내역 조회 -->
-	<select id="selectOrders" parameterType="String" resultType="map">
-	    SELECT 
-	        o.order_no,
-	        o.order_date,
-	        o.payment,
-	        o.order_status,
-	        d.item_no,
-	        d.item_cnt,
-	        d.item_price
-	    FROM orders o
-	    JOIN order_detail d ON o.order_no = d.order_no
-	    WHERE o.customer_id = #{customer_id}
-	    ORDER BY o.order_date DESC
-	</select>
+    <!-- order_detailVO ResultMap -->
+    <resultMap id="OrderDetailResult" type="com.example.model.vo.order_detailVO">
+        <id property="detail_no" column="detail_no" />
+        <result property="order_no" column="order_no" />
+        <result property="item_no" column="item_no" />
+        <result property="item_cnt" column="item_cnt" />
+        <result property="item_price" column="item_price" />
+        <result property="item_name" column="item_name" />
+        <result property="order_date" column="order_date" />
+        <result property="order_status" column="order_status" />
+    </resultMap>
 
+    <!-- 주문 생성 (시퀀스로 order_no 자동 생성) -->
+    <insert id="insertOrder" parameterType="com.example.model.vo.ordersVO">
+        <selectKey keyProperty="order_no" resultType="int" order="BEFORE">
+            SELECT orders_seq.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO orders (
+            order_no,
+            customer_id,
+            order_name,
+            order_addr,
+            order_phone,
+            order_date,
+            order_status,
+            payment
+        ) VALUES (
+            #{order_no},
+            #{customer_id},
+            #{order_name},
+            #{order_addr},
+            #{order_phone},
+            SYSDATE,
+            #{order_status},
+            #{payment}
+        )
+    </insert>
 
+    <!-- 주문 상세 저장 -->
+    <insert id="insertOrderDetail" parameterType="map">
+        INSERT INTO order_detail (
+            detail_no,
+            order_no,
+            item_no,
+            item_cnt,
+            item_price
+        ) VALUES (
+            order_detail_seq.NEXTVAL,
+            #{order_no},
+            #{item_no},
+            #{item_cnt},
+            #{item_price}
+        )
+    </insert>
+
+  <!--    주문 번호로 조회 
+    <select id="selectOrderByNo" parameterType="int" resultMap="OrderResult">
+        SELECT 
+            order_no,
+            order_name,
+            order_addr,
+            order_phone,
+            order_status,
+            payment,
+            tracking,
+            api_pay,
+            TO_CHAR(order_date, 'YYYY-MM-DD HH24:MI:SS') AS order_date,
+            customer_id
+        FROM orders
+        WHERE order_no = #{order_no}
+    </select>
+
+    고객 ID로 주문 목록 조회
+    <select id="selectOrdersByCustomerId" parameterType="string" resultMap="OrderResult">
+        SELECT 
+            order_no,
+            order_name,
+            order_addr,
+            order_phone,
+            order_status,
+            payment,
+            tracking,
+            api_pay,
+            TO_CHAR(order_date, 'YYYY-MM-DD HH24:MI:SS') AS order_date,
+            customer_id
+        FROM orders
+        WHERE customer_id = #{customer_id}
+        ORDER BY order_date DESC
+    </select>
+
+    주문 상태 업데이트
+    <update id="updateOrderStatus" parameterType="map">
+        UPDATE orders
+        SET order_status = #{order_status}
+        WHERE order_no = #{order_no}
+    </update>
+
+    주문 상세 조회 (상품명 포함)
+    <select id="getOrderDetail" parameterType="int" resultMap="OrderDetailResult">
+        SELECT 
+            od.detail_no,
+            od.order_no,
+            od.item_no,
+            od.item_cnt,
+            od.item_price,
+            p.item_name,
+            TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI:SS') AS order_date,
+            o.order_status
+        FROM order_detail od
+        JOIN orders o ON od.order_no = o.order_no
+        JOIN product p ON od.item_no = p.item_no
+        WHERE od.order_no = #{order_no}
+    </select>
+
+    고객의 전체 주문내역 조회
+    <select id="getDeliveryList" parameterType="string" resultMap="OrderDetailResult">
+        SELECT 
+            od.detail_no,
+            od.order_no,
+            od.item_no,
+            od.item_cnt,
+            od.item_price,
+            p.item_name,
+            TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI:SS') AS order_date,
+            o.order_status
+        FROM order_detail od
+        JOIN orders o ON od.order_no = o.order_no
+        JOIN product p ON od.item_no = p.item_no
+        WHERE o.customer_id = #{customer_id}
+        ORDER BY o.order_date DESC
+    </select>
+ -->
 </mapper>

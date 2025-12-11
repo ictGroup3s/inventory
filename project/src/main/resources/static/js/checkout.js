@@ -1,3 +1,5 @@
+
+
 /*체크박스 복사 스크립트*/
 document.getElementById('newaccount').addEventListener('change', function() {
     if(this.checked) {
@@ -75,6 +77,9 @@ function processPayment() {
             memo: memo,
             cardType: selectedCard
         },
+		xhrFields: {
+		            withCredentials: true  // ⭐ 추가! 세션 쿠키 전송
+		},
         success: function(response) {
             $('#payModal').modal('hide');
             

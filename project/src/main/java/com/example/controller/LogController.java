@@ -37,6 +37,11 @@ public class LogController {
 	        if (user !=null) { 
 	        	session.setAttribute("loginUser", user); 	       //세션저장
 	        	session.setAttribute("loginRole", user.getRole());
+	        	
+	        	System.out.println("✅ 로그인 성공!");
+	            System.out.println("로그인 정보: " + user);
+	            System.out.println("고객 ID: " + user.getCustomer_id());
+	            System.out.println("역할: " + user.getRole());
 	           return "redirect:/"; // 로그인 성공 시 메인으로
 	           
 	       } else {
