@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.model.ReviewRepository">
+
+<select id="selectReviewsByItemNo" parameterType="int" resultType="com.example.model.vo.ReviewVO">
+	SELECT	review_no
+		    , re_title
+	        , re_content
+	        , re_date
+	        , item_no
+	        , customer_id
+	FROM	review
+	WHERE 	item_no = #{item_no}
+	ORDER BY re_date DESC
+</select>
+
+<insert id="add" parameterType="com.example.model.vo.ReviewVO">
+	<selectKey keyProperty="review_no" resultType="int" order="BEFORE">
+	    SELECT review_seq.NEXTVAL FROM dual
+	</selectKey>
+	INSERT INTO review (review_no, re_title, re_content, re_date, item_no, customer_id)
+	VALUES (#{review_no}
+			, #{re_title}
+			, #{re_content}
+			, sysdate
+			, #{item_no}
+			, #{customer_id})
+</insert>
+
+</mapper>
+
