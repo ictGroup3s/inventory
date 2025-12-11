@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.model.vo.CartItemVO;
 import com.example.model.vo.CustomerVO;
-import com.example.model.vo.order_detailVO;
 import com.example.model.vo.ordersVO;
 import com.example.service.CartService;
 import com.example.service.orderService;
