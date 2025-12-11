@@ -1,5 +1,7 @@
 package com.example.model.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -16,4 +18,7 @@ public class ordersVO {
 	private String order_date;
 	private String customer_id;
 
+	// 주문 상세 리스트 추가!
+	private List<order_detailVO> detailList;
+	private Integer total_amount; 
 }
