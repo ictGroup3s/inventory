@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,24 +76,24 @@
 			</div>
 		</div>
 	</div>
-<c:if test="${not empty message}">
-    <script>
-        alert('${message}');
-    </script>
-</c:if>
+	<c:if test="${not empty message}">
+		<script>
+			alert('${message}');
+		</script>
+	</c:if>
 	<!-- Login Form -->
 	<div class="container mb-5">
 		<div class="login-card">
 
 			<h3 class="text-center login-title">로그인</h3>
-			
+
 
 			<form action="loginAction" method="post">
-			 <!-- 로그인 실패 메시지 -->
-			    <c:if test="${not empty loginError}">
-			        <div class="alert alert-danger">${loginError}</div>
-			    </c:if>
-						
+				<!-- 로그인 실패 메시지 -->
+				<c:if test="${not empty loginError}">
+					<div class="alert alert-danger">${loginError}</div>
+				</c:if>
+
 				<div class="form-group">
 					<label>아이디</label> <input type="text" name="login_id"
 						class="form-control" placeholder="아이디를 입력해주세요" required>
@@ -106,7 +106,7 @@
 
 				<div class="text-right mb-2">
 					<a href="find">아이디 찾기 / 비밀번호 찾기</a>
-					
+
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-block py-2">로그인</button>
@@ -121,9 +121,10 @@
 			<div class="text-center mb-3">
 				<p class="mb-2">소셜 계정으로 로그인</p>
 				<div class="social-login">
-					<img src="/img/google.png" alt="Google 로그인"> <img
-						src="/img/naver.png" alt="Naver 로그인"> <img
-						src="/img/kakao.png" alt="Kakao 로그인">
+				<a href="/googleLogin">
+					<img src="/img/google.png" alt="Google 로그인"> </a>
+					<img src="/img/naver.png" alt="Naver 로그인"> 
+					<img src="/img/kakao.png" alt="Kakao 로그인">
 				</div>
 			</div>
 
@@ -235,4 +236,3 @@
 
 </body>
 </html>
-
