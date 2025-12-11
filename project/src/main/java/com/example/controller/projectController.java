@@ -42,22 +42,47 @@ public class projectController {
 	
 	@GetMapping("shop")
 	public String shop() {
-		return "shop";		
+		return "shop";
 	}
-	
-	@GetMapping("checkout")
-	public String checkout() {
-		return "checkout";
-	}
-	
+  
 	@GetMapping("header")
 	public String header() {
 		return "header";
 	}
 	
+	@GetMapping("delete")
+	public String delete() {
+		return "delete";
+	}
+	
+	@GetMapping("update")
+	public String update() {
+		return "update";
+	}
+	
+	@GetMapping("goodbye")
+	public String goodbye() {
+		return "goodbye";
+	}
+	
 	@GetMapping("login")
 	public String login() {
 		return "login";
+	}
+	
+	 @GetMapping("register")
+	public String register() {
+		return "register";
+	}
+	 
+	@GetMapping("event1")
+	public String event1() {
+		return "event1";
+	}
+	
+	@GetMapping("event2")
+	public String event2() {
+		return "event2";
 	}
     // 전체 상품 조회 페이지, 검색, 정렬
     @GetMapping("selectall")
@@ -109,12 +134,12 @@ public class projectController {
         return "detail";
     }
 	
-	@GetMapping("register")
-	public String register() {
-		return "register";
+    @GetMapping("detail2")
+	public String detail2() {
+		return "detail2";
 	}
-    
-	@GetMapping("mlist")
+	
+   	@GetMapping("mlist")
 	public String mlist() {
 		return "mlist";
 	}
@@ -380,4 +405,3 @@ public class projectController {
         return "stats";
     }
 }
-

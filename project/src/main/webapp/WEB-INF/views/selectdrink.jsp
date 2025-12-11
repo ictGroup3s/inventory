@@ -83,9 +83,30 @@
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
 						<div class="navbar-nav ml-auto py-0">
-							<a href="login" class="nav-item nav-link">로그인</a> <a
-								href="register" class="nav-item nav-link">회원가입</a> <a
-								href="board" class="nav-item nav-link">고객센터</a>
+							<!-- 로그인전 -->
+							<c:if test="${empty sessionScope.loginUser}">
+								<a href="login" class="nav-item nav-link">로그인</a>
+								<a href="register" class="nav-item nav-link">회원가입</a>
+								<a href="board" class="nav-item nav-link">고객센터</a>
+							</c:if>
+
+							<!-- 회원 로그인 후   -->
+							<c:if test="${not empty sessionScope.loginUser}">
+								<span class="nav-item nav-link">안녕하세요,
+									${sessionScope.loginUser.customer_id}님!</span>
+
+
+								<c:if test="${sessionScope.loginRole == 0}">
+									<a href="mypage" class="nav-item nav-link">마이페이지</a>
+								</c:if>
+
+								<c:if test="${sessionScope.loginRole == 1}">
+									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+								</c:if>
+								<!-- 로그아웃 링크 -->
+								<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+							</c:if>
 						</div>
 					</div>
 				</nav>

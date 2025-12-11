@@ -7,7 +7,7 @@
  */
  
  .logo {
-    width: 20vw;       /* 화면 너비 대비 20% */
+    width: 12vw;       /* 화면 너비 대비 20% */
     max-width: 500px;  /* 최대 크기 */
     min-width: 250px;  /* 최소 크기 */
     height: auto;      /* 비율 유지 */
@@ -61,7 +61,7 @@ html {
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
-
+/* 
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
@@ -72,6 +72,15 @@ body {
   text-align: left;
   background-color: #fff;
 }
+ */
+ 
+body {
+  width: 100%;          /* 너비를 100%로 설정하여 화면 크기에 맞게 늘어나게 함 */
+  max-width: 1500px;    /* 최대 너비를 1500px로 제한 */
+  height: 800px;        /* 높이는 고정 (필요에 따라 수정 가능) */
+  margin: 0 auto;       /* 페이지 중앙에 배치 */
+}
+
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
@@ -9472,16 +9481,16 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
  .slider-card img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    margin-bottom: 10px;
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
   }
   
  .slider-card {
-    text-align: center;
-    padding: 10px;
-}
+            text-align: center;
+            padding: 10px;
+        }
 
 /********** Custom CSS ************/
 .font-weight-medium {
@@ -9601,9 +9610,8 @@ a.text-dark:hover, a.text-dark:focus {
 /* 상단으로 이동 버튼 */
 .back-to-top {
   position: fixed;
-  display: block;
-/*  right: 30px;  기존 설정( 채팅창과 겹쳐서 변경 -left:50% 삽입:중간에 위치 ) */
-  left: 50%;
+  display: none;
+  right: 30px;
   bottom: 30px;
   z-index: 11;
   animation: action 1s infinite alternate;
