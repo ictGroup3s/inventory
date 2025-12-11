@@ -139,10 +139,10 @@ public class projectController {
 		return "detail2";
 	}
 	
-   	@GetMapping("mlist")
-	public String mlist() {
-		return "mlist";
-	}
+
+	  @GetMapping("mlist") 
+	  public String mlist() { return "mlist"; }
+
 	
 	@GetMapping("selectGui")	
     public String selectGui(Model m,

@@ -11,10 +11,15 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.model.vo.CartItemVO;
+import com.example.model.vo.CustomerVO;
 import com.example.model.vo.order_detailVO;
 import com.example.model.vo.ordersVO;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Repository
@@ -143,27 +148,31 @@ public class orderRepository {
 	        }
 	    }
 
-	    // 주문 상세 저장
+	 // 주문 상세 저장
 	    public void insertOrderDetail(int orderNo, List<CartItemVO> cartItems) throws SQLException {
-	        String sql = "INSERT INTO order_detail (order_no, item_no, item_cnt, item_price) VALUES (?, ?, ?, ?)";
+	        // ⭐ DETAIL_NO를 시퀀스에서 가져오도록 수정
+	        String sql = "INSERT INTO order_detail (detail_no, order_no, item_no, item_cnt, item_price) " +
+	                     "VALUES (order_detail_seq.NEXTVAL, ?, ?, ?, ?)";
+	        
 	        try (Connection conn = dataSource.getConnection();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            for (CartItemVO item : cartItems) {
 	                pstmt.setInt(1, orderNo);
-	                pstmt.setInt(2, item.getItem_no());
+	                pstmt.setInt(2, item.getProduct().getItem_no());
 	                pstmt.setInt(3, item.getQty());
-	                pstmt.setInt(4, item.getItem_price());
+	                pstmt.setInt(4, item.getProduct().getSales_p());
 	                pstmt.addBatch();
 	            }
 	            pstmt.executeBatch();
 	        }
 	    }
 
-	    // 방금 주문 상세 조회
+	 // 방금 주문 상세 조회
 	    public List<order_detailVO> getOrderDetail(int orderNo) throws SQLException {
 	        List<order_detailVO> list = new ArrayList<>();
 	        String sql = """
 	            SELECT od.detail_no, od.order_no, od.item_no, od.item_cnt, od.item_price,
+	                   (od.item_cnt * od.item_price) AS amount,
 	                   p.item_name, TO_CHAR(o.order_date,'YYYY-MM-DD HH24:MI:SS') AS order_date,
 	                   o.order_status
 	            FROM order_detail od
@@ -185,6 +194,7 @@ public class orderRepository {
 	                d.setItem_no(rs.getInt("item_no"));
 	                d.setItem_cnt(rs.getInt("item_cnt"));
 	                d.setItem_price(rs.getInt("item_price"));
+	                d.setAmount(rs.getInt("amount"));  // ⭐ 추가
 	                d.setItem_name(rs.getString("item_name"));
 	                d.setOrder_date(rs.getString("order_date"));
 	                d.setOrder_status(rs.getString("order_status"));
@@ -199,6 +209,7 @@ public class orderRepository {
 	        List<order_detailVO> list = new ArrayList<>();
 	        String sql = """
 	            SELECT od.detail_no, od.order_no, od.item_no, od.item_cnt, od.item_price,
+	                   (od.item_cnt * od.item_price) AS amount,
 	                   p.item_name, TO_CHAR(o.order_date,'YYYY-MM-DD HH24:MI:SS') AS order_date,
 	                   o.order_status
 	            FROM order_detail od
@@ -221,6 +232,7 @@ public class orderRepository {
 	                d.setItem_no(rs.getInt("item_no"));
 	                d.setItem_cnt(rs.getInt("item_cnt"));
 	                d.setItem_price(rs.getInt("item_price"));
+	                d.setAmount(rs.getInt("amount"));  // ⭐ 추가
 	                d.setItem_name(rs.getString("item_name"));
 	                d.setOrder_date(rs.getString("order_date"));
 	                d.setOrder_status(rs.getString("order_status"));
@@ -229,4 +241,5 @@ public class orderRepository {
 	        }
 	        return list;
 	    }
+	    
 }

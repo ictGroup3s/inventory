@@ -1,5 +1,4 @@
 
-
 /*체크박스 복사 스크립트*/
 document.getElementById('newaccount').addEventListener('change', function() {
     if(this.checked) {

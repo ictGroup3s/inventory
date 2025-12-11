@@ -85,7 +85,11 @@
     WHERE c.customer_id = #{userId}
 </select>
 
-
+<!-- 특정 고객의 장바구니 전체 삭제 -->
+<delete id="deleteCartByCustomer" parameterType="string">
+    DELETE FROM cart 
+    WHERE customer_id = #{customerId}
+</delete>
 
   
   

@@ -1,6 +1,5 @@
 package com.example.model.vo;
 
-
 import lombok.Data;
 
 @Data
@@ -15,6 +14,6 @@ public class order_detailVO {
 	private String order_date;
 	private String order_status;
 	
+	private Integer amount;	
 	
-
 }

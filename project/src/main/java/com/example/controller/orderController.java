@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -10,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.orderRepository;
 import com.example.model.vo.CartItemVO;
+import com.example.model.vo.CustomerVO;
 import com.example.model.vo.order_detailVO;
 import com.example.service.CartService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class orderController {
 
