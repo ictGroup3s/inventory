@@ -66,9 +66,9 @@
 	<!-- Main Layout -->
 	<div class="container-fluid">
 		<div class="row px-xl-5">
-			<div class="col-lg-2 ">
-				<!-- Sidebar -->
-				<nav class="category-sidebar">
+			<!-- LEFT SIDEBAR (PC ONLY) -->
+			<div class="col-lg-2 d-none d-lg-block">
+				<nav class="category-sidebar" id="mainSidebar">
 					<h6>관리자 페이지</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="dashboard" class="nav-link active">대쉬보드</a></li>
@@ -82,7 +82,7 @@
 				</nav>
 			</div>
 			<!-- Dashboard Content -->
-			<div class="col-lg-9">
+			<div class="col-lg-10">
 				<!-- Mobile toggler for sidebar -->
 				<nav class="navbar navbar-light bg-light d-lg-none">
 					<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -90,7 +90,9 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 				</nav>
-
+				<div class="collapse bg-white p-3" id="sidebarMenu"></div>
+				
+				<!-- dashbaord content -->
 				<div class="dashboard-content">
 					<!-- 상단 영역 -->
 					<div class="row mb-4">

@@ -79,12 +79,17 @@
 					<h6 class="p-3">Categories</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이
+								．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국
+								．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
-						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식
+								．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬
+								．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
+								．음료</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -252,11 +257,11 @@
 			<div class="col-lg-4 col-md-6 pb-1">
 				<div class="cat-item d-flex flex-column border mb-4"
 					style="padding: 30px;">
-					<a href="selectRecipe"
+					<a href="selectdrink"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/recipe.png" alt="">
+						class="img-fluid" src="img/drink.png" alt="">
 					</a>
-					<h5 class="font-weight-semi-bold m-0">레시피</h5>
+					<h5 class="font-weight-semi-bold m-0">생수 ．음료</h5>
 				</div>
 			</div>
 		</div>
@@ -610,36 +615,37 @@
 		class="fa fa-angle-double-up"></i></a>
 
 	<!-- ------------------채팅 관련 추가---------------- -->
-	<!-- ▣ 채팅 목록 박스 -->
-	<div id="chat-list-box" class="chat-list-box" style="display: none;">
-		<div class="chat-list-header">나의 채팅 목록</div>
-		<div id="chat-list" class="chat-list"></div>
-	</div>
-
-	<!-- ▣ 채팅창 -->
-	<div id="chat-box" class="chat-box" style="display: none;">
-		<div class="chat-header">
-			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
-			<span id="chat-close" class="chat-header-close">✕</span>
+	<c:if test="${sessionScope.loginRole == 0}">
+		<!-- ▣ 채팅 목록 박스 -->
+		<div id="chat-list-box" class="chat-list-box" style="display: none;">
+			<div class="chat-list-header">나의 채팅 목록</div>
+			<div id="chat-list" class="chat-list"></div>
 		</div>
 
-		<div id="chat-messages" class="chat-messages"></div>
+		<!-- ▣ 채팅창 -->
+		<div id="chat-box" class="chat-box" style="display: none;">
+			<div class="chat-header">
+				<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+				<span id="chat-close" class="chat-header-close">✕</span>
+			</div>
 
-		<div class="chat-input">
-			<input type="text" id="chat-text" placeholder="메시지 입력...">
-			<button id="chat-send">Send</button>
+			<div id="chat-messages" class="chat-messages"></div>
+
+			<div class="chat-input">
+				<input type="text" id="chat-text" placeholder="메시지 입력...">
+				<button id="chat-send">Send</button>
+			</div>
+			<button id="new-chat-btn"
+				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+				새 채팅 시작</button>
 		</div>
-		<button id="new-chat-btn"
-			style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
-			새 채팅 시작</button>
-	</div>
 
-	<!-- ▣ 채팅 열기 버튼 -->
-	<button id="chat-open" class="chat-open-btn">💬</button>
-
+		<!-- ▣ 채팅 열기 버튼 -->
+		<button id="chat-open" class="chat-open-btn">💬</button>
+	</c:if>
 	<div class="toast-container" id="toast-container"></div>
-	
-	
+
+
 	<!-- JavaScript Libraries -->
 	<!-- jQuery 먼저 -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -654,25 +660,20 @@
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
-	<!-- 로그인 ID 주입 (chat.js보다 위에) -->
+
+	<!-- 1. 로그인 ID 주입 (가장 먼저) -->
 	<script>
 		const myId = "${sessionScope.loginUser.customer_id}";
 		console.log("✅ myId 확인:", myId);
 	</script>
 
-	<!-- Chat JS -->
+	<!-- 2. Chat JS (SockJS/Stomp 준비된 이후 로드) -->
 	<script src="/js/CustomerChat.js?v=999"></script>
 
-	<!-- Main JS -->
-	<script src="js/main.js" defer></script>
+	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
+	<script src="/js/main.js" defer></script>
 
-	<!-- SockJS + STOMPJS (chat.js보다 위에) -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
-	
 </body>
 
 </html>

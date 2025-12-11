@@ -1,4 +1,7 @@
 (function($) {
+	//sidebar
+	$("#sidebarMenu").html($("#mainSidebar").html());
+
 	"use strict";
 
 	$(document).ready(function() {
@@ -281,6 +284,47 @@
 		var $btn = $(this);
 		var itemNo = $btn.data('item-no');
 		addToCart(itemNo);
+	});
+
+	const fields = $(".required-field");
+
+	// 필드 검증 함수
+	function validateFields() {
+		let allValid = true;
+
+		fields.each(function() {
+			const el = $(this);
+			const msg = el.closest("td").find(".error-msg");
+
+			if (el.val().trim() === "") {
+				el.addClass("input-error");
+				msg.removeClass("d-none");
+				allValid = false;
+			} else {
+				el.removeClass("input-error");
+				msg.addClass("d-none");
+			}
+		});
+
+		return allValid;
+	}
+
+	// 입력 또는 select 변경 시 바로 검증
+	fields.on("input change", function() {
+		validateFields();
+	});
+
+	// 버튼 클릭 시 최종 검증
+	$(".submit-btn").on("click", function(e) {
+		if (!validateFields()) {
+			e.preventDefault(); // submit 막기
+			return;
+		}
+
+		// 정상 submit → formaction 적용
+		const form = $(this).closest("form");
+		form.attr("action", $(this).attr("formaction") || form.attr("action"));
+		form.submit();
 	});
 
 })(jQuery);
