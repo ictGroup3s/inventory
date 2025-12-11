@@ -160,7 +160,7 @@
 								<input type="hidden" name="size" value="${size}" />
 							</form>
 						-->
-							<div class="dropdown ml-4">
+							<div class="dropdown ml-auto">
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
@@ -348,110 +348,64 @@
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
 	<!-- ------------------채팅 관련 추가---------------- -->
-	<!-- ▣ 채팅 목록 박스 -->
-	<div id="chat-list-box" class="chat-list-box" style="display: none;">
-		<div class="chat-list-header">나의 채팅 목록</div>
-		<div id="chat-list" class="chat-list"></div>
-	</div>
-
-	<!-- ▣ 채팅창 -->
-	<div id="chat-box" class="chat-box" style="display: none;">
-		<div class="chat-header">
-			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
-			<span id="chat-close" class="chat-header-close">✕</span>
+	<c:if test="${sessionScope.loginRole == 0}">
+		<!-- ▣ 채팅 목록 박스 -->
+		<div id="chat-list-box" class="chat-list-box" style="display: none;">
+			<div class="chat-list-header">나의 채팅 목록</div>
+			<div id="chat-list" class="chat-list"></div>
 		</div>
 
-		<div id="chat-messages" class="chat-messages"></div>
+		<!-- ▣ 채팅창 -->
+		<div id="chat-box" class="chat-box" style="display: none;">
+			<div class="chat-header">
+				<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+				<span id="chat-close" class="chat-header-close">✕</span>
+			</div>
 
-		<div class="chat-input">
-			<input type="text" id="chat-text" placeholder="메시지 입력...">
-			<button id="chat-send">Send</button>
+			<div id="chat-messages" class="chat-messages"></div>
+
+			<div class="chat-input">
+				<input type="text" id="chat-text" placeholder="메시지 입력...">
+				<button id="chat-send">Send</button>
+			</div>
+			<button id="new-chat-btn"
+				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+				새 채팅 시작</button>
 		</div>
-	</div>
 
-	<!-- ▣ 채팅 열기 버튼 -->
-	<button id="chat-open" class="chat-open-btn">💬</button>
+		<!-- ▣ 채팅 열기 버튼 -->
+		<button id="chat-open" class="chat-open-btn">💬</button>
+	</c:if>
+	<div class="toast-container" id="toast-container"></div>
 
 
 	<!-- JavaScript Libraries -->
+	<!-- jQuery 먼저 -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+	<!-- Bootstrap JS -->
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-	<!-- Contact Javascript File -->
+	<!-- Contact JS -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
-	<!-- Javascript -->
-	<script src="/js/main.js"></script>
-	<!-- 채팅 JS -->
-	<script src="/js/chat.js?v=1"></script>
 
-	<!-- SockJS + StompJS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
-	<!-- 
+	<!-- 1. 로그인 ID 주입 (가장 먼저) -->
 	<script>
-		// `main.js`에서 addToCart를 정의하지 않았을 때를 대비한 폴백 전역 함수 ("undefined" 오류 방지)
-		if (typeof window.addToCart !== 'function') {
-			window.addToCart = function(itemNo, qty) {
-				try {
-					console.log('fallback addToCart called', itemNo, qty);
-					if (!itemNo) { alert('itemNo required'); return; }
-					fetch('/cart/add', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-						body: 'item_no=' + encodeURIComponent(itemNo) + '&qty=' + encodeURIComponent(qty || 1)
-					}).then(function(res){
-						return res.json().catch(function(){ return null; });
-					}).then(function(json){
-						if (json && json.success) {
-							// 페이지 이동 대신 간단한 피드백을 보여줍니다
-							try { console.log('fallback addToCart success', json); 
-								alert('장바구니에 담겼습니다.'); 
-								} catch(e){}
-						} else {
-							alert('장바구니에 추가하지 못했습니다.');
-						}
-					}).catch(function(err){
-						console.error('fallback addToCart error', err);
-						alert('네트워크 오류');
-					});
-				} catch(e) { console.error(e); }
-			};
-		}
+		const myId = "${sessionScope.loginUser.customer_id}";
+		console.log("✅ myId 확인:", myId);
 	</script>
-	<script>
-		// 네이티브 클릭 핸들러: 버튼 내부(아이콘/텍스트) 어디를 눌러도 안정적으로 처리합니다
-		document.addEventListener('click', function(e){
-			try {
-				var target = e.target;
-				// 가장 가까운 'add-to-cart-btn' 클래스를 가진 요소를 찾습니다
-				var btn = target.closest ? target.closest('.add-to-cart-btn') : null;
-				if (!btn && target.classList && target.classList.contains('add-to-cart-btn')) btn = target;
-				if (btn) {
-					// 버튼 요소로부터 data-item-no 속성값을 읽습니다
-					var itemNo = btn.getAttribute('data-item-no') || btn.dataset && btn.dataset.itemNo;
-					console.log('Native click on add-to-cart-btn (resolved)', itemNo);
-					// 전역 addToCart 함수가 있으면 이를 우선 호출합니다
-					if (typeof window.addToCart === 'function') {
-						// 기본 폼/버튼 동작을 막습니다
-						e.preventDefault();
-						try { window.addToCart(itemNo, 1); } catch(err) { console.error('addToCart call failed', err); }
-					} else {
-						// 폴백: JS 핸들러가 없으면 둘러싼 폼을 제출합니다
-						var form = btn.closest ? btn.closest('form') : null;
-						if (form) form.submit();
-					}
-				}
-			} catch(err){ console.error('debug click listener error', err); }
-		}, true);
-	</script>
-	 -->
+
+	<!-- 2. Chat JS (SockJS/Stomp 준비된 이후 로드) -->
+	<script src="/js/CustomerChat.js?v=999"></script>
+
+	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
+	<script src="/js/main.js" defer></script>
+
 </body>
 
 </html>

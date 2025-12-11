@@ -1,6 +1,9 @@
 (function($) {
+	//sidebar
+	$("#sidebarMenu").html( $("#mainSidebar").html() );
+	
 	"use strict";
-
+	
 	$(document).ready(function() {
 		$('.bxslider').bxSlider({
 			auto: true,

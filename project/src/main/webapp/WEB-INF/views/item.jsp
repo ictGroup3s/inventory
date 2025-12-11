@@ -168,7 +168,7 @@
 									<button class="btn btn-primary mr-2" type="submit">등록</button>
 									<button class="btn btn-warning mr-2" type="submit"
 										formaction="/itemUpdate">수정</button>
-									
+
 								</div>
 							</form>
 						</div>
@@ -178,7 +178,22 @@
 					<!-- 상품 목록 테이블 영역 -->
 					<div class="row px-xl-5 mt-4">
 						<div class="col-lg-12">
-							<h4 class="mb-3">상품 목록</h4>
+							<div class="d-flex justify-content-between align-items-center mb-3">
+								<h4 class="mb-0">등록된 상품 목록</h4>
+								<div class="d-flex">
+									<input type="text" id="itemSearch" class="form-control mr-2"
+										placeholder="상품명 검색" style="width: 200px;"> <select
+										id="categoryFilter" class="form-control" style="width: 200px;">
+										<option value="">전체 카테고리</option>
+										<option value="1">구이찜볶음</option>
+										<option value="2">국밥면</option>
+										<option value="3">식단관리</option>
+										<option value="4">분식간식</option>
+										<option value="5">반찬소스</option>
+										<option value="6">생수음료</option>
+									</select>
+								</div>
+							</div>
 							<!-- 상품 목록 테이블: 가로 전체(w-100) -->
 							<table class="table table-bordered w-100">
 								<thead class="thead-light">
@@ -195,8 +210,7 @@
 										<tr class="item-row" data-item_no="${item.item_no}"
 											data-item_name="${item.item_name}"
 											data-origin_p="${item.origin_p}"
-											data-sales_p="${item.sales_p}" 
-											data-cate_no="${item.cate_no}"
+											data-sales_p="${item.sales_p}" data-cate_no="${item.cate_no}"
 											data-stock_cnt="${item.stock_cnt}"
 											data-item_content="${item.item_content}"
 											data-item_img="${item.item_img}">
@@ -205,7 +219,8 @@
 											<td>${item.cate_name}</td>
 											<td>${item.origin_p}</td>
 											<td>${item.sales_p}</td>
-											<td><button class="btn btn-danger delete-btn" data-itemno="${item.item_no}">삭제</button></td>
+											<td><button class="btn btn-danger delete-btn"
+													data-itemno="${item.item_no}">삭제</button></td>
 										</tr>
 									</c:forEach>
 								</tbody>
