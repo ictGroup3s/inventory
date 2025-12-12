@@ -44,7 +44,17 @@ public class projectController {
 	public String shop() {
 		return "shop";
 	}
-  
+	
+	@GetMapping("kakaolog")
+	public String kakaolog() {
+		return "kakaolog";
+	}
+	
+//	@GetMapping("checkout")
+//	public String checkout() {
+//		return "checkout";
+//	}
+	
 	@GetMapping("header")
 	public String header() {
 		return "header";
@@ -56,7 +66,7 @@ public class projectController {
 	}
 	
 	@GetMapping("update")
-	public String update() {
+	public String updateUser() {
 		return "update";
 	}
 	
@@ -75,11 +85,6 @@ public class projectController {
 		return "register";
 	}
 	 
-	@GetMapping("event1")
-	public String event1() {
-		return "event1";
-	}
-	
 	@GetMapping("event2")
 	public String event2() {
 		return "event2";
@@ -123,8 +128,7 @@ public class projectController {
         }
         return "selectall";
     }
-	
-		
+    
     @GetMapping("detail")
     public String detail(@RequestParam(value = "item_no", required = false) Integer item_no, Model m) throws Exception {
         if (item_no != null) {
@@ -143,10 +147,10 @@ public class projectController {
 		return "detail2";
 	}
 	
-   	@GetMapping("mlist")
-	public String mlist() {
-		return "mlist";
-	}
+
+	  @GetMapping("mlist") 
+	  public String mlist() { return "mlist"; }
+
 	
 	@GetMapping("selectGui")	
     public String selectGui(Model m,

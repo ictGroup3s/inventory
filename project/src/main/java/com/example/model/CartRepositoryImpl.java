@@ -57,6 +57,10 @@ public class CartRepositoryImpl implements CartRepository {
         Integer cnt = sess.selectOne(NAMESPACE + "countByCustomer", customerId);
         return cnt == null ? 0 : cnt;
     }
+    @Override
+    public void deleteCartByCustomer(String customerId) {
+        sess.delete(NAMESPACE + "deleteCartByCustomer", customerId);
+    }
 
     
     

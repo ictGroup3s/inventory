@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>로그인</title>
+<title>카카오 로그인</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <!-- Favicon -->
@@ -66,71 +66,20 @@
 		<div
 			class="d-flex flex-column align-items-center justify-content-center"
 			style="min-height: 200px">
-			<h1 class="font-weight-semi-bold text-uppercase mb-3">LOGIN</h1>
+			<h1 class="font-weight-semi-bold text-uppercase mb-3">카카오 로그인 완료</h1>
 			<div class="d-inline-flex">
-				<p class="m-0">
-					<a href="/">Home</a>
-				</p>
-				<p class="m-0 px-2">-</p>
-				<p class="m-0">Login</p>
+				<p class="m-0 px-2"></p>
+				<p class="m-0"></p>
 			</div>
 		</div>
 	</div>
-	<c:if test="${not empty message}">
-		<script>
-			alert('${message}');
-		</script>
-	</c:if>
-	<!-- Login Form -->
-	<div class="container mb-5">
-		<div class="login-card">
 
-			<h3 class="text-center login-title">로그인</h3>
+		<div class="container mb-5">
+		<div class="login-card" align="center">
 
-
-			<form action="loginAction" method="post">
-				<!-- 로그인 실패 메시지 -->
-				<c:if test="${not empty loginError}">
-					<div class="alert alert-danger">${loginError}</div>
-				</c:if>
-
-				<div class="form-group">
-					<label>아이디</label> <input type="text" name="login_id"
-						class="form-control" placeholder="아이디를 입력해주세요" required>
-				</div>
-
-				<div class="form-group">
-					<label>비밀번호</label> <input type="password" name="login_pass"
-						class="form-control" placeholder="비밀번호를 입력해주세요" required>
-				</div>
-
-				<div class="text-right mb-2">
-					<a href="find">아이디 찾기 / 비밀번호 찾기</a>
-
-				</div>
-
-				<button type="submit" class="btn btn-primary btn-block py-2">로그인</button>
-
-				<button type="button" onclick="location.href='register'"
-					class="btn btn-outline-primary btn-block py-2 mt-2">회원가입</button>
-			</form>
-
-			<hr class="my-4">
-
-			<!-- Social Login -->
-			<div class="text-center mb-3">
-				<p class="mb-2">소셜 계정으로 로그인</p>
-				<div class="social-login">
-				 <!-- Google 로그인 버튼 -->
-					<a href="/googleLogin">
-					<img src="/img/google.png" alt="Google 로그인"> </a>
-					
-					<img src="/img/naver.png" alt="Naver 로그인"> 
-					
-					<a href="/oauth/kakao">
-					<img src="/img/kakao.png" alt="Kakao 로그인"></a>
-				</div>
-			</div>
+			<p>카카오 로그인 완료!</p>
+			<a href="/header">홈으로 돌아가기</a>
+			
 
 		</div>
 	</div>
@@ -204,6 +153,8 @@
     </div>
     <!-- Footer End -->
 
+
+
 	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
@@ -212,3 +163,4 @@
 
 </body>
 </html>
+

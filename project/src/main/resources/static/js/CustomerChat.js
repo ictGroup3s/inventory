@@ -5,6 +5,12 @@ $(function() {
 
 	$(".back-to-top").show();
 
+	// 채팅창 상태 복원
+	const chatOpen = sessionStorage.getItem("chatOpen");
+	if (chatOpen === "true") {
+		$("#chat-box").css("display", "flex");
+	}
+	
 	const isLoggedIn = myId && myId.trim() !== "";
 
 	let socket = null;
@@ -181,7 +187,7 @@ $(function() {
 			},
 			error: function() {
 				console.error("❌ 관리자 배정 실패");
-				showToast("관리자 연결에 실패했습니다.","error");
+				showToast("관리자 연결에 실패했습니다.", "error");
 			}
 		});
 	}
@@ -244,7 +250,7 @@ $(function() {
 		}
 
 		if (!socket || socket.readyState !== WebSocket.OPEN) {
-			showToast("연결이 끊어졌습니다. 재연결 중...","info");
+			showToast("연결이 끊어졌습니다. 재연결 중...", "info");
 			connectWebSocket();
 			return;
 		}
@@ -262,7 +268,7 @@ $(function() {
 			$("#chat-text").val("");
 		} catch (error) {
 			console.error("전송 실패:", error);
-			showToast("메시지 전송에 실패했습니다.","error");
+			showToast("메시지 전송에 실패했습니다.", "error");
 		}
 	}
 
@@ -276,7 +282,7 @@ $(function() {
 		}
 
 		if (!assignedAdminId) {
-			showToast("관리자 연결 중입니다. 잠시 후 다시 시도해주세요.","info");
+			showToast("관리자 연결 중입니다. 잠시 후 다시 시도해주세요.", "info");
 			assignAdmin();
 			return;
 		}
@@ -326,16 +332,19 @@ $(function() {
 
 		if (chatBox.css("display") === "none") {
 			chatBox.css("display", "flex");
+			sessionStorage.setItem("chatOpen", "true");  // 상태 저장
 			hasNewMessage = false;
 			$("#chat-open").removeClass("has-unread");
 			loadLatestChat();
 		} else {
 			chatBox.hide();
+			sessionStorage.setItem("chatOpen", "false");  // 상태 저장
 		}
 	});
 
 	$("#chat-close").click(function() {
 		chatBox.hide();
+		sessionStorage.setItem("chatOpen", "false");  // 상태 저장
 	});
 
 	$("#chat-toggle-list").click(function() {
@@ -406,11 +415,11 @@ $(function() {
 							url: "/chat/delete/" + room.chat_no,
 							type: "DELETE",
 							success: function() {
-								showToast("삭제되었습니다.","info");
+								showToast("삭제되었습니다.", "info");
 								loadChatList();
 							},
 							error: function() {
-								showToast("삭제에 실패했습니다.","error");
+								showToast("삭제에 실패했습니다.", "error");
 							}
 						});
 					}
