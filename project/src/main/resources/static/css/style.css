@@ -74,10 +74,11 @@ body {
 }
  */
  
- body {
-  width: 1500px;    /* 페이지의 너비를 고정 */
-  height: 800px;    /* 페이지의 높이를 고정 */
-  margin: 0 auto;   /* 페이지가 화면 중앙에 배치되도록 설정 */
+body {
+  width: 100%;          /* 너비를 100%로 설정하여 화면 크기에 맞게 늘어나게 함 */
+  max-width: 1500px;    /* 최대 너비를 1500px로 제한 */
+  height: 800px;        /* 높이는 고정 (필요에 따라 수정 가능) */
+  margin: 0 auto;       /* 페이지 중앙에 배치 */
 }
 
 
@@ -9625,41 +9626,13 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-/* 간단한 스타일: 버튼과 채팅박스 ----채팅관려 추가 시작-------- */
-  .chat-button {
-    position: fixed; right: 20px; bottom: 20px; z-index:1050;
-    width:56px; height:56px; border-radius:50%; background:#007bff; color:#fff;
-    display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.18);
-    font-size:22px;
-  }
-  .chat-box {
-    position: fixed; right: 20px; bottom: 90px; z-index:1060;
-    width: 320px; max-width: calc(100% - 40px); height: 420px;
-    background:#fff; border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,0.15);
-    display: none; flex-direction:column; overflow:hidden;
-  }
-  .chat-header { background:#007bff; color:#fff; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; }
-  .chat-messages { padding:12px; background:#f7f7f7; overflow-y:auto; flex:1; }
-  .chat-input { display:flex; gap:8px; padding:8px; border-top:1px solid #eee; }
-  .chat-input input[type="text"]{ flex:1; padding:8px; border-radius:6px; border:1px solid #ddd; }
-  .msg { margin-bottom:10px; }
-  .msg .meta { font-size:11px; color:#666; margin-bottom:4px; }
-  .msg .text { display:inline-block; padding:8px 10px; border-radius:8px; max-width:80%; }
-  .msg.customer .text { background:#e9f2ff; color:#044; float:left; }
-  .msg.admin .text { background:#007bff; color:#fff; float:right; }
-  /* 데스크탑 */
-.chat-button {
-  right: 90px;
-  z-index: 1060;
-}
-
 /* 작은 화면에서는 버튼을 왼쪽으로 이동(혹은 기본 위치로) */
 @media (max-width: 576px) {
   .chat-button {
     right: 20px;      /* 또는 left:20px; 로 완전히 왼쪽으로 보낼 수 있음 */
     transform: none;
     width: 40px;
-    height: 40px;
+  height: 40px;
   }
 }
 /* 간단한 스타일: 버튼과 채팅박스 ----채팅관려 추가 끝------- */
@@ -9763,54 +9736,6 @@ a.text-dark:hover, a.text-dark:focus {
  maintainAspectRatio가 true이고 aspectRatio가 설정되어 있으면
  Chart.js는 캔버스 크기를 그대로 따릅니다. */
 
-.chart-box { width:100%; height:320px; max-height:60vh; }
-
-/* 중간 크기(screen)에서는 비슷한 비율을 유지하되, 차트가 지나치게 길어지지 않도록 최대 높이를 제한합니다. */
-@media (max-width: 992px) {
-  .chart-box { height:300px; max-height:55vh; }
-}
-
-/* 작은 화면에서는 너무 많은 세로 공간을 차지하지 않도록 높이를 제한합니다. */
-@media (max-width: 576px) {
-  .chart-box { height:220px; max-height:40vh; }
-}
-
-/* 카드 본문을 flex로 유지하여 chart-box가 사용 가능한 공간을 채우도록 합니다. */
-.card.h-100 > .card-body { /* keep default flow to avoid forcing equal-height stretching */ }
-.row { align-items: flex-start; }
-.card.h-100 { height: auto !important; }
-.card.h-100 > .card-body { /* keep default flow to avoid forcing equal-height stretching */ }
-
-/* 캔버스가 컨테이너를 완전히 채우도록 강제합니다 (Chart.js는 캔버스 크기를 그대로 따릅니다). */
-.chart-box canvas { width:100% !important; display:block; }
-
-/* --- 표 조정: 지표 테이블의 글자 크기를 줄이고 패딩을 더 타이트하게 조정 --- */
-/* 날짜가 한 줄에 들어가도록 일일(daily) 테이블을 더 컴팩트하게 만들기 */
-#dailyTable, #monthlyMetricsTable, #monthlyTable {
-  font-size: 12px; /* smaller */
-}
-#dailyTable td, #dailyTable th, #monthlyMetricsTable td, #monthlyMetricsTable th {
-  padding: .25rem .4rem; /* tighter cell padding */
-}
-/* 일일 테이블에서 날짜 열이 줄바꿈되지 않도록 하고 고정된 최소 너비를 지정합니다 */
-#dailyTable th:first-child, #dailyTable td:first-child {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 92px; /* 날짜 열이 충분한 너비를 가지도록 합니다 */
-  max-width: 120px;
-}
-/* 아주 작은 화면에서 여전히 공간이 부족하면 글꼴 크기를 조금 더 줄입니다 */
-@media (max-width: 768px) {
-  #dailyTable { font-size: 11px; }
-  #dailyTable th:first-child, #dailyTable td:first-child { min-width: 80px; }
-}
-@media (max-width: 576px) {
-  #dailyTable, #monthlyMetricsTable, #monthlyTable { font-size: 11px; }
-}
-#categorySalesTable th, td {
-	font-size: 12px;
-}
 
 /* checkout  */
 .invalid-phone {
@@ -9836,4 +9761,85 @@ a.text-dark:hover, a.text-dark:focus {
     width: 100%;  */
 /*   height: 250px;     */     /* 이미지 최대 높이 */
 /*    margin-bottom: 10px;   */     /* 이미지 아래 여백 */   
-/* } */
+/* }
+*/
+
+
+/* PC용 사이드바 */
+.category-sidebar {
+    background: #fff;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+}
+
+/* 모바일에서는 사이드바 숨기기 */
+@media (max-width: 991px) {
+    .category-sidebar {
+        display: none !important;
+    }
+}
+
+.item-row {
+    cursor: pointer;
+}
+
+.item-row:hover {
+    background-color: #f5f5f5;
+}
+
+/* +,- */
+#plusBtn, #minusBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #999;
+}
+
+#adjust_qty {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#new_stock {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* 재고 조정 버튼 */
+.stock-adjust-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.stock-adjust-btn:hover {
+    background-color: #FFD333;
+    border-color: #FFD333;
+    color: #3D464D;
+}
+
+/* 수량 입력창 */
+#adjust_qty {
+    font-weight: 500;
+}
+
+/* 입고/출고 라벨 */
+.adjust-in {
+    color: #3D464D;
+    font-weight: 500;
+}
+
+.adjust-out {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.input-error {
+    border: 2px solid #e74c3c; /* 진한 빨간색 테두리 */
+    background-color: #fdecea; /* 연한 빨간 배경 */
+}
+ 
+    

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.model.vo.ProductVO;
+import com.example.model.vo.StockVO;
 
 @Repository
 public class AdminRepositoryImpl implements AdminRepository{
@@ -43,4 +44,25 @@ public class AdminRepositoryImpl implements AdminRepository{
 		
 	}
 
+	@Override
+	public void insertStockHistory(StockVO vo) {
+		sess.insert("adminmapper.insertStockHistory",vo);
+		
+	}
+
+	@Override
+	public ProductVO getProductByNo(Integer itemNo) {
+	    return sess.selectOne("adminmapper.getProductByNo", itemNo);
+	}
+	
+	@Override
+	public void updateStockOnly(ProductVO vo) {
+	    sess.update("adminmapper.updateStockOnly", vo);
+	}
+	
+	@Override
+	public List<ProductVO> getStockList() {
+	    return sess.selectList("adminmapper.getStockList");
+	}
+	
 }

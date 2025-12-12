@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%-- 가격,숫자 포맷 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,28 +18,28 @@
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+<link 
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" 
 	rel="stylesheet">
 
 <!-- Font Awesome -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+<link 
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" 
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="lib/owlcarousel/assets/owl.carousel.min.css" 
 	rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
 <!-- 채팅 관련 -->
 <link href="css/chat.css" rel="stylesheet">
-
 </head>
 
 <body>
 
+    <!-- Topbar Start -->
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
@@ -123,44 +125,23 @@
 				<nav class="category-sidebar">
 					<h6 class="p-3">Categories</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="selectall"
-							class="nav-link active">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이
-								．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link">국
-								．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
-						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식
-								．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬
-								．소스</a></li>
-						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
-								．음료</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
 					</ul>
 				</nav>
 			</div>
+			
 			<div class="col-lg-9 col-md-12">
 				<div class="row pb-3">
 					<div class="col-12 pb-1">
 						<div
-							class="d-flex align-items-center justify-content-between mb-4">
-							<!--  아래 검색창
-							<form action="selectall" method="get">
-							
-								<div class="input-group">
-									<input type="text" name="q" class="form-control"
-										placeholder="Search by name" value="${q}">
-									<div class="input-group-append">
-										<button class="input-group-text bg-transparent text-primary" type="submit">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
-								</div>
-							 	
-								<input type="hidden" name="size" value="${size}" />
-							</form>
-						-->
-							<div class="dropdown ml-4">
+							class="d-flex align-items-center justify-content-between mb-4">							
+							<div class="dropdown ml-auto">	<!-- ml-auto = 왼쪽 여백 자동 채움(margin-left: auto) -->
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
@@ -200,12 +181,51 @@
 								<div
 									class="card-body border-left border-right text-center p-0 pt-4 pb-3">
 									<h6 class="text-truncate mb-3">${item.item_name}</h6>
-									<div class="d-flex justify-content-center">
-										<h6>${item.sales_p}원</h6>
-										<h6 class="text-muted ml-2">
-											<del>${item.sales_p}원</del>
-										</h6>
+									
+								<%-- 평점 리뷰 적용 --%>	
+									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
+										<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
+										<span class="mr-1">
+											<c:forEach begin="1" end="5" var="i">
+												<c:choose>
+													<c:when test="${i <= rating}">
+														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													</c:when>
+													<c:otherwise>
+														<i class="far fa-heart" style="color: #D19C97;"></i>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</span>
+										<c:if test="${item.review_cnt > 0}">
+											<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
+										</c:if>
+										<span>(${item.review_cnt})</span>
 									</div>
+								<%-- 평점 리뷰 적용 --%>
+									
+								<%-- 할인가 적용 --%>	
+									<div class="d-flex justify-content-center">
+										<c:choose>
+											<c:when test="${not empty item.dis_rate and item.dis_rate > 0}">
+												<c:set var="discounted" value="${item.sales_p * (100 - item.dis_rate) / 100}" />
+												
+											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+												<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+												<h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+											
+												<h6 class="text-muted ml-2">
+													<del><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</del>
+												</h6>
+											</c:when>
+											<c:otherwise>
+												<h6><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h6>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								<%-- 할인가 적용 --%>
+									
 								</div>
 								<div
 									class="card-footer d-flex justify-content-between bg-light border">
@@ -271,9 +291,8 @@
 	</div>
 
 	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5"
-		style="margin-top: 550px !important;">
-		<div class="row px-xl-5 pt-5">
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -299,30 +318,33 @@
 							<a class="text-dark mb-2" href="/"><i
 								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
 								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-							<!--  <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
+								class="text-dark mb-2" href="mlist"><i
+								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
+								class="text-dark mb-2" href="cart"><i
+								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
+								class="text-dark mb-2" href="checkout"><i
+								class="fa fa-angle-right mr-2"></i>결제</a>
 						</div>
 					</div>
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-md-12 mt-4 mb-5">
+								<p class="text-dark mb-2">
+									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
 
-					<div class="row">
-						<div class="col-md-12 mt-4 mb-5">
-							<p class="text-dark mb-2">
-								<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
-								&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
-
-							</p>
-							<br>
-							<p style="color: #999;">
-								법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
-								통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
-								채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
-							</p>
+								</p>
+								<br>
+								<p style="color: #999;">
+									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+								</p>
+							</div>
 						</div>
+
 					</div>
-
-
 
 				</div>
 			</div>
@@ -348,110 +370,64 @@
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
 	<!-- ------------------채팅 관련 추가---------------- -->
-	<!-- ▣ 채팅 목록 박스 -->
-	<div id="chat-list-box" class="chat-list-box" style="display: none;">
-		<div class="chat-list-header">나의 채팅 목록</div>
-		<div id="chat-list" class="chat-list"></div>
-	</div>
-
-	<!-- ▣ 채팅창 -->
-	<div id="chat-box" class="chat-box" style="display: none;">
-		<div class="chat-header">
-			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
-			<span id="chat-close" class="chat-header-close">✕</span>
+	<c:if test="${sessionScope.loginRole == 0}">
+		<!-- ▣ 채팅 목록 박스 -->
+		<div id="chat-list-box" class="chat-list-box" style="display: none;">
+			<div class="chat-list-header">나의 채팅 목록</div>
+			<div id="chat-list" class="chat-list"></div>
 		</div>
 
-		<div id="chat-messages" class="chat-messages"></div>
+		<!-- ▣ 채팅창 -->
+		<div id="chat-box" class="chat-box" style="display: none;">
+			<div class="chat-header">
+				<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+				<span id="chat-close" class="chat-header-close">✕</span>
+			</div>
 
-		<div class="chat-input">
-			<input type="text" id="chat-text" placeholder="메시지 입력...">
-			<button id="chat-send">Send</button>
+			<div id="chat-messages" class="chat-messages"></div>
+
+			<div class="chat-input">
+				<input type="text" id="chat-text" placeholder="메시지 입력...">
+				<button id="chat-send">Send</button>
+			</div>
+			<button id="new-chat-btn"
+				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+				새 채팅 시작</button>
 		</div>
-	</div>
 
-	<!-- ▣ 채팅 열기 버튼 -->
-	<button id="chat-open" class="chat-open-btn">💬</button>
+		<!-- ▣ 채팅 열기 버튼 -->
+		<button id="chat-open" class="chat-open-btn">💬</button>
+	</c:if>
+	<div class="toast-container" id="toast-container"></div>
 
 
 	<!-- JavaScript Libraries -->
+	<!-- jQuery 먼저 -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+	<!-- Bootstrap JS -->
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-	<!-- Contact Javascript File -->
+	<!-- Contact JS -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
-	<!-- Javascript -->
-	<script src="/js/main.js"></script>
-	<!-- 채팅 JS -->
-	<script src="/js/chat.js?v=1"></script>
 
-	<!-- SockJS + StompJS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
-	<!-- 
+	<!-- 1. 로그인 ID 주입 (가장 먼저) -->
 	<script>
-		// `main.js`에서 addToCart를 정의하지 않았을 때를 대비한 폴백 전역 함수 ("undefined" 오류 방지)
-		if (typeof window.addToCart !== 'function') {
-			window.addToCart = function(itemNo, qty) {
-				try {
-					console.log('fallback addToCart called', itemNo, qty);
-					if (!itemNo) { alert('itemNo required'); return; }
-					fetch('/cart/add', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-						body: 'item_no=' + encodeURIComponent(itemNo) + '&qty=' + encodeURIComponent(qty || 1)
-					}).then(function(res){
-						return res.json().catch(function(){ return null; });
-					}).then(function(json){
-						if (json && json.success) {
-							// 페이지 이동 대신 간단한 피드백을 보여줍니다
-							try { console.log('fallback addToCart success', json); 
-								alert('장바구니에 담겼습니다.'); 
-								} catch(e){}
-						} else {
-							alert('장바구니에 추가하지 못했습니다.');
-						}
-					}).catch(function(err){
-						console.error('fallback addToCart error', err);
-						alert('네트워크 오류');
-					});
-				} catch(e) { console.error(e); }
-			};
-		}
+		const myId = "${sessionScope.loginUser.customer_id}";
+		console.log("✅ myId 확인:", myId);
 	</script>
-	<script>
-		// 네이티브 클릭 핸들러: 버튼 내부(아이콘/텍스트) 어디를 눌러도 안정적으로 처리합니다
-		document.addEventListener('click', function(e){
-			try {
-				var target = e.target;
-				// 가장 가까운 'add-to-cart-btn' 클래스를 가진 요소를 찾습니다
-				var btn = target.closest ? target.closest('.add-to-cart-btn') : null;
-				if (!btn && target.classList && target.classList.contains('add-to-cart-btn')) btn = target;
-				if (btn) {
-					// 버튼 요소로부터 data-item-no 속성값을 읽습니다
-					var itemNo = btn.getAttribute('data-item-no') || btn.dataset && btn.dataset.itemNo;
-					console.log('Native click on add-to-cart-btn (resolved)', itemNo);
-					// 전역 addToCart 함수가 있으면 이를 우선 호출합니다
-					if (typeof window.addToCart === 'function') {
-						// 기본 폼/버튼 동작을 막습니다
-						e.preventDefault();
-						try { window.addToCart(itemNo, 1); } catch(err) { console.error('addToCart call failed', err); }
-					} else {
-						// 폴백: JS 핸들러가 없으면 둘러싼 폼을 제출합니다
-						var form = btn.closest ? btn.closest('form') : null;
-						if (form) form.submit();
-					}
-				}
-			} catch(err){ console.error('debug click listener error', err); }
-		}, true);
-	</script>
-	 -->
+
+	<!-- 2. Chat JS (SockJS/Stomp 준비된 이후 로드) -->
+	<script src="/js/CustomerChat.js?v=999"></script>
+
+	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
+	<script src="/js/main.js" defer></script>
+
 </body>
 
 </html>

@@ -32,7 +32,7 @@
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" href="css/stats.css">
 
 <!-- jQuery 먼저 -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -165,12 +165,12 @@
 							</div>
 						</div>
 
-						<!-- 방문자수 / 주문건수 차트 -->
+						<!-- 주문건수 차트 -->
 						<div class="col-lg-6 col-md-12 mb-3">
 							<div class="card">
 								<div class="card-body">
-									<h6 class="card-title">방문자수 / 주문건수</h6>
-									<p class="text-muted small">기간별 방문자수와 주문건수 (샘플)</p>
+									<h6 class="card-title">일별 주문건수</h6>
+									<p class="text-muted small">최근 7일간 주문건수</p>
 									<div id="visitorsChartWrap" class="chart-box">
 										<canvas id="visitorsChart"></canvas>
 										<div id="status-visitorsChart"

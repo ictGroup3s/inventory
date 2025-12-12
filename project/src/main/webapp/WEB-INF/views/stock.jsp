@@ -105,6 +105,13 @@
 						<!-- 우측: 상품 등록 폼 -->
 						<div class="col-lg-7 pb-5">
 							<h3 class="font-weight-semi-bold mb-4">상품입고</h3>
+							<!-- 재고 부족 경고 -->
+							<div id="stockWarning"
+								class="alert alert-warning d-flex align-items-center"
+								style="display: none !important;">
+								<i class="fas fa-exclamation-triangle mr-2"></i> <span>재고가
+									10개 미만입니다! 입고가 필요합니다.</span>
+							</div>
 
 							<form action="updateStock" method="post">
 								<!-- 상품 정보 입력 테이블 -->
@@ -112,33 +119,60 @@
 									<tr>
 										<td>상품코드</td>
 										<td><input type="number" class="form-control"
-											name="item_no" placeholder="상품코드"></td>
+											name="item_no" id="item_no" placeholder="상품코드" readonly></td>
 									</tr>
 									<tr>
 										<td>상품명</td>
 										<td><input type="text" class="form-control"
-											name="item_name" placeholder="상품명"></td>
+											name="item_name" id="item_name" placeholder="상품명" readonly></td>
 									</tr>
 									<tr>
 										<td>원가</td>
 										<td><input type="number" class="form-control"
-											name="origin_p" placeholder="원가"></td>
+											name="origin_p" id="origin_p" placeholder="원가" readonly></td>
 									</tr>
 									<tr>
 										<td>소비자가</td>
 										<td><input type="number" class="form-control"
-											name="sales_p" placeholder="소비자가"></td>
+											name="sales_p" id="sales_p" placeholder="소비자가" readonly></td>
 									</tr>
 									<tr>
-										<td>입고수량</td>
+										<td>현재 재고</td>
 										<td><input type="number" class="form-control"
-											name="stock_cnt" placeholder="입고수량"></td>
+											id="current_stock" placeholder="현재 재고" readonly
+											style="background-color: #f8f9fa;"></td>
+									</tr>
+									<tr>
+										<td>수량 조정</td>
+										<td>
+											<div class="d-flex align-items-center">
+												<button type="button"
+													class="btn btn-outline-secondary stock-adjust-btn"
+													id="minusBtn">−</button>
+												<input type="number" class="form-control mx-2 text-center"
+													id="adjust_qty" value="0" style="width: 80px;">
+												<button type="button"
+													class="btn btn-outline-secondary stock-adjust-btn"
+													id="plusBtn">+</button>
+												<span class="ml-3" id="adjustLabel" style="font-size: 14px;"></span>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>변경 후 재고</td>
+										<td><input type="number" class="form-control"
+											name="stock_cnt" id="new_stock" placeholder="변경 후 재고"
+											readonly
+											style="background-color: #fff3cd; border-color: #ffc107;">
+										</td>
 									</tr>
 								</table>
 
-								<!-- 등록/수정/삭제 버튼 -->
+								<!-- 버튼 -->
 								<div class="d-flex align-items-center mb-4 pt-2">
-									<button class="btn btn-primary mr-2" type="submit">상품입고</button>
+									<button class="btn btn-primary mr-2" type="submit"
+										id="stockSubmitBtn" disabled>재고 수정</button>
+									<button class="btn btn-secondary" type="button" id="resetBtn">초기화</button>
 								</div>
 							</form>
 						</div>
@@ -148,7 +182,23 @@
 					<!-- 상품 목록 테이블 영역 -->
 					<div class="row px-xl-5 mt-4">
 						<div class="col-lg-12">
-							<h4 class="mb-3">상품 목록</h4>
+							<div
+								class="d-flex justify-content-between align-items-center mb-3">
+								<h4 class="mb-0">상품 목록</h4>
+								<div class="d-flex">
+									<input type="text" id="itemSearch" class="form-control mr-2"
+										placeholder="상품명 검색" style="width: 200px;"> <select
+										id="categoryFilter" class="form-control" style="width: 200px;">
+										<option value="">전체 카테고리</option>
+										<option value="1">구이찜볶음</option>
+										<option value="2">국밥면</option>
+										<option value="3">식단관리</option>
+										<option value="4">분식간식</option>
+										<option value="5">반찬소스</option>
+										<option value="6">생수음료</option>
+									</select>
+								</div>
+							</div>
 							<!-- 상품 목록 테이블: 가로 전체(w-100) -->
 							<table class="table table-bordered w-100">
 								<thead class="thead-light">
@@ -157,6 +207,7 @@
 										<th>상품명</th>
 										<th>원가</th>
 										<th>입고수량</th>
+										<th>출고수량</th>
 										<th>재고수량</th>
 									</tr>
 								</thead>
@@ -165,14 +216,26 @@
 										<tr class="item-row" data-item_no="${item.item_no}"
 											data-item_name="${item.item_name}"
 											data-origin_p="${item.origin_p}"
-											data-sales_p="${item.sales_p}"
+											data-sales_p="${item.sales_p}" data-cate_no="${item.cate_no}"
 											data-stock_cnt="${item.stock_cnt}"
 											data-item_img="${item.item_img}">
-											<td>${item.item_no }</td>
-											<td>${item.item_name }</td>
-											<td>${item.origin_p }</td>
-											<td>${item.stock_cnt }</td>
-											<td>${item.stock_cnt }</td>
+											<td>${item.item_no}</td>
+											<td>${item.item_name}</td>
+											<td>${item.origin_p}</td>
+											<td>${item.stock_in}</td>
+											<td>${item.stock_out}</td>
+											<td><c:choose>
+													<c:when test="${item.stock_cnt < 10}">
+														<span class="text-danger font-weight-bold"> 
+														<i class="fas fa-exclamation-triangle"></i>
+															${item.stock_cnt}
+														</span>
+													</c:when>
+													<c:otherwise>
+							                            ${item.stock_cnt}
+							                        </c:otherwise>
+												</c:choose>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>

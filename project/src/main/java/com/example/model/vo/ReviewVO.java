@@ -11,5 +11,6 @@ public class ReviewVO {
 	private String re_date;
 	private Integer item_no;
 	private String customer_id;
+	private Integer rating; // 평점 (1~5)
 	
 }

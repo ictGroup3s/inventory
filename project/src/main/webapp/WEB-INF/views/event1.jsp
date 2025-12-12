@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%><!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%><!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en">
 
 <head>
@@ -65,23 +65,27 @@
 
 
     <!-- Navbar Start -->
-    <div class="container-fluid mb-5">
-        <div class="row border-top px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                    <h6 class="m-0">Categories</h6>
-                    <i class="fa fa-angle-down text-dark"></i>
-                </a>
-                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 325px">
-                        <a href="selectall" class="nav-item nav-link">전체상품</a>
-                        <a href="selectGui" class="nav-item nav-link">구이 ．찜 ．볶음 </a>
-                        <a href="selectSoup" class="nav-item nav-link">국 ．밥 ．면</a>
-                        <a href="selectDiet" class="nav-item nav-link"> 식단관리 </a>
-                        <a href="selectBunsik" class="nav-item nav-link">분식 ．간식</a>
-                        <a href="selectBanchan" class="nav-item nav-link">반찬 ．소스</a>
-                        <a href="selectRecipe" class="nav-item nav-link">레시피</a>
-                    </div>
+    <div class="container-fluid pt-5">
+       <div class="row px-xl-5">
+       <!-- ================== 왼쪽 카테고리 ================== -->
+            <div class="col-lg-2 col-md-12 d-none d-lg-block">
+				<nav class="category-sidebar">
+                  <h6 class="p-3">Categories</h6>
+                   <ul class="nav flex-column">
+						<li class="nav-item"><a href="selectall"
+							class="nav-link active">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이
+								．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국
+								．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식
+								．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬
+								．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
+								．음료</a></li>
+					</ul>
                 </nav>
             </div>
             <div class="col-lg-9">
@@ -94,22 +98,31 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <!-- <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">메인</a>
-                            <a href="shop" class="nav-item nav-link">상품</a>
-                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="cart" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout" class="dropdown-item">Checkout</a>
-                                </div>
-                            </div>
-                            
-                        </div> -->
                         <div class="navbar-nav ml-auto py-0">
-                        	<a href="login" class="nav-item nav-link">로그인</a>
-                        	<a href="register" class="nav-item nav-link">회원가입</a>
-                            <a href="board" class="nav-item nav-link">고객센터</a>
+                        	<!-- 로그인전 -->
+							<c:if test="${empty sessionScope.loginUser}">
+								<a href="login" class="nav-item nav-link">로그인</a>
+								<a href="register" class="nav-item nav-link">회원가입</a>
+								<a href="board" class="nav-item nav-link">고객센터</a>
+							</c:if>
+
+							<!-- 회원 로그인 후   -->
+							<c:if test="${not empty sessionScope.loginUser}">
+								<span class="nav-item nav-link">안녕하세요,
+									${sessionScope.loginUser.customer_id}님!</span>
+
+
+								<c:if test="${sessionScope.loginRole == 0}">
+									<a href="mypage" class="nav-item nav-link">마이페이지</a>
+								</c:if>
+
+								<c:if test="${sessionScope.loginRole == 1}">
+									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+								</c:if>
+								<!-- 로그아웃 링크 -->
+								<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+							</c:if>
                         </div>
                     </div>
                 </nav>
@@ -118,32 +131,20 @@
                         <div class="carousel-item active" style="height: 410px;" onclick="location.href='event1'">
                            <img class="img-fluid" src="img/main_event1.png" alt="Image">
                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <!-- <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
-                                </div> -->
+                             
                             </div>
                         </div>
                         <div class="carousel-item" style="height: 410px;" onclick="location.href='event1'">
                          <img class="img-fluid" src="img/main_event2.png" alt="Image">
                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <!-- <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
-                                </div> -->
+                               
                             </div>
                         </div>
                         
                         <div class="carousel-item" style="height: 410px;"onclick="location.href='event2'">
                           <a href="event3">   <img class="img-fluid" src="img/main_event3.png" alt="Image">
                            </a> <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <!-- <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
-                                </div> -->
+                                
                             </div>
                         </div>
                     </div>
@@ -161,108 +162,50 @@
             </div>
         </div>
     </div>
-    <!-- banner End -->
-
-     <!-- Offer Start 
-    <div class="container-fluid offer pt-5">
-          <div class="row px-xl-5 justify-content-end">
-            <div class="col-md-6 pb-4">
-                <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5">
-                    <img src="img/bingsu.png" alt="">
-                    <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">season off</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">20%</h1>
-                      </div>
-                        <a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
-                       
-                </div>
-            </div>
-        </div>
-    </div>
- Offer End -->
-
 
     <!-- Products Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Season Off</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img src="img/삼계탕.png" style="width:100%; aspect-ratio:1/1; object-fit:cover;" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">삼계탕</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>18,000원</h6><h6 class="text-muted ml-2"><del>20,000원</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img src="img/쉐이크파우치.png" style="width:100%; aspect-ratio:1/1; object-fit:cover;" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">프로틴 쉐이트 5개입</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>12,000원</h6><h6 class="text-muted ml-2"><del>15,000원</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img src="img/스리라차.png" style="width:100%; aspect-ratio:1/1; object-fit:cover;" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">스리라차 핫 칠리 시즈닝, 255g, 1개</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>4,000원</h6><h6 class="text-muted ml-2"><del>5,000원</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img src="img/호떡.png" style="width:100%; aspect-ratio:1/1; object-fit:cover;" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">호떡 5개입, 2종</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>6,500원</h6><h6 class="text-muted ml-2"><del>8,500원</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
+            <h2 class="section-title px-5"><span class="px-2">Season Off (Discount)</span></h2>
         </div>
         
-    </div>
+   <div class="row px-xl-5 pb-3"> 
+  	<c:forEach var="item" items="${dis}">
+  	<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+	<div class="card product-item border-0 mb-4" style="width: 280px;">
+	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+	<a href="detail?item_no=${item.item_no}"> 
+<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
+</a>
+		</div>
+	<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+		<h6 class="text-truncate mb-3">${item.item_name}</h6>
+		<div class="d-flex justify-content-center">
+		<h6>${item.origin_p}원</h6>
+	<h6 class="text-muted ml-2">
+		<del>${item.sales_p}원</del>
+		</h6>
+		</div>
+		</div>
+<div class="card-footer d-flex justify-content-between bg-light border">
+		<a href="detail?item_no=${item.item_no}" class="btn btn-sm text-dark p-0"> 
+		<i class="fas fa-eye text-primary mr-1"></i>상세정보</a>
+	<form method="post" action="/cart/addForm" style="display: inline;">
+		<input type="hidden" name="item_no" value="${item.item_no}" />
+		<input type="hidden" name="qty" value="1" />
+	<button type="button" class="btn btn-sm text-dark p-0 add-to-cart-btn" data-item-no="${item.item_no}"
+		style="background: none; border: 0; padding: 0;">
+	<i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기</button>
+     </form>
+      </div>
+         </div>
+            </div>
+</c:forEach>
+           
     <!-- Products End -->
     <div class="container-fluid offer pt-5 ">
         <div class="row px-xl-5 justify-content-end">
-       <div class="col-md-6 pb-4">
+       <div class="col-md-8 pb-4">
                 <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5">
                     <img src="img/boong1.png" alt="">
                     <div class="position-relative" style="z-index: 1;">
@@ -297,9 +240,7 @@
                         <div class="d-flex flex-column justify-content-start">
                             <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
                             <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-                            <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a>
+
                          </div>
                     </div>
                     <div class="col-lg-8 col-md-12">
