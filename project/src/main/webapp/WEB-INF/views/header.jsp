@@ -1,23 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%-- 가격,숫자 포맷 --%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta charset="utf-8">
-<title>상세정보</title>
+<title>StockBob</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
 
-<!-- jQuery 먼저 -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<!-- bxSlider CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-<!-- bxSlider JS -->
-<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
@@ -39,20 +33,19 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
-<!-- 채팅 관련 -->
 <link href="css/chat.css" rel="stylesheet">
-
 </head>
 
 <body>
-<!-- ############## 로고부분 ############################## -->
-	<div class="row align-items-center py-3 px-xl-5" style="height:150px;">
-		 <div class="col-lg-3 d-none d-lg-block"><!-- 큰 화면에서는 3/12, 작은 화면에서는 숨김 -->
-			<a href="/" class="text-decoration-none"> <img
-				src="\img\logo.png" class='logo' />
+	<!-- Topbar Start -->
+
+	<div class="row align-items-center py-3 px-xl-5">
+		<div class="col-lg-3 d-none d-lg-block">
+			<a href="#" class="text-decoration-none"> <img
+				src='../img/logo.png' class='logo' /> <!-- <h1 class="m-0 display-5 font-weight-semi-bold">
+                    <span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1> -->
 			</a>
 		</div>
-		
 		<div class="col-lg-6 col-6 text-left">
 			<form action="selectall" method="get">
 				<div class="input-group">
@@ -68,31 +61,64 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> 
-			<i class="fas fa-heart text-primary"></i> 
-			<span class="badge">0</span>
+			<a href="" class="btn border"> <i
+				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
 			</a> <a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
 	</div>
-	
+	</div>
 	<!-- Topbar End -->
 
 
-	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
-	
-	<div class="container-fluid">
+	<!-- Navbar Start -->
+	<div class="container-fluid mb-5">
 		<div class="row border-top px-xl-5">
-			<div class="col-lg-12">
-				<nav class="navbar navbar-expand-lg bg-light navbar-light py-0 py-lg-0 px-0">
-					<a href="/" class="text-decoration-none d-block d-lg-none p-0 m-0"> 
-					<img src="\img\logo.png" class='logo' />
+			<div class="col-lg-2 col-md-12 d-none d-lg-block">
+				<nav class="category-sidebar">
+					<h6 class="p-3">Categories</h6>
+					<ul class="nav flex-column">
+						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이
+								．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국
+								．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식
+								．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬
+								．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
+								．음료</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-lg-9">
+				<nav
+					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+					<a href="" class="text-decoration-none d-block d-lg-none"> <img
+						src='../img/logo.png' class='logo' />
 					</a>
-					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+
+					<button type="button" class="navbar-toggler" data-toggle="collapse"
+						data-target="#navbarCollapse">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-					<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<!-- <div class="navbar-nav mr-auto py-0">
+                            <a href="index.html" class="nav-item nav-link active">메인</a>
+                            <a href="shop" class="nav-item nav-link">상품</a>
+                             <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="cart" class="dropdown-item">Shopping Cart</a>
+                                    <a href="checkout" class="dropdown-item">Checkout</a>
+                                </div>
+                            </div>
+                             
+                        </div> -->
 						<div class="navbar-nav ml-auto py-0">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
@@ -121,193 +147,164 @@
 						</div>
 					</div>
 				</nav>
-			</div>
-		</div>	
-	</div>		
-	<div class="container-fluid pt-5" >
-		<div class="row px-xl-5">
-		 <!-- ================== 왼쪽 카테고리 ================== -->
-            <div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar">
-					<h6 class="p-3">Categories</h6>
-					<ul class="nav flex-column">
-						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
-						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
-						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
-					</ul>
-				</nav>
-			</div>
-			
-
-		<div class="col-lg-10 col-md-12 p-0 m-0" >			 
-			 
-	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
-		<div class="container py-4">
-		    <div class="d-flex flex-wrap align-items-center">
-		        <!-- 이미지 -->
-		        <div class="p-2 flex-shrink-0">
-		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
-		        </div>
-		         <div class="p-2 flex-grow-1">
-		            <h4 class="font-weight-semi-bold">${product.item_name}</h4>
-		            <div id="product-rating-summary" class="mb-2" style="font-size: 0.9rem; color: #666;"></div>
-		            
-		            <div class="d-flex mb-2 align-items-center">
-		               		<small class="pt-1"></small> 
-		               		
-	               		<c:choose>
-							<c:when test="${not empty product.dis_rate and product.dis_rate > 0}">
-								<c:set var="discounted" value="${product.sales_p * (100 - product.dis_rate) / 100}" />
-								
-								<div class="d-flex flex-column">
-									<h6 class="text-muted mb-0">
-										<del><fmt:formatNumber value="${product.sales_p}" pattern="#,###" />원</del>
-									</h6>
-									
-								<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
-									<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
-									<h4><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h4>
-								<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
-								</div>
-								
-							</c:when>
-							<c:otherwise>
-								<h4><fmt:formatNumber value="${product.sales_p}" pattern="#,###" />원</h4>
-							</c:otherwise>
-						</c:choose>			
-					</div>	
-					
-					
-					<div class="d-flex mb-3">
-					</div>
-					
-				
-				<form action="/cart/addForm" method="post">
-					<input type="hidden" name="item_no" value="${product.item_no}" />
-		
-				 <div class="d-flex align-items-center mb-3">
-				     <!-- 수량 조절 -->
-			        <div class="input-group mr-2  quantity" style="width:130px;">		
-			        <button type="button" class="btn btn-primary btn-minus">-</button>
-			        <input type="text" class="form-control text-center" name="qty" id="qty" value="1">
-			        <button type="button" class="btn btn-primary btn-plus">+</button>
-			       </div>
-			      <!-- 장바구니 담기 버튼 -->   
-			       <button type="submit" class="btn btn-primary">
-					<i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
-					</button>
-					 
-				</form>
-		
-						</div>
-					</div>
-				</div>
-			</div>
-
-		<div class="row px-xl-5">
-			<div class="col">
-				<div class="nav nav-tabs justify-content-center border-secondary mb-4">
-					<c:set var="activeTab" value="${param.tab eq 'review' ? 'review' : 'info'}" />
-					<a class="nav-item nav-link ${activeTab eq 'info' ? 'active' : ''}" data-toggle="tab" href="#tab-pane-2">상품정보</a> 
-					<a class="nav-item nav-link ${activeTab eq 'review' ? 'active' : ''}" data-toggle="tab" href="#tab-pane-3">리뷰</a>
-				</div>
-
-				<div class="tab-content">
-					<div class="tab-pane fade ${activeTab eq 'info' ? 'show active' : ''}" id="tab-pane-2">
-						<h4 class="mb-3">상품 상세정보</h4>
-						<div class="row">
-							<div class="col-md-6">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item px-0"> ${product.item_content}</li>								
-								</ul>
-							</div>				
-						</div>
-					</div>
-
-					<div class="tab-pane fade ${activeTab eq 'review' ? 'show active' : ''}" id="tab-pane-3">
-						<div class="row">
-							<div class="col-md-6">
-								<h4 class="mb-4">리뷰 목록 <span id="review-summary" style="font-size: 0.6em; color: #666;"></span></h4>
-								<div id="review-section" data-item-no="${product.item_no}" data-login-user="${sessionScope.loginUser.customer_id}">
-								
-								<!-- 리뷰 목록 출력 부분 ajax / 리뷰 수정-삭제(Review.js)-->
-									<div id="review-list">										
-								
-									</div>
-
-									<!-- 페이지 이동 버튼 영역 -->
-									<div id="review-pagination" class="mt-3 d-flex justify-content-center"></div>
-									<!-- 페이지 이동 버튼 영역 -->
-									    
-								</div>
+				<div id="header-carousel" class="carousel slide"
+					data-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active" style="height: 410px;">
+							<img class="img-fluid" src="img/main_event1.png" alt="Image">
+							<div
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								<!-- <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                </div> -->
 							</div>
-					          
-						<div class="col-md-6">
-							<h4 class="mb-4">리뷰 작성</h4>
-							<form id="reviewForm">
-								<input type="hidden" name="item_no" value="${product.item_no}" />
-							    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
-								
-								<div class="form-group">
-                                    <label class="mb-1">평점 *</label>
-                                    <div id="rating-input" class="d-flex align-items-center">
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="1" style="cursor:pointer; color: #D19C97;"></i>
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="2" style="cursor:pointer; color: #D19C97;"></i>
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="3" style="cursor:pointer; color: #D19C97;"></i>
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="4" style="cursor:pointer; color: #D19C97;"></i>
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="5" style="cursor:pointer; color: #D19C97;"></i>
-                                        <input type="hidden" name="rating" id="rating" value="5">
-                                    </div>
-                                </div>
+						</div>
+						<div class="carousel-item" style="height: 410px;">
+							<img class="img-fluid" src="img/main_event2.png" alt="Image">
+							<div
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								<!-- <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                </div> -->
+							</div>
+						</div>
 
-								<div class="form-group">
-									<label for="re_content">내 리뷰작성 *</label>
-										<textarea id="re_content"  name="re_content" cols="30" rows="5" class="form-control"></textarea>
-								</div>
-								<div class="form-group">
-									<label for="re_title">제목 *</label> 
-									<input type="text" id="re_title" name="re_title" class="form-control" id="name">
-								</div>
-								
-								<div class="form-group mb-0">
-									<input type="button" id="addReview" value="리뷰 남기기" class="btn btn-primary px-3">
-								</div>
-											
-							</form>
-
+						<div class="carousel-item" style="height: 410px;">
+							<img class="img-fluid" src="img/main_event3.png" alt="Image">
+							<div
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								<!-- <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                </div> -->
+							</div>
 						</div>
 					</div>
+					<a class="carousel-control-prev" href="#header-carousel"
+						data-slide="prev">
+						<div class="btn btn-dark" style="width: 45px; height: 45px;">
+							<span class="carousel-control-prev-icon mb-n2"></span>
+						</div>
+					</a> <a class="carousel-control-next" href="#header-carousel"
+						data-slide="next">
+						<div class="btn btn-dark" style="width: 45px; height: 45px;">
+							<span class="carousel-control-next-icon mb-n2"></span>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Navbar End -->
+
+	<!-- Offer Start -->
+	<div class="container-fluid offer pt-5">
+		<div class="row px-xl-5">
+			<div class="col-md-6 pb-4">
+				<div
+					class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5">
+					<img src="img/bingsu.png" alt="">
+					<div class="position-relative" style="z-index: 1;">
+						<h5 class="text-uppercase text-primary mb-3">season off</h5>
+						<h1 class="mb-4 font-weight-semi-bold">20%</h1>
+					</div>
+					<a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop
+						Now</a>
+
+				</div>
+			</div>
+			<div class="col-md-6 pb-4">
+				<div
+					class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5">
+					<img src="img/boong1.png" alt="">
+					<div class="position-relative" style="z-index: 1;">
+						<h5 class="text-uppercase text-primary mb-3">new arrival</h5>
+						<h1 class="mb-4 font-weight-semi-bold">New arrival</h1>
+						<a href="event2" class="btn btn-outline-primary py-md-2 px-md-3">Shop
+							Now</a>
+
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Shop Detail End -->
-	
-<!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
-<div class="container py-5">
-   <ul class="bxslider">
-   	  <c:forEach var="rp" items="${randomProducts}">
-	    <li>
-	        <div class="slider-card" data-item-no="${rp.item_no}">
-	           <a href="detail?item_no=${rp.item_no}">
-	           		<img src="/img/product/${rp.item_img}" alt="${rp.item_name}" />
-	           </a>
-	            <h6 class="slider-title">${rp.item_name}</h6>				
-	            <p class="slider-price"><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</p>
-				
-	        </div>
-	    </li>
-      </c:forEach>
-   </ul>
-</div>
-<!-- Image Slider End -->
+	<!-- Offer End -->
 
-	 <!-- Footer Start -->
+	<!-- Categories Start -->
+	<div class="container-fluid pt-5">
+		<div class="row px-xl-5 pb-3">
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectGui"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/gui.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">구이 ．찜 ．볶음</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectSoup"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/soup.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">국 ．밥 ．면</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectDiet"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/diet.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">식단관리</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectBunsik"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/bunsik.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">분식 ．간식</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectBanchan"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/banchan.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">반찬 ．소스</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectdrink"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/waterdrink.png" alt="">
+					</a>
+					<h5 class="font-weight-semi-bold m-0">생수 ．음료</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Categories End -->
+
+
+	<!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
 		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
@@ -332,16 +329,11 @@
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
 						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="/"><i
-								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
-								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
-								class="text-dark mb-2" href="mlist"><i
-								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
-								class="text-dark mb-2" href="cart"><i
-								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
-								class="text-dark mb-2" href="checkout"><i
-								class="fa fa-angle-right mr-2"></i>결제</a>
+							<a class="text-dark mb-2" href="/"> <i
+								class="fa fa-angle-right mr-2"></i>메인 홈
+							</a> <a class="text-dark mb-2" href="selectall"> <i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-8 col-md-12">
@@ -387,68 +379,66 @@
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
+
 	<!-- ------------------채팅 관련 추가---------------- -->
-	<!-- ▣ 채팅 목록 박스 -->
-	<div id="chat-list-box" class="chat-list-box" style="display: none;">
-		<div class="chat-list-header">나의 채팅 목록</div>
-		<div id="chat-list" class="chat-list"></div>
-	</div>
-
-	<!-- ▣ 채팅창 -->
-	<div id="chat-box" class="chat-box" style="display: none;">
-		<div class="chat-header">
-			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
-			<span id="chat-close" class="chat-header-close">✕</span>
+	<c:if test="${sessionScope.loginRole == 0}">
+		<!-- ▣ 채팅 목록 박스 -->
+		<div id="chat-list-box" class="chat-list-box" style="display: none;">
+			<div class="chat-list-header">나의 채팅 목록</div>
+			<div id="chat-list" class="chat-list"></div>
 		</div>
 
-		<div id="chat-messages" class="chat-messages"></div>
+		<!-- ▣ 채팅창 -->
+		<div id="chat-box" class="chat-box" style="display: none;">
+			<div class="chat-header">
+				<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+				<span id="chat-close" class="chat-header-close">✕</span>
+			</div>
 
-		<div class="chat-input">
-			<input type="text" id="chat-text" placeholder="메시지 입력...">
-			<button id="chat-send">Send</button>
+			<div id="chat-messages" class="chat-messages"></div>
+
+			<div class="chat-input">
+				<input type="text" id="chat-text" placeholder="메시지 입력...">
+				<button id="chat-send">Send</button>
+			</div>
+			<button id="new-chat-btn"
+				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+				새 채팅 시작</button>
 		</div>
-		<button id="new-chat-btn"
-			style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
-			새 채팅 시작</button>
-	</div>
 
-	<!-- ▣ 채팅 열기 버튼 -->
-	<button id="chat-open" class="chat-open-btn">💬</button>
+		<!-- ▣ 채팅 열기 버튼 -->
+		<button id="chat-open" class="chat-open-btn">💬</button>
+	</c:if>
 	<div class="toast-container" id="toast-container"></div>
+
 
 	<!-- JavaScript Libraries -->
 	<!-- jQuery 먼저 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
+	<!-- Bootstrap JS -->
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-	<!-- Contact Javascript File -->
+	<!-- Contact JS -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
-	
-	<!-- 로그인 ID 주입 (chat.js보다 위에) -->
+
+
+	<!-- 1. 로그인 ID 주입 (가장 먼저) -->
 	<script>
 		const myId = "${sessionScope.loginUser.customer_id}";
 		console.log("✅ myId 확인:", myId);
 	</script>
-	
-	<!-- 채팅 JS -->
+
+	<!-- 2. Chat JS (SockJS/Stomp 준비된 이후 로드) -->
 	<script src="/js/CustomerChat.js?v=999"></script>
-	
-	<!-- Main JS -->
-	<script src="/js/main.js"></script>	
 
-	<!-- SockJS + STOMPJS (chat.js보다 위에) -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
+	<script src="/js/main.js" defer></script>
 
-	<!-- 리뷰 js -->	
-	<script src="js/Review.js"></script>
-	
 
 </body>
 
