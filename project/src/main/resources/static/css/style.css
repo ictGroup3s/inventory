@@ -9687,22 +9687,15 @@ a.text-dark:hover, a.text-dark:focus {
 /* 관리자 페이지 사이드바 스타일을 카테고리에 적용 */
 
 
-.category-sidebar {
-    padding: 3rem 0;
-    position: static;      /* 자연스럽게 스크롤 따라 움직임 */
-    top: auto;             /* top 제거 */
-    max-height: none;      /* 높이 제한 제거 */
-    overflow-y: visible;   /* 스크롤 제거 */
-}
-  /*.category-sidebar{
+ .category-sidebar{
    background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6; 
-    padding: 1rem 0;
-    position: fixed; 
-    top: 200px;    상단 네비게이션 높이만큼 조정 
-    max-height: calc(100vh - 600px);  화면 높이에서 상단 네비 높이 제외 
-   overflow-y: auto;  내용이 길면 스크롤 가능 
-}*/
+    top: 200px;    /* 상단 네비게이션 높이만큼 조정  */
+    max-height: calc(100vh - 600px);  /* 화면 높이에서 상단 네비 높이 제외  */
+    width:250px;
+    
+}
+
+
 .category-sidebar h6 {
     padding: 0 1rem;
     font-weight: 700;
