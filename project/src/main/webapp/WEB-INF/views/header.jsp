@@ -71,6 +71,7 @@
 	</div>
 	<!-- Topbar End -->
 
+
 	<!-- Navbar Start -->
 	<div class="container-fluid mb-5">
 		<div class="row border-top px-xl-5">
@@ -201,7 +202,6 @@
 	</div>
 	<!-- Navbar End -->
 
-
 	<!-- Offer Start -->
 	<div class="container-fluid offer pt-5">
 		<div class="row px-xl-5">
@@ -211,7 +211,7 @@
 					<img src="img/bingsu.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">season off</h5>
-						<h1 class="mb-4 font-weight-semi-bold">Discount</h1>
+						<h1 class="mb-4 font-weight-semi-bold">20%</h1>
 					</div>
 					<a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop
 						Now</a>
@@ -227,12 +227,15 @@
 						<h1 class="mb-4 font-weight-semi-bold">New arrival</h1>
 						<a href="event2" class="btn btn-outline-primary py-md-2 px-md-3">Shop
 							Now</a>
+
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Offer End -->
+
 	<!-- Categories Start -->
 	<div class="container-fluid pt-5">
 		<div class="row px-xl-5 pb-3">
@@ -243,7 +246,7 @@
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid" src="img/gui.png" alt="">
 					</a>
-	<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">구이 ．찜 ．볶음</h5>
+					<h5 class="font-weight-semi-bold m-0">구이 ．찜 ．볶음</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
@@ -253,7 +256,7 @@
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid" src="img/soup.png" alt="">
 					</a>
-			<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">국 ．밥 ．면</h5>
+					<h5 class="font-weight-semi-bold m-0">국 ．밥 ．면</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
@@ -263,7 +266,7 @@
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid" src="img/diet.png" alt="">
 					</a>
-				<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">식단관리</h5>
+					<h5 class="font-weight-semi-bold m-0">식단관리</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
@@ -273,7 +276,7 @@
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid" src="img/bunsik.png" alt="">
 					</a>
-				<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">분식 ．간식</h5>
+					<h5 class="font-weight-semi-bold m-0">분식 ．간식</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
@@ -283,7 +286,7 @@
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid" src="img/banchan.png" alt="">
 					</a>
-				<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">반찬 ．소스</h5>
+					<h5 class="font-weight-semi-bold m-0">반찬 ．소스</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
@@ -291,242 +294,15 @@
 					style="padding: 30px;">
 					<a href="selectdrink"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/drink.png" alt="">
+						class="img-fluid" src="img/waterdrink.png" alt="">
 					</a>
-				<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">생수 ．음료</h5>
+					<h5 class="font-weight-semi-bold m-0">생수 ．음료</h5>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Categories End -->
 
-	<!-- Products Start 
-	<div class="container-fluid pt-5">
-		<div class="text-center mb-4">
-			<h2 class="section-title px-5">
-				<span class="px-2">Trandy Products</span>
-			</h2>
-		</div>
-		<div class="row px-xl-5 pb-3">
-			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-				<div class="card product-item border-0 mb-4">
-					<div
-						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-						<img class="img-fluid w-100" src="img/삼계탕.png" alt="">
-					</div>
-					<div
-						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-						<h6 class="text-truncate mb-3">삼계탕</h6>
-						<div class="d-flex justify-content-center">
-							<h6>7,000원</h6>
-							<h6 class="text-muted ml-2">
-								<del>0.00</del>
-							</h6>
-						</div>
-					</div>
-					<div
-						class="card-footer d-flex justify-content-between bg-light border">
-						<a href="" class="btn btn-sm text-dark p-0"><i
-							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-							class="btn btn-sm text-dark p-0"><i
-							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-				<div class="card product-item border-0 mb-4">
-					<div
-						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-						<img class="img-fluid w-100" src="img/쉐이크파우치.png" alt="">
-					</div>
-					<div
-						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-						<h6 class="text-truncate mb-3">프로틴 쉐이트 5개입</h6>
-						<div class="d-flex justify-content-center">
-							<h6>8,970원</h6>
-							<h6 class="text-muted ml-2">
-								<del>14,950원</del>
-							</h6>
-						</div>
-					</div>
-					<div
-						class="card-footer d-flex justify-content-between bg-light border">
-						<a href="" class="btn btn-sm text-dark p-0"><i
-							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-							class="btn btn-sm text-dark p-0"><i
-							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-				<div class="card product-item border-0 mb-4">
-					<div
-						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-						<img class="img-fluid w-100" src="img/스리라차.png" alt="">
-					</div>
-					<div
-						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-						<h6 class="text-truncate mb-3">스리라차 핫 칠리 시즈닝, 255g, 1개</h6>
-						<div class="d-flex justify-content-center">
-							<h6>4,560원</h6>
-							<h6 class="text-muted ml-2">
-								<del></del>
-							</h6>
-						</div>
-					</div>
-					<div
-						class="card-footer d-flex justify-content-between bg-light border">
-						<a href="" class="btn btn-sm text-dark p-0"><i
-							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-							class="btn btn-sm text-dark p-0"><i
-							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-				<div class="card product-item border-0 mb-4">
-					<div
-						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-						<img class="img-fluid w-100" src="img/호떡.png" alt="">
-					</div>
-					<div
-						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-						<h6 class="text-truncate mb-3">호떡 5개입, 2종</h6>
-						<div class="d-flex justify-content-center">
-							<h6>5,100원</h6>
-							<h6 class="text-muted ml-2">
-								<del>8,500원</del>
-							</h6>
-						</div>
-					</div>
-					<div
-						class="card-footer d-flex justify-content-between bg-light border">
-						<a href="" class="btn btn-sm text-dark p-0"><i
-							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-							class="btn btn-sm text-dark p-0"><i
-							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-	<!-- Products End -->
-
-
-
-	<!-- Products Start 
-	<div class="container-fluid pt-5">
-		<div class="text-center mb-4">
-			<h2 class="section-title px-5">
-				<span class="px-2">Just Arrived</span>
-			</h2>
-		</div>
-		<div class="row px-xl-5 pb-3">
-			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-				<div class="card product-item border-0 mb-4">
-					<div
-						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-						<img class="img-fluid w-100" src="img/삼계탕.png" alt="">
-					</div>
-					<div
-						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-						<h6 class="text-truncate mb-3">삼계탕</h6>
-						<div class="d-flex justify-content-center">
-							<h6>7,000원</h6>
-							<h6 class="text-muted ml-2">
-								<del>0.00</del>
-							</h6>
-						</div>
-					</div>
-					<div
-						class="card-footer d-flex justify-content-between bg-light border">
-						<a href="" class="btn btn-sm text-dark p-0"><i
-							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-							class="btn btn-sm text-dark p-0"><i
-							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-				<div class="card product-item border-0 mb-4">
-					<div
-						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-						<img class="img-fluid w-100" src="img/쉐이크파우치.png" alt="">
-					</div>
-					<div
-						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-						<h6 class="text-truncate mb-3">프로틴 쉐이트 5개입</h6>
-						<div class="d-flex justify-content-center">
-							<h6>8,970원</h6>
-							<h6 class="text-muted ml-2">
-								<del>14,950원</del>
-							</h6>
-						</div>
-					</div>
-					<div
-						class="card-footer d-flex justify-content-between bg-light border">
-						<a href="" class="btn btn-sm text-dark p-0"><i
-							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-							class="btn btn-sm text-dark p-0"><i
-							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-				<div class="card product-item border-0 mb-4">
-					<div
-						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-						<img class="img-fluid w-100" src="img/스리라차.png" alt="">
-					</div>
-					<div
-						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-						<h6 class="text-truncate mb-3">스리라차 핫 칠리 시즈닝, 255g, 1개</h6>
-						<div class="d-flex justify-content-center">
-							<h6>4,560원</h6>
-							<h6 class="text-muted ml-2">
-								<del></del>
-							</h6>
-						</div>
-					</div>
-					<div
-						class="card-footer d-flex justify-content-between bg-light border">
-						<a href="" class="btn btn-sm text-dark p-0"><i
-							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-							class="btn btn-sm text-dark p-0"><i
-							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-				<div class="card product-item border-0 mb-4">
-					<div
-						class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-						<img class="img-fluid w-100" src="img/호떡.png" alt="">
-					</div>
-					<div
-						class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-						<h6 class="text-truncate mb-3">호떡 5개입, 2종</h6>
-						<div class="d-flex justify-content-center">
-							<h6>5,100원</h6>
-							<h6 class="text-muted ml-2">
-								<del>8,500원</del>
-							</h6>
-						</div>
-					</div>
-					<div
-						class="card-footer d-flex justify-content-between bg-light border">
-						<a href="" class="btn btn-sm text-dark p-0"><i
-							class="fas fa-eye text-primary mr-1"></i>View Detail</a> <a href=""
-							class="btn btn-sm text-dark p-0"><i
-							class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>-->
-	<!-- Products End -->
 
 	<!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
@@ -553,11 +329,12 @@
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
 						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="/">
-							<i class="fa fa-angle-right mr-2"></i>메인 홈</a> 
-							<a class="text-dark mb-2" href="selectall">
-							<i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-							</div>
+							<a class="text-dark mb-2" href="/"> <i
+								class="fa fa-angle-right mr-2"></i>메인 홈
+							</a> <a class="text-dark mb-2" href="selectall"> <i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동
+							</a>
+						</div>
 					</div>
 					<div class="col-lg-8 col-md-12">
 						<div class="row">

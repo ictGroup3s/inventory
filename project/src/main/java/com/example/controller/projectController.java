@@ -256,12 +256,6 @@ public class projectController {
             m.addAttribute("cate", cateNo);
         }
     }
-
-
-	@GetMapping("board")
-	public String board() {
-		return "board";
-	}
 	
 	@GetMapping("dashboard")
 	public String dashboard() {

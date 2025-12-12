@@ -63,7 +63,7 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a class="nav-link active">주문내역</a></li>
+						<li class="nav-item"><a href="/orderhistory" class="nav-link active">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
 						<li class="nav-item"><a href="/mycs" class="nav-link">취소/반품/교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
@@ -76,7 +76,7 @@
 			<!-- Main Content -->
 			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
-					<h4>주문내역</h4>
+					<h4 style="margin-top:50px;">주문내역</h4>
 				</div>
 
 				<div class="col-lg-10 mx-auto">
