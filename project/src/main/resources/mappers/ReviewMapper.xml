@@ -11,6 +11,7 @@
 	        , re_date
 	        , item_no
 	        , customer_id
+	        , rating
 	FROM	review
 	WHERE 	item_no = #{item_no}
 	ORDER BY re_date DESC
@@ -20,14 +21,26 @@
 	<selectKey keyProperty="review_no" resultType="int" order="BEFORE">
 	    SELECT review_seq.NEXTVAL FROM dual
 	</selectKey>
-	INSERT INTO review (review_no, re_title, re_content, re_date, item_no, customer_id)
+	INSERT INTO review (review_no, re_title, re_content, re_date, item_no, customer_id, rating)
 	VALUES (#{review_no}
 			, #{re_title}
 			, #{re_content}
 			, sysdate
 			, #{item_no}
-			, #{customer_id})
+			, #{customer_id}
+			, #{rating})
 </insert>
+
+<delete id="delete" parameterType="int">
+	DELETE FROM review WHERE review_no = #{review_no}
+</delete>
+
+<update id="update" parameterType="com.example.model.vo.ReviewVO">
+	UPDATE review
+	SET re_content = #{re_content},
+	    rating = #{rating}
+	WHERE review_no = #{review_no}
+</update>
 
 </mapper>
 

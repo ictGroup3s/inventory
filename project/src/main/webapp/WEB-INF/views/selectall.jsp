@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%-- 가격,숫자 포맷 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,28 +18,28 @@
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+<link 
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" 
 	rel="stylesheet">
 
 <!-- Font Awesome -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+<link 
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" 
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="lib/owlcarousel/assets/owl.carousel.min.css" 
 	rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
 <!-- 채팅 관련 -->
 <link href="css/chat.css" rel="stylesheet">
-
 </head>
 
 <body>
 
+    <!-- Topbar Start -->
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
@@ -123,44 +125,23 @@
 				<nav class="category-sidebar">
 					<h6 class="p-3">Categories</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="selectall"
-							class="nav-link active">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이
-								．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link">국
-								．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
-						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식
-								．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬
-								．소스</a></li>
-						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
-								．음료</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
 					</ul>
 				</nav>
 			</div>
+			
 			<div class="col-lg-9 col-md-12">
 				<div class="row pb-3">
 					<div class="col-12 pb-1">
 						<div
-							class="d-flex align-items-center justify-content-between mb-4">
-							<!--  아래 검색창
-							<form action="selectall" method="get">
-							
-								<div class="input-group">
-									<input type="text" name="q" class="form-control"
-										placeholder="Search by name" value="${q}">
-									<div class="input-group-append">
-										<button class="input-group-text bg-transparent text-primary" type="submit">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
-								</div>
-							 	
-								<input type="hidden" name="size" value="${size}" />
-							</form>
-						-->
-							<div class="dropdown ml-4">
+							class="d-flex align-items-center justify-content-between mb-4">							
+							<div class="dropdown ml-auto">	<!-- ml-auto = 왼쪽 여백 자동 채움(margin-left: auto) -->
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
@@ -200,12 +181,51 @@
 								<div
 									class="card-body border-left border-right text-center p-0 pt-4 pb-3">
 									<h6 class="text-truncate mb-3">${item.item_name}</h6>
-									<div class="d-flex justify-content-center">
-										<h6>${item.sales_p}원</h6>
-										<h6 class="text-muted ml-2">
-											<del>${item.sales_p}원</del>
-										</h6>
+									
+								<%-- 평점 리뷰 적용 --%>	
+									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
+										<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
+										<span class="mr-1">
+											<c:forEach begin="1" end="5" var="i">
+												<c:choose>
+													<c:when test="${i <= rating}">
+														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													</c:when>
+													<c:otherwise>
+														<i class="far fa-heart" style="color: #D19C97;"></i>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</span>
+										<c:if test="${item.review_cnt > 0}">
+											<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
+										</c:if>
+										<span>(${item.review_cnt})</span>
 									</div>
+								<%-- 평점 리뷰 적용 --%>
+									
+								<%-- 할인가 적용 --%>	
+									<div class="d-flex justify-content-center">
+										<c:choose>
+											<c:when test="${not empty item.dis_rate and item.dis_rate > 0}">
+												<c:set var="discounted" value="${item.sales_p * (100 - item.dis_rate) / 100}" />
+												
+											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+												<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+												<h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+											
+												<h6 class="text-muted ml-2">
+													<del><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</del>
+												</h6>
+											</c:when>
+											<c:otherwise>
+												<h6><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h6>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								<%-- 할인가 적용 --%>
+									
 								</div>
 								<div
 									class="card-footer d-flex justify-content-between bg-light border">
@@ -271,9 +291,8 @@
 	</div>
 
 	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5"
-		style="margin-top: 550px !important;">
-		<div class="row px-xl-5 pt-5">
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -299,30 +318,33 @@
 							<a class="text-dark mb-2" href="/"><i
 								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
 								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-							<!--  <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
+								class="text-dark mb-2" href="mlist"><i
+								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
+								class="text-dark mb-2" href="cart"><i
+								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
+								class="text-dark mb-2" href="checkout"><i
+								class="fa fa-angle-right mr-2"></i>결제</a>
 						</div>
 					</div>
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-md-12 mt-4 mb-5">
+								<p class="text-dark mb-2">
+									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
 
-					<div class="row">
-						<div class="col-md-12 mt-4 mb-5">
-							<p class="text-dark mb-2">
-								<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
-								&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
-
-							</p>
-							<br>
-							<p style="color: #999;">
-								법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
-								통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
-								채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
-							</p>
+								</p>
+								<br>
+								<p style="color: #999;">
+									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+								</p>
+							</div>
 						</div>
+
 					</div>
-
-
 
 				</div>
 			</div>
@@ -367,13 +389,17 @@
 			<input type="text" id="chat-text" placeholder="메시지 입력...">
 			<button id="chat-send">Send</button>
 		</div>
+		<button id="new-chat-btn"
+			style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+			새 채팅 시작</button>
 	</div>
 
 	<!-- ▣ 채팅 열기 버튼 -->
 	<button id="chat-open" class="chat-open-btn">💬</button>
-
+	<div class="toast-container" id="toast-container"></div>
 
 	<!-- JavaScript Libraries -->
+	<!-- jQuery 먼저 -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -383,17 +409,24 @@
 	<!-- Contact Javascript File -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
-
-	<!-- Javascript -->
-	<script src="/js/main.js"></script>
+	
+	<!-- 로그인 ID 주입 (chat.js보다 위에) -->
+	<script>
+		const myId = "${sessionScope.loginUser.customer_id}";
+		console.log("✅ myId 확인:", myId);
+	</script>
+	
 	<!-- 채팅 JS -->
-	<script src="/js/chat.js?v=1"></script>
+	<script src="/js/CustomerChat.js?v=999"></script>
+	
+	<!-- Main JS -->
+	<script src="/js/main.js"></script>	
 
-	<!-- SockJS + StompJS -->
+	<!-- SockJS + STOMPJS (chat.js보다 위에) -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.	s"></script>
 	<!-- 
 	<script>
 		// `main.js`에서 addToCart를 정의하지 않았을 때를 대비한 폴백 전역 함수 ("undefined" 오류 방지)

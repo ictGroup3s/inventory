@@ -15,6 +15,10 @@ public class ProductVO {
 	private Integer sales_p;
 	private Integer stock_cnt;
 	private Integer cate_no;
-	private Integer dis_no;
+	private Integer dis_rate;
 	private String cate_name;
+	
+	// 리뷰 평점 및 개수
+	private Double avg_rating;
+	private Integer review_cnt;
 }

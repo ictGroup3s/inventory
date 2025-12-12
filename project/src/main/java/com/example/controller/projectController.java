@@ -130,6 +130,10 @@ public class projectController {
         if (item_no != null) {
             ProductVO p = productService.getProductById(item_no);
             m.addAttribute("product", p);
+            
+            // 랜덤 상품 4개 추천 (bx slider용)
+            List<ProductVO> randomProducts = productService.getRandomProducts(4);
+            m.addAttribute("randomProducts", randomProducts);
         }
         return "detail";
     }

@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%-- 가격,숫자 포맷 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,13 +18,18 @@
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"	rel="stylesheet">
+<link 
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" 
+	rel="stylesheet">
 
 <!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link 
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" 
+	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="lib/owlcarousel/assets/owl.carousel.min.css" 
+	rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
@@ -131,33 +138,20 @@
 				<div class="row pb-3">
 					<div class="col-12 pb-1">
 						<div
-							class="d-flex align-items-center justify-content-between mb-4">
-						<!-- 아래 검색창
-							<form action="selectSoup" method="get">
-							
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Search by name">
-									<div class="input-group-append">
-										<span class="input-group-text bg-transparent text-primary">
-											<i class="fa fa-search"></i>
-										</span>
-									</div>
-								</div>
-							
-								<input type="hidden" name="size" value="${size}" />
-								
-							</form>
-						-->
-							<div class="dropdown ml-4">
+							class="d-flex align-items-center justify-content-between mb-4">						
+							<div class="dropdown ml-auto">
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
 								<div class="dropdown-menu dropdown-menu-right"
 									aria-labelledby="triggerId">
-									<a class="dropdown-item" href="selectBunsik?page=1&size=${size}&q=${fn:escapeXml(q)}">최신순</a> 
-									<a class="dropdown-item" href="selectBunsik?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">가격 높은순</a> 
-									<a class="dropdown-item" href="selectBunsik?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">가격 낮은순</a>
+									<a class="dropdown-item"
+										href="selectBunsik?page=1&size=${size}&q=${fn:escapeXml(q)}">최신순</a>
+									<a class="dropdown-item"
+										href="selectBunsik?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">가격
+										높은순</a> <a class="dropdown-item"
+										href="selectBunsik?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">가격
+										낮은순</a>
 								</div>
 							</div>
 						</div>
@@ -180,10 +174,51 @@
 								</div>
 								<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
 									<h6 class="text-truncate mb-3">${item.item_name}</h6>
-									<div class="d-flex justify-content-center">
-										<h6>${item.sales_p}원</h6>
-										<h6 class="text-muted ml-2"><del>${item.origin_p}원</del></h6>
+									
+								<%-- 평점 리뷰 적용 --%>	
+									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
+										<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
+										<span class="mr-1">
+											<c:forEach begin="1" end="5" var="i">
+												<c:choose>
+													<c:when test="${i <= rating}">
+														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													</c:when>
+													<c:otherwise>
+														<i class="far fa-heart" style="color: #D19C97;"></i>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</span>
+										<c:if test="${item.review_cnt > 0}">
+											<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
+										</c:if>
+										<span>(${item.review_cnt})</span>
 									</div>
+								<%-- 평점 리뷰 적용 --%>
+									
+								<%-- 할인가 적용 --%>		
+									<div class="d-flex justify-content-center">
+										<c:choose>
+											<c:when test="${not empty item.dis_rate and item.dis_rate > 0}">
+												<c:set var="discounted" value="${item.sales_p * (100 - item.dis_rate) / 100}" />
+												
+											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+												<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+												<h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+												
+												<h6 class="text-muted ml-2">
+													<del><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</del>
+												</h6>
+											</c:when>
+											<c:otherwise>
+												<h6><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h6>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								<%-- 할인가 적용 --%>
+								
 								</div>
 								<div class="card-footer d-flex justify-content-between bg-light border">
 									<a href="detail?item_no=${item.item_no}" class="btn btn-sm text-dark p-0">
@@ -239,77 +274,85 @@
 	</div>
 	
 	<!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
-				<div class="row px-xl-5 pt-5">
-            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
-           
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
-                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
-                <h2 class="mb-0">
-   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
-					</h2>
-                       </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
-                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-                     <!--  <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->      
-                         </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-12 mt-4 mb-5">
-                        <p class="text-dark mb-2">
-                        <span>stockbob 소개</span>
-                            &nbsp;&nbsp; | &nbsp;&nbsp;
-                        <span>이용약관</span>
-                       		&nbsp; | &nbsp;
-                       	<span>개인정보처리방침</span>
-                       		&nbsp; | &nbsp;
-                       	<span>이용안내</span>
-                       	
-                       </p><br>
-                       <p style="color: #999;">
-                       법인명 (상호) : 주식회사 STOCKBOB<br>
-                       사업자등록번호 : 000-11-00000<br>
-						통신판매업 : 제 2025-서울-11111 호<br>
-						주소 : 서울특별시 서대문구 신촌동 00<br>
-						채용문의 : ict.atosoft.com<br>
-						팩스 : 070-0000-0000
-                       </p>
-                      </div>
-                    </div>
-                 
-                    </div>
-                  
-                </div>
-            </div>
-        </div>
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+		<div class="row px-xl-5 pt-3">
+			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
+
+				<p class="mb-2">
+					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
+					Seoul, KOREA
+				</p>
+				<p class="mb-2">
+					<i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com
+				</p>
+				<p>
+					<i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전
+					9시30분~5시30분
+				</p>
+				<h2 class="mb-0">
+					<i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
+				</h2>
+			</div>
+			<div class="col-lg-8 col-md-12">
+				<div class="row">
+					<div class="col-md-4 mb-3">
+						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-dark mb-2" href="/"><i
+								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
+								class="text-dark mb-2" href="selectall"><i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
+								class="text-dark mb-2" href="mlist"><i
+								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
+								class="text-dark mb-2" href="cart"><i
+								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
+								class="text-dark mb-2" href="checkout"><i
+								class="fa fa-angle-right mr-2"></i>결제</a>
+						</div>
+					</div>
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-md-12 mt-4 mb-5">
+								<p class="text-dark mb-2">
+									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
+
+								</p>
+								<br>
+								<p style="color: #999;">
+									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+								</p>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row border-top border-light mx-xl-5 py-4">
+			<div class="col-md-6 px-xl-0">
+				<p class="mb-md-0 text-center text-md-left text-dark">
+					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						Site Name</a>. All Rights Reserved. Designed by <a
+						class="text-dark font-weight-semi-bold"
+						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
+					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+				</p>
+			</div>
+			<div class="col-md-6 px-xl-0 text-center text-md-right">
+				<img class="img-fluid" src="img/payments.png" alt="">
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
 
    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-<!-- ------------------채팅 관련 추가---------------- -->
+	<a href="#" class="btn btn-primary back-to-top"><i
+		class="fa fa-angle-double-up"></i></a>
+	<!-- ------------------채팅 관련 추가---------------- -->
 	<!-- ▣ 채팅 목록 박스 -->
 	<div id="chat-list-box" class="chat-list-box" style="display: none;">
 		<div class="chat-list-header">나의 채팅 목록</div>
@@ -319,8 +362,8 @@
 	<!-- ▣ 채팅창 -->
 	<div id="chat-box" class="chat-box" style="display: none;">
 		<div class="chat-header">
-			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> 
-			<span>상담채팅</span> <span id="chat-close" class="chat-header-close">✕</span>
+			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+			<span id="chat-close" class="chat-header-close">✕</span>
 		</div>
 
 		<div id="chat-messages" class="chat-messages"></div>
@@ -329,15 +372,20 @@
 			<input type="text" id="chat-text" placeholder="메시지 입력...">
 			<button id="chat-send">Send</button>
 		</div>
+		<button id="new-chat-btn"
+			style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+			새 채팅 시작</button>
 	</div>
 
 	<!-- ▣ 채팅 열기 버튼 -->
 	<button id="chat-open" class="chat-open-btn">💬</button>
-
+	<div class="toast-container" id="toast-container"></div>
 
 	<!-- JavaScript Libraries -->
+	<!-- jQuery 먼저 -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
@@ -345,12 +393,19 @@
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
+	<!-- 로그인 ID 주입 (chat.js보다 위에) -->
+	<script>
+		const myId = "${sessionScope.loginUser.customer_id}";
+		console.log("✅ myId 확인:", myId);
+	</script>
+	
+	<!-- 채팅 JS -->
+	<script src="/js/CustomerChat.js?v=999"></script>
+	
 	<!-- Javascript -->
 	<script src="js/main.js"></script>
-	<!-- 채팅 JS -->
-	<script src="/js/chat.js?v=1"></script>
-
-	<!-- SockJS + StompJS -->
+	
+	<!-- SockJS + STOMPJS (chat.js보다 위에) -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 	<script

@@ -47,14 +47,15 @@
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="">
+			<form action="selectall" method="get">
 				<div class="input-group">
-					<input type="text" class="form-control"
-						placeholder="Search for products">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
+						<button class="input-group-text bg-transparent text-primary"
+							type="submit">
 							<i class="fa fa-search"></i>
-						</span>
+						</button>
 					</div>
 				</div>
 			</form>
@@ -252,11 +253,11 @@
 			<div class="col-lg-4 col-md-6 pb-1">
 				<div class="cat-item d-flex flex-column border mb-4"
 					style="padding: 30px;">
-					<a href="selectRecipe"
+					<a href="selectdrink"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/recipe.png" alt="">
+						class="img-fluid" src="img/waterdrink.png" alt="">
 					</a>
-					<h5 class="font-weight-semi-bold m-0">레시피</h5>
+					<h5 class="font-weight-semi-bold m-0">생수 ．음료</h5>
 				</div>
 			</div>
 		</div>
