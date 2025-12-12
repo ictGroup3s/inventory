@@ -121,10 +121,14 @@
 			<div class="text-center mb-3">
 				<p class="mb-2">소셜 계정으로 로그인</p>
 				<div class="social-login">
+				 <!-- Google 로그인 버튼 -->
 					<a href="/googleLogin">
 					<img src="/img/google.png" alt="Google 로그인"> </a>
+					
 					<img src="/img/naver.png" alt="Naver 로그인"> 
-					<img src="/img/kakao.png" alt="Kakao 로그인">
+					
+					<a href="/oauth/kakao">
+					<img src="/img/kakao.png" alt="Kakao 로그인"></a>
 				</div>
 			</div>
 

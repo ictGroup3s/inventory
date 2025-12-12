@@ -122,7 +122,7 @@ public class PaymentController {
 	            // 4. ordersVO 객체 생성
 	            ordersVO order = new ordersVO();
 	            order.setOrder_name(shipName != null && !shipName.isEmpty() ? shipName : name);
-	            order.setOrder_phone(Integer.parseInt(cleanShipPhone));
+	            order.setOrder_phone(Long.parseLong(cleanShipPhone));
 	            order.setOrder_addr(shipAddress != null && !shipAddress.isEmpty() ? shipAddress : address);
 	            order.setPayment(cardType != null ? cardType : "카드결제");
 	            order.setOrder_status("결제완료");

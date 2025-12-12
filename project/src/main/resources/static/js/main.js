@@ -1,4 +1,7 @@
 (function($) {
+	//sidebar
+	$("#sidebarMenu").html($("#mainSidebar").html());
+
 	"use strict";
 
 	$(document).ready(function() {
@@ -134,7 +137,7 @@
 	try { updateCartBadge(); } catch (e) {/*ignore*/ }
 
 	// 간단한 토스트 알림 헬퍼 (비차단)
-	function createToast(message, timeout) {
+	function showToast(message, timeout) {
 		try {
 			var t = timeout || 2500;
 			var $toast = $('<div class="copilot-toast" />').text(message).css({
@@ -151,7 +154,7 @@
 			$('body').append($toast);
 			$toast.hide().fadeIn(150);
 			setTimeout(function() { $toast.fadeOut(300, function() { $toast.remove(); }); }, t);
-		} catch (e) { console.warn('createToast failed', e); }
+		} catch (e) { console.warn('showToast failed', e); }
 	}
 
 	// 상품명과 '장바구니 보기' 버튼을 포함한 풍부한 장바구니 토스트
@@ -189,7 +192,7 @@
 		var $form = $(this);
 		var itemNo = $form.find('input[name="item_no"]').val();
 		var qty = $form.find('input[name="qty"]').val() || 1;
-		if (!itemNo) { createToast('item_no가 필요합니다.'); return; }
+		if (!itemNo) { showToast('item_no가 필요합니다.'); return; }
 		$.post('/cart/add', { item_no: itemNo, qty: qty }, function(res) {
 			if (res && res.success) {
 				// 배지를 업데이트하고 간단한 피드백을 표시합니다
@@ -202,10 +205,10 @@
 				} catch (e) { }
 				showAddToast(productName, res.cartCount);
 			} else {
-				createToast('장바구니에 추가하지 못했습니다.');
+				showToast('장바구니에 추가하지 못했습니다.');
 			}
 		}, 'json').fail(function() {
-			createToast('네트워크 오류.');
+			showToast('네트워크 오류.');
 		});
 	});
 
@@ -221,7 +224,7 @@
 			itemNo = $form.find('input[name="item_no"]').val();
 			qty = $form.find('input[name="qty"]').val() || qty;
 		}
-		if (!itemNo) { createToast('item_no가 필요합니다.'); return; }
+		if (!itemNo) { showToast('item_no가 필요합니다.'); return; }
 		// 더 나은 토스트를 위해 DOM에서 상품명을 찾으려고 시도합니다
 		var productName = null;
 		try {
@@ -235,11 +238,11 @@
 				updateCartBadge();
 				showAddToast(productName, res.cartCount);
 			} else {
-				createToast('장바구니에 추가하지 못했습니다.');
+				showToast('장바구니에 추가하지 못했습니다.');
 			}
 		}, 'json').fail(function(jqxhr, status, err) {
 			console.error('/cart/add failed (click)', status, err, jqxhr && jqxhr.responseText);
-			createToast('네트워크 오류.');
+			showToast('네트워크 오류.');
 		});
 	});
 
@@ -248,7 +251,7 @@
 	function addToCart(itemNo, qty) {
 		if (!itemNo) {
 			console.warn('addToCart missing itemNo');
-			createToast('item_no가 필요합니다.');
+			showToast('item_no가 필요합니다.');
 			return;
 		}
 		// data-item-no 속성이 있는 요소에서 상품명을 시도하여 찾습니다
@@ -266,11 +269,11 @@
 				updateCartBadge();
 				showAddToast(productName, res.cartCount);
 			} else {
-				createToast('장바구니에 추가하지 못했습니다.');
+				showToast('장바구니에 추가하지 못했습니다.');
 			}
 		}, 'json').fail(function(jqxhr, status, err) {
 			console.error('/cart/add failed', status, err, jqxhr.responseText);
-			createToast('네트워크 오류가 발생했습니다. 콘솔을 확인하세요.');
+			showToast('네트워크 오류가 발생했습니다. 콘솔을 확인하세요.');
 		});
 	}
 	window.addToCart = addToCart;
@@ -281,6 +284,61 @@
 		var $btn = $(this);
 		var itemNo = $btn.data('item-no');
 		addToCart(itemNo);
+	});
+
+	const fields = $(".required-field");
+
+	// 필드 검증 함수
+	function validateFields() {
+		let allValid = true;
+
+		fields.each(function() {
+			const el = $(this);
+			const msg = el.closest("td").find(".error-msg");
+
+			if (el.val().trim() === "") {
+				el.addClass("input-error");
+				msg.removeClass("d-none");
+				allValid = false;
+			} else {
+				el.removeClass("input-error");
+				msg.addClass("d-none");
+			}
+		});
+
+		return allValid;
+	}
+
+
+	// 입력 시 해당 필드의 에러만 지움 (전체 검증 X)
+	$(document).on("input change", ".required-field", function() {
+	    const el = $(this);
+	    const msg = el.closest("td").find(".error-msg");
+	    
+	    if (el.val().trim() !== "") {
+	        el.removeClass("input-error");
+	        msg.addClass("d-none");
+	    }
+	});
+
+	// 버튼 클릭 시 최종 검증
+	$(".submit-btn").on("click", function(e) {
+	    // 비활성화된 버튼이면 종료
+	    if ($(this).prop('disabled')) {
+	        e.preventDefault();
+	        return false;
+	    }
+
+	    // 유효성 검사
+	    if (!validateFields()) {
+	        e.preventDefault();
+	        return;
+	    }
+
+	    // 정상 submit → formaction 적용
+	    const form = $(this).closest("form");
+	    form.attr("action", $(this).attr("formaction") || form.attr("action"));
+	    form.submit();
 	});
 
 })(jQuery);

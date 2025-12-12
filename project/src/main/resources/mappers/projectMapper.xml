@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "projectMapper">
-	<select id="selectProductById" parameterType="int" resultType="productVO">
+	<select id="selectProductById" parameterType="int" resultType="ProductVO">
 		SELECT
 			item_no      AS item_no,
 			item_img     AS item_img,
@@ -14,12 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sales_p      AS sales_p,
 			stock_cnt    AS stock_cnt,
 			cate_no      AS cate_no,
-			dis_no       AS dis_no
+			dis_rate     AS dis_rate
 		FROM product
 		WHERE item_no = #{item_no}
 	</select>
     
-	<select id="selectAllProducts" resultType="productVO">
+	<select id="selectAllProducts" resultType="ProductVO">
 		SELECT
 			item_no      AS item_no,
 			item_img     AS item_img,
@@ -29,12 +29,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sales_p      AS sales_p,
 			stock_cnt    AS stock_cnt,
 			cate_no      AS cate_no,
-			dis_no       AS dis_no
+			dis_rate     AS dis_rate
 		FROM product
 		ORDER BY item_no DESC
 	</select>
 
-	<select id="selectProducts" parameterType="map" resultType="productVO">
+	<select id="selectProducts" parameterType="map" resultType="ProductVO">
 		SELECT * FROM (
 			SELECT a.*, ROWNUM rn FROM (
 				SELECT
@@ -46,11 +46,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					sales_p      AS sales_p,
 					stock_cnt    AS stock_cnt,
 					cate_no      AS cate_no,
-					dis_no       AS dis_no
+				  dis_rate       AS dis_rate
+          (SELECT AVG(rating) FROM review WHERE item_no = item_no) AS avg_rating,
+					(SELECT COUNT(*) FROM review WHERE item_no = item_no) AS review_cnt
 				FROM product
 				<where>
 					<if test="q != null and q != ''">
-						(item_name LIKE '%' || #{q} || '%' OR item_content LIKE '%' || #{q} || '%')
+						(p.item_name LIKE '%' || #{q} || '%' OR p.item_content LIKE '%' || #{q} || '%')
 					</if>
 					<if test="cate_no != null">
 						AND cate_no = #{cate_no}
@@ -59,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<choose>
 					<when test="sort == 'price_asc'">ORDER BY sales_p ASC</when>
 					<when test="sort == 'price_desc'">ORDER BY sales_p DESC</when>
-					<otherwise>ORDER BY item_no DESC</otherwise>
+					<otherwise>ORDER BY p.item_no DESC</otherwise>
 				</choose>
 			) a WHERE ROWNUM &lt;= #{offset} + #{size}
 		)
@@ -76,5 +78,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND cate_no = #{cate_no}
 			</if>
 		</where>
+	</select>
+
+<!-- 랜덤 상품 4개 추천 (bx slider용) -->
+	<select id="selectRandomProducts" parameterType="int" resultType="productVO">
+		SELECT * FROM (
+			SELECT
+				item_no      AS item_no,
+				item_img     AS item_img,
+				item_name    AS item_name,
+				item_content AS item_content,
+				origin_p     AS origin_p,
+				sales_p      AS sales_p,
+				stock_cnt    AS stock_cnt,
+				cate_no      AS cate_no,
+				dis_rate     AS dis_rate
+			FROM product
+			ORDER BY DBMS_RANDOM.VALUE
+		) WHERE ROWNUM &lt;= #{limit}
 	</select>
 </mapper>

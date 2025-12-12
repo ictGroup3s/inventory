@@ -36,7 +36,8 @@ public class AdminController {
 	@GetMapping("/item")
 	public String showItemForm(Model m) {
 		List<ProductVO> list = adminService.getItemList();
-		log.info("controller [ " + list + " ]");
+		log.info("----- AdminController- showItemForm호출 -----");
+		//log.info("controller [ " + list + " ]");
 		m.addAttribute("list", list);
 
 		return "item"; // item.jsp
@@ -47,6 +48,9 @@ public class AdminController {
 	public String saveItem(@ModelAttribute ProductVO vo, @RequestParam("item_imgFile") MultipartFile file)
 			throws Exception {
 
+		// vo에 dis_rate가 정상적으로 넘어왔는지 확인
+	    log.info("Received dis_rate: " + vo.getDis_rate());
+	    
 		// 1. 이미지가 존재하면 서버에 저장
 		if (!file.isEmpty()) {
 			String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
@@ -76,21 +80,21 @@ public class AdminController {
 	}
 
 	@PostMapping("/itemUpdate")
-	public String updateItem(ProductVO productVO) throws IOException {
+	public String updateItem(ProductVO vo) throws IOException {
 		// MultipartFile에 업로드된 파일이 있는지 확인
-		if (productVO.getItem_imgFile() != null && !productVO.getItem_imgFile().isEmpty()) {
-			MultipartFile file = productVO.getItem_imgFile();
+		if (vo.getItem_imgFile() != null && !vo.getItem_imgFile().isEmpty()) {
+			MultipartFile file = vo.getItem_imgFile();
 			String fileName = file.getOriginalFilename();
-
+			
 			// 원하는 경로에 저장
 			file.transferTo(new File("src/main/resources/static/img/product/" + fileName));
 
 			// VO에 파일명 세팅 (DB 저장용)
-			productVO.setItem_img(fileName);
+			vo.setItem_img(fileName);
 		}
 
 		// 서비스 호출
-		adminService.updateItem(productVO);
+		adminService.updateItem(vo);
 
 		return "redirect:/item";
 	}
@@ -113,11 +117,10 @@ public class AdminController {
 	// 상품 등록 페이지 + 목록 보여주기
 	@GetMapping("/stock")
 	public String showItem(Model m) {
-		List<ProductVO> list = adminService.getItemList();
-		log.info("controller [ " + list + " ]");
-		m.addAttribute("list", list);
-
-		return "stock"; // stock.jsp
+	    log.info("===== /stock 호출됨 =====");  // 이거 추가
+	    List<ProductVO> list = adminService.getStockList();
+	    m.addAttribute("list", list);
+	    return "stock";
 	}
 	
 	@PostMapping("/updateStock")
@@ -126,5 +129,6 @@ public class AdminController {
 
 		return "redirect:/stock";
 	}
+	
 
 }
