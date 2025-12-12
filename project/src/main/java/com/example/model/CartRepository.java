@@ -12,4 +12,6 @@ public interface CartRepository {
     int deleteCartByCustomerAndItem(Map<String,Object> params);
     List<Map<String,Object>> findByCustomer(String customerId);
     int countByCustomer(String customerId);
+    
+    void deleteCartByCustomer(String customerId);
 }
