@@ -50,10 +50,10 @@ public class projectController {
 		return "kakaolog";
 	}
 	
-	@GetMapping("checkout")
-	public String checkout() {
-		return "checkout";
-	}
+//	@GetMapping("checkout")
+//	public String checkout() {
+//		return "checkout";
+//	}
 	
 	@GetMapping("header")
 	public String header() {
@@ -85,11 +85,6 @@ public class projectController {
 		return "register";
 	}
 	 
-	@GetMapping("event1")
-	public String event1() {
-		return "event1";
-	}
-	
 	@GetMapping("event2")
 	public String event2() {
 		return "event2";
@@ -133,8 +128,7 @@ public class projectController {
         }
         return "selectall";
     }
-	
-		
+    
     @GetMapping("detail")
     public String detail(@RequestParam(value = "item_no", required = false) Integer item_no, Model m) throws Exception {
         if (item_no != null) {

@@ -47,14 +47,15 @@
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="">
+			<form action="selectall" method="get">
 				<div class="input-group">
-					<input type="text" class="form-control"
-						placeholder="Search for products">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
+						<button class="input-group-text bg-transparent text-primary"
+							type="submit">
 							<i class="fa fa-search"></i>
-						</span>
+						</button>
 					</div>
 				</div>
 			</form>
@@ -69,7 +70,6 @@
 	</div>
 	</div>
 	<!-- Topbar End -->
-
 
 	<!-- Navbar Start -->
 	<div class="container-fluid mb-5">
@@ -201,73 +201,6 @@
 	</div>
 	<!-- Navbar End -->
 
-	<!-- Categories Start -->
-	<div class="container-fluid pt-5">
-		<div class="row px-xl-5 pb-3">
-			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
-					<a href="selectGui"
-						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/gui.png" alt="">
-					</a>
-					<h5 class="font-weight-semi-bold m-0">구이 ．찜 ．볶음</h5>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
-					<a href="selectSoup"
-						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/soup.png" alt="">
-					</a>
-					<h5 class="font-weight-semi-bold m-0">국 ．밥 ．면</h5>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
-					<a href="selectDiet"
-						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/diet.png" alt="">
-					</a>
-					<h5 class="font-weight-semi-bold m-0">식단관리</h5>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
-					<a href="selectBunsik"
-						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/bunsik.png" alt="">
-					</a>
-					<h5 class="font-weight-semi-bold m-0">분식 ．간식</h5>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
-					<a href="selectBanchan"
-						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/banchan.png" alt="">
-					</a>
-					<h5 class="font-weight-semi-bold m-0">반찬 ．소스</h5>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
-					<a href="selectdrink"
-						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/drink.png" alt="">
-					</a>
-					<h5 class="font-weight-semi-bold m-0">생수 ．음료</h5>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Categories End -->
-
 
 	<!-- Offer Start -->
 	<div class="container-fluid offer pt-5">
@@ -278,7 +211,7 @@
 					<img src="img/bingsu.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">season off</h5>
-						<h1 class="mb-4 font-weight-semi-bold">20%</h1>
+						<h1 class="mb-4 font-weight-semi-bold">Discount</h1>
 					</div>
 					<a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop
 						Now</a>
@@ -294,18 +227,80 @@
 						<h1 class="mb-4 font-weight-semi-bold">New arrival</h1>
 						<a href="event2" class="btn btn-outline-primary py-md-2 px-md-3">Shop
 							Now</a>
-
-
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Offer End -->
+	<!-- Categories Start -->
+	<div class="container-fluid pt-5">
+		<div class="row px-xl-5 pb-3">
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectGui"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/gui.png" alt="">
+					</a>
+	<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">구이 ．찜 ．볶음</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectSoup"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/soup.png" alt="">
+					</a>
+			<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">국 ．밥 ．면</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectDiet"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/diet.png" alt="">
+					</a>
+				<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">식단관리</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectBunsik"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/bunsik.png" alt="">
+					</a>
+				<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">분식 ．간식</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectBanchan"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/banchan.png" alt="">
+					</a>
+				<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">반찬 ．소스</h5>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 pb-1">
+				<div class="cat-item d-flex flex-column border mb-4"
+					style="padding: 30px;">
+					<a href="selectdrink"
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid" src="img/drink.png" alt="">
+					</a>
+				<h5 style="font-family: 'Tahoma', sans-serif; text-align:center;">생수 ．음료</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Categories End -->
 
-
-
-	<!-- Products Start -->
+	<!-- Products Start 
 	<div class="container-fluid pt-5">
 		<div class="text-center mb-4">
 			<h2 class="section-title px-5">
@@ -420,7 +415,7 @@
 
 
 
-	<!-- Products Start -->
+	<!-- Products Start 
 	<div class="container-fluid pt-5">
 		<div class="text-center mb-4">
 			<h2 class="section-title px-5">
@@ -530,7 +525,7 @@
 			</div>
 		</div>
 
-	</div>
+	</div>-->
 	<!-- Products End -->
 
 	<!-- Footer Start -->
@@ -558,17 +553,11 @@
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
 						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="/"><i
-								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
-								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
-								class="text-dark mb-2" href="mlist"><i
-								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
-								class="text-dark mb-2" href="cart"><i
-								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
-								class="text-dark mb-2" href="checkout"><i
-								class="fa fa-angle-right mr-2"></i>결제</a>
-						</div>
+							<a class="text-dark mb-2" href="/">
+							<i class="fa fa-angle-right mr-2"></i>메인 홈</a> 
+							<a class="text-dark mb-2" href="selectall">
+							<i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
+							</div>
 					</div>
 					<div class="col-lg-8 col-md-12">
 						<div class="row">
