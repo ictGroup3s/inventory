@@ -16,10 +16,11 @@ public interface orderService {
     ordersVO getOrderByNo(int orderNo);
     
     // 고객 ID로 주문 목록 조회
-    List<ordersVO> getOrdersByCustomerId(String customerId);
+    List<ordersVO> getOrdersByCustomerId(String loginUser);
     
     // 주문 상태 업데이트
     void updateOrderStatus(int orderNo, String status);
+    
     
    
     

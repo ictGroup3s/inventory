@@ -26,6 +26,7 @@ public class orderController {
 
 	    private final orderRepository repo;
 	    private final CartService cartService; // 장바구니 서비스
+	    private orderService service;
 
 	    public orderController(orderRepository repo, CartService cartService) {
 	        this.repo = repo;
@@ -35,10 +36,10 @@ public class orderController {
 	    // 결제 버튼 클릭 → 주문 저장 → 결제 완료 페이지 이동
 	    @PostMapping("/checkout")
 	    public String processCheckout(HttpSession session) throws Exception {
-	        String customerId = (String) session.getAttribute("customerId");
+	        String loginUser = (String) session.getAttribute("loginUser");
 
 	        // 1. 주문 저장
-	        int orderNo = repo.insertOrder(customerId);
+	        int orderNo = repo.insertOrder(loginUser);
 
 	        // 2. 장바구니 기반 주문 상세 저장
 	        List<CartItemVO> cartItems = cartService.getCartItems(session);
@@ -56,17 +57,14 @@ public class orderController {
 	    public String showSuccessPage() {
 	        return "ordercomplete"; // success.jsp
 	    }
-	    
-		/*
-		 * @GetMapping("/orderhistory") public String orderHistory(HttpSession session,
-		 * Model model) throws SQLException {
-		 * 
-		 * String customerId = (String) session.getAttribute("customer_id");
-		 * List<ordersVO> orderList = orderService.getOrders(customerId);
-		 * 
-		 * model.addAttribute("orderList", orderList);
-		 * 
-		 * return "orderhistory"; }
-		 * 
-		 */
-	}
+
+		 @GetMapping("/orderhistory") public String orderHistory(HttpSession session,
+		 Model model) throws SQLException {
+		  
+		 String loginUser = (String) session.getAttribute("loginUser");
+		 List<ordersVO> orderList = service.getOrdersByCustomerId(loginUser);
+		 model.addAttribute("orderList", orderList);
+		 return "orderhistory"; 
+		 }
+
+}

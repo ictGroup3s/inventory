@@ -130,8 +130,15 @@ public class orderRepository {
 	                order.setPayment(rs.getString("payment"));
 	                order.setCustomer_id(rs.getString("customer_id"));
 	                order.setOrder_date(rs.getString("order_date"));
-	                // ⭐ 여기 추가: 주문 상세 조회해서 넣기
-	                order.setDetailList(getOrderDetail(order.getOrder_no()));
+	                // 주문 상세 조회해서 넣기
+	                List<order_detailVO> detailList = getOrderDetail(order.getOrder_no());
+	                if (detailList == null || detailList.isEmpty()) {
+	                    System.out.println("[DEBUG] order_no=" + order.getOrder_no() + " 의 상세내역이 없습니다.");
+	                } else {
+	                    System.out.println("[DEBUG] order_no=" + order.getOrder_no() + " 의 상세내역 수: " + detailList.size());
+	                }
+	                order.setDetailList(detailList);
+
 	                list.add(order);
 	            }
 	        }
