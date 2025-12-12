@@ -262,11 +262,6 @@ public class projectController {
     }
 
 
-	@GetMapping("board")
-	public String board() {
-		return "board";
-	}
-	
 	@GetMapping("dashboard")
 	public String dashboard() {
 		return "dashboard";
