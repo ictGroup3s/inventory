@@ -130,6 +130,8 @@ public class orderRepository {
 	                order.setPayment(rs.getString("payment"));
 	                order.setCustomer_id(rs.getString("customer_id"));
 	                order.setOrder_date(rs.getString("order_date"));
+	                // ⭐ 여기 추가: 주문 상세 조회해서 넣기
+	                order.setDetailList(getOrderDetail(order.getOrder_no()));
 	                list.add(order);
 	            }
 	        }
