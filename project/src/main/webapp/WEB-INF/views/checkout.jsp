@@ -79,164 +79,222 @@
 		</div>
 	</div>
 
+	
 	<!-- Checkout Start -->
-	<div class="container-fluid pt-5">
-		<div class="row px-xl-5">
-			<!-- 왼쪽: 주소 입력 -->
-			<div class="col-lg-8">
-				<div class="mb-4">
-					<h4 class="font-weight-semi-bold mb-4">주소 입력</h4>
-					<div class="row">
-						<div class="col-md-6 form-group">
-							<label>이름</label>
-							<input class="form-control" type="text" id="Name" placeholder="이름을 입력해주세요" >
-						</div>
-						<div class="col-md-6 form-group">
-							<label>이메일</label>
-							<input class="form-control" type="text">
-						</div>
-						<div class="col-md-6 form-group">
-							<label>전화번호</label>
-							<input class="form-control" type="text" id="Phone">
-						</div>
-						<div class="col-md-6 form-group">
-							<label>주 소</label>
-							<input class="form-control" type="text" id="Address">
-						</div>
-					</div>
-					<div class="col-md-6 form-group">
-						<label style="padding-right:-50px;">지역선택</label>
-						<select class="custom-select" style="margin-left:-15px;">
-							<option selected>서울특별시</option>
-							<option>경기도</option>
-							<option>대전광역시</option>
-							<option>광주광역시</option>
-						</select>
-						<div class="col-md-12 form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="newaccount">
-								<label class="custom-control-label" for="newaccount" style="margin-top:20px; margin-left:-25px;">위 내용과 동일</label>
-							</div>
-						</div>
-						<div class="col-md-12 form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="shipto">
-								<label class="custom-control-label" for="shipto" data-toggle="collapse" data-target="#shipping-address" style="margin-top:5px; margin-left:-25px;">수령지주소입력</label>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<!-- 수령지 주소 -->
-				<div class="collapse mb-4" id="shipping-address">
-					<h4 class="font-weight-semi-bold mb-4">수령지 주소</h4>
-					<div class="row">
-						<div class="col-md-6 form-group">
-							<label>이름</label>
-							<input class="form-control" type="text" id="shipName">
-						</div>
-						<div class="col-md-6 form-group">
-							<label>핸드폰 번호</label>
-							<input class="form-control" type="text" id="shipPhone">
-						</div>
-						<div class="col-md-6 form-group">
-							<label>수령주소</label>
-							<input class="form-control" type="text" id="shipAddress">
-						</div>
-						<div class="col-md-6 form-group">
-							<label>메모</label>
-							<select class="custom-select" id="memoSelect">
-								<option selected>요청사항</option>
-								<option>문앞에 놓아주세요</option>
-								<option>경비실에 맡겨주세요</option>
-								<option>택배함에 넣어주세요</option>
-								<option value="direct">직접입력</option>
-							</select>
-							<input type="text" class="form-control mt-2" id="memoInput" placeholder="요청사항 입력" style="display: none;">
-						</div>
-					</div>
-				</div>
-			</div>
+<div class="container-fluid pt-5">
+ <form id="checkoutForm" method="post"  action="/order/submit">
+    <div class="row px-xl-5">
+        <!-- 왼쪽: 주소 입력 -->
+        <div class="col-lg-8">
+            <div class="mb-4">
+                <h4 class="font-weight-semi-bold mb-4">주소 입력</h4>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>이름</label>
+                        <input class="form-control" type="text" id="Name" name="name" 
+                               placeholder="이름을 입력해주세요"
+                               value="${name}"
+                               onfocus="this.placeholder=''"
+                               onblur="this.placeholder='이름을 입력해주세요'">
+                        <small id="NameError" class="text-danger"></small>
+                        <c:if test="${not empty nameError}">
+                            <small class="text-danger">${nameError}</small>
+                        </c:if>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>이메일</label>
+                        <input class="form-control" type="email" id="Email" name="email" 
+                               placeholder="이메일을 입력해주세요"
+                               value="${email}"
+                               onfocus="this.placeholder=''"
+                               onblur="this.placeholder='이메일을 입력해주세요'">
+                        <small id="EmailError" class="text-danger"></small>
+                        <c:if test="${not empty emailError}">
+                            <small class="text-danger">${emailError}</small>
+                        </c:if>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>전화번호</label>
+                        <input class="form-control" type="tel" id="Phone" name="phone"
+                               placeholder="전화번호를 입력해주세요"
+                               value="${phone}"
+                               onfocus="this.placeholder=''"
+                               onblur="this.placeholder='전화번호를 입력해주세요'">
+                        <small id="PhoneError" class="text-danger"></small>
+                        <c:if test="${not empty phoneError}">
+                            <small class="text-danger">${phoneError}</small>
+                        </c:if>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>주 소</label>
+                        <input class="form-control" type="text" id="Address" name="address" 
+                               placeholder="주소를 입력해주세요"
+                               value="${address}"
+                               onfocus="this.placeholder=''"
+                               onblur="this.placeholder='주소를 입력해주세요'">
+                        <small id="AddressError" class="text-danger"></small>
+                        <c:if test="${not empty addressError}">
+                            <small class="text-danger">${addressError}</small>
+                        </c:if>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label style="padding-right:-50px; margin-top:30px;">지역선택</label>
+                    <select class="custom-select" name="region" style="margin-left:-15px;">
+                        <option selected>서울특별시</option>
+                        <option>경기도</option>
+                        <option>대전광역시</option>
+                        <option>광주광역시</option>
+                    </select>
+                    <div class="col-md-12 form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="newaccount">
+                            <label class="custom-control-label" for="newaccount" style="margin-top:20px; margin-left:-25px;">위 내용과 동일</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="shipto">
+                            <label class="custom-control-label" for="shipto" data-toggle="collapse" data-target="#shipping-address" style="margin-top:5px; margin-left:-25px;">수령지주소입력</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 수령지 주소 -->
+            <div class="collapse mb-4" id="shipping-address">
+                <h4 class="font-weight-semi-bold mb-4">수령지 주소</h4>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>이름</label>
+                        <input class="form-control" type="text" id="shipName" name="shipName" 
+                               placeholder="이름을 입력해주세요"
+                               onfocus="this.placeholder=''"
+                               onblur="this.placeholder='이름을 입력해주세요'">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>전화번호</label>
+                        <input class="form-control" type="tel" id="shipPhone" name="shipPhone" 
+                               placeholder="전화번호를 입력해주세요"
+                               onfocus="this.placeholder=''"
+                               onblur="this.placeholder='전화번호를 입력해주세요'">
+                               <small id="shipPhoneError" class="text-danger"></small>
+                               
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>수령주소</label>
+                        <input class="form-control" type="text" id="shipAddress" name="shipAddress" 
+                               placeholder=" (수령주소가 다르면 직접입력해주세요.)"
+                               onfocus="this.placeholder=''"
+                               onblur="this.placeholder=' (수령주소가 다르면 직접입력해주세요.)'">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>메모</label>
+                        <select class="custom-select" id="memoSelect" name="memo">
+                            <option selected>요청사항</option>
+                            <option>문앞에 놓아주세요</option>
+                            <option>경비실에 맡겨주세요</option>
+                            <option>택배함에 넣어주세요</option>
+                            <option value="direct">직접입력</option>
+                        </select>
+                        <input type="text" class="form-control mt-2" id="memoInput" name="memoInput" 
+                               placeholder="요청사항 입력" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
 
-			<!-- 오른쪽: 주문서 및 결제 -->
-			<div class="col-lg-4">
-				<!-- 주문서 -->
-				<div class="card border-secondary mb-5">
-					<div class="card-header bg-secondary border-0">
-						<h4 class="font-weight-semi-bold m-0">주문서</h4>
-					</div>
-					<div class="card-body">
-						<h5 class="font-weight-medium mb-3">상품</h5>
-						<c:forEach var="ci" items="${cartItems}">
-							<div class="d-flex justify-content-between">
-								<p>${ci.product.item_name}x ${ci.qty}</p>
-								<p>${ci.subtotal}원</p>
-							</div>
-						</c:forEach>
-						<hr class="mt-0">
-						<div class="d-flex justify-content-between mb-3 pt-1">
-							<h6 class="font-weight-medium">상품수량</h6>
-							<h6 class="font-weight-medium">
-								<span id="cartCount">${cartCount}</span>
-							</h6>
-						</div>
-					</div>
-					<div class="card-footer border-secondary bg-transparent">
-						<div class="d-flex justify-content-between mt-2">
-							<h5 class="font-weight-bold">총 금액</h5>
-							<h5 class="font-weight-bold">
-								<span id="cartTotal">${cartTotal}원</span>
-							</h5>
-						</div>
-					</div>
-				</div>
+        <!-- 오른쪽: 주문서 및 결제 -->
+        <div class="col-lg-4">
+            <!-- 주문서 -->
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                    <h4 class="font-weight-semi-bold m-0">주문서</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="font-weight-medium mb-3">상품</h5>
+                    <c:forEach var="ci" items="${cartItems}">
+                        <div class="d-flex justify-content-between">
+                            <p>${ci.product.item_name}x ${ci.qty}</p>
+                            <p>${ci.subtotal}원</p>
+                        </div>
+                    </c:forEach>
+                    <hr class="mt-0">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">상품수량</h6>
+                        <h6 class="font-weight-medium">
+                            <span id="cartCount">${cartCount}</span>
+                        </h6>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold">총 금액</h5>
+                        <h5 class="font-weight-bold">
+                            <span id="cartTotal">${cartTotal}원</span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
 
+            <!-- 결제 방식 선택 카드 -->
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                    <h4 class="font-weight-semi-bold m-0">결제방식</h4>
+                </div>
+                <div class="card-body">
+                    <!-- 결제 방식 라디오 버튼 -->
+                    <div class="form-group">
+                        <div class="custom-control custom-radio" style="padding-top:10px;">
+                            <input type="radio" class="custom-control-input" name="payment" id="paypal" value="card">
+                            <label class="custom-control-label" for="paypal">카드결제</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="payment" id="directcheck" value="bank">
+                            <label class="custom-control-label" for="directcheck">계좌이체</label>
+                        </div>
+                        <div class="form-group" id="bankInfo" style="display: none;">
+                            <p>국민은행 123-456-7890</p>
+                        </div>
+                    </div>
 
-			<!-- 결제 방식 선택 카드 -->
-				<div class="card border-secondary mb-5">
-					<div class="card-header bg-secondary border-0">
-						<h4 class="font-weight-semi-bold m-0">결제방식</h4>
-					</div>
-					<div class="card-body">
-						<!-- 결제 방식 라디오 버튼 -->
-						<div class="form-group">
-							<div class="custom-control custom-radio" style="padding-top:10px;">
-								<input type="radio" class="custom-control-input" name="payment" id="paypal">
-								<label class="custom-control-label" for="paypal">카드결제</label>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="custom-control custom-radio">
-								<input type="radio" class="custom-control-input" name="payment" id="directcheck">
-								<label class="custom-control-label" for="directcheck">계좌이체</label>
-							</div>
-							<div class="form-group" id="bankInfo" style="display: none;">
-								<p>국민은행 123-456-7890</p>
-							</div>
-						</div>
+                    <!-- 기타 결제 (네이버페이, 카카오페이) -->
+                    <div class="tab-pane fade show active" id="social" role="tabpanel">
+                        <div class="text-center mb-4">
+                            <button type="button" id="naverPayBtn" class="btn btn-light border d-block mb-2 py-2 social-btn">
+                                <img src="/img/naver.png"> NaverPay로 결제
+                            </button>
+                            <button type="button" id="kakaoPayBtn" class="btn btn-light border d-block py-2 social-btn">
+                                <img src="/img/kakao.png"> KakaoPay로 결제
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-						<!-- 기타 결제 (네이버페이, 카카오페이) -->
-						<div class="tab-pane fade show active" id="social" role="tabpanel">
-							<div class="text-center mb-4">
-								<button id="naverPayBtn" class="btn btn-light border d-block mb-2 py-2 social-btn">
-									<img src="/img/naver.png"> NaverPay로 결제
-								</button>
-								<button id="kakaoPayBtn" class="btn btn-light border d-block py-2 social-btn">
-									<img src="/img/kakao.png"> KakaoPay로 결제
-								</button>
-							</div>
-						</div>
-					</div>
-
-					<!-- 결제하기 버튼 -->
-					<div class="card-footer border-secondary bg-transparent">
-						<button type="button" id="btnOpenModal" class="btn btn-block btn-primary my-3 py-3">결제하기</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
+                <!-- 결제하기 버튼 -->
+                <div class="card-footer border-secondary bg-transparent">
+                    <c:choose>
+                        <c:when test="${empty cartItems or cartCount == 0}">
+                            <button type="button" class="btn btn-block btn-secondary my-3 py-3" disabled>
+                                장바구니가 비어있습니다
+                            </button>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="button" id="btnOpenModal" class="btn btn-block btn-primary my-3 py-3">
+                                결제하기
+                            </button>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+	<!-- FORM 끝 -->
+	
 	<!-- Footer -->
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
 		<div class="row px-xl-5 pt-5">

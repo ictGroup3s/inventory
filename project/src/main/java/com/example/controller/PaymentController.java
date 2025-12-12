@@ -7,11 +7,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.model.vo.CartItemVO;
 import com.example.model.vo.CustomerVO;
@@ -159,5 +161,52 @@ public class PaymentController {
 	            result.put("message", "주문 처리 중 오류가 발생했습니다.");
 	            return result;
 	        }
+	    }
+	    
+	    @PostMapping("/validateCheckout")
+	    public String processPayment(
+	        @RequestParam String name,
+	        @RequestParam String email,
+	        @RequestParam String phone,
+	        @RequestParam String address,
+	        Model model,
+	        RedirectAttributes redirectAttributes
+	    ) {
+	        boolean hasError = false;
+	        
+	        if (name == null || name.trim().isEmpty()) {
+	            model.addAttribute("nameError", "이름을 입력해주세요.");
+	            hasError = true;
+	        }
+	        
+	        if (email == null || email.trim().isEmpty()) {
+	            model.addAttribute("emailError", "이메일을 입력해주세요.");
+	            hasError = true;
+	        } else if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+	            model.addAttribute("emailError", "올바른 이메일 형식이 아닙니다.");
+	            hasError = true;
+	        }
+	        
+	        if (phone == null || phone.trim().isEmpty()) {
+	            model.addAttribute("phoneError", "전화번호를 입력해주세요.");
+	            hasError = true;
+	        }
+	        
+	        if (address == null || address.trim().isEmpty()) {
+	            model.addAttribute("addressError", "주소를 입력해주세요.");
+	            hasError = true;
+	        }
+	        
+	        if (hasError) {
+	            // 입력값 유지
+	            model.addAttribute("name", name);
+	            model.addAttribute("email", email);
+	            model.addAttribute("phone", phone);
+	            model.addAttribute("address", address);
+	            return "checkout"; // 다시 결제 페이지로
+	        }
+	        
+	        // 검증 통과 시 결제 처리
+	        return "/ordercomplete";
 	    }
 	}

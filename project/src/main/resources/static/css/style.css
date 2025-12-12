@@ -9812,6 +9812,19 @@ a.text-dark:hover, a.text-dark:focus {
 	font-size: 12px;
 }
 
+/* checkout  */
+.invalid-phone {
+    border: 2px solid #d9534f !important;
+    background-color: #fff5f5;
+}
+
+ .valid-phone {
+    border: 2px solid #5cb85c !important;
+    background-color: #f4fff4;
+}
+
+
+
 /*.bxslider li {*/
 /*    display: block;*/
 /*    flex-direction: column;  */   /* 세로 배치 */
