@@ -15,6 +15,9 @@ public class ProductVO {
 	private Integer sales_p;
 	private Integer stock_cnt;
 	private Integer cate_no;
-	private Integer dis_no;
+	private Integer dis_rate;
 	private String cate_name;
+	
+	private Integer stock_in;   // 총 입고량
+    private Integer stock_out;  // 총 출고량
 }

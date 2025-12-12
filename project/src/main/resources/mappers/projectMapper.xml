@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sales_p      AS sales_p,
 			stock_cnt    AS stock_cnt,
 			cate_no      AS cate_no,
-			dis_no       AS dis_no
+			dis_rate       AS dis_rate
 		FROM product
 		WHERE item_no = #{item_no}
 	</select>
@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sales_p      AS sales_p,
 			stock_cnt    AS stock_cnt,
 			cate_no      AS cate_no,
-			dis_no       AS dis_no
+			dis_rate       AS dis_rate
 		FROM product
 		ORDER BY item_no DESC
 	</select>
@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					sales_p      AS sales_p,
 					stock_cnt    AS stock_cnt,
 					cate_no      AS cate_no,
-					dis_no       AS dis_no
+					dis_rate       AS dis_rate
 				FROM product
 				<where>
 					<if test="q != null and q != ''">

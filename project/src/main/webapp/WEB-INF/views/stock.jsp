@@ -207,7 +207,7 @@
 										<th>상품명</th>
 										<th>원가</th>
 										<th>입고수량</th>
-										<th>출고</th>
+										<th>출고수량</th>
 										<th>재고수량</th>
 									</tr>
 								</thead>
@@ -222,15 +222,19 @@
 											<td>${item.item_no}</td>
 											<td>${item.item_name}</td>
 											<td>${item.origin_p}</td>
-											<td>${item.stock_cnt}</td>
-											<td></td>
-											<td>${item.stock_cnt}</td>
-											<td>
-												<c:if test="${item.stock_cnt < 10}">
-													<span class="text-danger font-weight-bold"> 
-													<i class="fas fa-exclamation-triangle"></i> ${item.stock_cnt}
-													</span>
-												</c:if>
+											<td>${item.stock_in}</td>
+											<td>${item.stock_out}</td>
+											<td><c:choose>
+													<c:when test="${item.stock_cnt < 10}">
+														<span class="text-danger font-weight-bold"> 
+														<i class="fas fa-exclamation-triangle"></i>
+															${item.stock_cnt}
+														</span>
+													</c:when>
+													<c:otherwise>
+							                            ${item.stock_cnt}
+							                        </c:otherwise>
+												</c:choose>
 											</td>
 										</tr>
 									</c:forEach>
