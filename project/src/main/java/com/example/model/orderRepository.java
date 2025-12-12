@@ -48,7 +48,7 @@ public class orderRepository {
 	                pstmt.setString(2, order.getCustomer_id());
 	                pstmt.setString(3, order.getOrder_name());
 	                pstmt.setString(4, order.getOrder_addr());
-	                pstmt.setInt(5, order.getOrder_phone());
+	                pstmt.setLong(5, order.getOrder_phone());
 	                pstmt.setString(6, order.getOrder_status());
 	                pstmt.setString(7, order.getPayment());
 	                pstmt.setInt(8, order.getTotal_amount()); 
@@ -99,7 +99,7 @@ public class orderRepository {
 	                order.setOrder_no(rs.getInt("order_no"));
 	                order.setOrder_name(rs.getString("order_name"));
 	                order.setOrder_addr(rs.getString("order_addr"));
-	                order.setOrder_phone(rs.getInt("order_phone"));
+	                order.setOrder_phone(rs.getLong("order_phone"));
 	                order.setOrder_status(rs.getString("order_status"));
 	                order.setPayment(rs.getString("payment"));
 	                order.setCustomer_id(rs.getString("customer_id"));
@@ -125,11 +125,13 @@ public class orderRepository {
 	                order.setOrder_no(rs.getInt("order_no"));
 	                order.setOrder_name(rs.getString("order_name"));
 	                order.setOrder_addr(rs.getString("order_addr"));
-	                order.setOrder_phone(rs.getInt("order_phone"));
+	                order.setOrder_phone(rs.getLong("order_phone"));
 	                order.setOrder_status(rs.getString("order_status"));
 	                order.setPayment(rs.getString("payment"));
 	                order.setCustomer_id(rs.getString("customer_id"));
 	                order.setOrder_date(rs.getString("order_date"));
+	                // ⭐ 여기 추가: 주문 상세 조회해서 넣기
+	                order.setDetailList(getOrderDetail(order.getOrder_no()));
 	                list.add(order);
 	            }
 	        }

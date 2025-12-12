@@ -13,16 +13,25 @@ public class ReviewServiceImpl implements ReviewService {
 
 	
 	@Autowired
-	private ReviewRepository reviewRepo;
+	private ReviewRepository reviewRepository;
 	
 	// 상품 번호(item_no)로 리뷰 가져오기
 	public List<ReviewVO> getReviewList(Integer item_no) {
-		return reviewRepo.selectReviewsByItemNo(item_no);
+		return reviewRepository.selectReviewsByItemNo(item_no);
 	}
 	
 	// 리뷰 작성
-	public void addReview(ReviewVO review) {
-		reviewRepo.add(review);  // 매퍼 insert id값
+	public Integer addReview(ReviewVO review) {
+		Integer result = reviewRepository.add(review);  // 매퍼 insert id값="add"
+		return result;
+	}
+	
+	public void deleteReview(Integer review_no) {
+		reviewRepository.delete(review_no);
+	}
+
+	public void updateReview(ReviewVO review) {
+		reviewRepository.update(review);
 	}
 	
 }

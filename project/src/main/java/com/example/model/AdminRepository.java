@@ -14,4 +14,6 @@ public interface AdminRepository {
 	public void updateStock(ProductVO vo);
 	public void insertStockHistory(StockVO vo);
 	public ProductVO getProductByNo(Integer itemNo);
+	public void updateStockOnly(ProductVO vo);
+	public List<ProductVO> getStockList();
 }

@@ -9,4 +9,5 @@ public interface ProductService {
     List<ProductVO> getAllProducts();
     List<ProductVO> getProducts(Map<String, Object> params);
     int getProductsTotal(Map<String, Object> params);
+    List<ProductVO> getRandomProducts(int limit);
 }

@@ -174,7 +174,7 @@
   	<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
 	<div class="card product-item border-0 mb-4" style="width: 280px;">
 	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-	<a href="detail?item_no=${item.item_no}"> 
+	<a href="event1?item_no=${item.item_no}"> 
 <img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
 </a>
 		</div>
@@ -203,6 +203,7 @@
 </c:forEach>
            
     <!-- Products End -->
+    
     <div class="container-fluid offer pt-5 ">
         <div class="row px-xl-5 justify-content-end">
        <div class="col-md-8 pb-4">

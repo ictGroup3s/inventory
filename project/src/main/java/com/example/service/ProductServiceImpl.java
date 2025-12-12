@@ -34,4 +34,9 @@ public class ProductServiceImpl implements ProductService {
     public int getProductsTotal(Map<String, Object> params) {
         return productRepository.selectProductsCount(params);
     }
+
+    @Override
+    public List<ProductVO> getRandomProducts(int limit) {
+        return productRepository.selectRandomProducts(limit);
+    }
 }

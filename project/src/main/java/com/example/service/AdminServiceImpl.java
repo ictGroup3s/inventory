@@ -40,31 +40,38 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void updateStock(ProductVO vo) {
-	    // 기존 재고 조회
-	    ProductVO oldProduct = adminRepository.getProductByNo(vo.getItem_no());
-	    int beforeQty = oldProduct.getStock_cnt();
-	    int afterQty = vo.getStock_cnt();
-	    int changeQty = afterQty - beforeQty;
-	    
-	    // 1. product 테이블 업데이트
-	    adminRepository.updateStock(vo);
-	    
-	    // 2. stock 이력 저장
-	    if (changeQty != 0) {
-	        StockVO stockVO = new StockVO();
-	        stockVO.setItem_no(vo.getItem_no());
-	        stockVO.setStock(afterQty);
-	        
-	        if (changeQty > 0) {
-	            stockVO.setStock_in(changeQty);
-	            stockVO.setStock_out(0);
-	        } else {
-	            stockVO.setStock_in(0);
-	            stockVO.setStock_out(Math.abs(changeQty));
-	        }
-	        
-	        adminRepository.insertStockHistory(stockVO);
-	    }
+		// 기존 재고 조회
+		ProductVO oldProduct = adminRepository.getProductByNo(vo.getItem_no());
+		int beforeQty = oldProduct.getStock_cnt();
+		int afterQty = vo.getStock_cnt();
+		int changeQty = afterQty - beforeQty;
+
+		// 1. product 테이블 업데이트
+		adminRepository.updateStock(vo);
+
+		// 2. stock 이력 저장
+		if (changeQty != 0) {
+			StockVO stockVO = new StockVO();
+			stockVO.setItem_no(vo.getItem_no());
+			stockVO.setStock(afterQty);
+
+			if (changeQty > 0) {
+				stockVO.setStock_in(changeQty);
+				stockVO.setStock_out(0);
+			} else {
+				stockVO.setStock_in(0);
+				stockVO.setStock_out(Math.abs(changeQty));
+			}
+
+			adminRepository.insertStockHistory(stockVO);
+		}
+	}
+
+	@Override
+	public List<ProductVO> getStockList() {
+	    List<ProductVO> list = adminRepository.getStockList();
+	    	    
+	    return list;
 	}
 
 }

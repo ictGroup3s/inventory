@@ -7,5 +7,7 @@ import com.example.model.vo.ReviewVO;
 public interface ReviewService {
 
 	List<ReviewVO> getReviewList(Integer item_no);
-	void addReview(ReviewVO review);
+	Integer addReview(ReviewVO review);
+	void deleteReview(Integer review_no);
+	void updateReview(ReviewVO review);
 }
