@@ -37,4 +37,9 @@ public class ProductRepositoryImpl implements ProductRepository {
         Integer cnt = sess.selectOne(NAMESPACE + "selectProductsCount", params);
         return cnt == null ? 0 : cnt.intValue();
     }
+
+    @Override
+    public List<ProductVO> selectRandomProducts(int limit) {
+        return sess.selectList(NAMESPACE + "selectRandomProducts", limit);
+    }
 }

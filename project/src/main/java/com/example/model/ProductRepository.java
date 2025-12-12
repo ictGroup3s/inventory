@@ -9,4 +9,5 @@ public interface ProductRepository {
     List<ProductVO> selectAllProducts();
     List<ProductVO> selectProducts(Map<String, Object> params);
     int selectProductsCount(Map<String, Object> params);
+    List<ProductVO> selectRandomProducts(int limit);
 }

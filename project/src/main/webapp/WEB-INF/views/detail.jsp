@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%-- 가격,숫자 포맷 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,12 +11,11 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<!-- jQuery 먼저 -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- bxSlider CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-
 <!-- bxSlider JS -->
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
@@ -38,6 +39,8 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
+<!-- 채팅 관련 -->
+<link href="css/chat.css" rel="stylesheet">
 
 </head>
 
@@ -51,13 +54,15 @@
 		</div>
 		
 		<div class="col-lg-6 col-6 text-left">
-			<form action="">
+			<form action="selectall" method="get">
 				<div class="input-group">
-					<input type="text" class="form-control"	placeholder="Search for products">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
+						<button class="input-group-text bg-transparent text-primary"
+							type="submit">
 							<i class="fa fa-search"></i>
-						</span>
+						</button>
 					</div>
 				</div>
 			</form>
@@ -88,10 +93,31 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-						<div class="navbar-nav ml-auto py-0 p-0 m-0">
-							<a href="login" class="nav-item nav-link py-1">로그인</a> 
-							<a href="register" class="nav-item nav-link py-1" >회원가입</a> 
-							<a href="board" class="nav-item nav-link py-1">고객센터</a>
+						<div class="navbar-nav ml-auto py-0">
+							<!-- 로그인전 -->
+							<c:if test="${empty sessionScope.loginUser}">
+								<a href="login" class="nav-item nav-link">로그인</a>
+								<a href="register" class="nav-item nav-link">회원가입</a>
+								<a href="board" class="nav-item nav-link">고객센터</a>
+							</c:if>
+
+							<!-- 회원 로그인 후   -->
+							<c:if test="${not empty sessionScope.loginUser}">
+								<span class="nav-item nav-link">안녕하세요,
+									${sessionScope.loginUser.customer_id}님!</span>
+
+
+								<c:if test="${sessionScope.loginRole == 0}">
+									<a href="mypage" class="nav-item nav-link">마이페이지</a>
+								</c:if>
+
+								<c:if test="${sessionScope.loginRole == 1}">
+									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+								</c:if>
+								<!-- 로그아웃 링크 -->
+								<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+							</c:if>
 						</div>
 					</div>
 				</nav>
@@ -103,7 +129,7 @@
 		 <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-					<h6 class="p-3">상품 카테고리</h6>
+					<h6 class="p-3">Categories</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
@@ -127,16 +153,36 @@
 		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
 		        </div>
 		         <div class="p-2 flex-grow-1">
-		            <h3 class="font-weight-semi-bold">${product.item_name}</h3>
+		            <h4 class="font-weight-semi-bold">${product.item_name}</h4>
+		            <div id="product-rating-summary" class="mb-2" style="font-size: 0.9rem; color: #666;"></div>
 		            
 		            <div class="d-flex mb-2 align-items-center">
-		               		<small class="pt-1"></small> </div>
+		               		<small class="pt-1"></small> 
 		               		
-						<h4 class="font-weight-semi-bold mb-2">가격: ${product.sales_p}원</h4>
-						<p class="mb-4"> </p> <!-- 내용쓰러면 작은글 출력됨 -->
-				
-						
-						<div class="d-flex mb-3">
+	               		<c:choose>
+							<c:when test="${not empty product.dis_rate and product.dis_rate > 0}">
+								<c:set var="discounted" value="${product.sales_p * (100 - product.dis_rate) / 100}" />
+								
+								<div class="d-flex flex-column">
+									<h6 class="text-muted mb-0">
+										<del><fmt:formatNumber value="${product.sales_p}" pattern="#,###" />원</del>
+									</h6>
+									
+								<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+									<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+									<h4><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h4>
+								<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+								</div>
+								
+							</c:when>
+							<c:otherwise>
+								<h4><fmt:formatNumber value="${product.sales_p}" pattern="#,###" />원</h4>
+							</c:otherwise>
+						</c:choose>			
+					</div>	
+					
+					
+					<div class="d-flex mb-3">
 					</div>
 					
 				
@@ -161,74 +207,78 @@
 					</div>
 				</div>
 			</div>
+
 		<div class="row px-xl-5">
 			<div class="col">
-				<div
-					class="nav nav-tabs justify-content-center border-secondary mb-4">
-					<a class="nav-item nav-link"
-						data-toggle="tab" href="#tab-pane-2">상품정보</a> <a
-						class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">리뷰
-						</a>
+				<div class="nav nav-tabs justify-content-center border-secondary mb-4">
+					<c:set var="activeTab" value="${param.tab eq 'review' ? 'review' : 'info'}" />
+					<a class="nav-item nav-link ${activeTab eq 'info' ? 'active' : ''}" data-toggle="tab" href="#tab-pane-2">상품정보</a> 
+					<a class="nav-item nav-link ${activeTab eq 'review' ? 'active' : ''}" data-toggle="tab" href="#tab-pane-3">리뷰</a>
 				</div>
+
 				<div class="tab-content">
-					<div class="tab-pane fade" id="tab-pane-2">
+					<div class="tab-pane fade ${activeTab eq 'info' ? 'show active' : ''}" id="tab-pane-2">
 						<h4 class="mb-3">상품 상세정보</h4>
 						<div class="row">
 							<div class="col-md-6">
 								<ul class="list-group list-group-flush">
-									<li class="list-group-item px-0"> ${product.item_content}</li>
-								
+									<li class="list-group-item px-0"> ${product.item_content}</li>								
 								</ul>
-							</div>
-							<div class="col-md-6">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item px-0">    </li>
-										
-							
-								</ul>
-							</div>
+							</div>				
 						</div>
 					</div>
-					<div class="tab-pane fade" id="tab-pane-3">
+
+					<div class="tab-pane fade ${activeTab eq 'review' ? 'show active' : ''}" id="tab-pane-3">
 						<div class="row">
 							<div class="col-md-6">
-								<h4 class="mb-4">리뷰 목록</h4>
-	<!-- Ajax로 리뷰를 넣을 영역 --> <div id="review-list">
-									<c:if test="${empty reviews}">
-										<p>등록된 리뷰가 없습니다.</p>
-									</c:if>									
-										<c:forEach var="review" items="${reviews}">
-											 <div class="mb-3">
-												<a href="detail?item_no=${review.item_no}" />
-												<h6 class="text-truncate mb-3">${review.re_title}</h6>
-												<p>${review.re_content}</p>
-												<small><i>작성자: ${review.customer_id} | 작성일: ${review.re_date}</i></small>												
-												
-											</div>								
-										</c:forEach>
-									 
-						        </div>
+								<h4 class="mb-4">리뷰 목록 <span id="review-summary" style="font-size: 0.6em; color: #666;"></span></h4>
+								<div id="review-section" data-item-no="${product.item_no}" data-login-user="${sessionScope.loginUser.customer_id}">
+								
+								<!-- 리뷰 목록 출력 부분 ajax / 리뷰 수정-삭제(Review.js)-->
+									<div id="review-list">										
+								
+									</div>
+
+									<!-- 페이지 이동 버튼 영역 -->
+									<div id="review-pagination" class="mt-3 d-flex justify-content-center"></div>
+									<!-- 페이지 이동 버튼 영역 -->
+									    
+								</div>
 							</div>
 					          
 						<div class="col-md-6">
 							<h4 class="mb-4">리뷰 작성</h4>
-							<form action="/review/add" method="post">
+							<form id="reviewForm">
 								<input type="hidden" name="item_no" value="${product.item_no}" />
 							    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
-							<div class="form-group">
-								<label for="re_content">내 리뷰작성 *</label>
-									<textarea id="re_content"  name="re_content" cols="30" rows="5" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="re_title">제목 *</label> 
-								<input type="text" id="re_title" name="re_title" class="form-control" id="name">
-							</div>
-							
-							<div class="form-group mb-0">
-								<input type="submit" value="리뷰 남기기" class="btn btn-primary px-3">
-							</div>
+								
+								<div class="form-group">
+                                    <label class="mb-1">평점 *</label>
+                                    <div id="rating-input" class="d-flex align-items-center">
+                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="1" style="cursor:pointer; color: #D19C97;"></i>
+                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="2" style="cursor:pointer; color: #D19C97;"></i>
+                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="3" style="cursor:pointer; color: #D19C97;"></i>
+                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="4" style="cursor:pointer; color: #D19C97;"></i>
+                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="5" style="cursor:pointer; color: #D19C97;"></i>
+                                        <input type="hidden" name="rating" id="rating" value="5">
+                                    </div>
+                                </div>
+
+								<div class="form-group">
+									<label for="re_content">내 리뷰작성 *</label>
+										<textarea id="re_content"  name="re_content" cols="30" rows="5" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="re_title">제목 *</label> 
+									<input type="text" id="re_title" name="re_title" class="form-control" id="name">
+								</div>
+								
+								<div class="form-group mb-0">
+									<input type="button" id="addReview" value="리뷰 남기기" class="btn btn-primary px-3">
+								</div>
 											
 							</form>
+
 						</div>
 					</div>
 					</div>
@@ -238,126 +288,137 @@
 	</div>
 	<!-- Shop Detail End -->
 	
-<!-- Image Slider Start -->
+<!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
 <div class="container py-5">
    <ul class="bxslider">
-    <li>
-        <div class="slider-card" data-item-no="129">
-           <img src="/img/product/1764664988078_감자채볶음.png" alt="감자채볶음" />
-            <h5 class="slider-title">햄감자채볶음</h5>
-            <p class="slider-price">4,000원</p>
-    <!--      <button type="button" class="btn btn-sm text-dark p-0 add-to-cart-btn" data-item-no="129" style="background:none;border:0;padding:0;">
-					<i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기
-										</button>  -->  
-<button class="btn btn-primary slider-cart" data-item-no="129">장바구니 담기</button>    
-        </div>
-    </li>
-        <li>
-    <div class="slider-card">
-     <a href="productDetail.jsp?id=1">
-     <img src="img/fish.png" alt="Slider Image 2" /></a>
-      <h5 class="slider-title">고등어구이</h5>
-        <p class="slider-price">12,000원</p>
-         <button class="btn btn-primary slider-cart" >장바구니 담기</button>
-            </div>
-        </li> 
-     <li>
-    <div class="slider-card">
-       <img src="img/egg.png" alt="Slider Image 3" />
-      <h5 class="slider-title">계란세트</h5>
-        <p class="slider-price">12,000원</p>
-         <button class="btn btn-primary slider-cart">장바구니 담기</button>
-            </div>
-        </li> 
-     <li>
-    <div class="slider-card">
-       <img src="img/oven.png" alt="Slider Image 4" />
-      <h5 class="slider-title">파스타</h5>
-        <p class="slider-price">12,000원</p>
-         <button class="btn btn-primary slider-cart">장바구니 담기</button>
-            </div>
-        </li> 
-     </ul>
+   	  <c:forEach var="rp" items="${randomProducts}">
+	    <li>
+	        <div class="slider-card" data-item-no="${rp.item_no}">
+	           <a href="detail?item_no=${rp.item_no}">
+	           		<img src="/img/product/${rp.item_img}" alt="${rp.item_name}" />
+	           </a>
+	            <h6 class="slider-title">${rp.item_name}</h6>				
+	            <p class="slider-price"><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</p>
+				
+	        </div>
+	    </li>
+      </c:forEach>
+   </ul>
 </div>
 <!-- Image Slider End -->
 
 	 <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-5 pt-0 pb-2" style="margin-top: 0px;">
-				<div class="row px-xl-5 pt-2 pb-0">
-            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
-           
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
-                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
-                <h2 class="mb-0">
-   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
-					</h2>
-                       </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-3 ">
-                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
-                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-                     <!--  <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->      
-                         </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-12 mt-4 mb-5">
-                        <p class="text-dark mb-2">
-                        <span>stockbob 소개</span>
-                            &nbsp;&nbsp; | &nbsp;&nbsp;
-                        <span>이용약관</span>
-                       		&nbsp; | &nbsp;
-                       	<span>개인정보처리방침</span>
-                       		&nbsp; | &nbsp;
-                       	<span>이용안내</span>
-                       	
-                       </p><br>
-                       <p style="color: #999;">
-                       법인명 (상호) : 주식회사 STOCKBOB<br>
-                       사업자등록번호 : 000-11-00000<br>
-						통신판매업 : 제 2025-서울-11111 호<br>
-						주소 : 서울특별시 서대문구 신촌동 00<br>
-						채용문의 : ict.atosoft.com<br>
-						팩스 : 070-0000-0000
-                       </p>
-                      </div>
-                    </div>
-                 
-                    </div>
-                  
-                </div>
-            </div>
-        </div>
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+		<div class="row px-xl-5 pt-3">
+			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
+
+				<p class="mb-2">
+					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
+					Seoul, KOREA
+				</p>
+				<p class="mb-2">
+					<i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com
+				</p>
+				<p>
+					<i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전
+					9시30분~5시30분
+				</p>
+				<h2 class="mb-0">
+					<i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
+				</h2>
+			</div>
+			<div class="col-lg-8 col-md-12">
+				<div class="row">
+					<div class="col-md-4 mb-3">
+						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-dark mb-2" href="/"><i
+								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
+								class="text-dark mb-2" href="selectall"><i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
+								class="text-dark mb-2" href="mlist"><i
+								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
+								class="text-dark mb-2" href="cart"><i
+								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
+								class="text-dark mb-2" href="checkout"><i
+								class="fa fa-angle-right mr-2"></i>결제</a>
+						</div>
+					</div>
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-md-12 mt-4 mb-5">
+								<p class="text-dark mb-2">
+									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
+
+								</p>
+								<br>
+								<p style="color: #999;">
+									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+								</p>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row border-top border-light mx-xl-5 py-4">
+			<div class="col-md-6 px-xl-0">
+				<p class="mb-md-0 text-center text-md-left text-dark">
+					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						Site Name</a>. All Rights Reserved. Designed by <a
+						class="text-dark font-weight-semi-bold"
+						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
+					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+				</p>
+			</div>
+			<div class="col-md-6 px-xl-0 text-center text-md-right">
+				<img class="img-fluid" src="img/payments.png" alt="">
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
 
 
 	<!-- Back to Top -->
-	<a href="#" class="btn btn-primary back-to-top">
-		<i class="fa fa-angle-double-up"></i>
-	</a>
+	<a href="#" class="btn btn-primary back-to-top"><i
+		class="fa fa-angle-double-up"></i></a>
+	<!-- ------------------채팅 관련 추가---------------- -->
+	<!-- ▣ 채팅 목록 박스 -->
+	<div id="chat-list-box" class="chat-list-box" style="display: none;">
+		<div class="chat-list-header">나의 채팅 목록</div>
+		<div id="chat-list" class="chat-list"></div>
+	</div>
 
+	<!-- ▣ 채팅창 -->
+	<div id="chat-box" class="chat-box" style="display: none;">
+		<div class="chat-header">
+			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+			<span id="chat-close" class="chat-header-close">✕</span>
+		</div>
+
+		<div id="chat-messages" class="chat-messages"></div>
+
+		<div class="chat-input">
+			<input type="text" id="chat-text" placeholder="메시지 입력...">
+			<button id="chat-send">Send</button>
+		</div>
+		<button id="new-chat-btn"
+			style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+			새 채팅 시작</button>
+	</div>
+
+	<!-- ▣ 채팅 열기 버튼 -->
+	<button id="chat-open" class="chat-open-btn">💬</button>
+	<div class="toast-container" id="toast-container"></div>
 
 	<!-- JavaScript Libraries -->
+	<!-- jQuery 먼저 -->
+
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
@@ -366,49 +427,28 @@
 	<!-- Contact Javascript File -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
+	
+	<!-- 로그인 ID 주입 (chat.js보다 위에) -->
+	<script>
+		const myId = "${sessionScope.loginUser.customer_id}";
+		console.log("✅ myId 확인:", myId);
+	</script>
+	
+	<!-- 채팅 JS -->
+	<script src="/js/CustomerChat.js?v=999"></script>
+	
+	<!-- Main JS -->
+	<script src="/js/main.js"></script>	
 
-	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
+	<!-- SockJS + STOMPJS (chat.js보다 위에) -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
-<script>
-$(document).ready(function() {
-	var item_no = <c:out value="${product.item_no}" default="0"/>;
-
-	// '리뷰' 탭이 보여질 때 리뷰를 로드
-	$(document).on('shown.bs.tab', 'a[href="#tab-pane-3"]', function() {
-		var reviewlist = $('#review-list');
-		reviewlist.html('<p>리뷰를 불러오는 중...</p>');
-
-		$.ajax({
-			url: '/review/list',
-			type: 'GET',
-			dataType: 'html',
-			data: { item_no: item_no },
-			success: function(reviews) {				
-				reviewlist.empty();
-				if (!reviews || reviews.length === 0) {
-					reviewlist.html('<p>등록된 리뷰가 없습니다.</p>');
-					return;
-                }
-				reviews.forEach(function(r) {
-					var customer = r.customer_id || '익명';
-					var date = r.re_date || '';
-					var contentEscaped = $('<div>').text(r.re_content || '').html();
-					var html = '<div class="mb-3">'
-					    + '<h6>' + customer + ' <small><i>' + date + '</i></small></h6>'                        
-                        + '<p>' + contentEscaped + '</p>'
-                        + '</div>';
-                    reviewlist.append(html);
-				});
-			},
-			error: function(err) {
-				console.error(err);
-				reviewlist.html('<p>리뷰를 불러올 수 없습니다.</p>');
-			}
-		});
-	});
-});
-</script>
+	<!-- 리뷰 js -->	
+	<script src="js/Review.js"></script>
+	
 
 </body>
 

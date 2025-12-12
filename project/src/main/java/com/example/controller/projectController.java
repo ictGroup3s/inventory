@@ -44,7 +44,17 @@ public class projectController {
 	public String shop() {
 		return "shop";
 	}
-  
+	
+	@GetMapping("kakaolog")
+	public String kakaolog() {
+		return "kakaolog";
+	}
+	
+//	@GetMapping("checkout")
+//	public String checkout() {
+//		return "checkout";
+//	}
+	
 	@GetMapping("header")
 	public String header() {
 		return "header";
@@ -56,7 +66,7 @@ public class projectController {
 	}
 	
 	@GetMapping("update")
-	public String update() {
+	public String updateUser() {
 		return "update";
 	}
 	
@@ -75,11 +85,6 @@ public class projectController {
 		return "register";
 	}
 	 
-	@GetMapping("event1")
-	public String event1() {
-		return "event1";
-	}
-	
 	@GetMapping("event2")
 	public String event2() {
 		return "event2";
@@ -123,13 +128,16 @@ public class projectController {
         }
         return "selectall";
     }
-	
-		
+    
     @GetMapping("detail")
     public String detail(@RequestParam(value = "item_no", required = false) Integer item_no, Model m) throws Exception {
         if (item_no != null) {
             ProductVO p = productService.getProductById(item_no);
             m.addAttribute("product", p);
+            
+            // 랜덤 상품 4개 추천 (bx slider용)
+            List<ProductVO> randomProducts = productService.getRandomProducts(4);
+            m.addAttribute("randomProducts", randomProducts);
         }
         return "detail";
     }
