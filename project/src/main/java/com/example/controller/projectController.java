@@ -44,7 +44,17 @@ public class projectController {
 	public String shop() {
 		return "shop";
 	}
-  
+	
+	@GetMapping("kakaolog")
+	public String kakaolog() {
+		return "kakaolog";
+	}
+	
+	@GetMapping("checkout")
+	public String checkout() {
+		return "checkout";
+	}
+	
 	@GetMapping("header")
 	public String header() {
 		return "header";
@@ -56,7 +66,7 @@ public class projectController {
 	}
 	
 	@GetMapping("update")
-	public String update() {
+	public String updateUser() {
 		return "update";
 	}
 	
