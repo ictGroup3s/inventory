@@ -181,6 +181,19 @@
 											<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small>
 										</td>
 									</tr>
+									<tr>
+										<td>할인률</td>
+										<td>
+										    <div class="input-group">
+										        <input type="number" class="form-control required-field" 
+										            name="dis_rate" placeholder="할인률" aria-label="할인률">
+										        <div class="input-group-append">
+										            <span class="input-group-text">%</span>
+										        </div>
+										    </div>
+										    <small class="error-msg text-danger d-none">필수 입력 항목입니다.</small>
+										</td>
+									</tr>
 								</table>
 
 								<!-- 등록/수정/삭제 버튼 -->
@@ -231,10 +244,12 @@
 										<tr class="item-row" data-item_no="${item.item_no}"
 											data-item_name="${item.item_name}"
 											data-origin_p="${item.origin_p}"
-											data-sales_p="${item.sales_p}" data-cate_no="${item.cate_no}"
+											data-sales_p="${item.sales_p}" 
+											data-cate_no="${item.cate_no}"
 											data-stock_cnt="${item.stock_cnt}"
 											data-item_content="${item.item_content}"
-											data-item_img="${item.item_img}">
+											data-item_img="${item.item_img}"
+											data-dis_rate="${item.dis_rate }">
 											<td>${item.item_no}</td>
 											<td>${item.item_name}</td>
 											<td>${item.cate_name}</td>
