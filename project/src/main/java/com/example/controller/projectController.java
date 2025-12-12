@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class projectController {
 	
-	
+ 
 	@GetMapping("cart")
 	public String cart() {
 		return "cart";
@@ -91,11 +91,7 @@ public class projectController {
 		return "selectSoup";
 	}
 
-
-	@GetMapping("board")
-	public String board() {
-		return "board";
-	}
+ 
 	
 	@GetMapping("dashboard")
 	public String dashboard() {
