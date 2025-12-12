@@ -82,16 +82,15 @@ public class UserController {
 		public String updateForm(HttpSession session, Model m) {
 			
 			//세션에서 로그인된 아이디 가져오기
-			String loginId = (String) session.getAttribute("customer_id");
-			
+			CustomerVO loginUser = (CustomerVO) session.getAttribute("loginUser");
+			  System.out.println("세션 loginUser: " + loginUser);
 			//로그인 안되어 있으면 로그인 페이지로 이동
-			if(loginId == null) {
+			if(loginUser == null) {
 				return "redirect:login";
 			}
-			// 서비스에서 회원 정보 조회
-			CustomerVO customer = service.getUserById(loginId);
+			
 			//조회한 회원정보 모델에 담아서 jsp 전달
-			m.addAttribute("customer", customer); //jsp에서 사용할이름=${customer.name}
+			m.addAttribute("customer", loginUser); //jsp에서 사용할이름=${customer.name}
 			
 			return "update"; //update.jsp로 리턴
 		}
@@ -99,18 +98,19 @@ public class UserController {
 		// 회원 수정 처리(post)
 		@PostMapping("/updateUser")
 		public String updateSubmit(CustomerVO customer,HttpSession session) {
-			String loginId = (String) session.getAttribute("customer_id");
+			  CustomerVO loginUser = (CustomerVO) session.getAttribute("loginUser");
 			
 			//로그인 안되어 있으면 로그인 페이지로 이동
-			if(loginId == null) {
+			if(loginUser == null) {
 				return "redirect:/login";
 			}
 			
 			//아이디는 세션 기준으로 강제실행
-			customer.setCustomer_id(loginId);
+			customer.setCustomer_id(loginUser.getCustomer_id());
 			
 			//DB 업데이트 실행
 			service.updateUser(customer);
+			
 			
 			//수정 완료 후 마이페이지로 
 			return "redirect:/mypage";
