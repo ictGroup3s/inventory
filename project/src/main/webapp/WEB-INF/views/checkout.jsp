@@ -89,7 +89,7 @@
 					<div class="row">
 						<div class="col-md-6 form-group">
 							<label>이름</label>
-							<input class="form-control" type="text" id="Name">
+							<input class="form-control" type="text" id="Name" placeholder="이름을 입력해주세요" >
 						</div>
 						<div class="col-md-6 form-group">
 							<label>이메일</label>
