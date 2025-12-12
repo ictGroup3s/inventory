@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,16 +59,16 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
-						<li class="nav-item"><a href="/mydelivery" class="nav-link ">배송내역</a></li>
-						<li class="nav-item"><a href="/mycs" class="nav-link ">취소/반품/교환내역</a></li>
+						<li class="nav-item"><a href="/mypage" class="nav-link">주문내역</a></li>
+						<li class="nav-item"><a href="/mydelivery" class="nav-link active">배송내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link">취소·반품·교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
 					</ul>
 				</nav>
 			</div>
 		
 			<!-- Main Content -->
-			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
+			<div class="col-lg-10" style="margin-top: 30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
 					<h4>배송내역</h4>
 				</div>
@@ -80,9 +79,9 @@
 							<tr>
 								<th>주문번호</th>
 								<th>상품명</th>
-								<th>신청유형</th>
+								<th>수량</th>
 								<th>상태</th>
-								<th>처리일</th>
+								<th>주문일</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -90,9 +89,14 @@
 							<tr>
 								<td>20251202-002</td>
 								<td>상품 B</td>
-								<td>반품</td>
-								<td>처리중</td>
+								<td>2개</td>
+								<td><span class="badge badge-info" style="background-color:#EDF1FF; color: black;">배송중</span></td>
 								<td>2025-12-01</td>
+								<td>
+									<button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#detailModal">
+										상세보기
+									</button>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -100,7 +104,73 @@
 			</div>
 		</div>
 	</div>
-		<!-- Footer Start -->
+
+	<!-- 배송 상세 모달 -->
+	<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="detailModalLabel">배송 상세내역</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<strong>주문번호:</strong> 20251202-002
+						</div>
+						<div class="col-md-6">
+							<strong>주문일:</strong> 2025-12-01
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<strong>상품명:</strong> 상품 B
+						</div>
+						<div class="col-md-6">
+							<strong>수량:</strong> 2개
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>배송상태:</strong> 
+							<span class="badge badge-info" style="background-color:#EDF1FF; color: black;">배송중</span>
+						</div>
+					</div>
+					<hr>
+					<h6><strong>배송 정보</strong></h6>
+					<div class="row mb-2">
+						<div class="col-md-12">
+							<strong>받는 사람:</strong> 홍길동
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-12">
+							<strong>연락처:</strong> 010-1234-5678
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+							<strong>배송지:</strong> 서울시 강남구 테헤란로 123, 101호
+						</div>
+					</div>
+					<hr>
+					<h6><strong>배송 추적</strong></h6>
+					<ul class="mt-2">
+						<li>2025-12-01 14:30: 주문 접수</li>
+						<li>2025-12-01 16:00: 상품 준비중</li>
+						<li>2025-12-02 09:00: 배송 시작</li>
+						<li>예상 도착일: 2025-12-03</li>
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
 				<div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">

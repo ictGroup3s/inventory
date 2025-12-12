@@ -201,10 +201,9 @@
 											 <div class="mb-3">
 												<a href="detail?item_no=${review.item_no}" />
 												<h6 class="text-truncate mb-3">${review.re_title}</h6>
-												
-												<small><i>작성자: ${review.customer_id} | 작성일: ${review.re_date}</i></small>
-												
 												<p>${review.re_content}</p>
+												<small><i>작성자: ${review.customer_id} | 작성일: ${review.re_date}</i></small>												
+												
 											</div>								
 										</c:forEach>
 									 
@@ -213,7 +212,7 @@
 					          
 						<div class="col-md-6">
 							<h4 class="mb-4">리뷰 작성</h4>
-							<form action="/product/review" method="post">
+							<form action="/review/add" method="post">
 								<input type="hidden" name="item_no" value="${product.item_no}" />
 							    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
 							<div class="form-group">
@@ -353,8 +352,9 @@
 
 
 	<!-- Back to Top -->
-	<a href="#" class="btn btn-primary back-to-top"><i
-		class="fa fa-angle-double-up"></i></a>
+	<a href="#" class="btn btn-primary back-to-top">
+		<i class="fa fa-angle-double-up"></i>
+	</a>
 
 
 	<!-- JavaScript Libraries -->
@@ -382,10 +382,24 @@ $(document).ready(function() {
 		$.ajax({
 			url: '/review/list',
 			type: 'GET',
+			dataType: 'html',
 			data: { item_no: item_no },
-			success: function(html) {
-				// 서버에서 완성된 HTML을 반환하므로 그대로 삽입
-				reviewlist.html(html);
+			success: function(reviews) {				
+				reviewlist.empty();
+				if (!reviews || reviews.length === 0) {
+					reviewlist.html('<p>등록된 리뷰가 없습니다.</p>');
+					return;
+                }
+				reviews.forEach(function(r) {
+					var customer = r.customer_id || '익명';
+					var date = r.re_date || '';
+					var contentEscaped = $('<div>').text(r.re_content || '').html();
+					var html = '<div class="mb-3">'
+					    + '<h6>' + customer + ' <small><i>' + date + '</i></small></h6>'                        
+                        + '<p>' + contentEscaped + '</p>'
+                        + '</div>';
+                    reviewlist.append(html);
+				});
 			},
 			error: function(err) {
 				console.error(err);

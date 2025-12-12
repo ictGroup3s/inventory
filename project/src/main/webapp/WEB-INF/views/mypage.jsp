@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,7 +67,7 @@
 						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
 						<li class="nav-item"><a href="/mycs" class="nav-link">취소/반품/교환내역</a></li>
 						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
-						<li class="nav-item"><a href="/updateUser" class="nav-link">내정보수정</a></li>
+						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
 						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
 					</ul>
 				</nav>
@@ -88,17 +91,29 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>10001</td>
-								<td>상품명1</td>
-								<td>10,000원</td>
-								<td>결제완료</td>
-								<td>
-									<button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#orderDetailModal">
-										상세보기
-									</button>
-								</td>
-							</tr>
+						<c:choose>
+								<c:when test="${empty deliveryList}">
+									<tr>
+										<td colspan="5" class="text-center">주문 내역이 없습니다.</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="detail" items="${deliveryList}">
+										<tr>
+											<td>${detail.order_no}</td>
+											<td>${detail.item_name}</td>
+											<td><fmt:formatNumber value="${detail.amount}" pattern="#,###"/>원</td>
+											<td>${detail.order_status}</td>
+											<td>
+												<button class="btn btn-sm btn-secondary" 
+												        onclick="showOrderDetail(${detail.order_no})">
+													상세보기
+												</button>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 				</div>
@@ -299,5 +314,13 @@
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
+	
+	<script>
+	// 주문 상세보기 (나중에 구현)
+	function showOrderDetail(orderNo) {
+	    alert('주문번호 ' + orderNo + '의 상세내역 (추후 구현)');
+	    // $('#orderDetailModal').modal('show');
+	}
+	</script>
 </body>
 </html>
