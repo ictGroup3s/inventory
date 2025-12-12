@@ -36,16 +36,11 @@
 		</dependency>
 
 		 <!--WebSocket (STOMP 지원)--> 
-		 
 		 <dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-websocket</artifactId>
-		</dependency>
-		
-		  <dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-websocket</artifactId>
-		</dependency>
+		</dependency>		
+		  
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-websocket</artifactId>
@@ -57,6 +52,12 @@
 			<version>3.0.5</version>
 		</dependency>
 
+		<!-- Spring Security
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -115,11 +116,20 @@
 		    <artifactId>netty-socketio</artifactId>
 		    <version>1.7.17</version>
 		</dependency>
+
+		
 		<dependency>
-			<groupId>com.example</groupId>
-			<artifactId>bboardjsp</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20230227</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

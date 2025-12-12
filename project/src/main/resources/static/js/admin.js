@@ -50,17 +50,17 @@ $(function() {
 			success: function(response) {
 				if (response === "success") {
 					row.remove();
-					alert("정말로 삭제하시겠습니까?")
+					showToast("정말로 삭제하시겠습니까?")
 				} else {
-					alert('삭제 실패');
+					showToast('삭제 실패');
 				}
 			},
 			error: function() {
-				alert('삭제 실패');
+				showToast('삭제 실패');
 			}
 		});
 	});
-	
+
 	// 상세보기 버튼 클릭
 	$(".detail-btn").click(function() {
 		var url = $(this).data("url");
@@ -72,5 +72,155 @@ $(function() {
 	$("#closeModal, #overlay").click(function() {
 		$("#overlay, #customModal").fadeOut(200);
 		$("#modalFrame").attr("src", ""); // iframe 초기화
+	});
+
+	
+	// 상품 필터링 함수 (검색 + 카테고리 동시 적용)
+	function filterItems() {
+		var searchText = $('#itemSearch').val().toLowerCase();
+		var selectedCate = $('#categoryFilter').val();
+
+		$('.item-row').each(function() {
+			var itemName = $(this).data('item_name').toString().toLowerCase();
+			var itemCate = $(this).data('cate_no').toString();
+
+			var matchSearch = (searchText === '' || itemName.includes(searchText));
+			var matchCate = (selectedCate === '' || itemCate === selectedCate);
+
+			if (matchSearch && matchCate) {
+				$(this).show();
+			} else {
+				$(this).hide();
+			}
+		});
+	}
+
+	// 검색창 입력 시
+	$('#itemSearch').on('keyup', function() {
+		filterItems();
+	});
+
+	// 카테고리 선택 시
+	$('#categoryFilter').change(function() {
+		filterItems();
+	});
+	
+	
+	// ===== 재고 관리 (stock.jsp) =====
+	var currentStock = 0;
+
+	// 상품 클릭 시 재고 정보 로드
+	$('.item-row').on('click', function() {
+	    const $this = $(this);
+	    
+	    // 기존 필드 채우기
+	    $('#item_no').val($this.data('item_no'));
+	    $('#item_name').val($this.data('item_name'));
+	    $('#origin_p').val($this.data('origin_p'));
+	    $('#sales_p').val($this.data('sales_p'));
+	    
+	    // 재고 관련
+	    currentStock = parseInt($this.data('stock_cnt')) || 0;
+	    $('#current_stock').val(currentStock);
+	    $('#adjust_qty').val(0);
+	    $('#new_stock').val(currentStock);
+	    $('#adjustLabel').text('');
+	    $('#stockSubmitBtn').prop('disabled', true);
+	    
+	    // 이미지
+	    let imgPath = $this.data('item_img');
+	    if (imgPath) {
+	        $('#preview').attr('src', '/img/product/' + imgPath);
+	    } else {
+	        $('#preview').attr('src', 'img/insert_pic.png');
+	    }
+	});
+
+	// 수량 계산 함수
+	function updateNewStock() {
+	    var adjustQty = parseInt($('#adjust_qty').val()) || 0;
+	    var newStock = currentStock + adjustQty;
+	    
+	    // 음수 재고 방지
+	    if (newStock < 0) {
+	        newStock = 0;
+	        adjustQty = -currentStock;
+	        $('#adjust_qty').val(adjustQty);
+	    }
+	    
+	    $('#new_stock').val(newStock);
+	    
+	    // 라벨 표시
+	    if (adjustQty > 0) {
+	        $('#adjustLabel').text('입고 +' + adjustQty + '개').css('color', 'green');
+	        $('#stockSubmitBtn').prop('disabled', false);
+	    } else if (adjustQty < 0) {
+	        $('#adjustLabel').text('출고 ' + adjustQty + '개').css('color', 'red');
+	        $('#stockSubmitBtn').prop('disabled', false);
+	    } else {
+	        $('#adjustLabel').text('');
+	        $('#stockSubmitBtn').prop('disabled', true);
+	    }
+	}
+
+	// + 버튼
+	$('#plusBtn').click(function() {
+	    var qty = parseInt($('#adjust_qty').val()) || 0;
+	    $('#adjust_qty').val(qty + 1);
+	    updateNewStock();
+	});
+
+	// - 버튼
+	$('#minusBtn').click(function() {
+	    var qty = parseInt($('#adjust_qty').val()) || 0;
+	    $('#adjust_qty').val(qty - 1);
+	    updateNewStock();
+	});
+
+	// 직접 입력 시
+	$('#adjust_qty').on('input', function() {
+	    updateNewStock();
+	});
+
+	// 초기화 버튼
+	$('#resetBtn').click(function() {
+	    $('#adjust_qty').val(0);
+	    $('#new_stock').val(currentStock);
+	    $('#adjustLabel').text('');
+	    $('#stockSubmitBtn').prop('disabled', true);
+	});
+	
+	// 상품 클릭 시 재고 정보 로드
+	$('.item-row').on('click', function() {
+	    const $this = $(this);
+	    
+	    // 기존 필드 채우기
+	    $('#item_no').val($this.data('item_no'));
+	    $('#item_name').val($this.data('item_name'));
+	    $('#origin_p').val($this.data('origin_p'));
+	    $('#sales_p').val($this.data('sales_p'));
+	    
+	    // 재고 관련
+	    currentStock = parseInt($this.data('stock_cnt')) || 0;
+	    $('#current_stock').val(currentStock);
+	    $('#adjust_qty').val(0);
+	    $('#new_stock').val(currentStock);
+	    $('#adjustLabel').text('');
+	    $('#stockSubmitBtn').prop('disabled', true);
+	    
+	    // 재고 부족 경고
+	    if (currentStock < 10) {
+	        $('#stockWarning').show();
+	    } else {
+	        $('#stockWarning').hide();
+	    }
+	    
+	    // 이미지
+	    let imgPath = $this.data('item_img');
+	    if (imgPath) {
+	        $('#preview').attr('src', '/img/product/' + imgPath);
+	    } else {
+	        $('#preview').attr('src', 'img/insert_pic.png');
+	    }
 	});
 });

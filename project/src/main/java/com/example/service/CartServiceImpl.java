@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,8 +32,10 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private CartRepository cartRepository;
 
+    
+
     @Override
-    public void addToCart(Integer itemNo, int qty, HttpSession session) throws Exception {
+    public void addToCart(Integer itemNo, int qty, HttpSession session) {
         if (itemNo == null || qty <= 0) return;
 
         // 로그인된 사용자(세션 속성명: loginUser 또는 user)가 있으면 DB에 반영
@@ -49,19 +53,19 @@ public class CartServiceImpl implements CartService {
                 customerId = String.valueOf(userObj);
             }
             try {
-                java.util.Map<String,Object> existing = cartRepository.findByCustomerAndItem(customerId, itemNo);
+                Map<String,Object> existing = cartRepository.findByCustomerAndItem(customerId, itemNo);
                 if (existing != null) {
                     Object cartNoObj = existing.get("CART_NO"); if (cartNoObj == null) cartNoObj = existing.get("cart_no");
                     if (cartNoObj != null) {
                         Integer cartNo = (cartNoObj instanceof Number) ? ((Number)cartNoObj).intValue() : Integer.valueOf(cartNoObj.toString());
-                        cartRepository.increaseCartCntByCartNo(java.util.Map.of("cartNo", cartNo, "qty", qty));
+                        cartRepository.increaseCartCntByCartNo(Map.of("cartNo", cartNo, "qty", qty));
                         log.info("장바구니 DB 수량 증가 성공 cartNo={} itemNo={} qty={}", cartNo, itemNo, qty);
                     } else {
-                        cartRepository.insertCartItem(java.util.Map.of("itemNo", itemNo, "cartCnt", qty, "customerId", customerId));
+                        cartRepository.insertCartItem(Map.of("itemNo", itemNo, "cartCnt", qty, "customerId", customerId));
                         log.info("장바구니 DB 행 삽입 성공 user={} itemNo={} qty={}", customerId, itemNo, qty);
                     }
                 } else {
-                    cartRepository.insertCartItem(java.util.Map.of("itemNo", itemNo, "cartCnt", qty, "customerId", customerId));
+                    cartRepository.insertCartItem(Map.of("itemNo", itemNo, "cartCnt", qty, "customerId", customerId));
                     log.info("장바구니 DB 행 삽입 성공 user={} itemNo={} qty={}", customerId, itemNo, qty);
                 }
                 log.info("장바구니 저장 완료 user={} itemNo={} qty={}", customerId, itemNo, qty);
@@ -85,7 +89,7 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니에 저장된 모든 항목을 로그인한 사용자의 DB 장바구니로 병합
     // 병합 후 세션 장바구니를 초기화
-    public void mergeSessionCartToDb(HttpSession session) throws Exception {
+    public void mergeSessionCartToDb(HttpSession session) {
         Object userObj = session.getAttribute("loginUser");
         if (userObj == null) userObj = session.getAttribute("user");
         if (userObj == null) return;
@@ -108,19 +112,19 @@ public class CartServiceImpl implements CartService {
                 Integer itemNo = e.getKey();
                 Integer qty = e.getValue();
                 if (itemNo == null || qty == null || qty <= 0) continue;
-                java.util.Map<String,Object> existing = cartRepository.findByCustomerAndItem(customerId, itemNo);
+                Map<String,Object> existing = cartRepository.findByCustomerAndItem(customerId, itemNo);
                 if (existing != null) {
                     Object cartNoObj = existing.get("CART_NO"); if (cartNoObj == null) cartNoObj = existing.get("cart_no");
                     if (cartNoObj != null) {
                         Integer cartNo = (cartNoObj instanceof Number) ? ((Number)cartNoObj).intValue() : Integer.valueOf(cartNoObj.toString());
-                        cartRepository.increaseCartCntByCartNo(java.util.Map.of("cartNo", cartNo, "qty", qty));
+                        cartRepository.increaseCartCntByCartNo(Map.of("cartNo", cartNo, "qty", qty));
                         log.info("세션 병합: DB 장바구니 수량 증가 cartNo={} itemNo={} qty={}", cartNo, itemNo, qty);
                     } else {
-                        cartRepository.insertCartItem(java.util.Map.of("itemNo", itemNo, "cartCnt", qty, "customerId", customerId));
+                        cartRepository.insertCartItem(Map.of("itemNo", itemNo, "cartCnt", qty, "customerId", customerId));
                         log.info("세션 병합: DB 장바구니 행 삽입 user={} itemNo={} qty={}", customerId, itemNo, qty);
                     }
                 } else {
-                    cartRepository.insertCartItem(java.util.Map.of("itemNo", itemNo, "cartCnt", qty, "customerId", customerId));
+                    cartRepository.insertCartItem(Map.of("itemNo", itemNo, "cartCnt", qty, "customerId", customerId));
                     log.info("세션 병합: DB 장바구니 행 삽입 user={} itemNo={} qty={}", customerId, itemNo, qty);
                 }
             }
@@ -134,7 +138,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void removeFromCart(Integer itemNo, HttpSession session) throws Exception {
+    public void removeFromCart(Integer itemNo, HttpSession session) {
         if (itemNo == null) return;
         Object userObj = session.getAttribute("loginUser");
         if (userObj == null) userObj = session.getAttribute("user");
@@ -150,7 +154,7 @@ public class CartServiceImpl implements CartService {
                 customerId = String.valueOf(userObj);
             }
             try {
-                int deleted = cartRepository.deleteCartByCustomerAndItem(java.util.Map.of("customerId", customerId, "itemNo", itemNo));
+                int deleted = cartRepository.deleteCartByCustomerAndItem(Map.of("customerId", customerId, "itemNo", itemNo));
                 log.info("장바구니 DB 삭제 시도 user={} itemNo={} 삭제건수={}", customerId, itemNo, deleted);
             } catch (Exception e) {
                 log.error("장바구니 DB 삭제 실패 user=" + customerId + " itemNo=" + itemNo, e);
@@ -169,7 +173,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartItemVO> getCartItems(HttpSession session) throws Exception {
+    public List<CartItemVO> getCartItems(HttpSession session) {
         Object userObj = session.getAttribute("loginUser");
         if (userObj == null) userObj = session.getAttribute("user");
         List<CartItemVO> items = new ArrayList<>();
@@ -185,9 +189,9 @@ public class CartServiceImpl implements CartService {
                 customerId = String.valueOf(userObj);
             }
             try {
-                List<java.util.Map<String,Object>> rows = cartRepository.findByCustomer(customerId);
+                List<Map<String,Object>> rows = cartRepository.findByCustomer(customerId);
                 log.info("getCartItems - 고객 {}의 DB 행 수: {}", customerId, rows == null ? 0 : rows.size());
-                for (java.util.Map<String,Object> r : rows) {
+                for (Map<String,Object> r : rows) {
                     log.debug("getCartItems - DB 행: {}", r);
                     Object itemNoObj = r.get("ITEM_NO"); if (itemNoObj == null) itemNoObj = r.get("item_no");
                     Object cntObj = r.get("CART_CNT"); if (cntObj == null) cntObj = r.get("cart_cnt");
@@ -245,7 +249,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int getCartTotal(HttpSession session) throws Exception {
+    public int getCartTotal(HttpSession session) {
         int total = 0;
         for (CartItemVO ci : getCartItems(session)) {
             total += ci.getSubtotal();
@@ -266,4 +270,5 @@ public class CartServiceImpl implements CartService {
         } catch (Exception e) {}
         return m;
     }
+    
 }

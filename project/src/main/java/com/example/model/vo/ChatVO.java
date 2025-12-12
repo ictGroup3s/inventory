@@ -10,4 +10,5 @@ public class ChatVO {
     private String customer_id;   // 고객 ID
     private String admin_id;      // 관리자 ID
     private String read_flag;     // 읽음 여부 "Y"/"N"
+    private String status; 		  // 상태값
 }

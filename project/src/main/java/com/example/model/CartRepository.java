@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 public interface CartRepository {
-    Map<String,Object> findByCustomerAndItem(String customerId, Integer itemNo) throws Exception;
-    int insertCartItem(Map<String,Object> params) throws Exception;
-    int increaseCartCntByCartNo(Map<String,Object> params) throws Exception;
-    int updateCartCntByCartNo(Map<String,Object> params) throws Exception;
-    int deleteCartByCartNo(Integer cartNo) throws Exception;
-    int deleteCartByCustomerAndItem(Map<String,Object> params) throws Exception;
-    List<Map<String,Object>> findByCustomer(String customerId) throws Exception;
-    int countByCustomer(String customerId) throws Exception;
+    Map<String,Object> findByCustomerAndItem(String customerId, Integer itemNo);
+    int insertCartItem(Map<String,Object> params);
+    int increaseCartCntByCartNo(Map<String,Object> params);
+    int updateCartCntByCartNo(Map<String,Object> params);
+    int deleteCartByCartNo(Integer cartNo);
+    int deleteCartByCustomerAndItem(Map<String,Object> params);
+    List<Map<String,Object>> findByCustomer(String customerId);
+    int countByCustomer(String customerId);
+    
+    void deleteCartByCustomer(String customerId);
 }

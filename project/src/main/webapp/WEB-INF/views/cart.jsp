@@ -31,8 +31,8 @@
 <body>
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
-			<a href="/" class="text-decoration-none"> <img
-				src='../img/logo.png' class='logo' />
+			<a href="/" class="text-decoration-none"> 
+			<img  src='../img/logo.png' class='logo' />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
@@ -59,7 +59,7 @@
 			<div class="col-lg-9">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-					<a href="" class="text-decoration-none d-block d-lg-none"> <img
+					<a href="/" class="text-decoration-none d-block d-lg-none"> <img
 						src='../img/logo.png' class='logo' />
 					</a>
 					<button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -110,8 +110,7 @@
 								<c:forEach var="ci" items="${cartItems}">
 									<tr>
 										<td class="align-middle">
-											<img src="/img/product/${ci.product.item_img}" alt=""
-												style="width:50px;"/> ${ci.product.item_name}
+											<img src="/img/product/${ci.product.item_img}" alt="" style="width:50px;"/> ${ci.product.item_name}
 										</td>
 										<td class="align-middle">${ci.product.sales_p}원</td>
 										<td class="align-middle">
@@ -167,11 +166,22 @@
 					</div>
 					<div class="card-footer border-secondary bg-transparent">
 						<div class="d-flex justify-content-between mt-2">
-							<h5 class="font-weight-bold">총가격</h5>
+							<h5 class="font-weight-bold">총 가격</h5>
 							<h5 class="font-weight-bold"><span id="cartTotalFooter">${cartTotal}</span>원</h5>
 						</div>
-						<button class="btn btn-block btn-primary my-3 py-3"
-							onclick="location.href='checkout' ">결제하기</button>
+						<form action="/payment" method="post" id="checkoutForm">
+							<c:forEach var="ci" items="${cartItems}">
+								<!-- 상품번호와 수량을 hidden으로 전달 -->
+								<input type="hidden" name="item_no"
+									value="${ci.product.item_no}">
+								<input type="hidden" name="qty" value="${ci.qty}">
+							</c:forEach>
+							<input type="hidden" name="cartTotal" value="${cartTotal}">
+							
+							<a href="/checkout"class="btn btn-block btn-primary my-3 py-3"
+							onclick="location.href='checkout' ">결제하기</a>
+						</form>
+
 					</div>
 				</div>
 			</div>
@@ -245,11 +255,7 @@
         </div>
     </div>
     <!-- Footer End -->
-			<div class="col-md-6 px-xl-0 text-center text-md-right">
-				<img class="img-fluid" src="img/payments.png" alt="">
-			</div>
-		</div>
-	</div>
+
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
 

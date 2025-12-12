@@ -1,0 +1,1 @@
+[2025-12-08 17:55:04] ${sessionScope.loginUser.customer_id}: hello
