@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -134,25 +135,28 @@
 							<c:when test="${not empty cartItems}">
 								<c:forEach var="ci" items="${cartItems}">
 									<tr>
-										<td class="align-middle">
-											<img src="/img/product/${ci.product.item_img}" alt="" style="width:50px;"/> ${ci.product.item_name}
+										<td class="align-middle text-left">
+											<div class="d-flex align-items-center">
+												<img src="/img/product/${ci.product.item_img}" alt="" style="width:50px; height:50px; object-fit:cover;" class="mr-3" />
+												<div class="cart-product-name" style="word-break:break-word; max-width:320px;">${ci.product.item_name}</div>
+											</div>
 										</td>
-										<td class="align-middle">${ci.product.sales_p}원</td>
+										<td class="align-middle"><fmt:formatNumber value="${ci.product.sales_p}" pattern=",###"/>원</td>
 										<td class="align-middle">
 											<div class="input-group quantity mx-auto" style="width: 120px;">
 												<div class="input-group-prepend">
-													<button class="btn btn-sm btn-outline-secondary qty-decrease" data-item="${ci.product.item_no}" type="button">−</button>
+													<button class="btn btn-sm btn-primary qty-decrease" data-item="${ci.product.item_no}" type="button">−</button>
 												</div>
 												<input type="text"
 													class="form-control form-control-sm bg-secondary text-center cart-qty-input"
 													data-item="${ci.product.item_no}"
 													value="${ci.qty}" />
 												<div class="input-group-append">
-													<button class="btn btn-sm btn-outline-secondary qty-increase" data-item="${ci.product.item_no}" type="button">+</button>
+													<button class="btn btn-sm btn-primary qty-increase" data-item="${ci.product.item_no}" type="button">+</button>
 												</div>
 											</div>
 										</td>
-										<td class="align-middle"><span class="row-subtotal" data-item="${ci.product.item_no}">${ci.subtotal}</span>원</td>
+										<td class="align-middle"><span class="row-subtotal" data-item="${ci.product.item_no}"><fmt:formatNumber value="${ci.subtotal}" pattern=",###"/></span>원</td>
 										<td class="align-middle">
 											<form method="post" action="/cart/remove">
 												<input type="hidden" name="item_no" value="${ci.product.item_no}" />
@@ -180,7 +184,7 @@
 					<div class="card-body">
 						<div class="d-flex justify-content-between mb-3 pt-1">
 							<h6 class="font-weight-medium">상품가격 합계</h6>
-							<h6 class="font-weight-medium"><span id="cartTotal">${cartTotal}</span>원</h6>
+							<h6 class="font-weight-medium"><span id="cartTotal"><fmt:formatNumber value="${cartTotal}" pattern=",###"/></span>원</h6>
 						</div>
 					</div>
 					<div class="card-body">
@@ -192,7 +196,7 @@
 					<div class="card-footer border-secondary bg-transparent">
 						<div class="d-flex justify-content-between mt-2">
 							<h5 class="font-weight-bold">총 가격</h5>
-							<h5 class="font-weight-bold"><span id="cartTotalFooter">${cartTotal}</span>원</h5>
+							<h5 class="font-weight-bold"><span id="cartTotalFooter"><fmt:formatNumber value="${cartTotal}" pattern=",###"/></span>원</h5>
 						</div>
 						<form action="/payment" method="post" id="checkoutForm">
 							<c:forEach var="ci" items="${cartItems}">
@@ -360,6 +364,11 @@
 				return $.post('/cart/update', { item_no: itemNo, qty: qty });
 			}
 
+			// 숫자에 천단위 콤마 추가
+			function formatNumber(n){
+				try{ if(n===null||n===undefined) return '0'; return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }catch(e){ return n; }
+			}
+
 			$(document).on('click', '.qty-decrease', function(e){
 				var item = $(this).data('item');
 				var $input = $('.cart-qty-input[data-item="'+item+'"]');
@@ -371,11 +380,11 @@
 						$('.badge').text(resp.cartCount);
 						$('#cartCount').text(resp.cartCount);
 						if (typeof resp.cartTotal !== 'undefined') {
-							$('#cartTotal').text(resp.cartTotal);
-							$('#cartTotalFooter').text(resp.cartTotal);
+							$('#cartTotal').text(formatNumber(resp.cartTotal));
+							$('#cartTotalFooter').text(formatNumber(resp.cartTotal));
 						}
 						if (typeof resp.itemSubtotal !== 'undefined') {
-							$('.row-subtotal[data-item="'+item+'"]').text(resp.itemSubtotal);
+							$('.row-subtotal[data-item="'+item+'"]').text(formatNumber(resp.itemSubtotal));
 						}
 					}
 				});
@@ -392,11 +401,11 @@
 						$('.badge').text(resp.cartCount);
 						$('#cartCount').text(resp.cartCount);
 						if (typeof resp.cartTotal !== 'undefined') {
-							$('#cartTotal').text(resp.cartTotal);
-							$('#cartTotalFooter').text(resp.cartTotal);
+							$('#cartTotal').text(formatNumber(resp.cartTotal));
+							$('#cartTotalFooter').text(formatNumber(resp.cartTotal));
 						}
 						if (typeof resp.itemSubtotal !== 'undefined') {
-							$('.row-subtotal[data-item="'+item+'"]').text(resp.itemSubtotal);
+							$('.row-subtotal[data-item="'+item+'"]').text(formatNumber(resp.itemSubtotal));
 						}
 					}
 				});
@@ -413,11 +422,11 @@
 						$('.badge').text(resp.cartCount);
 						$('#cartCount').text(resp.cartCount);
 						if (typeof resp.cartTotal !== 'undefined') {
-							$('#cartTotal').text(resp.cartTotal);
-							$('#cartTotalFooter').text(resp.cartTotal);
+							$('#cartTotal').text(formatNumber(resp.cartTotal));
+							$('#cartTotalFooter').text(formatNumber(resp.cartTotal));
 						}
 						if (typeof resp.itemSubtotal !== 'undefined') {
-							$('.row-subtotal[data-item="'+item+'"]').text(resp.itemSubtotal);
+							$('.row-subtotal[data-item="'+item+'"]').text(formatNumber(resp.itemSubtotal));
 						}
 					}
 				});

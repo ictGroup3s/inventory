@@ -45,6 +45,7 @@
 </head>
 
 <body>
+	<!-- banner removed -->
 <!-- ############## 로고부분 ############################## -->
 	<div class="row align-items-center py-3 px-xl-5" style="height:150px;">
 		 <div class="col-lg-3 d-none d-lg-block"><!-- 큰 화면에서는 3/12, 작은 화면에서는 숨김 -->
@@ -132,7 +133,6 @@
 					<h6 class="p-3">Categories</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
 						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
 						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
@@ -143,8 +143,7 @@
 			</div>
 			
 
-		<div class="col-lg-10 col-md-12 p-0 m-0" >			 
-			 
+	<div class="col-lg-10 col-md-12 p-0 m-0" >		 
 	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
 		<div class="container py-4">
 		    <div class="d-flex flex-wrap align-items-center">
@@ -158,10 +157,10 @@
 		            
 		            <div class="d-flex mb-2 align-items-center">
 		               		<small class="pt-1"></small> 
-		               		
-	               		<c:choose>
-							<c:when test="${not empty product.dis_rate and product.dis_rate > 0}">
-								<c:set var="discounted" value="${product.sales_p * (100 - product.dis_rate) / 100}" />
+
+                		<c:choose>
+								<c:when test="${not empty product.dis_rate and product.dis_rate > 0}">
+									<c:set var="discounted" value="${product.sales_p * (100 - product.dis_rate) / 100}" />
 								
 								<div class="d-flex flex-column">
 									<h6 class="text-muted mb-0">
@@ -171,24 +170,19 @@
 								<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
 									<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
 									<h4><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h4>
-								<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+									<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
 								</div>
-								
 							</c:when>
 							<c:otherwise>
 								<h4><fmt:formatNumber value="${product.sales_p}" pattern="#,###" />원</h4>
 							</c:otherwise>
 						</c:choose>			
-					</div>	
-					
-					
-					<div class="d-flex mb-3">
-					</div>
+					</div>					
 					
 				
 				<form action="/cart/addForm" method="post">
 					<input type="hidden" name="item_no" value="${product.item_no}" />
-		
+											
 				 <div class="d-flex align-items-center mb-3">
 				     <!-- 수량 조절 -->
 			        <div class="input-group mr-2  quantity" style="width:130px;">		
@@ -203,10 +197,10 @@
 					 
 				</form>
 		
-						</div>
-					</div>
 				</div>
 			</div>
+		</div>
+	</div>
 
 		<div class="row px-xl-5">
 			<div class="col">
@@ -305,9 +299,9 @@
       </c:forEach>
    </ul>
 </div>
-<!-- Image Slider End -->
+<!-- Image Slider End --> 
 
-	 <!-- Footer Start -->
+<!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
 		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">

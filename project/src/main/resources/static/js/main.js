@@ -6,13 +6,17 @@
 
 	$(document).ready(function() {
 		$('.bxslider').bxSlider({
-			auto: true,
+			auto: false,
+			touchEnabled: false,
 			moveSlides: 1,
 			pager: false,
 			controls: true,
 			pause: 2000,
 			speed: 100,
 			infiniteLoop: true,
+			onSliderLoad: function(currentIndex){
+				try{ $('.bxslider').trigger('bxslider:loaded'); }catch(e){}
+			},
 			minSlides: 2,      // 최소 보여줄 슬라이드
 			maxSlides: 4,      // 최대 보여줄 슬라이드
 			slideWidth: 250,   // 슬라이드 개별 너비
