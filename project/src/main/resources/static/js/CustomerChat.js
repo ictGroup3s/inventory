@@ -1,4 +1,3 @@
-
 $(function() {
 	console.log("고객 채팅 JS 로드 완료");
 	console.log("chat-open 버튼:", $("#chat-open").length);
