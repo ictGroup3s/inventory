@@ -22,8 +22,9 @@ import com.example.model.vo.order_detailVO;
 import com.example.model.vo.ordersVO;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Repository
 public class orderRepository {
 	
@@ -313,5 +314,124 @@ public class orderRepository {
 	        }
 	        
 	        return new ArrayList<>(orderMap.values());
+	    }
+	    /**
+	     * 주문번호별로 그룹화된 주문 목록 조회 (주문내역용)
+	     */
+	    public List<ordersVO> getGroupedOrdersByUserId(String customerId) throws SQLException {
+	        log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+	        log.info("┃  📊 그룹화된 주문 조회 (Repository)                 ┃");
+	        log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+	        log.info("   - customer_id: {}", customerId);
+	        
+	        List<ordersVO> list = new ArrayList<>();
+	        String sql = """
+	            SELECT 
+	                o.order_no,
+	                o.customer_id,
+	                o.order_name,
+	                o.order_addr,
+	                o.order_phone,
+	                TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI:SS') as order_date,
+	                o.payment,
+	                o.order_status,
+	                o.total_amount,
+	                MIN(p.item_name) as first_item_name,
+	                COUNT(od.detail_no) - 1 as additional_count
+	            FROM orders o
+	            INNER JOIN order_detail od ON o.order_no = od.order_no
+	            INNER JOIN product p ON od.item_no = p.item_no
+	            WHERE o.customer_id = ?
+	            GROUP BY o.order_no, o.customer_id, o.order_name, o.order_addr, o.order_phone, 
+	                     o.order_date, o.payment, o.order_status, o.total_amount
+	            ORDER BY o.order_date DESC
+	        """;
+	        
+	        log.info("   - 실행 SQL: {}", sql.replaceAll("\\s+", " "));
+
+	        try (Connection conn = dataSource.getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	            pstmt.setString(1, customerId);
+	            ResultSet rs = pstmt.executeQuery();
+
+	            while (rs.next()) {
+	                ordersVO vo = new ordersVO();
+	                vo.setOrder_no(rs.getInt("order_no"));
+	                vo.setCustomer_id(rs.getString("customer_id"));
+	                vo.setOrder_name(rs.getString("order_name"));
+	                vo.setOrder_addr(rs.getString("order_addr"));
+	                vo.setOrder_phone(rs.getLong("order_phone"));
+	                vo.setOrder_date(rs.getString("order_date"));
+	                vo.setPayment(rs.getString("payment"));
+	                vo.setOrder_status(rs.getString("order_status"));
+	                vo.setTotal_amount(rs.getInt("total_amount"));
+	                
+	                // 첫 번째 상품명과 추가 개수를 임시로 저장
+	                // (JSP에서 표시용)
+	                order_detailVO tempDetail = new order_detailVO();
+	                tempDetail.setItem_name(rs.getString("first_item_name"));
+	                tempDetail.setAdditional_count(rs.getInt("additional_count"));
+	                
+	                List<order_detailVO> tempList = new ArrayList<>();
+	                tempList.add(tempDetail);
+	                vo.setDetailList(tempList);
+	                
+	                list.add(vo);
+	            }
+	            
+	            log.info("   ✅ 조회 성공: {} 건", list.size());
+	        } catch (Exception e) {
+	            log.error("   ❌ 조회 실패!", e);
+	            throw e;
+	        }
+	        
+	        return list;
+	    }
+
+	    /**
+	     * 주문번호로 전체 상품 목록 조회 (상세보기용)
+	     */
+	    public ordersVO getOrderWithDetailsByOrderNo(Integer orderNo) throws SQLException {
+	        log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+	        log.info("┃  📦 주문 전체 정보 조회 (Repository)                ┃");
+	        log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+	        log.info("   - order_no: {}", orderNo);
+	        
+	        ordersVO order = null;
+	        
+	        // 1. 주문 기본 정보 조회
+	        String orderSql = "SELECT * FROM orders WHERE order_no = ?";
+	        
+	        try (Connection conn = dataSource.getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(orderSql)) {
+
+	            pstmt.setInt(1, orderNo);
+	            ResultSet rs = pstmt.executeQuery();
+
+	            if (rs.next()) {
+	                order = new ordersVO();
+	                order.setOrder_no(rs.getInt("order_no"));
+	                order.setCustomer_id(rs.getString("customer_id"));
+	                order.setOrder_name(rs.getString("order_name"));
+	                order.setOrder_addr(rs.getString("order_addr"));
+	                order.setOrder_phone(rs.getLong("order_phone"));
+	                order.setOrder_date(rs.getString("order_date"));
+	                order.setPayment(rs.getString("payment"));
+	                order.setOrder_status(rs.getString("order_status"));
+	                order.setTotal_amount(rs.getInt("total_amount"));
+	                
+	                // 2. 주문 상세 목록 조회
+	                List<order_detailVO> detailList = getOrderDetail(orderNo);
+	                order.setDetailList(detailList);
+	            }
+	            
+	            log.info("   ✅ 조회 성공!");
+	        } catch (Exception e) {
+	            log.error("   ❌ 조회 실패!", e);
+	            throw e;
+	        }
+	        
+	        return order;
 	    }
 }

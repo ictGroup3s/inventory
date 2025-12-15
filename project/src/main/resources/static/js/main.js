@@ -342,3 +342,46 @@
 	});
 
 })(jQuery);
+
+	// 교환 선택시 교환 상품 번호 입력란 표시
+	$('select[name="type"]').change(function() {
+		if ($(this).val() === '교환') {
+			$('#returnNoGroup').show();
+		} else {
+			$('#returnNoGroup').hide();
+		}
+	});
+	
+	// 상세보기
+	function loadCrDetail(crNo) {
+		$.ajax({
+			url: '/mycs/detail/' + crNo,
+			method: 'GET',
+			success: function(data) {
+				if (data) {
+					let html = '<dl class="row">';
+					html += '<dt class="col-sm-4">신청번호</dt><dd class="col-sm-8">' + data.cr_no + '</dd>';
+					html += '<dt class="col-sm-4">주문번호</dt><dd class="col-sm-8">' + data.order_no + '</dd>';
+					html += '<dt class="col-sm-4">신청유형</dt><dd class="col-sm-8">' + data.type + '</dd>';
+					html += '<dt class="col-sm-4">상태</dt><dd class="col-sm-8">' + data.status + '</dd>';
+					html += '<dt class="col-sm-4">신청일</dt><dd class="col-sm-8">' + data.re_date + '</dd>';
+					html += '<dt class="col-sm-4">사유</dt><dd class="col-sm-8">' + data.reason + '</dd>';
+					html += '</dl>';
+					$('#detailContent').html(html);
+				} else {
+					$('#detailContent').html('<p class="text-center">데이터를 불러올 수 없습니다.</p>');
+				}
+			},
+			error: function() {
+				$('#detailContent').html('<p class="text-center text-danger">오류가 발생했습니다.</p>');
+			}
+		});
+	}
+	
+	function loadCrDetail(crNo) {
+	    console.log("상세보기 cr_no =", crNo);
+
+	    document.getElementById("detailModalBody").innerHTML =
+	        "상세 내용 로딩 중... (cr_no=" + crNo + ")";
+	}
+

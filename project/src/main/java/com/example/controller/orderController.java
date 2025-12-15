@@ -15,7 +15,6 @@ import com.example.model.vo.CustomerVO;
 import com.example.model.vo.order_detailVO;
 import com.example.model.vo.ordersVO;
 import com.example.service.CartService;
-import com.example.service.orderService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,6 @@ public class orderController {
 
 	    private final orderRepository repo;
 	    private final CartService cartService; // 장바구니 서비스
-	    private orderService service;
 
 	    public orderController(orderRepository repo, CartService cartService) {
 	        this.repo = repo;
@@ -164,6 +162,13 @@ public class orderController {
 	    }
 	    
 	    // 기존 /order/mypage 매핑 (필요하면 유지)
+	    @GetMapping("/order/mypage")
+	    public String orderMypage(HttpSession session, Model model) {
+	        log.info("🔄 /order/mypage 접속 → /orderhistory로 리다이렉트");
+	        return "redirect:/orderhistory";
+	    }
+	    
+	    // ⭐⭐⭐ 배송내역 페이지 - 배송중/배송완료 주문만 조회
 	    @GetMapping("/mydelivery")
 	    public String myDelivery(HttpSession session, Model model) {
 	        try {
@@ -181,20 +186,7 @@ public class orderController {
 	            
 	            log.info("조회된 주문 개수: {}", orderList.size());
 	            
-	            // ⭐⭐⭐ 디버깅: 각 주문의 detailList 확인
-	            for (ordersVO order : orderList) {
-	                log.info("주문번호: {}, detailList 크기: {}", 
-	                    order.getOrder_no(), 
-	                    order.getDetailList() != null ? order.getDetailList().size() : "NULL");
-	                
-	                if (order.getDetailList() != null) {
-	                    for (order_detailVO detail : order.getDetailList()) {
-	                        log.info("  - 상품: {}", detail.getItem_name());
-	                    }
-	                }
-	            }
-	            
-	            model.addAttribute("orderList", orderList);
+	            model.addAttribute("deliveryList", orderList);
 	            
 	            return "mydelivery";
 	            
@@ -204,6 +196,7 @@ public class orderController {
 	            return "mydelivery";
 	        }
 	    }
+	    
 	    
 	    
 }

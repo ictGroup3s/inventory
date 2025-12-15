@@ -81,7 +81,7 @@
 				
 				<div class="col-lg-10 mx-auto">
 					<c:choose>
-						<c:when test="${empty orderList}">
+						<c:when test="${empty deliveryList}">
 							<p class="text-center">배송 내역이 없습니다.</p>
 						</c:when>
 						<c:otherwise>
@@ -97,7 +97,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="order" items="${orderList}">
+									<c:forEach var="order" items="${deliveryList}">
 										<tr>
 											<td>${order.order_no}</td>
 											<td>${order.order_date}</td>
@@ -170,17 +170,17 @@
 							<div class="col-md-12">
 								<strong>배송상태:</strong>
 								<c:choose>
-									<c:when test="${order.order_status == '배송준비중'}">
+									<c:when test="${order.delivery_status == '배송준비중'}">
 										<span class="badge badge-warning" style="background-color:#FFF3E0; color: #E65100;">배송준비중</span>
 									</c:when>
-									<c:when test="${order.order_status == '배송중'}">
+									<c:when test="${order.delivery_status == '배송중'}">
 														<span class="badge badge-info" style="background-color:#EDF1FF; color: #1565C0;">배송중</span>
 									</c:when>
-									<c:when test="${order.order_status == '배송완료'}">
+									<c:when test="${order.delivery_status == '배송완료'}">
 										<span class="badge badge-success" style="background-color:#E8F5E9; color: #2E7D32;">배송완료</span>
 									</c:when>
 									<c:otherwise>
-										<span class="badge badge-secondary">${order.order_status}</span>
+										<span class="badge badge-secondary">${order.delivery_status}</span>
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -217,14 +217,14 @@
 						<ul class="mt-2">
 							<li>${order.order_date}: 주문 접수</li>
 							<c:choose>
-								<c:when test="${order.order_status == '배송준비중'}">
+								<c:when test="${order.delivery_status == '배송준비중'}">
 									<li>현재: 상품 준비중</li>
 								</c:when>
-								<c:when test="${order.order_status == '배송중'}">
+								<c:when test="${order.delivery_status == '배송중'}">
 									<li>배송 시작됨</li>
 									<li>배송 예정일: 1-2일 이내</li>
 								</c:when>
-								<c:when test="${order.order_status == '배송완료'}">
+								<c:when test="${order.delivery_status == '배송완료'}">
 									<li>배송 완료</li>
 								</c:when>
 							</c:choose>

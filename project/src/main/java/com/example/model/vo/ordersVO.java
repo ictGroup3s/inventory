@@ -12,7 +12,7 @@ public class ordersVO {
 	private String order_addr;
 	private Integer tracking;
 	private long order_phone;
-	private String order_status;
+	private String order_status; //결제상태
 	private String payment;
 	private String api_pay;
 	private String order_date;
@@ -20,6 +20,7 @@ public class ordersVO {
 	
 	private Integer total_amount; 
 	private String request;
+
 
 	// 주문 상세 리스트 추가!
 	private List<order_detailVO> detailList;
