@@ -20,8 +20,8 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public List<Map<String, Object>> getRecentOrders() {
-        return dashboardRepository.getRecentOrders();
+    public List<Map<String, Object>> getRecentOrders(String date) {
+        return dashboardRepository.getRecentOrders(date);
     }
 
     @Override

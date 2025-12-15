@@ -1,0 +1,131 @@
+.status-badge {
+	padding: 5px 10px;
+	border-radius: 15px;
+	font-size: 12px;
+	font-weight: 500;
+	white-space: nowrap;
+	display: inline-block;
+}
+
+.status-결제완료 {
+	background: #fff3cd;
+	color: #856404;
+}
+
+.status-배송준비중 {
+	background: #cce5ff;
+	color: #004085;
+}
+
+.status-배송중 {
+	background: #d4edda;
+	color: #155724;
+}
+
+.status-배송완료 {
+	background: #d1ecf1;
+	color: #0c5460;
+}
+
+.status-취소 {
+	background: #f8d7da;
+	color: #721c24;
+}
+
+.status-반품 {
+	background: #e2e3e5;
+	color: #383d41;
+}
+
+.status-교환 {
+	background: #fff3cd;
+	color: #856404;
+}
+
+.modal-header {
+	background: #f8f9fa;
+}
+
+.order-info-label {
+	font-weight: 600;
+	color: #666;
+}
+
+.order-items-table {
+	font-size: 14px;
+}
+
+/* 테이블 스타일 */
+.order-table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+.order-table th, .order-table td {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.order-table .col-order-no {
+	width: 85px;
+}
+
+.order-table .col-customer {
+	width: 80px;
+}
+
+.order-table .col-items {
+	width: auto;
+	text-align: center;
+}
+
+.order-table .col-amount {
+	width: 100px;
+}
+
+.order-table .col-date {
+	width: 100px;
+}
+
+.order-table .col-status {
+	width: 85px;
+	text-align: center;
+}
+
+.order-table .col-action {
+	width: 70px;
+}
+
+.item-cell {
+	max-width: 300px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.item-cell:hover {
+	white-space: normal;
+	overflow: visible;
+	background: #fff;
+	position: relative;
+	z-index: 1;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	padding: 8px;
+	border-radius: 4px;
+}
+
+.detail-status-정상 {
+	color: #155724;
+}
+
+.detail-status-취소 {
+	color: #721c24;
+}
+
+.detail-status-반품 {
+	color: #856404;
+}
+
+.detail-status-교환 {
+	color: #004085;
+}
