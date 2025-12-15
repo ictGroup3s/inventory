@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
 <head>
@@ -30,6 +31,7 @@
 <!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
@@ -91,7 +93,6 @@
 								．소스</a></li>
 						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
 								．음료</a></li>
-						<li class="nav-item"><a href="#" class="nav-link" data-toggle="modal" data-target="#mapModal">오프라인 매장</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -208,7 +209,7 @@
 		<div class="row px-xl-5">
 			<div class="col-md-6 pb-4">
 				<div
-					class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5">
+					class="position-relative bg-white text-center text-md-right text-dark mb-2 py-2 px-5" style="border: 1px solid #d4d4d4;">
 					<img src="img/bingsu.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">season off</h5>
@@ -221,7 +222,7 @@
 			</div>
 			<div class="col-md-6 pb-4">
 				<div
-					class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5">
+					class="position-relative bg-white text-center text-md-left text-dark mb-2 py-2 px-5" style="border: 1px solid #d4d4d4;">
 					<img src="img/boong1.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">new arrival</h5>
@@ -241,61 +242,55 @@
 	<div class="container-fluid pt-5">
 		<div class="row px-xl-5 pb-3">
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectGui"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/gui.png" alt="">
+						class="img-fluid cat-img-fill" src="img/guizzim.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">구이 ．찜 ．볶음</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectSoup"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/soup.png" alt="">
+						class="img-fluid cat-img-fill" src="img/gukbob.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">국 ．밥 ．면</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectDiet"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/diet.png" alt="">
+						class="img-fluid cat-img-fill" src="img/sikdana.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">식단관리</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectBunsik"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/bunsik.png" alt="">
+						class="img-fluid cat-img-fill" src="img/bunsikgan.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">분식 ．간식</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectBanchan"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/banchan.png" alt="">
+						class="img-fluid cat-img-fill" src="img/banchana.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">반찬 ．소스</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectdrink"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/waterdrink.png" alt="">
+						class="img-fluid cat-img-fill" src="img/drinka.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">생수 ．음료</h5>
 				</div>
@@ -303,10 +298,63 @@
 		</div>
 	</div>
 	<!-- Categories End -->
+	 
+	 <!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
+	<div class="container-fluid py-5" style="border-top: 1px solid #dee2e6;">
+		<div class="container-fluid px-5">
+			<div class="text-center mb-5">
+				<h5 class="font-weight-bold m-0">추천상품 바로가기</h5>
+			</div>
+			<ul class="bxslider">
+				<c:forEach var="rp" items="${randomProducts}">  
+				<li>
+						<div class="slider-card" data-item-no="${rp.item_no}">
+							<a href="detail?item_no=${rp.item_no}">
+								<img src="/img/product/${rp.item_img}" alt="${rp.item_name}" class="d-block mx-auto"/>
+							</a>
+							<h6 class="slider-title mt-2">${rp.item_name}</h6>
+
+							<!-- 평점 리뷰 적용 -->
+							<div class="mb-2" style="font-size: 0.9rem; color: #666;">
+								<c:choose>
+									<c:when test="${rp.review_cnt > 0}">
+										<i class="fas fa-heart" style="color: #D19C97;"></i> 
+										<fmt:formatNumber value="${rp.avg_rating}" pattern="#.0"/> (${rp.review_cnt}개 리뷰)
+									</c:when>
+									<c:otherwise>
+										<i class="far fa-heart" style="color: #D19C97;"></i> 0.0 (${rp.review_cnt}개 리뷰)
+									</c:otherwise>
+								</c:choose>
+							</div>
+
+							<c:choose>
+								<c:when test="${not empty rp.dis_rate and rp.dis_rate > 0}">
+									<c:set var="discounted" value="${rp.sales_p * (100 - rp.dis_rate) / 100}" />
+									<div class="d-flex flex-column">
+										<h6 class="text-muted mb-0" style="font-size: 0.8rem;">
+											<del><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</del>
+										</h6>
+										<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+										<h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<h6><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</h6>
+								</c:otherwise>
+							</c:choose>
+							
+						</div>
+				</li>
+				</c:forEach>
+			</ul>      
+		</div>
+	</div>
+	</div>
+	<!-- Image Slider End -->
 
 
 	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+	<div class="container-fluid text-dark mt-3 pt-3 pb-2" style="border-top: 2px solid #eeeeee;">
 		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
@@ -359,7 +407,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row border-top border-light mx-xl-5 py-4">
+		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
 					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
@@ -412,34 +460,6 @@
 	</c:if>
 	<div class="toast-container" id="toast-container"></div>
 
-	<!-- Map Modal -->
-	<div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="mapModalLabel">오프라인 매장 위치</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<!-- Map Placeholder -->
-					<div id="map" style="width: 100%; height: 400px; background-color: #eee;">
-						<!-- Google Maps Embed (Sinchon) -->
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3163.016675216768!2d126.9390663153116!3d37.55403497979988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c98970e0e0e0f%3A0x5c308dc8454e40!2z7ISc7Jq47Yq567OE7IucIOyEnOuMgOusuOq1rCDsi6DstIztjZgx6ri4!5e0!3m2!1sko!2skr!4v1614750000000!5m2!1sko!2skr" 
-								width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-					</div>
-					<p class="mt-3 text-center">
-						<strong>주소:</strong> 서울특별시 서대문구 신촌동 00<br>
-						<strong>전화번호:</strong> 02-070-0000
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- JavaScript Libraries -->
 	<!-- jQuery 먼저 -->
@@ -450,6 +470,7 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
 
 	<!-- Contact JS -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
@@ -467,6 +488,8 @@
 
 	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
 	<script src="/js/main.js" defer></script>
+	<!-- 리뷰 js -->	
+	<script src="js/Review.js"></script>
 
 
 </body>

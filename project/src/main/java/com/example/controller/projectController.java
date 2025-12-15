@@ -36,7 +36,10 @@ public class projectController {
     private ProductService productService;    
 
 	@GetMapping("/")
-	public String home() {
+	public String home(Model m) throws Exception {
+		// 랜덤 상품 10개 노출 적용 (bx slider용)
+		List<ProductVO> randomProducts = productService.getRandomProducts(10);
+		m.addAttribute("randomProducts", randomProducts);
 		return "header"; // header.jsp로 이동
 	}
 	
