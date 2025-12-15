@@ -42,24 +42,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM dual
     </select>
 
-    <!-- 최근 주문 5건 -->
-    <select id="getRecentOrders" resultType="map">
-        SELECT * FROM (
-            SELECT 
-                o.order_no,
-                o.order_name as customer_name,
-                p.item_name,
-                od.item_cnt as qty,
-                (od.item_price * od.item_cnt) as amount,
-                TO_CHAR(o.order_date, 'MM-DD HH24:MI') as order_date
-            FROM orders o
-            JOIN order_detail od ON o.order_no = od.order_no
-            JOIN product p ON od.item_no = p.item_no
-            WHERE o.order_status != '취소'
-            ORDER BY o.order_date DESC
-        ) WHERE ROWNUM &lt;= 5
-    </select>
-
+    <!-- 주문 전체 (매일 자정 자동 초기화) -->
+	<!-- 날짜별 주문 조회 -->
+	<select id="getRecentOrders" resultType="map" parameterType="String">
+	    SELECT
+	        o.order_no,
+	        o.order_name as customer_name,
+	        p.item_name,
+	        od.item_cnt as qty,
+	        (od.item_price * od.item_cnt) as amount,
+	        TO_CHAR(o.order_date, 'MM-DD HH24:MI') as order_date
+	    FROM orders o
+	    JOIN order_detail od ON o.order_no = od.order_no
+	    JOIN product p ON od.item_no = p.item_no
+	    WHERE o.order_status != '취소'
+	      AND TRUNC(o.order_date) = 
+	        <choose>
+	            <when test="_parameter != null and _parameter != ''">
+	                TO_DATE(#{_parameter}, 'YYYY-MM-DD')
+	            </when>
+	            <otherwise>
+	                TRUNC(SYSDATE)
+	            </otherwise>
+	        </choose>
+	    ORDER BY o.order_date DESC
+	</select>
     <!-- 일별 매출 (최근 7일) -->
     <select id="getDailySales" resultType="map">
         SELECT 

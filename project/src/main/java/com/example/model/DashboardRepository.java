@@ -28,4 +28,8 @@ public class DashboardRepository {
     public List<Map<String, Object>> getIncomeExpense() {
         return sess.selectList("dashboardmapper.getIncomeExpense");
     }
+    
+    public List<Map<String, Object>> getRecentOrders(String date) {
+        return sess.selectList("dashboardmapper.getRecentOrders", date);
+    }
 }
