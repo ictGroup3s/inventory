@@ -23,7 +23,7 @@ public class mypageController {
     private orderRepository orderRepository;
     
     // 주문내역 페이지
-    @GetMapping("/order/mypage")
+    @GetMapping("/order/mlist")
     public String orderList(HttpSession session, Model model) {
         try {
             // 로그인 체크
