@@ -284,7 +284,7 @@ $(function() {
 			}),
 			success: function(res) {
 				if (res.success) {
-					consloe.log('응답: ', res);
+					console.log('응답: ', res);
 					alert(newStatus + ' 처리되었습니다.');
 					loadOrderDetail(currentOrderNo);
 					loadOrders();
