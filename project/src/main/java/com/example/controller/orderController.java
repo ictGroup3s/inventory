@@ -1,5 +1,6 @@
 package com.example.controller;
 
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.orderRepository;
 import com.example.model.vo.CartItemVO;
-import com.example.model.vo.CustomerVO;
 import com.example.model.vo.order_detailVO;
+import com.example.model.vo.ordersVO;
 import com.example.service.CartService;
+import com.example.service.orderService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -54,25 +56,17 @@ public class orderController {
 	    public String showSuccessPage() {
 	        return "ordercomplete"; // success.jsp
 	    }
-
-	    // 주문내역 페이지
-	    @GetMapping("/order/mypage")
-	    public String showMyPage(@RequestParam(value="view", required=false) String view,
-	                             HttpSession session,
-	                             Model model) throws Exception {
-
-	        if ("last".equals(view)) {
-	            Integer orderNo = (Integer) session.getAttribute("lastOrderNo");
-	            if (orderNo != null) {
-	                List<order_detailVO> list = repo.getOrderDetail(orderNo);
-	                model.addAttribute("deliveryList", list);
-	            }
-	        } else {
-	            String customerId = (String) session.getAttribute("customerId");
-	            List<order_detailVO> list = repo.getDeliveryList(customerId);
-	            model.addAttribute("deliveryList", list);
-	        }
-
-	        return "mypage"; // mypage.jsp
-	    }
+	    
+		/*
+		 * @GetMapping("/orderhistory") public String orderHistory(HttpSession session,
+		 * Model model) throws SQLException {
+		 * 
+		 * String customerId = (String) session.getAttribute("customer_id");
+		 * List<ordersVO> orderList = orderService.getOrders(customerId);
+		 * 
+		 * model.addAttribute("orderList", orderList);
+		 * 
+		 * return "orderhistory"; }
+		 * 
+		 */
 	}
