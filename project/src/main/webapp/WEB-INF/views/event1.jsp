@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html lang="en">
 
 <head>
@@ -166,7 +167,7 @@
     <!-- Products Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Season Off (Discount)</span></h2>
+            <h2 class="section-title px-5"><span class="px-2">Discount</span></h2>
         </div>
         
    <div class="row px-xl-5 pb-3"> 
@@ -174,17 +175,17 @@
   	<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
 	<div class="card product-item border-0 mb-4" style="width: 280px;">
 	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-	<a href="detail?item_no=${item.item_no}"> 
-<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
-</a>
+	<a href="event1?item_no=${item.item_no}"> 
+	<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
+	</a>
 		</div>
-	<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-		<h6 class="text-truncate mb-3">${item.item_name}</h6>
-		<div class="d-flex justify-content-center">
-		<h6>${item.origin_p}원</h6>
-	<h6 class="text-muted ml-2">
-		<del>${item.sales_p}원</del>
-		</h6>
+	<div class="card-body border-left border-right text-center p-0 pt-4 ">
+ 		<h5 class="text-truncate mb-3">${item.item_name}</h5>
+ 		<div class="d-flex justify-content-center">
+ 			<h5 class="text-muted ml-2"> <del>${item.sales_p}원</del>	</h5></div>
+ 			<div class="d-flex justify-content-center">	
+		<c:set var="discount_P" value="${item.sales_p*(1-item.dis_rate/100)}"/>
+			<h5 style="color:red;">${item.dis_rate}%  ${discount_P.intValue()}원</h5> 
 		</div>
 		</div>
 <div class="card-footer d-flex justify-content-between bg-light border">
@@ -201,8 +202,33 @@
          </div>
             </div>
 </c:forEach>
-           
+  </div>   
     <!-- Products End -->
+    <!-- 페이지 네비게이션 -->
+    <div class="pagination-container" >
+       <ul class="pagination justify-content-center mb-3">
+            <!-- 이전 페이지 버튼 -->
+            <c:if test="${currentPage > 1}">
+                <li class="page-item">
+                    <a class="page-link" href="event1?page=${currentPage - 1}&size=${size}">이전</a>
+                </li>
+            </c:if>
+            <!-- 페이지 번호 버튼들 -->
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <li class="page-item <c:if test="${i == currentPage}">active</c:if>">
+                    <a class="page-link" href="event1?page=${i}&size=${size}">${i}</a>
+                </li>
+            </c:forEach>
+
+            <!-- 다음 페이지 버튼 -->
+            <c:if test="${currentPage < totalPages}">
+                <li class="page-item">
+                    <a class="page-link" href="event1?page=${currentPage + 1}&size=${size}">다음</a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
+      <!-- 다른 이벤트페이지 링크 -->
     <div class="container-fluid offer pt-5 ">
         <div class="row px-xl-5 justify-content-end">
        <div class="col-md-8 pb-4">
@@ -219,8 +245,9 @@
             </div>
 		</div>
     </div>
-    <!-- Products End -->
 
+    <!-- event -->
+ 
   	    <!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
         <div class="row px-xl-5 pt-3">

@@ -1585,12 +1585,13 @@ pre code {
 
 .table-bordered th,
 .table-bordered td {
-	font-size: 18px; 
+  font-size: 18px; 
   border: 1px solid #EDF1FF;
 }
 
 .table-bordered thead th,
 .table-bordered thead td {
+	font-size: 18px; 
   border-bottom-width: 2px;
 }
 
