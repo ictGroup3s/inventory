@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sales_p      AS sales_p,
 			stock_cnt    AS stock_cnt,
 			cate_no      AS cate_no,
-			dis_rate       AS dis_rate
+			dis_rate     AS dis_rate
 		FROM product
 		WHERE item_no = #{item_no}
 	</select>
@@ -29,13 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sales_p      AS sales_p,
 			stock_cnt    AS stock_cnt,
 			cate_no      AS cate_no,
-			dis_rate       AS dis_rate
+			dis_rate     AS dis_rate
 		FROM product
 		ORDER BY item_no DESC
 	</select>
 
 	<select id="selectProducts" parameterType="map" resultType="ProductVO">
-			SELECT * FROM (
+		SELECT * FROM (
 			SELECT a.*, ROWNUM rn FROM (
 				SELECT
 					p.item_no      AS item_no,
@@ -52,16 +52,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				FROM product p
 				<where>
 					<if test="q != null and q != ''">
-						(item_name LIKE '%' || #{q} || '%' OR item_content LIKE '%' || #{q} || '%')
+						(p.item_name LIKE '%' || #{q} || '%' OR p.item_content LIKE '%' || #{q} || '%')
 					</if>
 					<if test="cate_no != null">
-						AND cate_no = #{cate_no}
+						AND p.cate_no = #{cate_no}
 					</if>
 				</where>
 				<choose>
-					<when test="sort == 'price_asc'">ORDER BY sales_p ASC</when>
-					<when test="sort == 'price_desc'">ORDER BY sales_p DESC</when>
-					<otherwise>ORDER BY item_no DESC</otherwise>
+					<when test="sort == 'price_asc'">ORDER BY p.sales_p ASC</when>
+					<when test="sort == 'price_desc'">ORDER BY p.sales_p DESC</when>
+					<otherwise>ORDER BY p.item_no DESC</otherwise>
 				</choose>
 			) a WHERE ROWNUM &lt;= #{offset} + #{size}
 		)
@@ -79,8 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</where>
 	</select>
-	
-	<!-- 랜덤 상품 4개 추천 (bx slider용) -->
+
+<!-- 랜덤 상품 4개 추천 (bx slider용) -->
 	<select id="selectRandomProducts" parameterType="int" resultType="productVO">
 		SELECT * FROM (
 			SELECT
@@ -97,7 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ORDER BY DBMS_RANDOM.VALUE
 		) WHERE ROWNUM &lt;= #{limit}
 	</select>
-	
+
 	<select id="selectDiscount" resultType="com.example.model.vo.ProductVO">
 	SELECT  *
 	FROM product 

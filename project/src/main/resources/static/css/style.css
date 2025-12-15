@@ -65,6 +65,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
+
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -75,6 +76,7 @@ body {
  */
  
 body {
+  font-size: 18px;              /* 기본 글씨 크기 */
   width: 100%;          /* 너비를 100%로 설정하여 화면 크기에 맞게 늘어나게 함 */
   max-width: 1500px;    /* 최대 너비를 1500px로 제한 */
   height: 800px;        /* 높이는 고정 (필요에 따라 수정 가능) */
@@ -1567,11 +1569,13 @@ pre code {
 }
 
 .table tbody + tbody {
+ font-size: 18px;
   border-top: 2px solid #EDF1FF;
 }
 
 .table-sm th,
 .table-sm td {
+  font-size: 18px; 
   padding: 0.3rem;
 }
 
@@ -1581,6 +1585,7 @@ pre code {
 
 .table-bordered th,
 .table-bordered td {
+	font-size: 18px; 
   border: 1px solid #EDF1FF;
 }
 
@@ -2963,7 +2968,7 @@ fieldset:disabled a.btn {
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 18px;
   line-height: 1.5;
   border-radius: 0;
 }
@@ -9687,22 +9692,15 @@ a.text-dark:hover, a.text-dark:focus {
 /* 관리자 페이지 사이드바 스타일을 카테고리에 적용 */
 
 
-.category-sidebar {
-    padding: 3rem 0;
-    position: static;      /* 자연스럽게 스크롤 따라 움직임 */
-    top: auto;             /* top 제거 */
-    max-height: none;      /* 높이 제한 제거 */
-    overflow-y: visible;   /* 스크롤 제거 */
-}
-  /*.category-sidebar{
+ .category-sidebar{
    background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6; 
-    padding: 1rem 0;
-    position: fixed; 
-    top: 200px;    상단 네비게이션 높이만큼 조정 
-    max-height: calc(100vh - 600px);  화면 높이에서 상단 네비 높이 제외 
-   overflow-y: auto;  내용이 길면 스크롤 가능 
-}*/
+    top: 200px;    /* 상단 네비게이션 높이만큼 조정  */
+    max-height: calc(100vh - 600px);  /* 화면 높이에서 상단 네비 높이 제외  */
+    width:250px;
+    
+}
+
+
 .category-sidebar h6 {
     padding: 0 1rem;
     font-weight: 700;
@@ -9736,54 +9734,19 @@ a.text-dark:hover, a.text-dark:focus {
  maintainAspectRatio가 true이고 aspectRatio가 설정되어 있으면
  Chart.js는 캔버스 크기를 그대로 따릅니다. */
 
-.chart-box { width:100%; height:320px; max-height:60vh; }
 
-/* 중간 크기(screen)에서는 비슷한 비율을 유지하되, 차트가 지나치게 길어지지 않도록 최대 높이를 제한합니다. */
-@media (max-width: 992px) {
-  .chart-box { height:300px; max-height:55vh; }
-}
-
-/* 작은 화면에서는 너무 많은 세로 공간을 차지하지 않도록 높이를 제한합니다. */
-@media (max-width: 576px) {
-  .chart-box { height:220px; max-height:40vh; }
+/* checkout  */
+.invalid-phone {
+    border: 2px solid #d9534f !important;
+    background-color: #fff5f5;
 }
 
-/* 카드 본문을 flex로 유지하여 chart-box가 사용 가능한 공간을 채우도록 합니다. */
-.card.h-100 > .card-body { /* keep default flow to avoid forcing equal-height stretching */ }
-.row { align-items: flex-start; }
-.card.h-100 { height: auto !important; }
-.card.h-100 > .card-body { /* keep default flow to avoid forcing equal-height stretching */ }
+ .valid-phone {
+    border: 2px solid #5cb85c !important;
+    background-color: #f4fff4;
+}
 
-/* 캔버스가 컨테이너를 완전히 채우도록 강제합니다 (Chart.js는 캔버스 크기를 그대로 따릅니다). */
-.chart-box canvas { width:100% !important; display:block; }
 
-/* --- 표 조정: 지표 테이블의 글자 크기를 줄이고 패딩을 더 타이트하게 조정 --- */
-/* 날짜가 한 줄에 들어가도록 일일(daily) 테이블을 더 컴팩트하게 만들기 */
-#dailyTable, #monthlyMetricsTable, #monthlyTable {
-  font-size: 12px; /* smaller */
-}
-#dailyTable td, #dailyTable th, #monthlyMetricsTable td, #monthlyMetricsTable th {
-  padding: .25rem .4rem; /* tighter cell padding */
-}
-/* 일일 테이블에서 날짜 열이 줄바꿈되지 않도록 하고 고정된 최소 너비를 지정합니다 */
-#dailyTable th:first-child, #dailyTable td:first-child {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 92px; /* 날짜 열이 충분한 너비를 가지도록 합니다 */
-  max-width: 120px;
-}
-/* 아주 작은 화면에서 여전히 공간이 부족하면 글꼴 크기를 조금 더 줄입니다 */
-@media (max-width: 768px) {
-  #dailyTable { font-size: 11px; }
-  #dailyTable th:first-child, #dailyTable td:first-child { min-width: 80px; }
-}
-@media (max-width: 576px) {
-  #dailyTable, #monthlyMetricsTable, #monthlyTable { font-size: 11px; }
-}
-#categorySalesTable th, td {
-	font-size: 12px;
-}
 
 /*.bxslider li {*/
 /*    display: block;*/
