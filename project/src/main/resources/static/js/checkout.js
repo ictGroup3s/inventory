@@ -233,10 +233,6 @@ if (shipPhoneInput) {
     shipPhoneInput.addEventListener("blur", () => validatePhone(shipPhoneInput, shipPhoneError));
 }
 
-
-
-
-
 /*요청사항 직접입력*/
 document.getElementById('memoSelect').addEventListener('change', function() {
     const memoInput = document.getElementById('memoInput');
@@ -265,17 +261,13 @@ function selectCard(cardType) {
     event.target.classList.add('btn-primary');
 }
 
-// 결제진행 (서버 전송 추가!)
-function processPayment() {
-    if (!selectedCard) {
-        alert('카드를 선택해주세요!');
-        return;
-    }
-
+// ⭐⭐⭐ 공통 결제 처리 함수 - 모든 결제 수단에서 사용 ⭐⭐⭐
+function submitPayment(paymentType, additionalData = {}) {
     // 주문 정보 수집
     const name = $('#Name').val();
     const phone = $('#Phone').val();
     const address = $('#Address').val();
+    const region = $('select[name="region"]').val();
     const shipName = $('#shipName').val() || name;
     const shipPhone = $('#shipPhone').val() || phone;
     const shipAddress = $('#shipAddress').val() || address;
@@ -288,39 +280,51 @@ function processPayment() {
     }
 
     // 서버로 주문 데이터 전송
-	$.ajax({
-	    url: '/processPayment',
-	    method: 'POST',
-	    data: {
-	        name: name,
-	        phone: phone,
-	        address: address,
-	        shipName: shipName,
-	        shipPhone: shipPhone,
-	        shipAddress: shipAddress,
-	        memo: memo,
-	        cardType: selectedCard,
-			amount: '${cartTotal}' 
-	    },
-	    xhrFields: {
-	        withCredentials: true  // ★ 세션 쿠키 전송
-	    },
-	    crossDomain: true,          // ★ jQuery에서 credentials 사용 시 필수
-	    success: function(response) {
-	        $('#payModal').modal('hide');
+    const paymentData = {
+        name: name,
+        phone: phone,
+        address: address,
+        region: region,
+        shipName: shipName,
+        shipPhone: shipPhone,
+        shipAddress: shipAddress,
+        memo: memo,
+        paymentType: paymentType,  // ⭐ 결제 방식 추가
+        amount: '${cartTotal}',
+        ...additionalData  // 추가 데이터 (카드사 정보 등)
+    };
 
-	        // sessionStorage에도 저장 (필요시)
-	        sessionStorage.setItem('selectedCard', selectedCard);
-	        sessionStorage.setItem('amount', '${cartTotal}');
+    $.ajax({
+        url: '/processPayment',
+        method: 'POST',
+        data: paymentData,
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
+        success: function(response) {
+            // 모달이 열려있다면 닫기
+            $('#payModal').modal('hide');
 
-	        // 주문 완료 페이지로 이동
-	        window.location.href = '/ordercomplete?orderNo=' + response.orderNo;
-	    },
-	    error: function(error) {
-	        alert('결제 처리 중 오류가 발생했습니다.');
-	        console.error(error);
-	    }
-	});
+            // 주문 완료 페이지로 이동
+            window.location.href = '/ordercomplete?orderNo=' + response.orderNo;
+        },
+        error: function(error) {
+            alert('결제 처리 중 오류가 발생했습니다.');
+            console.error(error);
+        }
+    });
+}
+
+// 카드 결제 진행
+function processPayment() {
+    if (!selectedCard) {
+        alert('카드를 선택해주세요!');
+        return;
+    }
+
+    // 카드결제는 paymentType='card'와 cardType 전송
+    submitPayment('card', { cardType: selectedCard });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -342,35 +346,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // 카드결제 - 모달 열기
         if(selected === 'paypal') {
             $('#payModal').modal('show');
-        } else if(selected === 'directcheck') {
-            // 계좌이체도 서버에 주문 저장 후 이동
-            const name = $('#Name').val();
-            const phone = $('#Phone').val();
-            const address = $('#Address').val();
-            
-            if(!name || !phone || !address) {
-                alert('필수 정보를 입력해주세요.');
-                return;
-            }
-            
-            $.ajax({
-                url: '/processPayment',
-                method: 'POST',
-                data: {
-                    name: name,
-                    phone: phone,
-                    address: address,
-                    paymentType: 'bank'
-                },
-                success: function(response) {
-                    window.location.href = '/ordercomplete?orderNo=' + response.orderNo;
-                },
-                error: function(error) {
-                    alert('결제 처리 중 오류가 발생했습니다.');
-                }
-            });
+        } 
+        // 계좌이체 - 바로 처리
+        else if(selected === 'directcheck') {
+            submitPayment('bank');  // ⭐ paymentType='bank'로 전송
         }
     });
 
@@ -385,32 +367,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 네이버페이, 카카오페이 버튼
+    // ⭐⭐⭐ 네이버페이 버튼 클릭 - DB에 저장 후 이동 ⭐⭐⭐
     const naverBtn = document.getElementById('naverPayBtn');
+    naverBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        submitPayment('naver');  // ⭐ paymentType='naver'로 전송
+    });
+
+    // ⭐⭐⭐ 카카오페이 버튼 클릭 - DB에 저장 후 이동 ⭐⭐⭐
     const kakaoBtn = document.getElementById('kakaoPayBtn');
-
-    naverBtn.addEventListener('click', function() {
-        window.location.href = '/naver';
+    kakaoBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        submitPayment('kakao');  // ⭐ paymentType='kakao'로 전송
     });
-
-    kakaoBtn.addEventListener('click', function() {
-        window.location.href = '/kakao';
-    });
-	
-	// 폼 제출 시 장바구니 체크
-	const checkoutForm = document.getElementById('checkoutForm');
-	if (checkoutForm) {
-	    checkoutForm.addEventListener('submit', function(e) {
-	        const cartCountElement = document.getElementById('cartCount');
-	        const cartCount = cartCountElement ? parseInt(cartCountElement.textContent) : 0;
-	        
-	        if (cartCount === 0 || isNaN(cartCount)) {
-	            e.preventDefault();
-	            alert('장바구니에 상품이 없습니다.');
-	            window.location.href = 'cart';
-	            return false;
-	        }
-	    });
-	}
-	
+    
+    // 폼 제출 시 장바구니 체크
+    const checkoutForm = document.getElementById('checkoutForm');
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function(e) {
+            const cartCountElement = document.getElementById('cartCount');
+            const cartCount = cartCountElement ? parseInt(cartCountElement.textContent) : 0;
+            
+            if (cartCount === 0 || isNaN(cartCount)) {
+                e.preventDefault();
+                alert('장바구니에 상품이 없습니다.');
+                window.location.href = 'cart';
+                return false;
+            }
+        });
+    }
 });

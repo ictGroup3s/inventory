@@ -297,9 +297,9 @@ public class projectController {
 		return "myqna";
 	}
 	
-	@GetMapping("/mydelivery")
-	public String mydelivery() {
-		return "mydelivery";
-	}	
+	/*
+	 * @GetMapping("/mydelivery") public String mydelivery() { return "mydelivery";
+	 * }
+	 */
 
 }

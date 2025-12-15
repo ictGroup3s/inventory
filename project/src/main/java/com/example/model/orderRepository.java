@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -231,6 +233,7 @@ public class orderRepository {
 	            JOIN orders o ON od.order_no = o.order_no
 	            JOIN product p ON od.item_no = p.item_no
 	            WHERE o.customer_id = ?
+	            AND o.order_status = '결제완료'
 	            ORDER BY o.order_date DESC
 	        """;
 
@@ -246,8 +249,8 @@ public class orderRepository {
 	                d.setOrder_no(rs.getInt("order_no"));
 	                d.setItem_no(rs.getInt("item_no"));
 	                d.setItem_cnt(rs.getInt("item_cnt"));
-	                d.setItem_price(rs.getInt("item_price"));
-	                d.setAmount(rs.getInt("amount"));  // ⭐ 추가
+	                d.setItem_price(rs.getInt("item_price")); 
+	                d.setAmount(rs.getInt("amount"));
 	                d.setItem_name(rs.getString("item_name"));
 	                d.setOrder_date(rs.getString("order_date"));
 	                d.setOrder_status(rs.getString("order_status"));
@@ -256,5 +259,59 @@ public class orderRepository {
 	        }
 	        return list;
 	    }
-	    
+	 // 주문번호별로 그룹핑된 배송내역 조회
+	    public List<ordersVO> getDeliveryGroupedList(String customerId) throws SQLException {
+	        Map<Integer, ordersVO> orderMap = new LinkedHashMap<>();
+	        
+	        String sql = """
+	            SELECT od.detail_no, od.order_no, od.item_no, od.item_cnt, od.item_price,
+	                   (od.item_cnt * od.item_price) AS amount,
+	                   p.item_name, 
+	                   TO_CHAR(o.order_date,'YYYY-MM-DD HH24:MI:SS') AS order_date,
+	                   o.order_status, o.total_amount
+	            FROM order_detail od
+	            JOIN orders o ON od.order_no = o.order_no
+	            JOIN product p ON od.item_no = p.item_no
+	            WHERE o.customer_id = ?
+	            ORDER BY o.order_date DESC, od.detail_no
+	        """;
+
+	        try (Connection conn = dataSource.getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	            pstmt.setString(1, customerId);
+	            ResultSet rs = pstmt.executeQuery();
+
+	            while (rs.next()) {
+	                int orderNo = rs.getInt("order_no");
+	                
+	                // 주문번호가 처음 나오면 ordersVO 생성
+	                if (!orderMap.containsKey(orderNo)) {
+	                    ordersVO order = new ordersVO();
+	                    order.setOrder_no(orderNo);
+	                    order.setOrder_date(rs.getString("order_date"));
+	                    order.setOrder_status(rs.getString("order_status"));
+	                    order.setTotal_amount(rs.getInt("total_amount"));
+	                    order.setDetailList(new ArrayList<>());
+	                    orderMap.put(orderNo, order);
+	                }
+	                
+	                // 상품 상세 정보 추가
+	                order_detailVO detail = new order_detailVO();
+	                detail.setDetail_no(rs.getInt("detail_no"));
+	                detail.setOrder_no(orderNo);
+	                detail.setItem_no(rs.getInt("item_no"));
+	                detail.setItem_cnt(rs.getInt("item_cnt"));
+	                detail.setItem_price(rs.getInt("item_price"));
+	                detail.setAmount(rs.getInt("amount"));
+	                detail.setItem_name(rs.getString("item_name"));
+	                detail.setOrder_date(rs.getString("order_date"));
+	                detail.setOrder_status(rs.getString("order_status"));
+	                
+	                orderMap.get(orderNo).getDetailList().add(detail);
+	            }
+	        }
+	        
+	        return new ArrayList<>(orderMap.values());
+	    }
 }
