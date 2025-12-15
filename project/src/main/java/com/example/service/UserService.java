@@ -30,7 +30,7 @@ public class UserService {
 	}
 	//회원 삭제
 	public void deleteById(String customer_id) {
-		repo.deleteById(customer_id); //db삭제 실행
+		repo.softDeleteById(customer_id); //db삭제 실행
 	}
 	
 	//회원 수정
