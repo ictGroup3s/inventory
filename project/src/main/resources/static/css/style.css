@@ -75,6 +75,7 @@ body {
  */
  
 body {
+  font-size: 18px;              /* 기본 글씨 크기 */
   width: 100%;          /* 너비를 100%로 설정하여 화면 크기에 맞게 늘어나게 함 */
   max-width: 1500px;    /* 최대 너비를 1500px로 제한 */
   height: 800px;        /* 높이는 고정 (필요에 따라 수정 가능) */
@@ -1567,7 +1568,8 @@ pre code {
 }
 
 .table tbody + tbody {
-  border-top: 2px solid #EDF1FF;
+     font-size: 18px; 
+     border-top: 2px solid #EDF1FF;
 }
 
 .table-sm th,
@@ -1581,11 +1583,13 @@ pre code {
 
 .table-bordered th,
 .table-bordered td {
+  font-size: 18px; 
   border: 1px solid #EDF1FF;
 }
 
 .table-bordered thead th,
 .table-bordered thead td {
+	font-size: 18px; 
   border-bottom-width: 2px;
 }
 
@@ -2963,7 +2967,7 @@ fieldset:disabled a.btn {
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 18px;
   line-height: 1.5;
   border-radius: 0;
 }

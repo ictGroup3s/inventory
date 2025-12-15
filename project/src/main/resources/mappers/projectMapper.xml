@@ -98,22 +98,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) WHERE ROWNUM &lt;= #{limit}
 	</select>
 	
-	<select id="selectDiscount" resultType="com.example.model.vo.ProductVO">
-	SELECT  *
-	FROM product 
-	WHERE dis_rate IS NOT NULL AND dis_rate > 0
-	
-	</select>
-	
-	<select id="newarrivals" parameterType="map" resultType="com.example.model.vo.ProductVO">
-	SELECT *
-	FROM product
-	ORDER BY CREATED_AT DESC
-	</select>
-	
-	<select id="selectNewArrivalsCount" resultType="int">
-    SELECT COUNT(*)
-    FROM product
-    ORDER BY created_at DESC
-</select>
+
 </mapper>

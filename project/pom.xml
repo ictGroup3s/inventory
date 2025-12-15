@@ -130,6 +130,11 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>bboardjsp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

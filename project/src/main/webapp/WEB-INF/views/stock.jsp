@@ -92,7 +92,7 @@
 					</button>
 				</nav>
 
-				<div class="container-fluid py-5">
+				<div class="container-fluid py-5 px-0">
 
 					<!-- 상품 등록 영역 -->
 					<div class="row px-xl-5">

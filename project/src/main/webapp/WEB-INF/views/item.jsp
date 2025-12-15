@@ -98,10 +98,10 @@
 					</button>
 				</nav>
 
-				<div class="container-fluid py-5">
+				<div class="container-fluid py-5 px-0">
 
 					<!-- 상품 등록 영역 -->
-					<div class="row px-xl-5">
+					<div class="row px-xl-0">
 						<!-- 좌측: 상품 이미지 -->
 						<div class="col-lg-5 pb-5 text-center">
 							<img id="preview" src="img/insert_pic.png" alt="상품 이미지"
