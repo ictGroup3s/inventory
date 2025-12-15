@@ -284,6 +284,7 @@ $(function() {
 			}),
 			success: function(res) {
 				if (res.success) {
+					consloe.log('응답: ', res);
 					alert(newStatus + ' 처리되었습니다.');
 					loadOrderDetail(currentOrderNo);
 					loadOrders();
@@ -293,6 +294,7 @@ $(function() {
 			},
 			error: function(err) {
 				console.error('상태 변경 실패:', err);
+				console.error('응답 내용:', err.responseText);
 				alert('처리에 실패했습니다.');
 			}
 		});
@@ -317,16 +319,14 @@ $(function() {
 				item_cnt: itemCnt
 			}),
 			success: function(res) {
-				if (res.success) {
-					alert('복구되었습니다.');
-					loadOrderDetail(currentOrderNo);
-					loadOrders();
-				} else {
-					alert(res.message || '복구에 실패했습니다.');
-				}
+				console.log('응답:', res);
+				alert('복구되었습니다.');
+				loadOrderDetail(currentOrderNo);
+				loadOrders();
 			},
 			error: function(err) {
 				console.error('복구 실패:', err);
+				console.error('응답 내용:', err.responseText);
 				alert('복구에 실패했습니다.');
 			}
 		});
