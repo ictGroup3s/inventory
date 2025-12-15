@@ -20,7 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    SELECT * FROM (
 	        SELECT p.*, ROWNUM AS rn
 	        FROM (
-	            SELECT * FROM product p ORDER BY CREATED_AT DESC
+	            SELECT * 
+	            FROM product p 
+	            ORDER BY CREATED_AT DESC
 	        ) p
 	    ) 
 	    WHERE rn &gt; #{offset} AND rn &lt;= #{offset} + #{size}
