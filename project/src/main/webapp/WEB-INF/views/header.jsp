@@ -211,7 +211,7 @@
 					<img src="img/bingsu.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">season off</h5>
-						<h1 class="mb-4 font-weight-semi-bold">20%</h1>
+						<h1 class="mb-4 font-weight-semi-bold">Discount</h1>
 					</div>
 					<a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop
 						Now</a>

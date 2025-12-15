@@ -65,6 +65,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
+
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -75,6 +76,7 @@ body {
  */
  
 body {
+  font-size: 18px;              /* 기본 글씨 크기 */
   width: 100%;          /* 너비를 100%로 설정하여 화면 크기에 맞게 늘어나게 함 */
   max-width: 1500px;    /* 최대 너비를 1500px로 제한 */
   height: 800px;        /* 높이는 고정 (필요에 따라 수정 가능) */
@@ -617,8 +619,8 @@ pre code {
 .container-lg,
 .container-xl {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0px;
+  padding-left: 150px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -1567,11 +1569,13 @@ pre code {
 }
 
 .table tbody + tbody {
+ font-size: 18px;
   border-top: 2px solid #EDF1FF;
 }
 
 .table-sm th,
 .table-sm td {
+  font-size: 18px; 
   padding: 0.3rem;
 }
 
@@ -1581,11 +1585,13 @@ pre code {
 
 .table-bordered th,
 .table-bordered td {
+  font-size: 18px; 
   border: 1px solid #EDF1FF;
 }
 
 .table-bordered thead th,
 .table-bordered thead td {
+	font-size: 18px; 
   border-bottom-width: 2px;
 }
 
@@ -2963,7 +2969,7 @@ fieldset:disabled a.btn {
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 18px;
   line-height: 1.5;
   border-radius: 0;
 }
@@ -9687,22 +9693,15 @@ a.text-dark:hover, a.text-dark:focus {
 /* 관리자 페이지 사이드바 스타일을 카테고리에 적용 */
 
 
-.category-sidebar {
-    padding: 3rem 0;
-    position: static;      /* 자연스럽게 스크롤 따라 움직임 */
-    top: auto;             /* top 제거 */
-    max-height: none;      /* 높이 제한 제거 */
-    overflow-y: visible;   /* 스크롤 제거 */
-}
-  /*.category-sidebar{
+ .category-sidebar{
    background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6; 
-    padding: 1rem 0;
-    position: fixed; 
-    top: 200px;    상단 네비게이션 높이만큼 조정 
-    max-height: calc(100vh - 600px);  화면 높이에서 상단 네비 높이 제외 
-   overflow-y: auto;  내용이 길면 스크롤 가능 
-}*/
+    top: 200px;    /* 상단 네비게이션 높이만큼 조정  */
+    max-height: calc(100vh - 600px);  /* 화면 높이에서 상단 네비 높이 제외  */
+    width:250px;
+    
+}
+
+
 .category-sidebar h6 {
     padding: 0 1rem;
     font-weight: 700;
@@ -9735,6 +9734,19 @@ a.text-dark:hover, a.text-dark:focus {
  부모 컨테이너가 계속해서 커지는 것을 방지하려면 명시적으로 고정된 높이를 사용하세요.
  maintainAspectRatio가 true이고 aspectRatio가 설정되어 있으면
  Chart.js는 캔버스 크기를 그대로 따릅니다. */
+
+
+/* checkout  */
+.invalid-phone {
+    border: 2px solid #d9534f !important;
+    background-color: #fff5f5;
+}
+
+ .valid-phone {
+    border: 2px solid #5cb85c !important;
+    background-color: #f4fff4;
+}
+
 
 
 /*.bxslider li {*/

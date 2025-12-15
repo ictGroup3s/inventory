@@ -4,7 +4,7 @@ package com.example.model.vo;
 import lombok.Data;
 
 @Data
-public class boardVO {
+public class BoardVO {
 	
 	private Integer board_no;
 	private String title;

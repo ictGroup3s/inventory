@@ -16,8 +16,8 @@ public interface UserRepository{
 		// 회원가입
 		void registerUser(CustomerVO customer); // Mapper XML에 id="registerUser"와 매핑
 		
-		// 회원탈퇴 매서드가 있어야 함
-		void deleteById(@Param("customer_id") String customer_id);
+		// 회원탈퇴 
+		void softDeleteById(@Param("customer_id") String customer_id);
 		
 		//회원수정 매퍼 update id값과 매서드명 일치
 		void updateUser(CustomerVO customer);

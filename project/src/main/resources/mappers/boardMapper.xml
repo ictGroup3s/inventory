@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardMapper">
+
+    <!-- 목록 조회 -->
+    <select id="getBoardList" resultType="com.example.model.vo.BoardVO">
+        SELECT
+            BOARD_NO AS board_no,
+            TITLE AS title,
+            B_CONTENT AS b_content,
+            TO_CHAR(B_DATE,'YYYY-MM-DD') AS b_date,
+            CUSTOMER_ID AS customer_id
+        FROM BOARD
+        ORDER BY BOARD_NO DESC
+    </select>
+
+    <!-- 🔥 상세 조회 -->
+    <select id="getBoardDetail"
+            parameterType="int"
+            resultType="com.example.model.vo.BoardVO">
+        SELECT
+            BOARD_NO AS board_no,
+            TITLE AS title,
+            B_CONTENT AS b_content,
+            TO_CHAR(B_DATE,'YYYY-MM-DD') AS b_date,
+            CUSTOMER_ID AS customer_id
+        FROM BOARD
+        WHERE BOARD_NO = #{value}
+    </select>
+
+    <!-- 글 등록 -->
+    <insert id="insertBoard" parameterType="com.example.model.vo.BoardVO">
+        INSERT INTO BOARD
+            (BOARD_NO, TITLE, B_CONTENT, B_DATE, CUSTOMER_ID)
+        VALUES
+            (BOARD_SEQ.NEXTVAL, #{title}, #{b_content}, SYSDATE, #{customer_id})
+    </insert>
+
+</mapper>
