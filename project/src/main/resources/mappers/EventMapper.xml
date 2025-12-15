@@ -15,21 +15,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )
         WHERE rn &gt; #{offset} AND rn &lt;= #{offset} + #{size}
     </select>
-
-
 	
 	<select id="selectNewArrivals" parameterType="map" resultType="com.example.model.vo.ProductVO">
-      SELECT *
-        FROM (
-            SELECT p.*, ROWNUM AS rn
-            FROM product p
-            ORDER BY CREATED_AT DESC
-        )
-        WHERE rn &gt; #{offset} AND rn &lt;= #{offset} + #{size}
-    </select>
+	    SELECT * FROM (
+	        SELECT p.*, ROWNUM AS rn
+	        FROM (
+	            SELECT * FROM product p ORDER BY CREATED_AT DESC
+	        ) p
+	    ) 
+	    WHERE rn &gt; #{offset} AND rn &lt;= #{offset} + #{size}
+	</select>
 
-	
-	
+		
 	<select id="selectNewArrivalsCount" resultType="int">
     SELECT COUNT(*)
     FROM product

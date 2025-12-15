@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html lang="en">
 
 <head>
@@ -175,16 +176,16 @@
 	<div class="card product-item border-0 mb-4" style="width: 280px;">
 	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 	<a href="event1?item_no=${item.item_no}"> 
-<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
-</a>
+	<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
+	</a>
 		</div>
-	<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
- 		<h5 class="text-truncate mb-3">${item.item_name}_${item.dis_rate}%</h5>
-		<div class="d-flex justify-content-center">
-		<h5 style="color:red;">${item.origin_p}원</h5>
-	<h5 class="text-muted ml-2">
-		<del>${item.sales_p}원</del>
-		</h5>
+	<div class="card-body border-left border-right text-center p-0 pt-4 ">
+ 		<h5 class="text-truncate mb-3">${item.item_name}</h5>
+ 		<div class="d-flex justify-content-center">
+ 			<h5 class="text-muted ml-2"> <del>${item.sales_p}원</del>	</h5></div>
+ 			<div class="d-flex justify-content-center">	
+		<c:set var="discount_P" value="${item.sales_p*(1-item.dis_rate/100)}"/>
+			<h5 style="color:red;">${item.dis_rate}%  ${discount_P.intValue()}원</h5> 
 		</div>
 		</div>
 <div class="card-footer d-flex justify-content-between bg-light border">

@@ -178,16 +178,13 @@
 	<div class="card product-item border-0 mb-4" style="width: 280px;">
 	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 	<a href="detail?item_no=${item.item_no}"> 
-<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
-</a>
+	<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
+	</a>
 		</div>
 	<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
 		<h5 class="text-truncate mb-3">${item.item_name}</h5>
 		<div class="d-flex justify-content-center">
-		<h5 style="color:red;">${item.origin_p}원</h5>
-	<h6 class="text-muted ml-2">
-		<del>${item.sales_p}원</del>
-		</h6>
+		<h5>${item.sales_p}원</h5>
 		</div>
 		</div>
 <div class="card-footer d-flex justify-content-between bg-light border">

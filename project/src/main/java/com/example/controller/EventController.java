@@ -34,6 +34,9 @@ public class EventController {
 			  int total = eventService.getDiscountCount();
 			  int totalPages = (int) Math.ceil((double) total / size);
 			  
+			 //페이지 번호 범위
+			  totalPages = Math.min(totalPages, 4);
+			  
 			  // JSP로 전달
 			  m.addAttribute("dis", discount);
 			  m.addAttribute("size", size);
@@ -58,7 +61,8 @@ public class EventController {
 	        int total = eventService.getNewArrivalsCount();
 	        int totalPages = (int) Math.ceil((double) total / size);
  
-	                
+	        totalPages = Math.min(totalPages, 4);  
+	        
 	        // JSP로 전달
 	        m.addAttribute("newArrivals", products);//jsp파일에 띄울 이름값 <c:forEach var="item" items="${newArrivals}">
 	        m.addAttribute("size", size);
