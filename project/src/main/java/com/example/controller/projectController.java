@@ -93,7 +93,7 @@ public class projectController {
     @GetMapping("selectall")
     public String selectall(Model m,
                             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                            @RequestParam(value = "size", required = false, defaultValue = "9") int size,
+                            @RequestParam(value = "size", required = false, defaultValue = "9") int size,	//9개 상품 목록
                             @RequestParam(value = "q", required = false) String q,
                             @RequestParam(value = "sort", required = false) String sort) {
         try {
@@ -122,7 +122,7 @@ public class projectController {
             log.warn("Failed to load products with pagination", e);
             m.addAttribute("products", new ArrayList<>());
             m.addAttribute("page", 1);
-            m.addAttribute("size", 9);
+            m.addAttribute("size", 9);	//9개 상품 목록
             m.addAttribute("total", 0);
             m.addAttribute("totalPages", 0);
         }
@@ -135,8 +135,8 @@ public class projectController {
             ProductVO p = productService.getProductById(item_no);
             m.addAttribute("product", p);
             
-            // 랜덤 상품 4개 추천 (bx slider용)
-            List<ProductVO> randomProducts = productService.getRandomProducts(4);
+            // 랜덤 상품 10개 노출 적용 (bx slider용)
+            List<ProductVO> randomProducts = productService.getRandomProducts(10);
             m.addAttribute("randomProducts", randomProducts);
         }
         return "detail";

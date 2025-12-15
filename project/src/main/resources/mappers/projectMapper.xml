@@ -80,21 +80,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-<!-- 랜덤 상품 4개 추천 (bx slider용) -->
+<!-- 랜덤 상품 출력 (bx slider용) -->
 	<select id="selectRandomProducts" parameterType="int" resultType="productVO">
 		SELECT * FROM (
 			SELECT
-				item_no      AS item_no,
-				item_img     AS item_img,
-				item_name    AS item_name,
-				item_content AS item_content,
-				origin_p     AS origin_p,
-				sales_p      AS sales_p,
-				stock_cnt    AS stock_cnt,
-				cate_no      AS cate_no,
-				dis_rate     AS dis_rate
-			FROM product
+				p.item_no      AS item_no,
+				p.item_img     AS item_img,
+				p.item_name    AS item_name,
+				p.item_content AS item_content,
+				p.origin_p     AS origin_p,
+				p.sales_p      AS sales_p,
+				p.stock_cnt    AS stock_cnt,
+				p.cate_no      AS cate_no,
+				p.dis_rate     AS dis_rate,
+				(SELECT AVG(rating) FROM review WHERE item_no = p.item_no) AS avg_rating,
+				(SELECT COUNT(*) FROM review WHERE item_no = p.item_no) AS review_cnt
+			FROM product p
 			ORDER BY DBMS_RANDOM.VALUE
 		) WHERE ROWNUM &lt;= #{limit}
 	</select>
+
+
 </mapper>

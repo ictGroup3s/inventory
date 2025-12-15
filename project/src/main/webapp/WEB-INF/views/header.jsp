@@ -91,6 +91,7 @@
 								．소스</a></li>
 						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
 								．음료</a></li>
+						<li class="nav-item"><a href="#" class="nav-link" data-toggle="modal" data-target="#mapModal">오프라인 매장</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -411,6 +412,34 @@
 	</c:if>
 	<div class="toast-container" id="toast-container"></div>
 
+	<!-- Map Modal -->
+	<div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="mapModalLabel">오프라인 매장 위치</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- Map Placeholder -->
+					<div id="map" style="width: 100%; height: 400px; background-color: #eee;">
+						<!-- Google Maps Embed (Sinchon) -->
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3163.016675216768!2d126.9390663153116!3d37.55403497979988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c98970e0e0e0f%3A0x5c308dc8454e40!2z7ISc7Jq47Yq567OE7IucIOyEnOuMgOusuOq1rCDsi6DstIztjZgx6ri4!5e0!3m2!1sko!2skr!4v1614750000000!5m2!1sko!2skr" 
+								width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+					</div>
+					<p class="mt-3 text-center">
+						<strong>주소:</strong> 서울특별시 서대문구 신촌동 00<br>
+						<strong>전화번호:</strong> 02-070-0000
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- JavaScript Libraries -->
 	<!-- jQuery 먼저 -->

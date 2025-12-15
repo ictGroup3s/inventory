@@ -100,7 +100,7 @@
             var ratingHtml = '';
             var rating = r.rating || 5; // 기본값 5
             for(var i=1; i<=5; i++) {
-                if(i <= rating) {
+                if(i <= Math.round(rating)) {	// 반올림 적용(하트 채우기)
                     ratingHtml += '<i class="fas fa-heart" style="color: #D19C97;"></i>';
                 } else {
                     ratingHtml += '<i class="far fa-heart" style="color: #D19C97;"></i>';

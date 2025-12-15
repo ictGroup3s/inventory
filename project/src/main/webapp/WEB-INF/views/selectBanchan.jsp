@@ -199,7 +199,7 @@
 										<c:if test="${item.review_cnt > 0}">
 											<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
 										</c:if>
-										<span>(${item.review_cnt})</span>
+										<span>(${item.review_cnt}개 리뷰)</span>
 									</div>
 								<%-- 평점 리뷰 적용 --%>
 									

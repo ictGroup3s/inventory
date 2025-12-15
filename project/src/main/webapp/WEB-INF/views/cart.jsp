@@ -147,10 +147,11 @@
 												<div class="input-group-prepend">
 													<button class="btn btn-sm btn-primary qty-decrease" data-item="${ci.product.item_no}" type="button">−</button>
 												</div>
-												<input type="text"
+												<input type="number"
 													class="form-control form-control-sm bg-secondary text-center cart-qty-input"
 													data-item="${ci.product.item_no}"
-													value="${ci.qty}" />
+													data-max="${ci.product.stock_cnt}"
+													value="${ci.qty}" min="1" max="${ci.product.stock_cnt}" style="width: 50px; flex: none;" />
 												<div class="input-group-append">
 													<button class="btn btn-sm btn-primary qty-increase" data-item="${ci.product.item_no}" type="button">+</button>
 												</div>
@@ -368,7 +369,7 @@
 			function formatNumber(n){
 				try{ if(n===null||n===undefined) return '0'; return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }catch(e){ return n; }
 			}
-
+		// 수량 감소 버튼 클릭
 			$(document).on('click', '.qty-decrease', function(e){
 				var item = $(this).data('item');
 				var $input = $('.cart-qty-input[data-item="'+item+'"]');
@@ -389,12 +390,20 @@
 					}
 				});
 			});
-
+			
+			// 수량 증가 버튼 클릭
 			$(document).on('click', '.qty-increase', function(e){
 				var item = $(this).data('item');
 				var $input = $('.cart-qty-input[data-item="'+item+'"]');
+				var max = parseInt($input.data('max')) || 9999;
 				var val = parseInt($input.val()) || 0;
 				var next = val + 1;
+				
+				if(next > max) { // 최대수량-재고량 이하
+					alert("재고가 부족합니다. (남은 수량: " + max + "개)");
+					return;
+				}
+				
 				$input.val(next);
 				updateQtyOnServer(item, next).done(function(resp){
 					if (resp && resp.success) {
@@ -414,8 +423,15 @@
 	// 장바구니 품목 수량을 직접 입력한 후 포커스가 벗어나면(blur) 서버에 갱신 요청(db반영)
 			$(document).on('blur', '.cart-qty-input', function(){
 				var item = $(this).data('item');
+				var max = parseInt($(this).data('max')) || 9999;
 				var val = parseInt($(this).val()) || 0;
+				
 				if (val < 0) val = 0;
+				if (val > max) {
+					alert("재고가 부족합니다. (남은 수량: " + max + "개)");
+					val = max;
+				}
+				
 				$(this).val(val);
 				updateQtyOnServer(item, val).done(function(resp){
 					if (resp && resp.success) {

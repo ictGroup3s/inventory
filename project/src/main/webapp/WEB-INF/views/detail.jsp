@@ -45,7 +45,6 @@
 </head>
 
 <body>
-	<!-- banner removed -->
 <!-- ############## 로고부분 ############################## -->
 	<div class="row align-items-center py-3 px-xl-5" style="height:150px;">
 		 <div class="col-lg-3 d-none d-lg-block"><!-- 큰 화면에서는 3/12, 작은 화면에서는 숨김 -->
@@ -133,6 +132,7 @@
 					<h6 class="p-3">Categories</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
 						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
 						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
@@ -152,15 +152,15 @@
 		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
 		        </div>
 		         <div class="p-2 flex-grow-1">
-		            <h4 class="font-weight-semi-bold">${product.item_name}</h4>
+					<h4 class="font-weight-semi-bold">${product.item_name}</h4>												
 		            <div id="product-rating-summary" class="mb-2" style="font-size: 0.9rem; color: #666;"></div>
 		            
 		            <div class="d-flex mb-2 align-items-center">
 		               		<small class="pt-1"></small> 
-
-                		<c:choose>
-								<c:when test="${not empty product.dis_rate and product.dis_rate > 0}">
-									<c:set var="discounted" value="${product.sales_p * (100 - product.dis_rate) / 100}" />
+		               		
+	               		<c:choose>
+							<c:when test="${not empty product.dis_rate and product.dis_rate > 0}">
+								<c:set var="discounted" value="${product.sales_p * (100 - product.dis_rate) / 100}" />
 								
 								<div class="d-flex flex-column">
 									<h6 class="text-muted mb-0">
@@ -170,24 +170,26 @@
 								<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
 									<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
 									<h4><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h4>
-									<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+								<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
 								</div>
+								
 							</c:when>
 							<c:otherwise>
 								<h4><fmt:formatNumber value="${product.sales_p}" pattern="#,###" />원</h4>
 							</c:otherwise>
 						</c:choose>			
 					</div>					
-					
 				
 				<form action="/cart/addForm" method="post">
 					<input type="hidden" name="item_no" value="${product.item_no}" />
-											
-				 <div class="d-flex align-items-center mb-3">
+					<c:if test="${product.stock_cnt <= 10}">
+							<p style="font-size:12px; color:#b90000;"> 남은 수량: ${product.stock_cnt} 개</p>
+					</c:if>
+				 <div class="d-flex align-items-center mb-3">					
 				     <!-- 수량 조절 -->
 			        <div class="input-group mr-2  quantity" style="width:130px;">		
 			        <button type="button" class="btn btn-primary btn-minus">-</button>
-			        <input type="text" class="form-control text-center" name="qty" id="qty" value="1">
+			        	<input type="number" class="form-control text-center" name="qty" id="qty" value="1" min="1" max="${product.stock_cnt}" data-max="${product.stock_cnt}">
 			        <button type="button" class="btn btn-primary btn-plus">+</button>
 			       </div>
 			      <!-- 장바구니 담기 버튼 -->   
@@ -197,10 +199,10 @@
 					 
 				</form>
 		
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
 		<div class="row px-xl-5">
 			<div class="col">
@@ -285,23 +287,52 @@
 <!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
 <div class="container py-5">
    <ul class="bxslider">
-   	  <c:forEach var="rp" items="${randomProducts}">
-	    <li>
-	        <div class="slider-card" data-item-no="${rp.item_no}">
-	           <a href="detail?item_no=${rp.item_no}">
-	           		<img src="/img/product/${rp.item_img}" alt="${rp.item_name}" />
-	           </a>
-	            <h6 class="slider-title">${rp.item_name}</h6>				
-	            <p class="slider-price"><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</p>
-				
-	        </div>
-	    </li>
-      </c:forEach>
-   </ul>
-</div>
-<!-- Image Slider End --> 
+            <c:forEach var="rp" items="${randomProducts}">  
+               <li>
+                    <div class="slider-card" data-item-no="${rp.item_no}">
+                        <a href="detail?item_no=${rp.item_no}">
+                            <img src="/img/product/${rp.item_img}" alt="${rp.item_name}" class="d-block mx-auto"/>
+                        </a>
+                        <h6 class="slider-title mt-2">${rp.item_name}</h6>
 
-<!-- Footer Start -->
+                        <!-- 평점 리뷰 적용 -->
+                        <div class="mb-2" style="font-size: 0.9rem; color: #666;">
+                            <c:choose>
+                                <c:when test="${rp.review_cnt > 0}">
+                                    <i class="fas fa-heart" style="color: #D19C97;"></i> 
+                                    <fmt:formatNumber value="${rp.avg_rating}" pattern="#.0"/> (${rp.review_cnt}개 리뷰)
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="far fa-heart" style="color: #D19C97;"></i> 0.0 (${rp.review_cnt}개 리뷰)
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+
+                        <c:choose>
+                            <c:when test="${not empty rp.dis_rate and rp.dis_rate > 0}">
+                                <c:set var="discounted" value="${rp.sales_p * (100 - rp.dis_rate) / 100}" />
+                                <div class="d-flex flex-column">
+                                    <h6 class="text-muted mb-0" style="font-size: 0.8rem;">
+                                        <del><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</del>
+                                    </h6>
+                                    <fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+                                    <h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <h6><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</h6>
+                            </c:otherwise>
+                        </c:choose>
+                        
+                    </div>
+               </li>
+            </c:forEach>
+          </ul>      
+    </div>
+</div>
+<!-- Image Slider End -->
+
+	 <!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
 		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
