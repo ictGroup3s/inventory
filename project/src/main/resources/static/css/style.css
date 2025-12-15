@@ -65,6 +65,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
+
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -75,6 +76,7 @@ body {
  */
  
 body {
+  font-size: 18px;              /* 기본 글씨 크기 */
   width: 100%;          /* 너비를 100%로 설정하여 화면 크기에 맞게 늘어나게 함 */
   max-width: 1500px;    /* 최대 너비를 1500px로 제한 */
   height: 800px;        /* 높이는 고정 (필요에 따라 수정 가능) */
@@ -1567,11 +1569,13 @@ pre code {
 }
 
 .table tbody + tbody {
+ font-size: 18px;
   border-top: 2px solid #EDF1FF;
 }
 
 .table-sm th,
 .table-sm td {
+  font-size: 18px; 
   padding: 0.3rem;
 }
 
@@ -1581,6 +1585,7 @@ pre code {
 
 .table-bordered th,
 .table-bordered td {
+	font-size: 18px; 
   border: 1px solid #EDF1FF;
 }
 
