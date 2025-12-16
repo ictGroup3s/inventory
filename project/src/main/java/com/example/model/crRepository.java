@@ -1,15 +1,19 @@
 package com.example.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.model.vo.crVO;
+import com.example.model.vo.order_detailVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,131 +21,210 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 public class crRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+	 @Autowired
+	    private DataSource dataSource;
 
-    // RowMapper 정의
-    private RowMapper<crVO> crRowMapper = new RowMapper<crVO>() {
-        @Override
-        public crVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-            crVO vo = new crVO();
-            vo.setCr_no(rs.getInt("cr_no"));
-            vo.setOrder_no(rs.getInt("order_no"));
-            vo.setDetail_no(rs.getObject("detail_No", Integer.class));
-            vo.setType(rs.getString("type"));
-            vo.setReturn_cnt(rs.getInt("return_cnt"));
-            vo.setStatus(rs.getString("status"));
-            vo.setReason(rs.getString("reason"));
-            vo.setRe_date(rs.getTimestamp("re_date"));
-            return vo;
-        }
-    };
+	    /**
+	     * 취소/반품/교환 목록 조회 (고객별)
+	     */
+	    public List<crVO> getCRListByCustomerId(String customerId) throws SQLException {
+	        log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+	        log.info("┃  📋 취소/반품/교환 목록 조회 (Repository)           ┃");
+	        log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+	        log.info("   - loginUser: {}", customerId);
+	        
+	        List<crVO> list = new ArrayList<>();
+	        
+	        String sql = """
+	        		SELECT
+	        		cr.cr_no,
+	        		cr.order_no,
+	        		cr.type,
+	        		cr.return_cnt,
+	        		cr.reason,
+	        		cr.status,
+	        		cr.re_date,
+	        		p.item_name
+	        		FROM cr
+	        		JOIN orders o ON cr.order_no = o.order_no
+	        		JOIN order_detail od ON o.order_no = od.order_no
+	        		JOIN product p ON od.item_no = p.item_no
+	        		WHERE o.customer_id = ?
+	        		ORDER BY cr.re_date DESC
+	        """;
+	        
+	        log.info("   - 실행 SQL: {}", sql.replaceAll("\\s+", " "));
+	        
+	        try (Connection conn = dataSource.getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-    // 사용자별 취소/반품/교환 내역 조회
-    public List<crVO> findByUserId(String loginUser) {
-        log.info("사용자 {} 취소/반품/교환 내역 조회", loginUser);
-        
-        String sql ="SELECT " +
-        	    	    "c.cr_no, " +
-        	    	    "c.order_no, " +
-        	    	    "c.detail_no, " +
-        	    	    "c.type AS type, " +
-        	    	    "c.return_cnt, " +
-        	    	    "c.status AS status, " +
-        	    	    "c.reason, " +
-        	    	    "c.re_date " +
-        	    	    "FROM cr c " +
-        	    	    "JOIN orders o ON c.order_no = o.order_no " +
-        	    	    "WHERE o.customer_id = ? " +
-        	    	    "ORDER BY c.re_date DESC";
+	            pstmt.setString(1, customerId);
+	            ResultSet rs = pstmt.executeQuery();
 
-        return jdbcTemplate.query(sql, crRowMapper, loginUser);
-    }
+	            while (rs.next()) {
+	            	crVO vo = new crVO();
+	                vo.setCr_no(rs.getInt("cr_no"));
+	                vo.setOrder_no(rs.getInt("order_no"));
+	                vo.setType(rs.getString("type"));
+	                
+	                vo.setReturn_cnt(rs.getObject("return_cnt", Integer.class));
+	                
+	                vo.setReason(rs.getString("reason"));
+	                vo.setStatus(rs.getString("status"));
+	                vo.setRe_date(rs.getTimestamp("re_date"));
+	                vo.setItem_name(rs.getString("item_name")); 
+	                
+	                list.add(vo);
+	            }
+	            
+	            log.info("   ✅ 조회 성공: {} 건", list.size());
+	        } catch (Exception e) {
+	            log.error("   ❌ 조회 실패!", e);
+	            throw e;
+	        }
+	        
+	        return list;
+	    }
 
-    // 취소/반품/교환 상세 조회
-    public crVO findById(Integer crNo) {
-        log.info("취소/반품/교환 상세 조회: {}", crNo);
-        
-        String sql = "SELECT * FROM cr WHERE cr_no = ?";
+	    /* ===============================
+	       취소/반품/교환 신청
+	       =============================== */
+	    public int insertCR(crVO crVO) throws SQLException {
 
-        try {
-            return jdbcTemplate.queryForObject(sql, crRowMapper, crNo);
-        } catch (Exception e) {
-            log.error("상세 조회 실패: crNo={}", crNo, e);
-            return null;
-        }
-    }
+	        String sql = """
+	            INSERT INTO cr
+	            (cr_no, order_no, type, return_cnt, reason, status, re_date)
+	            VALUES (cr_seq.NEXTVAL, ?, ?, ?, ?, ?, SYSDATE)
+	        """;
 
-    // 취소/반품/교환 신청
-    public int insert(crVO vo) {
-        log.info("취소/반품/교환 신청: {}", vo);
-        
-        String sql = "INSERT INTO cr (order_no, detail_no, type, return_no, status, reason, re_date) " +
-                     "VALUES (?, ?, ?, ?, '신청', ?, sysdate())";
+	        try (
+	            Connection conn = dataSource.getConnection();
+	            PreparedStatement pstmt = conn.prepareStatement(sql)
+	        ) {
+	            pstmt.setInt(1, crVO.getOrder_no());
+	            pstmt.setString(2, crVO.getType());
 
-        return jdbcTemplate.update(
-            sql,
-            vo.getOrder_no(),
-            vo.getDetail_no(),
-            vo.getType(),
-            vo.getReturn_cnt(),
-            vo.getReason()
-        );
-    }
+	            if (crVO.getReturn_cnt() != null) {
+	                pstmt.setInt(3, crVO.getReturn_cnt());
+	            } else {
+	                pstmt.setNull(3, java.sql.Types.INTEGER);
+	            }
 
-    // 상태 업데이트
-    public int updateStatus(Integer crNo, String status) {
-        log.info("상태 변경: crNo={}, status={}", crNo, status);
-        
-        String sql = "UPDATE cr SET status = ? WHERE cr_no = ?";
+	            pstmt.setString(4, crVO.getReason());
+	            pstmt.setString(5, crVO.getStatus());
 
-        return jdbcTemplate.update(sql, status, crNo);
-    }
+	            return pstmt.executeUpdate();
+	        }
+	    }
 
-    // 주문번호로 조회
-    public List<crVO> findByOrderNo(Integer orderNo) {
-        log.info("주문번호 {} 취소/반품/교환 내역 조회", orderNo);
-        
-        String sql = "SELECT * FROM cr WHERE order_no = ? ORDER BY re_date DESC";
+	    /* ===============================
+	       주문 상품 개수
+	       =============================== */
+	    public int getOrderItemCount(int orderNo) throws SQLException {
 
-        return jdbcTemplate.query(sql, crRowMapper, orderNo);
-    }
+	        String sql = """
+	            SELECT COUNT(*)
+	            FROM order_detail
+	            WHERE order_no = ?
+	        """;
 
-    // 중복 신청 체크
-    public int countByDetailNo(Integer detailNo) {
-        log.info("중복 신청 체크: detailNo={}", detailNo);
-        
-        String sql = "SELECT COUNT(*) FROM cr " +
-                     "WHERE detail_no = ? AND status IN ('신청', '승인')";
+	        try (
+	            Connection conn = dataSource.getConnection();
+	            PreparedStatement pstmt = conn.prepareStatement(sql)
+	        ) {
+	            pstmt.setInt(1, orderNo);
 
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, detailNo);
-        return count != null ? count : 0;
-    }
+	            try (ResultSet rs = pstmt.executeQuery()) {
+	                if (rs.next()) return rs.getInt(1);
+	            }
+	        }
+	        return 0;
+	    }
 
-    // 전체 목록 조회
-    public List<crVO> findAll() {
-        log.info("전체 취소/반품/교환 내역 조회");
-        
-        String sql = "SELECT * FROM cr ORDER BY re_date DESC";
+	    /* ===============================
+	       🔐 내 주문인지 확인 (보안 핵심)
+	       =============================== */
+	    public boolean isMyOrder(int orderNo, String customerId) throws SQLException {
 
-        return jdbcTemplate.query(sql, crRowMapper);
-    }
+	        String sql = """
+	            SELECT COUNT(*)
+	            FROM orders
+	            WHERE order_no = ?
+	            AND customer_id = ?
+	        """;
 
-    // 상태별 조회
-    public List<crVO> findByStatus(String status) {
-        log.info("상태별 취소/반품/교환 내역 조회: status={}", status);
-        
-        String sql = "SELECT * FROM cr WHERE status = ? ORDER BY re_date DESC";
+	        try (
+	            Connection conn = dataSource.getConnection();
+	            PreparedStatement pstmt = conn.prepareStatement(sql)
+	        ) {
+	            pstmt.setInt(1, orderNo);
+	            pstmt.setString(2, customerId);
 
-        return jdbcTemplate.query(sql, crRowMapper, status);
-    }
+	            try (ResultSet rs = pstmt.executeQuery()) {
+	                rs.next();
+	                return rs.getInt(1) > 0;
+	            }
+	        }
+	    }
+	   
+	    public List<Integer> getMyOrderNos(String customerId) throws SQLException {
 
-    // 유형별 조회
-    public List<crVO> findByType(String type) {
-        log.info("유형별 취소/반품/교환 내역 조회: type={}", type);
-        
-        String sql = "SELECT * FROM cr WHERE type = ? ORDER BY re_date DESC";
+	        String sql = """
+	            SELECT DISTINCT order_no
+	            FROM orders
+	            WHERE customer_id = ?
+	            ORDER BY order_no DESC
+	        """;
 
-        return jdbcTemplate.query(sql, crRowMapper, type);
-    }
-}
+	        List<Integer> list = new ArrayList<>();
+
+	        try (
+	            Connection conn = dataSource.getConnection();
+	            PreparedStatement pstmt = conn.prepareStatement(sql)
+	        ) {
+	            pstmt.setString(1, customerId);
+
+	            try (ResultSet rs = pstmt.executeQuery()) {
+	                while (rs.next()) {
+	                    list.add(rs.getInt("order_no"));
+	                }
+	            }
+	        }
+	        return list;
+	    }
+	    
+	    public List<order_detailVO> getOrderDetails(int orderNo) throws SQLException {
+
+	        String sql = """
+	            SELECT
+	                od.detail_no,
+	                od.order_no,
+	                od.item_no,
+	                p.item_name
+	            FROM order_detail od
+	            JOIN product p ON od.item_no = p.item_no
+	            WHERE od.order_no = ?
+	        """;
+
+	        List<order_detailVO> list = new ArrayList<>();
+
+	        try (
+	            Connection conn = dataSource.getConnection();
+	            PreparedStatement pstmt = conn.prepareStatement(sql)
+	        ) {
+	            pstmt.setInt(1, orderNo);
+
+	            try (ResultSet rs = pstmt.executeQuery()) {
+	                while (rs.next()) {
+	                    order_detailVO vo = new order_detailVO();
+	                    vo.setDetail_no(rs.getInt("detail_no"));
+	                    vo.setOrder_no(rs.getInt("order_no"));
+	                    vo.setItem_no(rs.getInt("item_no"));
+	                    vo.setItem_name(rs.getString("item_name"));
+	                    list.add(vo);
+	                }
+	            }
+	        }
+	        return list;
+	    }
+	}

@@ -161,12 +161,13 @@ public class orderController {
 	        }
 	    }
 	    
-	    // 기존 /order/mypage 매핑 (필요하면 유지)
-	    @GetMapping("/order/mypage")
-	    public String orderMypage(HttpSession session, Model model) {
-	        log.info("🔄 /order/mypage 접속 → /orderhistory로 리다이렉트");
-	        return "redirect:/orderhistory";
-	    }
+		/*
+		 * // 기존 /order/mypage 매핑 (필요하면 유지)
+		 * 
+		 * @GetMapping("/order/mypage") public String orderMypage(HttpSession session,
+		 * Model model) { log.info("🔄 /order/mypage 접속 → /orderhistory로 리다이렉트"); return
+		 * "redirect:/orderhistory"; }
+		 */
 	    
 	    // ⭐⭐⭐ 배송내역 페이지 - 배송중/배송완료 주문만 조회
 	    @GetMapping("/mydelivery")

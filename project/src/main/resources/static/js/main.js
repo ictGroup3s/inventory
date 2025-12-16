@@ -352,7 +352,7 @@
 		}
 	});
 	
-	// 상세보기
+	// 취/반/교 상세보기
 	function loadCrDetail(crNo) {
 		$.ajax({
 			url: '/mycs/detail/' + crNo,

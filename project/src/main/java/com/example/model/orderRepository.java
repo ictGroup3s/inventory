@@ -317,6 +317,7 @@ public class orderRepository {
 	    }
 	    /**
 	     * 주문번호별로 그룹화된 주문 목록 조회 (주문내역용)
+	     * - 각 주문의 전체 상품 목록 포함
 	     */
 	    public List<ordersVO> getGroupedOrdersByUserId(String customerId) throws SQLException {
 	        log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
@@ -325,32 +326,28 @@ public class orderRepository {
 	        log.info("   - customer_id: {}", customerId);
 	        
 	        List<ordersVO> list = new ArrayList<>();
-	        String sql = """
+	        
+	        // 1. 주문 목록 조회
+	        String orderSql = """
 	            SELECT 
-	                o.order_no,
-	                o.customer_id,
-	                o.order_name,
-	                o.order_addr,
-	                o.order_phone,
-	                TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI:SS') as order_date,
-	                o.payment,
-	                o.order_status,
-	                o.total_amount,
-	                MIN(p.item_name) as first_item_name,
-	                COUNT(od.detail_no) - 1 as additional_count
-	            FROM orders o
-	            INNER JOIN order_detail od ON o.order_no = od.order_no
-	            INNER JOIN product p ON od.item_no = p.item_no
-	            WHERE o.customer_id = ?
-	            GROUP BY o.order_no, o.customer_id, o.order_name, o.order_addr, o.order_phone, 
-	                     o.order_date, o.payment, o.order_status, o.total_amount
-	            ORDER BY o.order_date DESC
+	                order_no,
+	                customer_id,
+	                order_name,
+	                order_addr,
+	                order_phone,
+	                TO_CHAR(order_date, 'YYYY-MM-DD HH24:MI:SS') as order_date,
+	                payment,
+	                order_status,
+	                total_amount
+	            FROM orders
+	            WHERE customer_id = ?
+	            ORDER BY order_date DESC
 	        """;
 	        
-	        log.info("   - 실행 SQL: {}", sql.replaceAll("\\s+", " "));
+	        log.info("   - 실행 SQL: {}", orderSql.replaceAll("\\s+", " "));
 
 	        try (Connection conn = dataSource.getConnection();
-	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	             PreparedStatement pstmt = conn.prepareStatement(orderSql)) {
 
 	            pstmt.setString(1, customerId);
 	            ResultSet rs = pstmt.executeQuery();
@@ -367,15 +364,9 @@ public class orderRepository {
 	                vo.setOrder_status(rs.getString("order_status"));
 	                vo.setTotal_amount(rs.getInt("total_amount"));
 	                
-	                // 첫 번째 상품명과 추가 개수를 임시로 저장
-	                // (JSP에서 표시용)
-	                order_detailVO tempDetail = new order_detailVO();
-	                tempDetail.setItem_name(rs.getString("first_item_name"));
-	                tempDetail.setAdditional_count(rs.getInt("additional_count"));
-	                
-	                List<order_detailVO> tempList = new ArrayList<>();
-	                tempList.add(tempDetail);
-	                vo.setDetailList(tempList);
+	                // 2. 각 주문의 전체 상세 내역 조회
+	                List<order_detailVO> detailList = getOrderDetail(rs.getInt("order_no"));
+	                vo.setDetailList(detailList);
 	                
 	                list.add(vo);
 	            }
@@ -390,48 +381,45 @@ public class orderRepository {
 	    }
 
 	    /**
-	     * 주문번호로 전체 상품 목록 조회 (상세보기용)
+	     * 주문 상세 내역 조회 (기존 메서드 활용 또는 새로 작성)
 	     */
-	    public ordersVO getOrderWithDetailsByOrderNo(Integer orderNo) throws SQLException {
-	        log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-	        log.info("┃  📦 주문 전체 정보 조회 (Repository)                ┃");
-	        log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-	        log.info("   - order_no: {}", orderNo);
+	    private List<order_detailVO> getOrderDetail(Integer orderNo) throws SQLException {
+	        List<order_detailVO> detailList = new ArrayList<>();
 	        
-	        ordersVO order = null;
-	        
-	        // 1. 주문 기본 정보 조회
-	        String orderSql = "SELECT * FROM orders WHERE order_no = ?";
+	        String sql = """
+	            SELECT 
+	                od.detail_no,
+	                od.order_no,
+	                od.item_no,
+	                od.item_cnt,
+	                od.item_price,
+	                p.item_name
+	            FROM order_detail od
+	            INNER JOIN product p ON od.item_no = p.item_no
+	            WHERE od.order_no = ?
+	            ORDER BY od.detail_no
+	        """;
 	        
 	        try (Connection conn = dataSource.getConnection();
-	             PreparedStatement pstmt = conn.prepareStatement(orderSql)) {
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 	            pstmt.setInt(1, orderNo);
 	            ResultSet rs = pstmt.executeQuery();
 
-	            if (rs.next()) {
-	                order = new ordersVO();
-	                order.setOrder_no(rs.getInt("order_no"));
-	                order.setCustomer_id(rs.getString("customer_id"));
-	                order.setOrder_name(rs.getString("order_name"));
-	                order.setOrder_addr(rs.getString("order_addr"));
-	                order.setOrder_phone(rs.getLong("order_phone"));
-	                order.setOrder_date(rs.getString("order_date"));
-	                order.setPayment(rs.getString("payment"));
-	                order.setOrder_status(rs.getString("order_status"));
-	                order.setTotal_amount(rs.getInt("total_amount"));
+	            while (rs.next()) {
+	                order_detailVO detail = new order_detailVO();
+	                detail.setDetail_no(rs.getInt("detail_no"));
+	                detail.setOrder_no(rs.getInt("order_no"));
+	                detail.setItem_no(rs.getInt("item_no"));
+	                detail.setItem_cnt(rs.getInt("item_cnt"));
+	                detail.setItem_price(rs.getInt("item_price"));
+	                detail.setItem_name(rs.getString("item_name"));
 	                
-	                // 2. 주문 상세 목록 조회
-	                List<order_detailVO> detailList = getOrderDetail(orderNo);
-	                order.setDetailList(detailList);
+	                detailList.add(detail);
 	            }
-	            
-	            log.info("   ✅ 조회 성공!");
-	        } catch (Exception e) {
-	            log.error("   ❌ 조회 실패!", e);
-	            throw e;
 	        }
 	        
-	        return order;
+	        return detailList;
 	    }
+
 }

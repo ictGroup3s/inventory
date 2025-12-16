@@ -275,19 +275,5 @@ public class projectController {
 		return "order";
 	}
 
-	
-	 @GetMapping("/mypage") public String mypage() {
-		 return "mypage"; 
-		 }
-	 
-	@GetMapping("/myqna") public String myqna() { 
-		return "myqna"; 
-		}
-	
-
-	/*
-	 * @GetMapping("/mydelivery") public String mydelivery() { return "mydelivery";
-	 * }
-	 */
 
 }

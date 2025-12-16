@@ -397,3 +397,52 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+//cs 모달창
+document.getElementById("order_no").addEventListener("change", function () {
+
+    const orderNo = this.value;
+    const detailSelect = document.getElementById("return_cnt");
+
+    detailSelect.innerHTML = '<option value="">상품을 선택하세요</option>';
+    if (!orderNo) return;
+
+    fetch(`/mycs/order/details?order_no=${orderNo}`)
+        .then(res => res.json())
+        .then(data => {
+            data.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.detail_no;
+                opt.textContent = `${item.item_name} (상품번호 ${item.detail_no})`;
+                detailSelect.appendChild(opt);
+            });
+        })
+        .catch(err => console.error(err));
+});
+
+$(document).ready(function () {
+
+    // 신청 유형 변경
+    $('#type').change(function () {
+        if ($(this).val() === '교환') {
+            $('#returnCntGroup').show();
+            $('#return_cnt').attr('required', true);
+        } else {
+            $('#returnCntGroup').hide();
+            $('#return_cnt').val('');
+            $('#return_cnt').removeAttr('required');
+        }
+    });
+
+    // 최종 방어 (UX)
+    $('#crApplyForm').submit(function (e) {
+        if ($('#type').val() === '교환' && !$('#return_cnt').val()) {
+            alert('교환할 상품을 선택해주세요.');
+            e.preventDefault();
+            return false;
+        }
+    });
+
+});
+
+

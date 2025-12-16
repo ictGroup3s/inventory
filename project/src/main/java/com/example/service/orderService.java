@@ -1,10 +1,10 @@
 package com.example.service;
 
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.example.model.vo.CartItemVO;
+import com.example.model.vo.CustomerVO;
 import com.example.model.vo.ordersVO;
 
 public interface orderService {
@@ -20,6 +20,10 @@ public interface orderService {
     
     // 주문 상태 업데이트
     void updateOrderStatus(int orderNo, String status);
+    
+    List<ordersVO> getOrders(CustomerVO loginUser);
+
+    List<ordersVO> getDeliveries(CustomerVO loginUser);
     
     
    

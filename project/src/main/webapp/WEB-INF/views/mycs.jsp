@@ -8,51 +8,6 @@
 <title>취소/반품/교환내역</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
-
-<!-- Google Web Fonts -->
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-<!-- Customized Bootstrap Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
-</head>
-
-<body>
-	<div class="row align-items-center py-3 px-xl-5">
-		<div class="col-lg-3 d-none d-lg-block">
-			<a href="/" class="text-decoration-none">
-				<img src="\img\logo.png" class='logo' />
-			</a>
-		</div>
-		<div class="col-lg-6 col-6 text-left">
-			<form action="">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for products">
-					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
-							<i class="fa fa-search"></i>
-						</span>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border">
-				<i class="fas fa-heart text-primary"></i>
-				<span class="badge">0</span>
-			</a>
-			<a href="cart" class="btn border">
-				<i class="fas fa-shopping-cart text-primary"></i>
-				<span class="badge">0</span>
-			</a>
-		</div>
-	</div>
-
 	<!-- Main Layout -->
 	<div class="container-fluid">
 		<div class="row px-xl-5">
@@ -64,7 +19,6 @@
 						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
 						<li class="nav-item"><a href="/mycs" class="nav-link active">취소·반품·교환내역</a></li>
-						<li class="nav-item"><a href="/myqna" class="nav-link">1:1문의내역</a></li>
 						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
 						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
 					</ul>
@@ -106,25 +60,31 @@
 							<c:forEach var="cr" items="${crList}">
 								<tr>
 									<td>${cr.order_no}</td>
-									<td>상품명 표시</td>
+									<td>${cr.item_name}</td>
 									<td>${cr.type}</td>
 									<td>${cr.status}</td>
 									<td><fmt:formatDate value="${cr.re_date}"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td>
 										<button class="btn btn-sm btn-secondary" data-toggle="modal"
-											data-target="#detailModal"
-											>상세보기</button>
+											data-target="#detailModal_${cr.cr_no}">상세보기</button>
 									</td>
 								</tr>
 							</c:forEach>
 
 							<c:if test="${empty crList}">
 								<tr>
-									<td colspan="6" class="text-center">취소·반품·교환 신청 내역이 없습니다.
-									</td>
+									<td colspan="6" class="text-center">취소·반품·교환 신청 내역이 없습니다.</td>
 								</tr>
 							</c:if>
+							<c:choose>
+								<c:when test="${order.item_cnt > 1}">
+									<button class="btn btn-secondary" disabled>부분 취소 불가
+										(채팅 문의)</button>
+									<a href="/chat/admin" class="btn btn-outline-danger"> 관리자
+										문의 </a>
+								</c:when>
+							</c:choose>
 						</tbody>
 					</table>
 				</div>
@@ -132,25 +92,40 @@
 		</div>
 	</div>
 
-
 	<!-- 취소/반품/교환 신청 모달 -->
 	<div class="modal fade" id="crApplyModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
+				<form action="/mycs/apply" method="post" id="crApplyForm">
+					<div class="modal-header">
+						<h5 class="modal-title">취소·반품·교환 신청</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
 					<div class="modal-body">
 						<!-- 주문번호 입력 -->
 						<div class="form-group">
-							<h6>주문번호</h6>
-							<input type="number" 
-								   class="form-control"
-								   name="order_no"
-								   placeholder="주문번호를 입력하세요">
-						</div>
+							<label><h6>주문번호 <span class="text-danger">*</span></h6></label>
+							<select name="order_no" id="order_no" class="form-control"
+								required>
+								<option value="">주문번호를 선택하세요</option>
 
+								<c:forEach var="order" items="${orderList}">
+									<option value="${order}">주문번호 ${order}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>상품번호</label> 
+							<select name="return_cnt" id="return_cnt" class="form-control">
+								<option value="">상품을 선택하세요</option>
+							</select>
+						</div>
 						<!-- 신청 유형 -->
 						<div class="form-group">
-							<label>신청 유형</label>
-							<select name="type" class="form-control" required>
+							<label>신청 유형 <span class="text-danger">*</span></label>
+							<select name="type" id="type" class="form-control" required>
 								<option value="">선택하세요</option>
 								<option value="취소">취소</option>
 								<option value="반품">반품</option>
@@ -158,115 +133,81 @@
 							</select>
 						</div>
 
-						<!-- 교환 상품번호 (교환 선택시만) -->
-						<div class="form-group" id="returnNoGroup" style="display:none;">
-							<label>교환할 상품 번호</label>
-							<input type="number" 
-								   class="form-control"
-								   name="return_no"
-								   placeholder="교환할 상품의 detail_no를 입력하세요">
-						</div>
-
 						<!-- 사유 -->
 						<div class="form-group">
-							<label>사유</label>
+							<label>사유 <span class="text-danger">*</span></label>
 							<textarea name="reason"
+									  id="reason"
 									  class="form-control"
 									  rows="4"
 									  placeholder="사유를 입력해주세요"
-									  required>
-							</textarea>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary">확인</button>
+									  required></textarea>
 						</div>
 					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+						<button type="submit" class="btn btn-primary">신청하기</button>
 					</div>
+				</form>
 			</div>
 		</div>
 	</div>
 
+	<!-- 상세보기 모달 (각 항목별) -->
+	<c:forEach var="cr" items="${crList}">
+		<div class="modal fade" id="detailModal_${cr.cr_no}" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">취소·반품·교환 상세내역</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<strong>신청번호:</strong> ${cr.cr_no}
+							</div>
+							<div class="col-md-6">
+								<strong>주문번호:</strong> ${cr.order_no}
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<strong>신청유형:</strong> ${cr.type}
+							</div>
+							<div class="col-md-6">
+								<strong>상태:</strong> ${cr.status}
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-md-12">
+								<strong>신청일:</strong> <fmt:formatDate value="${cr.re_date}" pattern="yyyy-MM-dd HH:mm:ss" />
+							</div>
+						</div>
+						<c:if test="${not empty cr.return_cnt}">
+							<div class="row mb-3">
+								<div class="col-md-12">
+									<strong>교환 상품번호:</strong> ${cr.return_cnt}
+								</div>
+							</div>
+						</c:if>
+						<hr>
+						<div class="row mb-3">
+							<div class="col-md-12">
+								<strong>사유:</strong>
+								<p class="mt-2">${cr.reason}</p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
 
-<!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
-				<div class="row px-xl-5 pt-5">
-            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
-           
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
-                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
-                <h2 class="mb-0">
-   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
-					</h2>
-                       </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
-                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-                            <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a>
-                         </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-12 mt-4 mb-5">
-                        <p class="text-dark mb-2">
-                        <span>stockbob 소개</span>
-                            &nbsp;&nbsp; | &nbsp;&nbsp;
-                        <span>이용약관</span>
-                       		&nbsp; | &nbsp;
-                       	<span>개인정보처리방침</span>
-                       		&nbsp; | &nbsp;
-                       	<span>이용안내</span>
-                       	
-                       </p><br>
-                       <p style="color: #999;">
-                       법인명 (상호) : 주식회사 STOCKBOB<br>
-                       사업자등록번호 : 000-11-00000<br>
-						통신판매업 : 제 2025-서울-11111 호<br>
-						주소 : 서울특별시 서대문구 신촌동 00<br>
-						채용문의 : ict.atosoft.com<br>
-						팩스 : 070-0000-0000
-                       </p>
-                      </div>
-                    </div>
-                 
-                    </div>
-                  
-                </div>
-            </div>
-        </div>
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-
-	<!-- Back to Top -->
-	<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
 </body>
 </html>

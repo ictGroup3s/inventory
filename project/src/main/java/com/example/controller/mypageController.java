@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.model.orderRepository;
 import com.example.model.vo.CustomerVO;
 import com.example.model.vo.order_detailVO;
+import com.example.service.crService;
+import com.example.service.orderService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,22 @@ public class mypageController {
 	
 	@Autowired
     private orderRepository orderRepository;
+	@Autowired
+	private orderService orderService;
+	@Autowired
+	private crService crService;
+	
+	@GetMapping("/mypage")
+	public String mypage(HttpSession session, Model model) {
+
+	    String loginUser = (String) session.getAttribute("loginUser");
+
+	    model.addAttribute("orderList", orderService.getOrders(loginUser));
+	    model.addAttribute("deliveryList", orderService.getDeliveries(loginUser));
+	    model.addAttribute("crList", crService.getCsList(loginUser));
+
+	    return "mypage/mypage";
+	}
     
     // 주문내역 페이지
     @GetMapping("/order/mypage")
