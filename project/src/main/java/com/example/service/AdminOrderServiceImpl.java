@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.model.AdminOrderRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AdminOrderServiceImpl implements AdminOrderService {
 
@@ -16,12 +19,14 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 	private AdminOrderRepository adminOrderRepository;
 
 	@Override
-	public List<Map<String, Object>> getOrders(String orderNo, String customerName, String status) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("orderNo", orderNo);
-		params.put("customerName", customerName);
-		params.put("status", status);
-		return adminOrderRepository.getOrders(params);
+	public List<Map<String, Object>> getOrders(String orderNo, String customerName, String status, String startDate, String endDate) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("orderNo", orderNo);
+	    params.put("customerName", customerName);
+	    params.put("status", status);
+	    params.put("startDate", startDate);
+	    params.put("endDate", endDate);
+	    return adminOrderRepository.getOrders(params);
 	}
 
 	@Override
@@ -62,21 +67,26 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
 	@Override
 	public Map<String, Object> updateDetailStatus(Map<String, Object> params) {
-		Map<String, Object> result = new HashMap<>();
-		try {
-			// 상태 변경
-			adminOrderRepository.updateDetailStatus(params);
-
-			// 재고 복구
-			adminOrderRepository.restoreItemStock(params);
-
-			result.put("success", true);
-			result.put("message", "처리되었습니다.");
-		} catch (Exception e) {
-			result.put("success", false);
-			result.put("message", "처리에 실패했습니다.");
-		}
-		return result;
+	    Map<String, Object> result = new HashMap<>();
+	    try {
+	        log.info("===== 상품 상태 변경 시작 ===== params: {}", params);
+	        
+	        // 상태 변경
+	        adminOrderRepository.updateDetailStatus(params);
+	        log.info("상태 변경 완료");
+	        
+	        // 재고 복구
+	        adminOrderRepository.restoreItemStock(params);
+	        log.info("재고 복구 완료");
+	        
+	        result.put("success", true);
+	        result.put("message", "처리되었습니다.");
+	    } catch (Exception e) {
+	        log.error("상품 상태 변경 실패: ", e);
+	        result.put("success", false);
+	        result.put("message", "처리에 실패했습니다.");
+	    }
+	    return result;
 	}
 
 	@Override

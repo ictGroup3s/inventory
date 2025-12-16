@@ -84,11 +84,10 @@ public class projectController {
 	public String register() {
 		return "register";
 	}
-	 
-	@GetMapping("event2")
-	public String event2() {
-		return "event2";
-	}
+
+	/*
+	 * @GetMapping("event2") public String event2() { return "event2"; }
+	 */
     // 전체 상품 조회 페이지, 검색, 정렬
     @GetMapping("selectall")
     public String selectall(Model m,

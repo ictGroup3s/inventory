@@ -5,33 +5,38 @@
 <mapper namespace="adminordermapper">
 
     <!-- 주문 목록 조회 -->
-    <select id="getOrders" resultType="map" parameterType="map">
-        SELECT 
-            o.order_no,
-            o.order_name,
-            o.order_status,
-            o.total_amount,
-            TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI') as order_date,
-            (
-                SELECT LISTAGG(p.item_name, ', ') WITHIN GROUP (ORDER BY p.item_name)
-                FROM order_detail od
-                JOIN product p ON od.item_no = p.item_no
-                WHERE od.order_no = o.order_no
-            ) as item_names
-        FROM orders o
-        WHERE 1=1
-        <if test="orderNo != null and orderNo != ''">
-            AND o.order_no = #{orderNo}
-        </if>
-        <if test="customerName != null and customerName != ''">
-            AND o.order_name LIKE '%' || #{customerName} || '%'
-        </if>
-        <if test="status != null and status != ''">
-            AND o.order_status = #{status}
-        </if>
-        ORDER BY o.order_date DESC
-    </select>
-
+	<select id="getOrders" resultType="map" parameterType="map">
+	    SELECT
+	        o.order_no,
+	        o.order_name,
+	        o.order_status,
+	        o.total_amount,
+	        TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI') as order_date,
+	        (
+	            SELECT LISTAGG(p.item_name, ', ') WITHIN GROUP (ORDER BY p.item_name)
+	            FROM order_detail od
+	            JOIN product p ON od.item_no = p.item_no
+	            WHERE od.order_no = o.order_no
+	        ) as item_names
+	    FROM orders o
+	    WHERE 1=1
+	    <if test="orderNo != null and orderNo != ''">
+	        AND o.order_no = #{orderNo}
+	    </if>
+	    <if test="customerName != null and customerName != ''">
+	        AND o.order_name LIKE '%' || #{customerName} || '%'
+	    </if>
+	    <if test="status != null and status != ''">
+	        AND o.order_status = #{status}
+	    </if>
+	    <if test="startDate != null and startDate != ''">
+	        AND TRUNC(o.order_date) &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD')
+	    </if>
+	    <if test="endDate != null and endDate != ''">
+	        AND TRUNC(o.order_date) &lt;= TO_DATE(#{endDate}, 'YYYY-MM-DD')
+	    </if>
+	    ORDER BY o.order_date DESC
+	</select>
     <!-- 주문 단건 조회 -->
     <select id="getOrder" resultType="map" parameterType="int">
         SELECT 
@@ -126,14 +131,14 @@
 	<!-- 개별 상품 재고 복구 -->
 	<update id="restoreItemStock" parameterType="map">
 	    UPDATE product
-	    SET stock_qty = stock_qty + #{item_cnt}
+	    SET stock_cnt = stock_cnt + #{item_cnt}
 	    WHERE item_no = #{item_no}
 	</update>
 	
 	<!-- 개별 상품 재고 차감 -->
 	<update id="deductItemStock" parameterType="map">
 	    UPDATE product
-	    SET stock_qty = stock_qty - #{item_cnt}
+	    SET stock_cnt = stock_cnt - #{item_cnt}
 	    WHERE item_no = #{item_no}
 	</update>
 

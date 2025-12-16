@@ -20,10 +20,15 @@ public class AdminOrderController {
 
 	// 주문 목록 조회
 	@GetMapping
-	public List<Map<String, Object>> getOrders(@RequestParam(required = false) String orderNo,
-			@RequestParam(required = false) String customerName, @RequestParam(required = false) String status) {
-		log.info("===== 주문 목록 조회 ===== orderNo: {}, customerName: {}, status: {}", orderNo, customerName, status);
-		return adminOrderService.getOrders(orderNo, customerName, status);
+	public List<Map<String, Object>> getOrders(
+	        @RequestParam(required = false) String orderNo,
+	        @RequestParam(required = false) String customerName,
+	        @RequestParam(required = false) String status,
+	        @RequestParam(required = false) String startDate,
+	        @RequestParam(required = false) String endDate) {
+	    log.info("===== 주문 목록 조회 ===== orderNo: {}, customerName: {}, status: {}, startDate: {}, endDate: {}", 
+	             orderNo, customerName, status, startDate, endDate);
+	    return adminOrderService.getOrders(orderNo, customerName, status, startDate, endDate);
 	}
 
 	// 주문 상세 조회

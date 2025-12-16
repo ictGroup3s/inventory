@@ -62,8 +62,8 @@ $(function() {
 				html += '<td>' + (order.ORDER_NAME || order.order_name || '-') + '</td>';
 				html += '<td class="item-cell text-left" title="' + itemNames + '">' + displayItems + '</td>';
 				html += '<td>₩' + formatNumber(order.TOTAL_AMOUNT || order.total_amount) + '</td>';
-				html += '<td>' + (order.ORDER_DATE || order.order_date || '-') + '</td>';
-				html += '<td style="width: 120px;"><div style="display: flex; justify-content: center;"><span class="status-badge status-' + status + '">' + status + '</span></div></td>';
+				html += '<td class="order-date" title="' + (order.ORDER_DATE || order.order_date || '-') + '">' + (order.ORDER_DATE || order.order_date || '-') + '</td>';
+				html += '<td style="width: 120px;"><div style="display: flex; justify-content: center; flex-direction: row; white-space: nowrap; "><span class="status-badge status-' + status + '">' + status + '</span></div></td>';
 				html += '<td><button class="btn btn-sm btn-info btn-detail" data-order-no="' + (order.ORDER_NO || order.order_no) + '">상세</button></td>';
 				html += '</tr>';
 			});
@@ -212,10 +212,22 @@ $(function() {
 		var params = {
 			orderNo: $('#searchOrderNo').val(),
 			customerName: $('#searchCustomer').val(),
-			status: $('#searchStatus').val()
+			status: $('#searchStatus').val(),
+			startDate: $('#searchStartDate').val(),
+			endDate: $('#searchEndDate').val()
 		};
 		console.log('검색 파라미터:', params);
 		loadOrders(params);
+	});
+
+	// 초기화
+	$('#resetBtn').on('click', function() {
+		$('#searchOrderNo').val('');
+		$('#searchCustomer').val('');
+		$('#searchStatus').val('');
+		$('#searchStartDate').val('');
+		$('#searchEndDate').val('');
+		loadOrders();
 	});
 
 	// 초기화
