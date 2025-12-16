@@ -9923,129 +9923,82 @@ a.text-dark:hover, a.text-dark:focus {
 }
  
 /* admin 공용 style */
-/* 오버레이 */
-/* .admin-overlay {
+.admin-content {
+    display: block;
+}
+
+.admin-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.55);
     z-index: 9999;
 }
 
-.admin-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-미니멀 카드
-.login-required-modal {
+/* 로그인 모달 */
+.login-modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
     width: 320px;
     padding: 40px 30px;
-    background: white;
+    background: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
     text-align: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     z-index: 10000;
 }
 
-.login-required-modal.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.login-required-modal .lock-icon {
+/* 🔒 아이콘 배경 */
+.login-modal .lock-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #FFD333 0%, #FFC107 100%);
+    background: linear-gradient(135deg, #D19C97, #B88480);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 36px;
     margin: 0 auto 20px;
-    box-shadow: 0 10px 30px rgba(255, 211, 51, 0.4);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(209,156,151,0.45);
 }
 
-.login-required-modal h3 {
-    color: #333;
+/* 타이틀 */
+.login-modal h3 {
+    color: #7A4A47;
     font-size: 20px;
     margin-bottom: 8px;
 }
 
-.login-required-modal p {
-    color: #888;
+/* 설명 */
+.login-modal p {
+    color: #9A6B68;
     font-size: 14px;
     margin-bottom: 24px;
-    line-height: 1.5;
 }
 
-.login-required-modal .btn-login {
+/* 로그인 버튼 */
+.login-modal .btn-login {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #FFD333 0%, #FFC107 100%);
+    background: linear-gradient(135deg, #D19C97, #B88480);
     border: none;
     border-radius: 12px;
     font-size: 15px;
     font-weight: 600;
-    color: #333;
+    color: #ffffff;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.25s ease;
 }
 
-.login-required-modal .btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 211, 51, 0.5);    
-}   */
-
-.admin-content { display: block; }
-.admin-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); z-index: 9999;
-}
-.login-modal {
-    position: fixed; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 320px; padding: 40px 30px;
-    background: white; border-radius: 20px;
-    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
-    text-align: center; z-index: 10000;
-}
-.login-modal .lock-icon {
-    width: 80px; height: 80px;
-    background: linear-gradient(135deg, #FFD333, #FFC107);
-    border-radius: 50%; display: flex;
-    align-items: center; justify-content: center;
-    font-size: 36px; margin: 0 auto 20px;
-    box-shadow: 0 10px 30px rgba(255,211,51,0.4);
-}
-.login-modal h3 { color: #333; font-size: 20px; margin-bottom: 8px; }
-.login-modal p { color: #888; font-size: 14px; margin-bottom: 24px; }
-.login-modal .btn-login {
-    width: 100%; padding: 14px;
-    background: linear-gradient(135deg, #FFD333, #FFC107);
-    border: none; border-radius: 12px;
-    font-size: 15px; font-weight: 600;
-    color: #333; cursor: pointer;
-}
+/* hover */
 .login-modal .btn-login:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255,211,51,0.5);
+    box-shadow: 0 8px 25px rgba(184,132,128,0.5);
 }
 
 /* hide-content 클래스가 있을 때만 숨김 */
-.hide-content .admin-content { 
-    display: none !important; 
+.hide-content .admin-content {
+    display: none !important;
 }
