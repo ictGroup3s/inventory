@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 
 <head>
@@ -30,6 +32,7 @@
 <!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
@@ -240,61 +243,55 @@
 	<div class="container-fluid pt-5">
 		<div class="row px-xl-5 pb-3">
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectGui"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/gui.png" alt="">
+						class="img-fluid cat-img-fill" src="img/guizzim.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">구이 ．찜 ．볶음</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectSoup"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/soup.png" alt="">
+						class="img-fluid cat-img-fill" src="img/gukbob.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">국 ．밥 ．면</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectDiet"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/diet.png" alt="">
+						class="img-fluid cat-img-fill" src="img/sikdana.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">식단관리</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectBunsik"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/bunsik.png" alt="">
+						class="img-fluid cat-img-fill" src="img/bunsikgan.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">분식 ．간식</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectBanchan"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/banchan.png" alt="">
+						class="img-fluid cat-img-fill" src="img/banchana.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">반찬 ．소스</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4"
-					style="padding: 30px;">
+				<div class="cat-item d-flex flex-column border mb-4">
 					<a href="selectdrink"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid" src="img/waterdrink.png" alt="">
+						class="img-fluid cat-img-fill" src="img/drinka.png" alt="">
 					</a>
 					<h5 class="font-weight-semi-bold m-0">생수 ．음료</h5>
 				</div>
@@ -302,6 +299,68 @@
 		</div>
 	</div>
 	<!-- Categories End -->
+	 
+	 <!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
+	<div class="container-fluid py-5" style="border-top: 1px solid #dee2e6;">
+		<div class="container-fluid px-5">
+			<div class="text-center mb-5">
+				<h5 class="font-weight-bold m-0">추천상품 바로가기</h5>
+			</div>
+			<ul class="bxslider">
+				<c:forEach var="rp" items="${randomProducts}">  
+               <li>
+                    <div class="slider-card" data-item-no="${rp.item_no}">
+                        <a href="detail?item_no=${rp.item_no}">
+                            <img src="/img/product/${rp.item_img}" alt="${rp.item_name}" class="d-block mx-auto"/>
+                        </a>
+                        <h6 class="slider-title mt-2">${rp.item_name}</h6>
+
+                        <!-- 평점 리뷰 적용 -->
+						<c:set var="reviewCnt" value="${empty rp.review_cnt ? 0 : rp.review_cnt}" />
+						<c:set var="rating" value="${empty rp.avg_rating ? 0 : rp.avg_rating}" />
+						<c:if test="${rating > 0 || reviewCnt > 0}">
+							<div class="mb-2" style="font-size: 0.9rem; color: #666;">
+								<c:choose>
+									<c:when test="${rating > 0}">
+										<i class="fas fa-heart" style="color: #D19C97;"></i>
+									</c:when>
+									<c:otherwise>
+										<i class="far fa-heart" style="color: #D19C97;"></i>
+									</c:otherwise>
+								</c:choose>
+								<fmt:formatNumber value="${rating}" pattern="#.0"/>
+								<c:if test="${reviewCnt > 0}"> (${reviewCnt}개 리뷰)</c:if>
+							</div>
+						</c:if>
+
+                        <c:choose>
+                            <c:when test="${not empty rp.dis_rate and rp.dis_rate > 0}">
+                                <c:set var="discounted" value="${rp.sales_p * (100 - rp.dis_rate) / 100}" />
+                                <div class="d-flex flex-column">
+                                    <h6 class="text-muted mb-0" style="font-size: 0.8rem;">
+                                        <del><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</del>
+                                    </h6>
+                                    <fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+                                    <h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <h6><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</h6>
+                            </c:otherwise>
+                        </c:choose>
+                        
+                    </div>
+               </li>
+            </c:forEach>
+			</ul>      
+		</div>
+	</div>
+	</div>
+	<!-- Image Slider End -->
+
+
+	<!-- Footer Start -->
+	<!-- <div class="container-fluid text-dark mt-3 pt-3 pb-2" style="border-top: 2px solid #eeeeee;"> -->
 
 
 	<!-- Footer Start -->
@@ -358,7 +417,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row border-top border-light mx-xl-5 py-4">
+		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
 					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
@@ -421,6 +480,7 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
 
 	<!-- Contact JS -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
@@ -438,6 +498,8 @@
 
 	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
 	<script src="/js/main.js" defer></script>
+	<!-- 리뷰 js -->	
+	<script src="js/Review.js"></script>
 
 
 </body>

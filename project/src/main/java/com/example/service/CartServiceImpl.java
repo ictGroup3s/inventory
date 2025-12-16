@@ -37,21 +37,9 @@ public class CartServiceImpl implements CartService {
     @Override
     public void addToCart(Integer itemNo, int qty, HttpSession session) {
         if (itemNo == null || qty <= 0) return;
-
         // 로그인된 사용자(세션 속성명: loginUser 또는 user)가 있으면 DB에 반영
-        Object userObj = session.getAttribute("loginUser");
-        if (userObj == null) userObj = session.getAttribute("user");
-        if (userObj != null) {
-            String customerId = null;
-            try {
-                if (userObj instanceof CustomerVO) {
-                    customerId = ((CustomerVO) userObj).getCustomer_id();
-                } else {
-                    customerId = String.valueOf(userObj);
-                }
-            } catch (Exception ex) {
-                customerId = String.valueOf(userObj);
-            }
+        String customerId = getCustomerIdFromSession(session);
+        if (customerId != null) {
             try {
                 Map<String,Object> existing = cartRepository.findByCustomerAndItem(customerId, itemNo);
                 if (existing != null) {
@@ -76,7 +64,7 @@ public class CartServiceImpl implements CartService {
             return;
         }
 
-        // 익명 사용자: 세션에 장바구니 보관
+        // 익명 사용자: 세션에 장바구니 보관 (db에는 저장하지 않음)
         Map<Integer, Integer> cart = getCartMap(session);
         cart.put(itemNo, cart.getOrDefault(itemNo, 0) + qty);
         session.setAttribute(SESSION_CART, cart);
@@ -87,23 +75,11 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-    // 장바구니에 저장된 모든 항목을 로그인한 사용자의 DB 장바구니로 병합
-    // 병합 후 세션 장바구니를 초기화
+    // 장바구니에 저장된(로그인전) 모든 항목을 로그인한 사용자의 DB 장바구니로 병합
+    // 병합 후 세션 장바구니를 초기화(로그아웃시 장바구니 초기화0)
     public void mergeSessionCartToDb(HttpSession session) {
-        Object userObj = session.getAttribute("loginUser");
-        if (userObj == null) userObj = session.getAttribute("user");
-        if (userObj == null) return;
-
-        String customerId = null;
-        try {
-            if (userObj instanceof CustomerVO) {
-                customerId = ((CustomerVO) userObj).getCustomer_id();
-            } else {
-                customerId = String.valueOf(userObj);
-            }
-        } catch (Exception ex) {
-            customerId = String.valueOf(userObj);
-        }
+        String customerId = getCustomerIdFromSession(session);
+        if (customerId == null) return;
 
         Map<Integer, Integer> cart = getCartMap(session);
         if (cart == null || cart.isEmpty()) return;
@@ -140,19 +116,8 @@ public class CartServiceImpl implements CartService {
     @Override
     public void removeFromCart(Integer itemNo, HttpSession session) {
         if (itemNo == null) return;
-        Object userObj = session.getAttribute("loginUser");
-        if (userObj == null) userObj = session.getAttribute("user");
-        if (userObj != null) {
-            String customerId = null;
-            try {
-                if (userObj instanceof CustomerVO) {
-                    customerId = ((CustomerVO) userObj).getCustomer_id();
-                } else {
-                    customerId = String.valueOf(userObj);
-                }
-            } catch (Exception ex) {
-                customerId = String.valueOf(userObj);
-            }
+        String customerId = getCustomerIdFromSession(session);
+        if (customerId != null) {
             try {
                 int deleted = cartRepository.deleteCartByCustomerAndItem(Map.of("customerId", customerId, "itemNo", itemNo));
                 log.info("장바구니 DB 삭제 시도 user={} itemNo={} 삭제건수={}", customerId, itemNo, deleted);
@@ -174,20 +139,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItemVO> getCartItems(HttpSession session) {
-        Object userObj = session.getAttribute("loginUser");
-        if (userObj == null) userObj = session.getAttribute("user");
         List<CartItemVO> items = new ArrayList<>();
-        if (userObj != null) {
-            String customerId = null;
-            try {
-                if (userObj instanceof CustomerVO) {
-                    customerId = ((CustomerVO) userObj).getCustomer_id();
-                } else {
-                    customerId = String.valueOf(userObj);
-                }
-            } catch (Exception ex) {
-                customerId = String.valueOf(userObj);
-            }
+        String customerId = getCustomerIdFromSession(session);
+        if (customerId != null) {
             try {
                 List<Map<String,Object>> rows = cartRepository.findByCustomer(customerId);
                 log.info("getCartItems - 고객 {}의 DB 행 수: {}", customerId, rows == null ? 0 : rows.size());
@@ -269,6 +223,22 @@ public class CartServiceImpl implements CartService {
             log.info("CartService.getCartMap - 세션에 새 장바구니 생성 session={}", session.getId());
         } catch (Exception e) {}
         return m;
+    }
+    
+    // 세션에서 현재 로그인된 고객 ID를 얻어옵니다.
+    // 우선순위: "loginUser" -> "user". 값이 CustomerVO이면 customer_id 반환,
+    // 그렇지 않으면 toString()한 값을 반환합니다. 없으면 null.
+    private String getCustomerIdFromSession(HttpSession session) {
+        if (session == null) return null;
+        Object userObj = session.getAttribute("loginUser");
+        if (userObj == null) userObj = session.getAttribute("user");
+        if (userObj == null) return null;
+        try {
+            if (userObj instanceof CustomerVO) return ((CustomerVO) userObj).getCustomer_id();
+            return String.valueOf(userObj);
+        } catch (Exception e) {
+            return String.valueOf(userObj);
+        }
     }
     
 }

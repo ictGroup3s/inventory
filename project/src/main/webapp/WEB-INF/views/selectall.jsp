@@ -59,9 +59,7 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -106,10 +104,9 @@
 								</c:if>
 								<!-- 로그아웃 링크 -->
 								<a href="logout" class="nav-item nav-link">로그아웃</a>
-
-							</c:if>
+								</c:if>
+							</div>
 						</div>
-					</div>
 				</nav>
 			</div>
 		</div>
@@ -118,13 +115,11 @@
 
 	<div class="container-fluid pt-5">
 		<div class="row px-xl-5">
-			<!-- ================== 왼쪽 카테고리 ================== -->
 			<div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
 					<h5 class="p-3">Categories</h5>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="selectall"
-							class="nav-link active">전체상품</a></li>
+						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이
 								．찜 ．볶음</a></li>
 						<li class="nav-item"><a href="selectSoup" class="nav-link">국
@@ -140,27 +135,11 @@
 				</nav>
 			</div>
 			<div class="col-lg-9 col-md-12">
-				<div class="row pb-3">
+				<div class="row pb-3 product-grid">
 					<div class="col-12 pb-1">
 						<div
-							class="d-flex align-items-center justify-content-between mb-4">
-							<!--  아래 검색창
-							<form action="selectall" method="get">
-							
-								<div class="input-group">
-									<input type="text" name="q" class="form-control"
-										placeholder="Search by name" value="${q}">
-									<div class="input-group-append">
-										<button class="input-group-text bg-transparent text-primary" type="submit">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
-								</div>
-							 	
-								<input type="hidden" name="size" value="${size}" />
-							</form>
-						-->
-							<div class="dropdown ml-auto">
+							class="d-flex align-items-center justify-content-between mb-4">							
+							<div class="dropdown">	<!-- ml-auto = 왼쪽 여백 자동 채움(margin-left: auto) -->
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
@@ -187,8 +166,8 @@
 					</c:if>
 
 					<c:forEach var="item" items="${products}">
-						<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4"
+						<div class="col-lg-4 col-md-4 col-sm-4 pb-1 product-col">
+							<div class="card product-item border-0 mb-4 h-100 d-flex flex-column"
 								style="width: 280px;">
 								<div
 									class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -199,16 +178,54 @@
 								</div>
 								<div
 									class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-									<h6 class="text-truncate mb-3">${item.item_name}</h6>
+									<h5 class="text-truncate mb-3">${item.item_name}</h5>
+									
+								<%-- 평점/리뷰: 리뷰가 없으면 표시 안 함 --%>
+								<c:set var="reviewCnt" value="${empty item.review_cnt ? 0 : item.review_cnt}" />
+								<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
+								<c:if test="${reviewCnt > 0}">
+									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
+										<span class="mr-1">
+											<c:forEach begin="1" end="5" var="i">
+												<c:choose>
+													<c:when test="${i <= rating}">
+														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													</c:when>
+													<c:otherwise>
+														<i class="far fa-heart" style="color: #D19C97;"></i>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</span>
+										<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
+										<span>(${reviewCnt}개 리뷰)</span>
+									</div>
+								</c:if>
+								<%-- 평점/리뷰 --%>
+									
+								<%-- 할인가 적용 --%>	
 									<div class="d-flex justify-content-center">
-										<h6>${item.sales_p}원</h6>
-										<h6 class="text-muted ml-2">
-											<del>${item.sales_p}원</del>
-										</h6>
+										<c:choose>
+											<c:when test="${not empty item.dis_rate and item.dis_rate > 0}">
+												<c:set var="discounted" value="${item.sales_p * (100 - item.dis_rate) / 100}" />
+												
+											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+												<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+												<h5><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h5>
+											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+											
+												<h6 class="text-muted ml-2">
+													<del><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</del>
+												</h6>
+											</c:when>
+											<c:otherwise>
+												<h5><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h5>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 								<div
-									class="card-footer d-flex justify-content-between bg-light border">
+									class="card-footer d-flex justify-content-between bg-light border mt-auto">
 									<a href="detail?item_no=${item.item_no}"
 										class="btn btn-sm text-dark p-0"> <i
 										class="fas fa-eye text-primary mr-1"></i>상세정보

@@ -1,4 +1,5 @@
-$(function(){
+(function($){
+ 	$(function(){
 	
 	var reviewSection = $('#review-section');
 	var reviewList = $('#review-list'); // 변수 상단으로 이동 (중복 제거)
@@ -99,7 +100,7 @@ $(function(){
             var ratingHtml = '';
             var rating = r.rating || 5; // 기본값 5
             for(var i=1; i<=5; i++) {
-                if(i <= rating) {
+                if(i <= Math.round(rating)) {	// 반올림 적용(하트 채우기)
                     ratingHtml += '<i class="fas fa-heart" style="color: #D19C97;"></i>';
                 } else {
                     ratingHtml += '<i class="far fa-heart" style="color: #D19C97;"></i>';
@@ -288,10 +289,48 @@ $(function(){
 			},
 			error: function(err) {
 		//		console.error(err);
-				alert('리뷰 등록에 실패했습니다.');
+				alert('리뷰 등록은 로그인 이후에 가능합니다.');
 			}
 		});
 	});
 	
-	
-});
+	// 리뷰 작성란: 포커스 시 placeholder 즉시 숨김, 비어있으면 blur 시 복원
+		$(function() {
+			var $textarea = $('#re_content');
+			if ($textarea.length === 0) return;
+			var defaultPlaceholder = $textarea.attr('data-placeholder') || $textarea.attr('placeholder') || '';
+			$textarea.on('focus', function() {
+				$(this).attr('placeholder', '');
+			});
+			$textarea.on('blur', function() {
+				if (!$(this).val().trim()) {
+					$(this).attr('placeholder', defaultPlaceholder);
+				}
+			});
+		});
+
+	//  디테일js에서 이미지 슬라이더 클릭시 이동 처리 ------------------------
+	// 클릭 위임: 원본(비클론, aria-hidden != true) 슬라이드의 카드 클릭 시 디테일로 이동
+			$(document).on('click', '.bxslider .slider-card', function(e){
+				try{
+					var $li = $(this).closest('li');
+					if($li.hasClass('bx-clone') || $li.attr('aria-hidden') === 'true') return; // 복제본/숨김은 무시
+					var $a = $(this).find('a').first();
+					if($a && $a.length){
+						e.preventDefault();
+						window.location.href = $a[0].href;
+					}
+				}catch(err){ /* 무시 */ }
+			});		
+			// aria-hidden 복제본의 포커스 수신을 방지 (한 번만 실행, bxSlider 로드 이후에도 재호출)
+			function sanitize(){
+				try{
+					var nodes = document.querySelectorAll('.bxslider li[aria-hidden="true"] a, .bxslider li[aria-hidden="true"] button');
+					nodes.forEach(function(el){ el.setAttribute('tabindex','-1'); });
+				}catch(e){}
+			}
+			sanitize();
+			$(document).on('bxslider:loaded', sanitize);		
+	    });
+
+})(jQuery);
