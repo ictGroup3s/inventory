@@ -340,5 +340,20 @@
 	    form.attr("action", $(this).attr("formaction") || form.attr("action"));
 	    form.submit();
 	});
+	
+	// JS (admin-common.js에 추가)
+	const AdminAuth = {
+	    showLoginRequired: function() {
+	        document.getElementById('adminOverlay').classList.add('show');
+	        document.getElementById('loginModal').classList.add('show');
+	    }
+	};
+
+	// AJAX 401 에러 시 자동 표시
+	$(document).ajaxError(function(event, xhr) {
+	    if (xhr.status === 401) {
+	        AdminAuth.showLoginRequired();
+	    }
+	});
 
 })(jQuery);

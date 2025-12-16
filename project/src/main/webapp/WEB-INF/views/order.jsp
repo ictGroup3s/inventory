@@ -101,11 +101,10 @@
 						<option value="취소">취소</option>
 						<option value="반품">반품</option>
 						<option value="교환">교환</option>
-					</select> <input type="date" class="form-control mr-2 mb-2"
-						id="searchStartDate" style="width: 150px;"> <span
-						class="mr-2 mb-2">~</span> <input type="date"
-						class="form-control mr-2 mb-2" id="searchEndDate"
-						style="width: 150px;">
+					</select> 
+					<input type="date" class="form-control mr-2 mb-2" id="searchStartDate" style="width: 150px;"> 
+					<span class="mr-2 mb-2">~</span> 
+					<input type="date" class="form-control mr-2 mb-2" id="searchEndDate" style="width: 150px;">
 					<button type="submit" class="btn btn-primary mr-2 mb-2">검색</button>
 					<button type="button" class="btn btn-secondary mb-2" id="resetBtn">초기화</button>
 				</form>

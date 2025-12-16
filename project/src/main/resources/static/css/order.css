@@ -4,7 +4,7 @@
 	font-size: 12px;
 	font-weight: 500;
 	white-space: nowrap;
-	display: inline-block;
+	display: inline-flex;
 }
 
 .status-결제완료 {
@@ -74,9 +74,10 @@
 	width: 80px;
 }
 
-.order-table .col-items {
+.order-table  {
 	width: auto;
 	text-align: center;
+	
 }
 
 .order-table .col-amount {
@@ -101,6 +102,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	cursor: pointer;
 }
 
 .item-cell:hover {
@@ -128,4 +130,57 @@
 
 .detail-status-교환 {
 	color: #004085;
+}
+
+@media (min-width: 992px) {
+    .order-table {
+        table-layout: fixed; /* 고정 폭 */
+        width: 100%;
+    }
+
+    .order-table thead, .order-table tbody {
+        display: table-header-group;
+        display: table-row-group;
+    }
+
+    .order-table tr {
+        display: table-row;
+    }
+
+    .order-table th, .order-table td {
+        display: table-cell;
+        white-space: nowrap;
+        vertical-align: middle;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* 컬럼별 고정 너비 */
+    .order-table .col-order-no { width: 10%; }
+    .order-table .col-customer { width: 10%; }
+    .order-table .col-items { width: 35%; }
+    .order-table .col-amount { width: 10%; }
+    .order-table .col-date { width: 15%; }
+    .order-table .col-status { width: 10%; }
+    .order-table .col-action { width: 10%; }
+}
+
+.order-date {
+    position: relative;
+    cursor: pointer;
+}
+
+.order-date:hover::after {
+    content: attr(data-full-date);
+    position: absolute;
+    bottom: 100%; /* 위쪽에 표시 */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    font-size: 12px;
 }
