@@ -53,9 +53,7 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -134,9 +132,11 @@
 								<c:forEach var="ci" items="${cartItems}">
 									<tr>
 										<td class="align-middle text-left">
-											<div class="d-flex align-items-center">
-												<img src="/img/product/${ci.product.item_img}" alt="" style="width:50px; height:50px; object-fit:cover;" class="mr-3" />
-												<div class="cart-product-name" style="word-break:break-word; max-width:320px;">${ci.product.item_name}</div>
+											<div class="d-flex flex-column align-items-center">		<!-- <div class="d-flex align-items-center"> w50-h50   -->
+												<a href="detail?item_no=${ci.product.item_no}">
+													<img src="/img/product/${ci.product.item_img}" alt="" style="width:150px; height:150px; object-fit:cover;" class="mb-2" /><!-- class="mr-3"   -->
+												</a>
+													<div class="cart-product-name" style="word-break:break-word; max-width:320px; font-size:16px; ">${ci.product.item_name}</div>												
 											</div>
 										</td>
 										<td class="align-middle"><fmt:formatNumber value="${ci.product.sales_p}" pattern=",###"/>원</td>
@@ -149,7 +149,7 @@
 													class="form-control form-control-sm bg-secondary text-center cart-qty-input"
 													data-item="${ci.product.item_no}"
 													data-max="${ci.product.stock_cnt}"
-													value="${ci.qty}" min="1" max="${ci.product.stock_cnt}" style="width: 50px; flex: none;" />
+													value="${ci.qty}" min="1" max="${ci.product.stock_cnt}" style="width: 50px; height: 40px; flex: none;" />
 												<div class="input-group-append">
 													<button class="btn btn-sm btn-primary qty-increase" data-item="${ci.product.item_no}" type="button">+</button>
 												</div>

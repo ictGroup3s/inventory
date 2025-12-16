@@ -306,7 +306,7 @@
 					<i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
 				</h2>
 			</div>
-			<div class="col-lg-9 col-md-12">
+			<div class="col-lg-8 col-md-12">
 				<div class="row">
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
