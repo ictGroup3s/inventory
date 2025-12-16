@@ -55,4 +55,14 @@ public class AdminRepositoryImpl implements AdminRepository{
 	    return sess.selectOne("adminmapper.getProductByNo", itemNo);
 	}
 	
+	@Override
+	public void updateStockOnly(ProductVO vo) {
+	    sess.update("adminmapper.updateStockOnly", vo);
+	}
+	
+	@Override
+	public List<ProductVO> getStockList() {
+	    return sess.selectList("adminmapper.getStockList");
+	}
+	
 }

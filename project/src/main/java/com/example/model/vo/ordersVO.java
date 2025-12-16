@@ -11,7 +11,7 @@ public class ordersVO {
 	private String order_name;
 	private String order_addr;
 	private Integer tracking;
-	private Integer order_phone;
+	private long order_phone;
 	private String order_status;
 	private String payment;
 	private String api_pay;
@@ -21,4 +21,5 @@ public class ordersVO {
 	// 주문 상세 리스트 추가!
 	private List<order_detailVO> detailList;
 	private Integer total_amount; 
+	private String request;
 }

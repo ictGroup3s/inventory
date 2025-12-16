@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 
 <head>
@@ -79,7 +80,7 @@
 		<div class="row border-top px-xl-5">
 			<div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-					<h6 class="p-3">Categories</h6>
+					<h5 class="p-3">Categories</h5>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이
@@ -209,11 +210,11 @@
 		<div class="row px-xl-5">
 			<div class="col-md-6 pb-4">
 				<div
-					class="position-relative bg-white text-center text-md-right text-dark mb-2 py-2 px-5" style="border: 1px solid #d4d4d4;">
+					class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5">
 					<img src="img/bingsu.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">season off</h5>
-						<h1 class="mb-4 font-weight-semi-bold">20%</h1>
+						<h1 class="mb-4 font-weight-semi-bold">Discount</h1>
 					</div>
 					<a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop
 						Now</a>
@@ -222,7 +223,7 @@
 			</div>
 			<div class="col-md-6 pb-4">
 				<div
-					class="position-relative bg-white text-center text-md-left text-dark mb-2 py-2 px-5" style="border: 1px solid #d4d4d4;">
+					class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5">
 					<img src="img/boong1.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">new arrival</h5>
@@ -359,7 +360,11 @@
 
 
 	<!-- Footer Start -->
-	<div class="container-fluid text-dark mt-3 pt-3 pb-2" style="border-top: 2px solid #eeeeee;">
+	<!-- <div class="container-fluid text-dark mt-3 pt-3 pb-2" style="border-top: 2px solid #eeeeee;"> -->
+
+
+	<!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
 		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 

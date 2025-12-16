@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%-- 가격,숫자 포맷 --%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,28 +16,28 @@
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link 
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" 
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
 	rel="stylesheet">
 
 <!-- Font Awesome -->
-<link 
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" 
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css" 
+<link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
 <!-- 채팅 관련 -->
 <link href="css/chat.css" rel="stylesheet">
+
 </head>
 
 <body>
 
-    <!-- Topbar Start -->
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
@@ -119,7 +117,7 @@
 		<div class="row px-xl-5">
 			<div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-					<h6 class="p-3">Categories</h6>
+					<h5 class="p-3">Categories</h5>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이
@@ -136,7 +134,6 @@
 					</ul>
 				</nav>
 			</div>
-			
 			<div class="col-lg-9 col-md-12">
 				<div class="row pb-3 product-grid">
 					<div class="col-12 pb-1">
@@ -226,8 +223,6 @@
 											</c:otherwise>
 										</c:choose>
 									</div>
-								<%-- 할인가 적용 --%>
-									
 								</div>
 								<div
 									class="card-footer d-flex justify-content-between bg-light border mt-auto">
@@ -293,8 +288,9 @@
 	</div>
 
 	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-		<div class="row px-xl-5 pt-3">
+	<div class="container-fluid bg-secondary text-dark mt-5 pt-5"
+		style="margin-top: 550px !important;">
+		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -320,33 +316,30 @@
 							<a class="text-dark mb-2" href="/"><i
 								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
 								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
-								class="text-dark mb-2" href="mlist"><i
-								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
-								class="text-dark mb-2" href="cart"><i
-								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
-								class="text-dark mb-2" href="checkout"><i
-								class="fa fa-angle-right mr-2"></i>결제</a>
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
+							<!--  <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
+                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
+                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->
 						</div>
 					</div>
-					<div class="col-lg-8 col-md-12">
-						<div class="row">
-							<div class="col-md-12 mt-4 mb-5">
-								<p class="text-dark mb-2">
-									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
-									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
 
-								</p>
-								<br>
-								<p style="color: #999;">
-									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
-									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
-									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
-								</p>
-							</div>
+					<div class="row">
+						<div class="col-md-12 mt-4 mb-5">
+							<p class="text-dark mb-2">
+								<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+								&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
+
+							</p>
+							<br>
+							<p style="color: #999;">
+								법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+								통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+								채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+							</p>
 						</div>
-
 					</div>
+
+
 
 				</div>
 			</div>

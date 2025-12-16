@@ -71,7 +71,7 @@
 			<!-- Main Content -->
 			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
-					<h4>주문내역</h4>
+					<h4 style="margin-top:40px;">주문내역</h4>
 				</div>
 
 				<div class="col-lg-10 mx-auto">
@@ -86,17 +86,35 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>10001</td>
-								<td>상품명1</td>
-								<td>10,000원</td>
-								<td>결제완료</td>
-								<td>
-									<button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#orderDetailModal">
-										상세보기
-									</button>
-								</td>
-							</tr>
+							<c:forEach var="order" items="${orderList}">
+								<tr>
+									<td>${order.order_no}</td>
+
+									<!-- 상품명: detailList 중 첫 번째 상품명 -->
+									<td>
+									<c:choose>
+									<c:when test="${not empty order.detailList}">
+				                        ${order.detailList[0].item_name}
+				                        <c:if test="${fn:length(order.detailList) > 1}">
+				                            외 ${fn:length(order.detailList) - 1}개
+				                        </c:if>
+									</c:when>
+									<c:otherwise> 상품 없음 </c:otherwise>
+									</c:choose>
+									</td>
+
+									<!-- 결제금액 -->
+									<td>${order.total_amount}원</td>
+
+									<!-- 주문상태 -->
+									<td>${order.order_status}</td>
+
+									<!-- 상세보기 버튼: 주문번호별 모달 ID 부여 -->
+									<button class="btn btn-sm btn-secondary" data-toggle="modal"
+										data-target="#orderDetailModal_${order.order_no}">
+										상세보기</button>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -104,117 +122,137 @@
 		</div>
 	</div>
 
-	<!-- 주문 상세 모달 -->
-	<div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="orderDetailModalLabel">주문 상세내역</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<!-- 주문 기본 정보 -->
-					<div class="row mb-3">
-						<div class="col-md-6">
-							<strong>주문번호:</strong> 10001
-						</div>
-						<div class="col-md-6">
-							<strong>주문일자:</strong> 2025-12-01 14:30
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-12">
-							<strong>주문상태:</strong> <span class="badge badge-warning" style="background-color:#EDF1FF; color: black;">결제완료</span>
-						</div>
-					</div>
-					
-					<hr>
-					
-					<!-- 상품 정보 -->
-					<h6 class="mb-3"><strong>주문 상품</strong></h6>
-					<div class="table-responsive">
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>상품명</th>
-									<th>수량</th>
-									<th>가격</th>
-									<th>합계</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>상품명1</td>
-									<td>1개</td>
-									<td>10,000원</td>
-									<td>10,000원</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-					<hr>
-					
-					<!-- 결제 정보 -->
-					<h6 class="mb-3"><strong>결제 정보</strong></h6>
-					<div class="row mb-2">
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-6">
-							<strong>총 결제 금액:</strong>
-						</div>
-						<div class="col-md-6 text-right">
-							<h5 class="text-primary mb-0">13,000원</h5>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-12">
-							<strong>결제 방법:</strong> 신용카드 (국민카드 **** **** **** 1234)
-						</div>
-					</div>
-					
-					<hr>
-					
-					<!-- 배송 정보 -->
-					<h6 class="mb-3"><strong>배송 정보</strong></h6>
-					<div class="row mb-2">
-						<div class="col-md-12">
-							<strong>받는 사람:</strong> 홍길동
-						</div>
-					</div>
-					<div class="row mb-2">
-						<div class="col-md-12">
-							<strong>연락처:</strong> 010-1234-5678
-						</div>
-					</div>
-					<div class="row mb-2">
-						<div class="col-md-12">
-							<strong>배송지:</strong> 서울시 강남구 테헤란로 123, 101호
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-md-12">
-							<strong>배송 요청사항:</strong> 문 앞에 놓아주세요
-						</div>
-					</div>
-					
-					<hr>
-					
-					<!-- 주문 진행 상태 -->
-					<h6 class="mb-3"><strong>주문 진행 상태</strong></h6>
-					<ul class="mt-2">
-						<li>2025-12-01 15:00: 결제 완료</li>
-						<li>처리 예정일: 2025-12-02</li>
-					</ul>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				</div>
+	<c:forEach var="order" items="${orderList}">
+<div class="modal fade" id="orderDetailModal_${order.order_no}" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title">주문 상세내역</h5>
+				<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+				</button>
 			</div>
+
+			<div class="modal-body">
+
+				<!-- 주문 기본 정보 -->
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>주문번호:</strong> ${order.order_no}
+					</div>
+					<div class="col-md-6">
+						<strong>주문일자:</strong> ${order.order_date}
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-md-12">
+						<strong>주문상태:</strong>
+						<span class="badge badge-warning" style="background-color:#EDF1FF; color: black;">
+							${order.order_status}
+						</span>
+					</div>
+				</div>
+
+				<hr>
+
+				<!-- 상품 정보 -->
+				<h6 class="mb-3"><strong>주문 상품</strong></h6>
+
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>상품명</th>
+								<th>수량</th>
+								<th>가격</th>
+								<th>합계</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="item" items="${order.detailList}">
+								<tr>
+									<td>${item.item_name}</td>
+									<td>${item.item_cnt}개</td>
+									<td>${item.item_price}원</td>
+									<td>${item.amount}원</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+
+				<hr>
+
+				<!-- 결제 정보 -->
+				<h6 class="mb-3"><strong>결제 정보</strong></h6>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>총 결제 금액:</strong>
+					</div>
+					<div class="col-md-6 text-right">
+						<h5 class="text-primary mb-0">${order.total_amount}원</h5>
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-md-12">
+						<strong>결제 방법:</strong> ${order.payment}
+					</div>
+				</div>
+
+				<hr>
+
+				<!-- 배송 정보 -->
+				<h6 class="mb-3"><strong>배송 정보</strong></h6>
+
+				<div class="row mb-2">
+					<div class="col-md-12">
+						<strong>받는 사람:</strong> ${order.order_name}
+					</div>
+				</div>
+
+				<div class="row mb-2">
+					<div class="col-md-12">
+						<strong>연락처:</strong> ${order.order_phone}
+					</div>
+				</div>
+
+				<div class="row mb-2">
+					<div class="col-md-12">
+						<strong>배송지:</strong> ${order.order_addr}
+					</div>
+				</div>
+
+				<!-- 요청사항이 있을 경우만 표시 -->
+				<c:if test="${not empty order.request}">
+				<div class="row mb-3">
+					<div class="col-md-12">
+						<strong>배송 요청사항:</strong> ${order.request}
+					</div>
+				</div>
+				</c:if>
+
+				<hr>
+
+				<!-- 주문 진행 상태: tracking 값 표시 -->
+				<h6 class="mb-3"><strong>주문 진행 상태</strong></h6>
+				<ul class="mt-2">
+					<li>주문 상태: ${order.order_status}</li>
+					<li>Tracking 코드: ${order.tracking}</li>
+				</ul>
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+			</div>
+
 		</div>
 	</div>
+</div>
+</c:forEach>
 
 	<!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
