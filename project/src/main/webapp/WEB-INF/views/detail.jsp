@@ -68,10 +68,7 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> 
-			<i class="fas fa-heart text-primary"></i> 
-			<span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -143,8 +140,7 @@
 			</div>
 			
 
-		<div class="col-lg-10 col-md-12 p-0 m-0" >			 
-			 
+	<div class="col-lg-10 col-md-12 p-0 m-0" >		 
 	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
 		<div class="container py-4">
 		    <div class="d-flex flex-wrap align-items-center">
@@ -153,7 +149,7 @@
 		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
 		        </div>
 		         <div class="p-2 flex-grow-1">
-		            <h4 class="font-weight-semi-bold">${product.item_name}</h4>
+					<h4 class="font-weight-semi-bold">${product.item_name}</h4>												
 		            <div id="product-rating-summary" class="mb-2" style="font-size: 0.9rem; color: #666;"></div>
 		            
 		            <div class="d-flex mb-2 align-items-center">
@@ -179,21 +175,18 @@
 								<h4><fmt:formatNumber value="${product.sales_p}" pattern="#,###" />원</h4>
 							</c:otherwise>
 						</c:choose>			
-					</div>	
-					
-					
-					<div class="d-flex mb-3">
-					</div>
-					
+					</div>					
 				
 				<form action="/cart/addForm" method="post">
 					<input type="hidden" name="item_no" value="${product.item_no}" />
-		
-				 <div class="d-flex align-items-center mb-3">
+					<c:if test="${product.stock_cnt <= 10}">
+							<p style="font-size:12px; color:#b90000;"> 남은 수량: ${product.stock_cnt} 개</p>
+					</c:if>
+				 <div class="d-flex align-items-center mb-3">					
 				     <!-- 수량 조절 -->
 			        <div class="input-group mr-2  quantity" style="width:130px;">		
 			        <button type="button" class="btn btn-primary btn-minus">-</button>
-			        <input type="text" class="form-control text-center" name="qty" id="qty" value="1">
+			        	<input type="number" class="form-control text-center" name="qty" id="qty" value="1" min="1" max="${product.stock_cnt}" data-max="${product.stock_cnt}">
 			        <button type="button" class="btn btn-primary btn-plus">+</button>
 			       </div>
 			      <!-- 장바구니 담기 버튼 -->   
@@ -266,7 +259,9 @@
 
 								<div class="form-group">
 									<label for="re_content">내 리뷰작성 *</label>
-										<textarea id="re_content"  name="re_content" cols="30" rows="5" class="form-control"></textarea>
+											<textarea id="re_content" name="re_content" cols="30" rows="5" class="form-control"
+												placeholder="리뷰 내용을 입력하세요 (예: 맛/양/배송 상태)"
+												data-placeholder="리뷰 내용을 입력하세요 (예: 맛/양/배송 상태)"></textarea>
 								</div>
 								<div class="form-group">
 									<label for="re_title">제목 *</label> 
@@ -291,19 +286,53 @@
 <!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
 <div class="container py-5">
    <ul class="bxslider">
-   	  <c:forEach var="rp" items="${randomProducts}">
-	    <li>
-	        <div class="slider-card" data-item-no="${rp.item_no}">
-	           <a href="detail?item_no=${rp.item_no}">
-	           		<img src="/img/product/${rp.item_img}" alt="${rp.item_name}" />
-	           </a>
-	            <h6 class="slider-title">${rp.item_name}</h6>				
-	            <p class="slider-price"><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</p>
-				
-	        </div>
-	    </li>
-      </c:forEach>
-   </ul>
+            <c:forEach var="rp" items="${randomProducts}">  
+               <li>
+                    <div class="slider-card" data-item-no="${rp.item_no}">
+                        <a href="detail?item_no=${rp.item_no}">
+                            <img src="/img/product/${rp.item_img}" alt="${rp.item_name}" class="d-block mx-auto"/>
+                        </a>
+                        <h6 class="slider-title mt-2">${rp.item_name}</h6>
+
+                        <!-- 평점 리뷰 적용 -->
+						<c:set var="reviewCnt" value="${empty rp.review_cnt ? 0 : rp.review_cnt}" />
+						<c:set var="rating" value="${empty rp.avg_rating ? 0 : rp.avg_rating}" />
+						<c:if test="${rating > 0 || reviewCnt > 0}">
+							<div class="mb-2" style="font-size: 0.9rem; color: #666;">
+								<c:choose>
+									<c:when test="${rating > 0}">
+										<i class="fas fa-heart" style="color: #D19C97;"></i>
+									</c:when>
+									<c:otherwise>
+										<i class="far fa-heart" style="color: #D19C97;"></i>
+									</c:otherwise>
+								</c:choose>
+								<fmt:formatNumber value="${rating}" pattern="#.0"/>
+								<c:if test="${reviewCnt > 0}"> (${reviewCnt}개 리뷰)</c:if>
+							</div>
+						</c:if>
+
+                        <c:choose>
+                            <c:when test="${not empty rp.dis_rate and rp.dis_rate > 0}">
+                                <c:set var="discounted" value="${rp.sales_p * (100 - rp.dis_rate) / 100}" />
+                                <div class="d-flex flex-column">
+                                    <h6 class="text-muted mb-0" style="font-size: 0.8rem;">
+                                        <del><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</del>
+                                    </h6>
+                                    <fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+                                    <h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <h6><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</h6>
+                            </c:otherwise>
+                        </c:choose>
+                        
+                    </div>
+               </li>
+            </c:forEach>
+          </ul>      
+    </div>
 </div>
 <!-- Image Slider End -->
 
@@ -447,7 +476,7 @@
 		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
 	<!-- 리뷰 js -->	
-	<script src="js/Review.js"></script>
+	<script src="js/Review.js"></script>	
 	
 
 </body>
