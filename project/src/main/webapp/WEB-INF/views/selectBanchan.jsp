@@ -61,9 +61,7 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -136,11 +134,11 @@
 				</nav>
 			</div>
 			<div class="col-lg-9 col-md-12">
-				<div class="row pb-3">
+				<div class="row pb-3 product-grid">
 					<div class="col-12 pb-1">
 						<div class="d-flex align-items-center justify-content-between mb-4">
 							
-							<div class="dropdown ml-auto">
+							<div class="dropdown">
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
@@ -167,8 +165,8 @@
 					</c:if>
 
 					<c:forEach var="item" items="${products}">
-						<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4"
+						<div class="col-lg-4 col-md-4 col-sm-4 pb-1 product-col">
+							<div class="card product-item border-0 mb-4 h-100 d-flex flex-column"
 								style="width: 280px;">
 								<div
 									class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -179,11 +177,13 @@
 								</div>
 								<div
 									class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-									<h6 class="text-truncate mb-3">${item.item_name}</h6>
+									<h5 class="text-truncate mb-3">${item.item_name}</h5>
 									
-								<%-- 평점 리뷰 적용 --%>	
+								<%-- 평점/리뷰: 리뷰가 없으면 표시 안 함 --%>
+								<c:set var="reviewCnt" value="${empty item.review_cnt ? 0 : item.review_cnt}" />
+								<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
+								<c:if test="${reviewCnt > 0}">
 									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
-										<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
 										<span class="mr-1">
 											<c:forEach begin="1" end="5" var="i">
 												<c:choose>
@@ -196,12 +196,11 @@
 												</c:choose>
 											</c:forEach>
 										</span>
-										<c:if test="${item.review_cnt > 0}">
-											<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
-										</c:if>
-										<span>(${item.review_cnt}개 리뷰)</span>
+										<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
+										<span>(${reviewCnt}개 리뷰)</span>
 									</div>
-								<%-- 평점 리뷰 적용 --%>
+								</c:if>
+								<%-- 평점/리뷰 --%>
 									
 								<%-- 할인가 적용 --%>	
 									<div class="d-flex justify-content-center">
@@ -210,13 +209,13 @@
 												<c:set var="discounted" value="${item.sales_p * (100 - item.dis_rate) / 100}" />
 											<%-- 10원 단위 절삭 (내림) --%>
 												<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
-												<h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+												<h5><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h5>
 												<h6 class="text-muted ml-2">
 													<del><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</del>
 												</h6>
 											</c:when>
 											<c:otherwise>
-												<h6><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h6>
+												<h5><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h5>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -224,7 +223,7 @@
 									
 								</div>
 								<div
-									class="card-footer d-flex justify-content-between bg-light border">
+									class="card-footer d-flex justify-content-between bg-light border mt-auto">
 									<a href="detail?item_no=${item.item_no}"
 										class="btn btn-sm text-dark p-0"> <i
 										class="fas fa-eye text-primary mr-1"></i>상세정보
@@ -306,7 +305,7 @@
 					<i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
 				</h2>
 			</div>
-			<div class="col-lg-8 col-md-12">
+			<div class="col-lg-9 col-md-12">
 				<div class="row">
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>

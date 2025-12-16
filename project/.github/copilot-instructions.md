@@ -1,123 +1,105 @@
-﻿```instructions
-# GitHub Copilot 지침  Inventory 프로젝트
+# GitHub Copilot Instructions for Inventory Project
 
-이 파일은 Spring Boot + JSP 기반의 재고/채팅 애플리케이션에서 바로 생산성을 낼 수 있도록 핵심 정보를 정리한 안내서입니다.
+This guide provides essential context for AI coding agents working on this Spring Boot + JSP inventory and chat application.
 
-##  아키텍처 & 기술 스택
+## Architecture & Tech Stack
+- **Framework**: Spring Boot 3.5.8 (Java 17)
+- **Database**: Oracle (ojdbc11) with MyBatis 3.0.5
+- **Frontend**: JSP (Jakarta JSTL) + Static Resources (CSS/JS in `src/main/resources/static`)
+- **Real-time**: Spring WebSocket (`TextWebSocketHandler`)
+- **Build**: Maven (`mvnw`)
 
-##  코드 구조 요약
+## Code Structure & Patterns
 
-### 레이어 구조
-```
-controller/     `@Controller`(JSP 뷰 반환) 또는 `@RestController`(JSON 반환)
-service/        비즈니스 로직, Interface+Impl 또는 단일 클래스 패턴
-model/          MyBatis 기반 Repository 구현, `vo/`에 Lombok VO
-resources/
-  mappers/       MyBatis XML 매퍼 (namespace = Repository FQCN)
-  static/        CSS/JS/img 및 채팅 로그 파일
-webSocket/       WebSocket 핸들러 (`UnifiedChatHandler`)
-```
+### Layered Architecture
+1.  **Controller**: 
+    - `@RestController` for JSON APIs (e.g., `ReviewController`).
+    - `@Controller` for JSP views (e.g., `AdminController`).
+2.  **Service**: 
+    - Interface + Implementation pattern (e.g., `ReviewService` interface and `ReviewServiceImpl` class).
+3.  **Repository (Data Access)**:
+    - **Pattern**: Manual implementation using `SqlSessionTemplate`.
+    - **Structure**: Interface (`ReviewRepository`) + Implementation (`ReviewRepositoryImpl`).
+    - **MyBatis Usage**: `sess.selectList("namespace.id", param)` inside the implementation.
+4.  **Model**:
+    - VOs in `com.example.model.vo` using Lombok `@Data`.
+    - Mappers in `src/main/resources/mappers/`.
 
-### 핵심 파일
+### MyBatis Convention (Crucial)
+Do **not** use `@Mapper` interfaces directly. Use the `RepositoryImpl` pattern:
 
-##  주요 규약/패턴
-
-### MyBatis 사용 방식
+**Repository Implementation (`src/main/java/com/example/model/ReviewRepositoryImpl.java`):**
 ```java
-sess.selectList("com.example.model.ReviewRepository.selectReviewsByItemNo", itemNo);
-sess.insert("com.example.model.ReviewRepository.add", reviewVO);
+@Repository
+public class ReviewRepositoryImpl implements ReviewRepository {
+    @Autowired
+    private SqlSessionTemplate sess;
+
+    @Override
+    public List<ReviewVO> selectReviewsByItemNo(Integer item_no) {
+        // Namespace must match the XML mapper namespace
+        return sess.selectList("com.example.model.ReviewRepository.selectReviewsByItemNo", item_no);
+    }
+}
 ```
 
+**Mapper XML (`src/main/resources/mappers/ReviewMapper.xml`):**
 ```xml
 <mapper namespace="com.example.model.ReviewRepository">
-  <select id="selectReviewsByItemNo" parameterType="int" resultType="com.example.model.vo.ReviewVO">
-    <!-- resultType은 VO의 FQCN을 사용 -->
-  </select>
-
-  <insert id="add" parameterType="com.example.model.vo.ReviewVO">
-    <selectKey keyProperty="review_no" resultType="int" order="BEFORE">
-      SELECT review_seq.NEXTVAL FROM dual
-    </selectKey>
-    <!-- Oracle 시퀀스는 selectKey(ORDER=BEFORE) 사용 -->
-  </insert>
+    <select id="selectReviewsByItemNo" parameterType="int" resultType="com.example.model.vo.ReviewVO">
+        SELECT * FROM review WHERE item_no = #{item_no}
+    </select>
 </mapper>
 ```
 
-### 의존성 주입 패턴
+### Chat System Architecture
+- **Handler**: `UnifiedChatHandler` (`/ws/chat`).
+- **Protocol**: JSON messages.
+    - `__JOIN__`: Register session (no broadcast).
+    - `__CLOSE__`: End chat, broadcast close, remove cache.
+    - Normal Message: Broadcast to room, save to file, save to DB.
+- **Storage**:
+    - Files: `src/main/resources/static/chat/chat_{customerId}_{adminId}_{timestamp}.txt`.
+    - DB: `ChatService` saves metadata.
 
-### 채팅(실시간) 아키텍처
-  1. `chatRepository.findExistingChatRoom(customerId)`로 기존 채팅 확인
-  2. 기존 방의 `admin_id`가 있으면 재사용
-  3. 없으면 `chatRepository.findSpecificAdmin()`으로 관리자 조회
-  4. 관리자 미존재 시 예외 발생
+## Developer Workflow
 
-  - 경로: `src/main/resources/static/chat/`
-  - 파일명 형식: `chat_{customerId}_{adminId}_{timestamp}.txt`
-  - 보조 로그: `FileSaveService`는 `C:/chat_logs/` 사용 가능
-  - 디렉토리가 없으면 핸들러가 생성함
-
-  1. 클라이언트  `/ws/chat`로 전송
-  2. `UnifiedChatHandler.handleTextMessage()`가 JSON 파싱
-  3. 특수 메시지: `__JOIN__`(세션 등록만), `__CLOSE__`(종료 브로드캐스트 + 캐시 제거)
-  4. 일반 메시지: 파일 기록  방 세션에 브로드캐스트  `ChatService.saveChat()`  DB 저장
-
-### REST 컨트롤러 vs 뷰 컨트롤러
-```java
-@PostMapping("/add")
-public String addReview(@RequestBody ReviewVO review) {
-    reviewService.addReview(review);
-    return "리뷰가 등록되었습니다." + review.getItem_no();
-}
-```
-```java
-@GetMapping("shop")
-public String shop() {
-    return "shop"; // -> /WEB-INF/views/shop.jsp
-}
-```
-
-##  빌드 및 실행
-PowerShell(Windows) 예시:
+### Build & Run (PowerShell)
 ```powershell
-# 애플리케이션 실행 (포트 8080)
+# Run Application (Port 8080)
 .\mvnw.cmd spring-boot:run
 
-# 패키징
+# Clean & Package
 .\mvnw.cmd clean package
 
-# 테스트 실행
+# Run Tests
 .\mvnw.cmd test
 ```
 
-##  개발 가이드 (자주 하는 작업)
+### Common Tasks
 
-### 새 VO(도메인) 추가
-1. `com.example.model.vo` 패키지에 VO 클래스 추가 (Lombok `@Data` 사용)
-2. DB 컬럼명과 필드명 매핑(보통 snake_case)
-3. 매퍼에서 `resultType="com.example.model.vo.YourVO"` 형태로 사용
+**Adding a New Feature:**
+1.  **VO**: Create `YourVO.java` in `com.example.model.vo`.
+2.  **Mapper**: Create/Update XML in `src/main/resources/mappers/`. Use `<selectKey>` for Oracle sequences if needed.
+3.  **Repository**: Add method to Interface, implement in `Impl` using `SqlSessionTemplate`.
+4.  **Service**: Add business logic.
+5.  **Controller**: Expose endpoint.
+6.  **View**: Add JSP in `src/main/webapp/WEB-INF/views/`.
 
-### 새 MyBatis 매퍼 추가
-1. `src/main/resources/mappers/`에 XML 파일 추가
-2. `<mapper namespace>`는 레포지토리 인터페이스의 FQCN으로 설정
-3. Oracle 시퀀스가 필요하면 `<selectKey order="BEFORE">` 사용
-4. 레포지토리에서 `sess.selectList("namespace.id", param)` 호출
-
-### 새 JSP 뷰 추가
-1. `src/main/webapp/WEB-INF/views/{name}.jsp`에 파일 생성
-2. 컨트롤러는 `return "{name}";` (prefix/suffix는 설정에 의해 붙음)
-3. 정적 리소스는 `src/main/resources/static/` 하위에 배치
-
-### 설정 주의사항
-
-##  문제해결 팁
-
-### 채팅 관련
-
-### 빌드/컴파일 문제
-
-### DB 연결 문제
-
-##  프로젝트 요약
-전자상거래형 재고관리 시스템에 고객-관리자 실시간 채팅이 통합된 프로젝트입니다. 주요 기능: 상품 카탈로그, 장바구니, 주문처리, 리뷰, 실시간 채팅. 코드에는 한국어 주석/문구와 영어 코드가 혼재되어 있으니 참고하세요.
-
+**Oracle Sequence Example:**
+```xml
+<insert id="add" parameterType="com.example.model.vo.ReviewVO">
+    <selectKey keyProperty="review_no" resultType="int" order="BEFORE">
+        SELECT review_seq.NEXTVAL FROM dual
+    </selectKey>
+    INSERT INTO review (review_no, ...) VALUES (#{review_no}, ...)
+</insert>
 ```
+
+## Key Directories
+- **Controllers**: `src/main/java/com/example/controller/`
+- **Services**: `src/main/java/com/example/service/`
+- **Repositories**: `src/main/java/com/example/model/`
+- **Mappers**: `src/main/resources/mappers/`
+- **Views (JSP)**: `src/main/webapp/WEB-INF/views/`
+- **Static Assets**: `src/main/resources/static/`

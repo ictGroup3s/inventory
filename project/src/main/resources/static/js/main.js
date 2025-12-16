@@ -12,7 +12,10 @@
 			pager: false,			// 페이지 네비게이션(하단 점) 표시 여부
 			controls: true,			// 좌-우 화살표 (슬라이드 전환 효과) 설정
 			pause: 2000,			// 자동 슬라이드 시 각 슬라이드가 보여지는 시간 (밀리초)
-			speed: 100,				// 슬라이드 전환 속도 (밀리초)
+			// 전환이 너무 빠르면 '딱딱'해 보이므로 여유 있게 설정
+			speed: 650,				// 슬라이드 전환 속도 (밀리초)
+			useCSS: false,			// jQuery easing 적용을 위해 CSS transition 비활성화
+			easing: 'easeInOutCubic',
 			infiniteLoop: true,		// 무한 루프 설정
 			onSliderLoad: function(currentIndex){
 				try{ $('.bxslider').trigger('bxslider:loaded'); }catch(e){}

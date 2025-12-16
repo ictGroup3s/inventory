@@ -106,14 +106,12 @@
 	<div class="container-fluid bg-secondary mb-5">
 		<div
 			class="d-flex flex-column align-items-center justify-content-center"
-			style="min-height: 300px">
+			style="min-height: 250px">
 			<h1 class="font-weight-semi-bold text-uppercase mb-3">장바구니</h1>
 			<div class="d-inline-flex">
 				<p class="m-0">
-					<a href="header">쇼핑 계속 하기</a>
-				</p>
-				<p class="m-0 px-2">-</p>
-				<p class="m-0">Shopping Cart</p>
+					<a href="header"><h4>쇼핑 계속 하기</h4></a>
+				</p>				
 			</div>
 		</div>
 	</div>

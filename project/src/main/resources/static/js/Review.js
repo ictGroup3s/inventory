@@ -293,6 +293,21 @@
 			}
 		});
 	});
+	
+	// 리뷰 작성란: 포커스 시 placeholder 즉시 숨김, 비어있으면 blur 시 복원
+		$(function() {
+			var $textarea = $('#re_content');
+			if ($textarea.length === 0) return;
+			var defaultPlaceholder = $textarea.attr('data-placeholder') || $textarea.attr('placeholder') || '';
+			$textarea.on('focus', function() {
+				$(this).attr('placeholder', '');
+			});
+			$textarea.on('blur', function() {
+				if (!$(this).val().trim()) {
+					$(this).attr('placeholder', defaultPlaceholder);
+				}
+			});
+		});
 
 	//  디테일js에서 이미지 슬라이더 클릭시 이동 처리 ------------------------
 	// 클릭 위임: 원본(비클론, aria-hidden != true) 슬라이드의 카드 클릭 시 디테일로 이동

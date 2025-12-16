@@ -307,45 +307,50 @@
 			</div>
 			<ul class="bxslider">
 				<c:forEach var="rp" items="${randomProducts}">  
-				<li>
-						<div class="slider-card" data-item-no="${rp.item_no}">
-							<a href="detail?item_no=${rp.item_no}">
-								<img src="/img/product/${rp.item_img}" alt="${rp.item_name}" class="d-block mx-auto"/>
-							</a>
-							<h6 class="slider-title mt-2">${rp.item_name}</h6>
+               <li>
+                    <div class="slider-card" data-item-no="${rp.item_no}">
+                        <a href="detail?item_no=${rp.item_no}">
+                            <img src="/img/product/${rp.item_img}" alt="${rp.item_name}" class="d-block mx-auto"/>
+                        </a>
+                        <h6 class="slider-title mt-2">${rp.item_name}</h6>
 
-							<!-- 평점 리뷰 적용 -->
+                        <!-- 평점 리뷰 적용 -->
+						<c:set var="reviewCnt" value="${empty rp.review_cnt ? 0 : rp.review_cnt}" />
+						<c:set var="rating" value="${empty rp.avg_rating ? 0 : rp.avg_rating}" />
+						<c:if test="${rating > 0 || reviewCnt > 0}">
 							<div class="mb-2" style="font-size: 0.9rem; color: #666;">
 								<c:choose>
-									<c:when test="${rp.review_cnt > 0}">
-										<i class="fas fa-heart" style="color: #D19C97;"></i> 
-										<fmt:formatNumber value="${rp.avg_rating}" pattern="#.0"/> (${rp.review_cnt}개 리뷰)
+									<c:when test="${rating > 0}">
+										<i class="fas fa-heart" style="color: #D19C97;"></i>
 									</c:when>
 									<c:otherwise>
-										<i class="far fa-heart" style="color: #D19C97;"></i> 0.0 (${rp.review_cnt}개 리뷰)
+										<i class="far fa-heart" style="color: #D19C97;"></i>
 									</c:otherwise>
 								</c:choose>
+								<fmt:formatNumber value="${rating}" pattern="#.0"/>
+								<c:if test="${reviewCnt > 0}"> (${reviewCnt}개 리뷰)</c:if>
 							</div>
+						</c:if>
 
-							<c:choose>
-								<c:when test="${not empty rp.dis_rate and rp.dis_rate > 0}">
-									<c:set var="discounted" value="${rp.sales_p * (100 - rp.dis_rate) / 100}" />
-									<div class="d-flex flex-column">
-										<h6 class="text-muted mb-0" style="font-size: 0.8rem;">
-											<del><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</del>
-										</h6>
-										<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
-										<h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<h6><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</h6>
-								</c:otherwise>
-							</c:choose>
-							
-						</div>
-				</li>
-				</c:forEach>
+                        <c:choose>
+                            <c:when test="${not empty rp.dis_rate and rp.dis_rate > 0}">
+                                <c:set var="discounted" value="${rp.sales_p * (100 - rp.dis_rate) / 100}" />
+                                <div class="d-flex flex-column">
+                                    <h6 class="text-muted mb-0" style="font-size: 0.8rem;">
+                                        <del><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</del>
+                                    </h6>
+                                    <fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
+                                    <h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <h6><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</h6>
+                            </c:otherwise>
+                        </c:choose>
+                        
+                    </div>
+               </li>
+            </c:forEach>
 			</ul>      
 		</div>
 	</div>
