@@ -22,20 +22,6 @@ $(function() {
 		}, 4000); // 애니메이션 완전히 끝난 후 삭제
 	}
 
-	$.ajaxSetup({
-		complete: function(xhr) {
-			if (xhr.status === 401) { // 서버에서 세션 만료 시 401 반환
-				console.warn("⚠️ 세션 만료: 관리자 로그인이 필요합니다.");
-				showToast("관리자 로그인이 필요합니다.", "warning");
-
-				// 1.5초 후 로그인 페이지 이동
-				setTimeout(() => {
-					window.location.href = "/login";
-				}, 1500);
-			}
-		}
-	});
-
 	console.log("관리자 채팅 JS 로드 완료");
 /*
 	if (typeof adminId === 'undefined' || !adminId || adminId === "") {
@@ -44,10 +30,6 @@ $(function() {
 		return;
 	}
 */
-	if (!adminId || adminId === "" || adminRole !== "1") {
-		console.error("❌ 관리자 권한이 없습니다.");
-		showToast("관리자 로그인이 필요합니다.");
-	}
 	console.log("✅ 현재 관리자:", adminId);
 
 	let adminSocket = null;
@@ -88,7 +70,6 @@ $(function() {
 
 			// 세션 만료 메시지 처리
 			if (chatMsg.type === "SESSION_EXPIRED") {
-				showToast("관리자 로그인이 필요합니다.");
 				setTimeout(() => {
 					window.location.href = "/admin/login";
 				}, 1500);

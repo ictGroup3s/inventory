@@ -27,6 +27,7 @@ public class LogController {
 	    @PostMapping("/loginAction")
 	    public String login(@RequestParam String login_id,
 	                        @RequestParam String login_pass,
+	                        @RequestParam(required = false) String redirectURL,
 	                        HttpSession session,
 	                        RedirectAttributes ra,
 	                        Model m) {
@@ -36,7 +37,11 @@ public class LogController {
 	        if (user !=null) { 
 	        	session.setAttribute("loginUser", user); 	       //세션저장
 	        	session.setAttribute("loginRole", user.getRole());
-	           return "redirect:/"; // 로그인 성공 시 메인으로
+	        	if (redirectURL != null && !redirectURL.isEmpty()) {
+	                return "redirect:" + redirectURL;
+	            }
+	        	
+	        	return "redirect:/"; // 로그인 성공 시 메인으로
 	           
 	       } else {
 	    	   m.addAttribute("loginError", "아이디 또는 비밀번호가 틀렸습니다.");

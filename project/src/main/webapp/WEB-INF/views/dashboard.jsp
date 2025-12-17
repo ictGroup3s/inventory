@@ -37,15 +37,18 @@
 <body class="${empty sessionScope.loginUser || sessionScope.loginRole != '1' ? 'hide-content' : ''}">
 	<%-- 관리자 아니면 모달 띄우고 페이지 내용 숨김 --%>
 	<c:if test="${empty sessionScope.loginUser || sessionScope.loginRole != '1'}">
-		<div class="admin-overlay"></div>
-		<div class="login-modal">
-			<div class="lock-icon">🔒</div>
-			<h3>로그인이 필요합니다</h3>
-			<p>
-				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
-			</p>
-			<a href="${pageContext.request.contextPath}/login" class="btn-login"
-				style="display: block; text-decoration: none;">로그인</a>
+    <div class="admin-overlay"></div>
+    <div class="login-modal">
+        <div class="lock-icon">🔒</div>
+        <h3>로그인이 필요합니다</h3>
+        <p>
+            관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
+        </p>
+        <%-- 현재 페이지 이름만 전달 --%>
+        <a href="login?redirectURL=dashboard" 
+           class="btn-login" style="display: block; text-decoration: none;">로그인</a>
+			<a href="${pageContext.request.contextPath}/" class="btn-home"
+			style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
@@ -90,8 +93,7 @@
 					<nav class="category-sidebar" id="mainSidebar">
 						<h5 class="p-3"> 관리자 페이지</h5>
 						<ul class="nav flex-column">
-							<li class="nav-item"><a href="dashboard"
-								class="nav-link active">대쉬보드</a></li>
+							<li class="nav-item"><a href="dashboard" class="nav-link active">대쉬보드</a></li>
 							<li class="nav-item"><a href="item" class="nav-link">상품관리</a></li>
 							<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
 							<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>

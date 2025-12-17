@@ -51,8 +51,11 @@
 			<p>
 				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
 			</p>
-			<a href="${pageContext.request.contextPath}/login" class="btn-login"
-				style="display: block; text-decoration: none;">로그인</a>
+			<%-- 현재 페이지 이름만 전달 --%>
+			<a href="login?redirectURL=item" class="btn-login"
+				style="display: block; text-decoration: none;">로그인</a> <a
+				href="${pageContext.request.contextPath}/" class="btn-home"
+				style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
@@ -92,7 +95,7 @@
 		<!-- Main Layout -->
 		<div class="container-fluid">
 			<div class="row px-xl-5">
-				<div class="col-lg-2 ">
+				<div class="col-lg-1 ">
 					<!-- Sidebar -->
 					<nav class="category-sidebar">
 						<h6>관리자 페이지</h6>
@@ -108,7 +111,7 @@
 					</nav>
 				</div>
 				<!-- Dashboard Content -->
-				<div class="col-lg-10">
+				<div class="col-lg-11">
 					<!-- Mobile toggler for sidebar -->
 					<nav class="navbar navbar-light bg-light d-lg-none">
 						<button class="navbar-toggler" type="button"
@@ -117,25 +120,30 @@
 						</button>
 					</nav>
 
-					<div class="container-fluid py-5 px-0">
+					<div class="container py-5">
 
 						<!-- 상품 등록 영역 -->
-						<div class="row px-xl-0">
+						<div class="row" style="align-items: flex-start;">
+
 							<!-- 좌측: 상품 이미지 -->
-							<div class="col-lg-5 pb-5 text-center">
+							<div class="col-lg-4 d-flex justify-content-start"
+								style="padding-left: 0;">
 								<img id="preview" src="img/insert_pic.png" alt="상품 이미지"
-									class="img-fluid" style="width: 600px; height: 500px;">
+									class="img-fluid"
+									style="max-width: 350px; height: auto; margin-top: 70px;">
 							</div>
 
 							<!-- 우측: 상품 등록 폼 -->
-							<div class="col-lg-7 pb-5">
+							<div class="col-lg-8">
 								<h3 class="font-weight-semi-bold mb-4">상품관리</h3>
 
 								<form action="saveItem" method="post"
 									enctype="multipart/form-data">
 									<input type="hidden" name="item_no">
+
 									<!-- 상품 정보 입력 테이블 -->
-									<table class="table table-bordered">
+									<table class="table table-bordered mx-auto"
+										style="max-width: 600px;">
 										<tr>
 											<td>상품명</td>
 											<td><input type="text"
@@ -183,6 +191,8 @@
 												class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
 										</tr>
 
+										<input type="hidden" name="existingItemImg" value="">
+
 										<tr>
 											<td>이미지 업로드</td>
 											<td><input type="file" id="uploadFile"
@@ -198,12 +208,13 @@
 												<small class="error-msg text-danger d-none">필수 입력
 													항목입니다.</small></td>
 										</tr>
+
 										<tr>
 											<td>할인률</td>
 											<td>
 												<div class="input-group">
 													<input type="number" class="form-control required-field"
-														name="dis_rate" placeholder="할인률" aria-label="할인률">
+														name="dis_rate" placeholder="할인률">
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -213,12 +224,11 @@
 										</tr>
 									</table>
 
-									<!-- 등록/수정/삭제 버튼 -->
+									<!-- 등록/수정 버튼 -->
 									<div class="d-flex align-items-center mb-4 pt-2">
 										<button class="btn btn-primary mr-2 submit-btn register">등록</button>
 										<button class="btn btn-warning mr-2 submit-btn update"
 											formaction="/itemUpdate">수정</button>
-
 									</div>
 								</form>
 							</div>
@@ -247,38 +257,41 @@
 									</div>
 								</div>
 								<!-- 상품 목록 테이블: 가로 전체(w-100) -->
-								<table class="table table-bordered w-100">
-									<thead class="thead-light">
-										<tr>
-											<th>상품코드</th>
-											<th>상품명</th>
-											<th>카테고리</th>
-											<th>원가</th>
-											<th>소비자가</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${list}" var="item">
-											<tr class="item-row" data-item_no="${item.item_no}"
-												data-item_name="${item.item_name}"
-												data-origin_p="${item.origin_p}"
-												data-sales_p="${item.sales_p}"
-												data-cate_no="${item.cate_no}"
-												data-stock_cnt="${item.stock_cnt}"
-												data-item_content="${item.item_content}"
-												data-item_img="${item.item_img}"
-												data-dis_rate="${item.dis_rate }">
-												<td>${item.item_no}</td>
-												<td>${item.item_name}</td>
-												<td>${item.cate_name}</td>
-												<td>${item.origin_p}</td>
-												<td>${item.sales_p}</td>
-												<td><button class="btn btn-danger delete-btn"
-														data-itemno="${item.item_no}">삭제</button></td>
+								<div class="stock-table-wrapper">
+									<table class="table table-bordered w-100 stock-table">
+										<thead class="thead-light">
+											<tr>
+												<th>상품코드</th>
+												<th>상품명</th>
+												<th>카테고리</th>
+												<th>원가</th>
+												<th>소비자가</th>
+												<th></th>
 											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+										</thead>
+										<tbody>
+											<c:forEach items="${list}" var="item">
+												<tr class="item-row" data-item_no="${item.item_no}"
+													data-item_name="${item.item_name}"
+													data-origin_p="${item.origin_p}"
+													data-sales_p="${item.sales_p}"
+													data-cate_no="${item.cate_no}"
+													data-stock_cnt="${item.stock_cnt}"
+													data-item_content="${item.item_content}"
+													data-item_img="${item.item_img}"
+													data-dis_rate="${item.dis_rate }">
+													<td>${item.item_no}</td>
+													<td>${item.item_name}</td>
+													<td>${item.cate_name}</td>
+													<td>${item.origin_p}</td>
+													<td>${item.sales_p}</td>
+													<td><button class="btn btn-danger delete-btn"
+															data-itemno="${item.item_no}">삭제</button></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 						<!-- 상품 목록 row 끝 -->
@@ -336,12 +349,9 @@
 			</div>
 		</div>
 	</div>
-	<!-- JS -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="js/main.js"></script>
 
 	<div id="toast"></div>
 
