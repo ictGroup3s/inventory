@@ -11,6 +11,7 @@ import com.example.model.AdminRepository;
 import com.example.model.CartRepository;
 import com.example.model.orderRepository;
 import com.example.model.vo.CartItemVO;
+import com.example.model.vo.CustomerVO;
 import com.example.model.vo.ProductVO;
 import com.example.model.vo.StockVO;
 import com.example.model.vo.ordersVO;
@@ -151,6 +152,34 @@ public class orderServiceImple implements orderService {
 		} catch (SQLException e) {
 			log.error("❌ 주문 상태 업데이트 실패 - 주문번호: {}", orderNo, e);
 			throw new RuntimeException("주문 상태 업데이트 중 오류 발생", e);
+		}
+	}
+
+	// ⭐⭐⭐ 새로 추가되는 메서드들 ⭐⭐⭐
+	@Override
+	public List<ordersVO> getOrders(CustomerVO loginUser) {
+		try {
+			log.info("마이페이지 주문 목록 조회 - 고객ID: {}", loginUser.getCustomer_id());
+			List<ordersVO> orders = orderRepository.selectOrdersByCustomerId(loginUser.getCustomer_id());
+			log.info("✅ 조회된 주문 개수: {}", orders != null ? orders.size() : 0);
+			return orders;
+		} catch (SQLException e) {
+			log.error("❌ 주문 목록 조회 실패 - 고객ID: {}", loginUser.getCustomer_id(), e);
+			throw new RuntimeException("주문 목록 조회 중 오류 발생", e);
+		}
+	}
+
+	@Override
+	public List<ordersVO> getDeliveries(CustomerVO loginUser) {
+		try {
+			log.info("마이페이지 배송 목록 조회 - 고객ID: {}", loginUser.getCustomer_id());
+			// 기본적으로 주문 목록을 가져옴 (배송 관련 정보 포함)
+			List<ordersVO> deliveries = orderRepository.selectOrdersByCustomerId(loginUser.getCustomer_id());
+			log.info("✅ 조회된 배송 개수: {}", deliveries != null ? deliveries.size() : 0);
+			return deliveries;
+		} catch (SQLException e) {
+			log.error("❌ 배송 목록 조회 실패 - 고객ID: {}", loginUser.getCustomer_id(), e);
+			throw new RuntimeException("배송 목록 조회 중 오류 발생", e);
 		}
 	}
 }

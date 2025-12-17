@@ -299,25 +299,6 @@ public class projectController {
 	public String order() {
 		return "order";
 	}
-	
-	@GetMapping("/mypage")
-	public String mypage() {
-		return "mypage";
-	}
-	
-	@GetMapping("/mycs")
-	public String mycs() {
-		return "mycs";
-	}
-	
-	@GetMapping("/myqna")
-	public String myqna() {
-		return "myqna";
-	}
-	
-	@GetMapping("/mydelivery")
-	public String mydelivery() {
-		return "mydelivery";
-	}	
+
 
 }

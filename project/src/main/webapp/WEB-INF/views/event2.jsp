@@ -72,7 +72,7 @@
        <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-                  <h6 class="p-3">Categories</h6>
+                  <h6 class="p-3">MENU</h6>
                    <ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall"
 							class="nav-link active">전체상품</a></li>
@@ -130,20 +130,20 @@
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" style="height: 410px;" onclick="location.href='event1'">
+                        <div class="carousel-item active" style="height: 340px;" onclick="location.href='event1'">
                            <img class="img-fluid" src="img/main_event1.png" alt="Image">
                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                              
                             </div>
                         </div>
-                        <div class="carousel-item" style="height: 410px;" onclick="location.href='event1'">
+                        <div class="carousel-item" style="height: 340px;" onclick="location.href='event1'">
                          <img class="img-fluid" src="img/main_event2.png" alt="Image">
                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                
                             </div>
                         </div>
                         
-                        <div class="carousel-item" style="height: 410px;"onclick="location.href='event2'">
+                        <div class="carousel-item" style="height:340px;"onclick="location.href='event2'">
                           <a href="event3">   <img class="img-fluid" src="img/main_event3.png" alt="Image">
                            </a> <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 
@@ -166,16 +166,16 @@
     </div>
 
 
-  <!-- Products Start -->
-    <div class="container-fluid pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">NEW arrivals</span></h2>
+   <!-- Products Start -->
+    <div class="container-fluid pt-2" style="padding-left:250px;">
+        <div class="text-center mb-4" style="padding-top:30px; ">
+            <h3 class="section-title px-5"><span class="px-2">새 상품</span></h3>
         </div>
         
    <div class="row px-xl-5 pb-3"> 
   	<c:forEach var="item" items="${newArrivals}">
   	<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-	<div class="card product-item border-0 mb-4" style="width: 280px;">
+	<div class="card product-item border-0 mb-4" style="width: 270px; height:450px;">
 	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 	<a href="detail?item_no=${item.item_no}"> 
 	<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
@@ -235,7 +235,7 @@
                     <img src="img/bingsu.png" alt="">
                     <div class="position-relative" style="z-index: 1;">
                         <h5 class="text-uppercase text-primary mb-3">season off</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">20%</h1>
+                        <h1 class="mb-4 font-weight-semi-bold">Discount</h1>
                       </div>
                         <a href="event1" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
                        
@@ -245,72 +245,76 @@
     </div>
  <!-- Offer End  -->
  
-					<!-- 상품 목록 페이지 이동 끝 -->
-  	    <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-        <div class="row px-xl-5 pt-3">
-            <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
-           
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
-                 <p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
-                <h2 class="mb-0">
-   				 <i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
-					</h2>
-                       </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
-                            <a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-12 mt-4 mb-5">
-                        <p class="text-dark mb-2">
-                        <span>stockbob 소개</span>
-                            &nbsp;&nbsp; | &nbsp;&nbsp;
-                        <span>이용약관</span>
-                       		&nbsp; | &nbsp;
-                       	<span>개인정보처리방침</span>
-                       		&nbsp; | &nbsp;
-                       	<span>이용안내</span>
-                       	
-                       </p><br>
-                       <p style="color: #999;">
-                       법인명 (상호) : 주식회사 STOCKBOB<br>
-                       사업자등록번호 : 000-11-00000<br>
-						통신판매업 : 제 2025-서울-11111 호<br>
-						주소 : 서울특별시 서대문구 신촌동 00<br>
-						채용문의 : ict.atosoft.com<br>
-						팩스 : 070-0000-0000
-                       </p>
-                      </div>
-                    </div>
-                 
-                    </div>
-                  
-                </div>
-            </div>
-        </div>
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
+	<!-- 상품 목록 페이지 이동 끝 -->
+  	<!-- Footer Start -->
+		<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+		<div class="row px-xl-3 pt-3">
+			<div class="col-lg-4 col-md-12 mb-3 pr-3 pl-1 pt-3">
+				<p class="mb-2">
+					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
+					Seoul, KOREA
+				</p>
+				<p class="mb-2">
+					<i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com
+				</p>
+				<p>
+					<i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전
+					9시30분~5시30분
+				</p>
+				<h2 class="mb-0">
+					<i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
+				</h2>
+			</div>
+			<div class="col-lg-8 col-md-12">
+				<div class="row">
+					<div class="col-md-4 mb-3">
+						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-dark mb-2" href="/"> <i
+								class="fa fa-angle-right mr-2"></i>메인 홈
+							</a> <a class="text-dark mb-2" href="selectall"> <i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-md-12 mt-4 mb-5">
+								<p class="text-dark mb-2" style="margin-left: -30px;">
+									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
+
+								</p>
+								<br>
+								<p style="color: #999; margin-left: -30px;">
+									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+								</p>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
+			<div class="col-md-6 px-xl-0">
+				<p class="mb-md-0 text-center text-md-left text-dark">
+					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						Site Name</a>. All Rights Reserved. Designed by <a
+						class="text-dark font-weight-semi-bold"
+						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
+					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+				</p>
+			</div>
+			<div class="col-md-6 px-xl-0 text-center text-md-right">
+				<img class="img-fluid" src="img/payments.png" alt="">
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
