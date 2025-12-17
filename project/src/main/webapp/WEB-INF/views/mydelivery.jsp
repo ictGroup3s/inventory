@@ -134,45 +134,49 @@
 								</thead>
 								<tbody>
 									<c:forEach var="order" items="${deliveryList}">
-										<tr>
-											<td>${order.order_no}</td>
-											<td>${order.order_date}</td>
-											<td>
-												<!-- ⭐⭐⭐ 첫 번째 상품만 표시 -->
-												<c:if test="${not empty order.detailList}">
+											<tr data-order-no="${order.order_no}"
+												data-item-name="${not empty order.detailList ? order.detailList[0].item_name : ''}">
+												
+												<td>${order.order_no}</td>
+												<td>${order.order_date}</td>
+												<td>
+													<!-- ⭐⭐⭐ 첫 번째 상품만 표시 --> <c:if
+														test="${not empty order.detailList}">
 													${order.detailList[0].item_name}
 													<!-- 2개 이상이면 "외 N개" 표시 -->
-													<c:if test="${fn:length(order.detailList) > 1}">
-														<span class="text-muted"> 외 ${fn:length(order.detailList) - 1}개</span>
+														<c:if test="${fn:length(order.detailList) > 1}">
+															<span class="text-muted"> 외
+																${fn:length(order.detailList) - 1}개</span>
+														</c:if>
 													</c:if>
-												</c:if>
-											</td>
-											<td><fmt:formatNumber value="${order.total_amount}" pattern="#,###"/>원</td>
-											<td>
-												<c:choose>
-													<c:when test="${order.order_status == '배송준비중'}">
-														<span class="badge badge-warning" style="background-color:#FFF3E0; color: #E65100;">배송준비중</span>
-													</c:when>
-													<c:when test="${order.order_status == '배송중'}">
-														<span class="badge badge-info" style="background-color:#EDF1FF; color: #1565C0;">배송중</span>
-													</c:when>
-													<c:when test="${order.order_status == '배송완료'}">
-														<span class="badge badge-success" style="background-color:#E8F5E9; color: #2E7D32;">배송완료</span>
-													</c:when>
-													<c:otherwise>
-														<span class="badge badge-secondary">${order.order_status}</span>
-													</c:otherwise>
-												</c:choose>
-											</td>
-											<td>
-												<button class="btn btn-sm btn-secondary" 
-												        data-toggle="modal" 
-												        data-target="#detailModal_${order.order_no}">
-													상세보기
-												</button>
-											</td>
-										</tr>
-									</c:forEach>
+												</td>
+												<td><fmt:formatNumber value="${order.total_amount}"
+														pattern="#,###" />원</td>
+												<td><c:choose>
+														<c:when test="${order.order_status == '배송준비중'}">
+															<span class="badge badge-warning"
+																style="background-color: #FFF3E0; color: #E65100;">배송준비중</span>
+														</c:when>
+														<c:when test="${order.order_status == '배송중'}">
+															<span class="badge badge-info"
+																style="background-color: #EDF1FF; color: #1565C0;">배송중</span>
+														</c:when>
+														<c:when test="${order.order_status == '배송완료'}">
+															<span class="badge badge-success"
+																style="background-color: #E8F5E9; color: #2E7D32;">배송완료</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge badge-secondary">${order.order_status}</span>
+														</c:otherwise>
+													</c:choose></td>
+												<td>
+													<button class="btn btn-sm btn-secondary"
+														data-toggle="modal"
+														data-target="#detailModal_${order.order_no}">
+														상세보기</button>
+												</td>
+											</tr>
+										</c:forEach>
 								</tbody>
 							</table>
 						</c:otherwise>
@@ -333,6 +337,7 @@
 		<!-- ⭐⭐⭐ JavaScript Libraries ⭐⭐⭐ -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="js/checkout.js"></script>
 
 </body>
 </html>
