@@ -54,9 +54,11 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right">
-			<a href="cart" class="btn border"> <i
-				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+		<div class="col-lg-3 col-6 text-right">			
+			<a href="cart" class="btn border">
+				<i class="fas fa-shopping-cart text-primary"></i>
+				<span class="ml-1">장바구니</span>
+				<span class="badge badge-primary badge-pill" style="border-radius: 999px; color:rgb(254, 254, 254)">0</span>
 			</a>
 		</div>
 	</div>
