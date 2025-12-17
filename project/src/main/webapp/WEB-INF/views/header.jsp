@@ -42,12 +42,11 @@
 <body>
 	<!-- Topbar Start -->
 
-	<div class="row align-items-center py-3 px-xl-5">
+	<div class="row align-items-center py-2 px-xl-5">
+		
 		<div class="col-lg-3 d-none d-lg-block">
-			<a href="#" class="text-decoration-none"> <img
-				src='../img/logo.png' class='logo' /> <!-- <h1 class="m-0 display-5 font-weight-semi-bold">
-                    <span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1> -->
-			</a>
+		<a href="#" class="text-decoration-none"> <img
+				src='../img/logo.png' class='logo' /> </a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
 			<form action="selectall" method="get">
@@ -63,10 +62,8 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+		<div class="col-lg-2 col-6 text-right">
+		 <a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -80,7 +77,7 @@
 		<div class="row border-top px-xl-5">
 			<div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-					<h5 class="p-3">Categories</h5>
+					<h5 class="p-3"> MENU</h5>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이
@@ -153,7 +150,7 @@
 				<div id="header-carousel" class="carousel slide"
 					data-ride="carousel">
 					<div class="carousel-inner">
-						<div class="carousel-item active" style="height: 410px;">
+						<div class="carousel-item active" style="height: 350px;">
 							<img class="img-fluid" src="img/main_event1.png" alt="Image">
 							<div
 								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
@@ -164,7 +161,7 @@
                                 </div> -->
 							</div>
 						</div>
-						<div class="carousel-item" style="height: 410px;">
+						<div class="carousel-item" style="height: 350px;">
 							<img class="img-fluid" src="img/main_event2.png" alt="Image">
 							<div
 								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
@@ -176,7 +173,7 @@
 							</div>
 						</div>
 
-						<div class="carousel-item" style="height: 410px;">
+						<div class="carousel-item" style="height: 350px;">
 							<img class="img-fluid" src="img/main_event3.png" alt="Image">
 							<div
 								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
@@ -206,11 +203,13 @@
 	<!-- Navbar End -->
 
 	<!-- Offer Start -->
-	<div class="container-fluid offer pt-5">
-		<div class="row px-xl-5">
-			<div class="col-md-6 pb-4">
+	<!--<div class="container-fluid offer pt-1 " >-->
+	 <div class="container-fluid offer pt-1 "  style="width:1200px; 
+	 padding-left:140px;"> 
+		<div class="row px-xl-4" >
+			<div class="col-md-6 pb-4" ">
 				<div
-					class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5">
+					class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5" >
 					<img src="img/bingsu.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">season off</h5>
@@ -223,7 +222,7 @@
 			</div>
 			<div class="col-md-6 pb-4">
 				<div
-					class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5">
+					class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5" >
 					<img src="img/boong1.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">new arrival</h5>
@@ -239,73 +238,70 @@
 	</div>
 	<!-- Offer End -->
 
-	<!-- Categories Start -->
-	<div class="container-fluid pt-5">
+	<!-- Images Start -->
+<div class="container-fluid pt-5" style="width:1200px; margin-left:270px;">
 		<div class="row px-xl-5 pb-3">
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4">
+				<div class="cat-item d-flex flex-column  mb-4" style="width:250px;">
 					<a href="selectGui"
-						class="cat-img position-relative overflow-hidden mb-3"> <img
-						class="img-fluid cat-img-fill" src="img/guizzim.png" alt="">
+						class="cat-img position-relative overflow-hidden mb-3"> 
+				<img class="img-fluid cat-img-fill" src="img/guizzim.png" alt="">
 					</a>
-					<h5 class="font-weight-semi-bold m-0">구이 ．찜 ．볶음</h5>
+					<h5 style="padding-left: 50px">구이 ．찜 ．볶음</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4">
+				<div class="cat-item d-flex flex-column  mb-4">
 					<a href="selectSoup"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid cat-img-fill" src="img/gukbob.png" alt="">
 					</a>
-					<h5 class="font-weight-semi-bold m-0">국 ．밥 ．면</h5>
+					<h5 style="padding-left: 70px">국 ．밥 ．면</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4">
+				<div class="cat-item d-flex flex-column  mb-4">
 					<a href="selectDiet"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid cat-img-fill" src="img/sikdana.png" alt="">
 					</a>
-					<h5 class="font-weight-semi-bold m-0">식단관리</h5>
+					<h5 style="padding-left: 85px">식단관리</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4">
+				<div class="cat-item d-flex flex-column  mb-4">
 					<a href="selectBunsik"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid cat-img-fill" src="img/bunsikgan.png" alt="">
 					</a>
-					<h5 class="font-weight-semi-bold m-0">분식 ．간식</h5>
+					<h5 style="padding-left: 75px">분식 ．간식</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4">
+				<div class="cat-item d-flex flex-column  mb-4">
 					<a href="selectBanchan"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid cat-img-fill" src="img/banchana.png" alt="">
 					</a>
-					<h5 class="font-weight-semi-bold m-0">반찬 ．소스</h5>
+					<h5 style="padding-left: 75px">반찬 ．소스</h5>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 pb-1">
-				<div class="cat-item d-flex flex-column border mb-4">
+				<div class="cat-item d-flex flex-column  mb-4">
 					<a href="selectdrink"
 						class="cat-img position-relative overflow-hidden mb-3"> <img
 						class="img-fluid cat-img-fill" src="img/drinka.png" alt="">
 					</a>
-					<h5 class="font-weight-semi-bold m-0">생수 ．음료</h5>
+					<h5 style="padding-left: 80px">생수 ．음료</h5>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Categories End -->
-	 
+	<!-- Images End -->
+
 	 <!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
-	<div class="container-fluid py-5" style="border-top: 1px solid #dee2e6;">
-		<div class="container-fluid px-5">
-			<div class="text-center mb-5">
-				<h5 class="font-weight-bold m-0">추천상품 바로가기</h5>
-			</div>
+		<div class="container-fluid" style="width:1500px; padding-left:350px; margin-bottom:0px;">
+			<h5 align="center">추천상품</h5>
 			<ul class="bxslider">
 				<c:forEach var="rp" items="${randomProducts}">  
                <li>
@@ -355,16 +351,11 @@
 			</ul>      
 		</div>
 	</div>
-	</div>
 	<!-- Image Slider End -->
 
-
 	<!-- Footer Start -->
-	<!-- <div class="container-fluid text-dark mt-3 pt-3 pb-2" style="border-top: 2px solid #eeeeee;"> -->
-
-
-	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
+	<div class="container-fluid bg-secondary text-dark pt-2 pb-2" 
+	style="width:1600px;">
 		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
@@ -501,9 +492,6 @@
 	<!-- 리뷰 js -->	
 	<script src="js/Review.js"></script>
 
-
 </body>
 
 </html>
-
-
