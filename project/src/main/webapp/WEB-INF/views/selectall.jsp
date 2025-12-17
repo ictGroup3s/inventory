@@ -18,28 +18,28 @@
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link 
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" 
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
 	rel="stylesheet">
 
 <!-- Font Awesome -->
-<link 
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" 
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css" 
+<link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
 <!-- 채팅 관련 -->
 <link href="css/chat.css" rel="stylesheet">
+
 </head>
 
 <body>
 
-    <!-- Topbar Start -->
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
@@ -61,9 +61,7 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -108,10 +106,9 @@
 								</c:if>
 								<!-- 로그아웃 링크 -->
 								<a href="logout" class="nav-item nav-link">로그아웃</a>
-
-							</c:if>
+								</c:if>
+							</div>
 						</div>
-					</div>
 				</nav>
 			</div>
 		</div>
@@ -120,28 +117,31 @@
 
 	<div class="container-fluid pt-5">
 		<div class="row px-xl-5">
-			<!-- ================== 왼쪽 카테고리 ================== -->
 			<div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-					<h6 class="p-3">Categories</h6>
+					<h5 class="p-3">Categories</h5>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이
+								．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국
+								．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
-						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식
+								．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬
+								．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
+								．음료</a></li>
 					</ul>
 				</nav>
 			</div>
-			
 			<div class="col-lg-9 col-md-12">
-				<div class="row pb-3">
+				<div class="row pb-3 product-grid">
 					<div class="col-12 pb-1">
 						<div
 							class="d-flex align-items-center justify-content-between mb-4">							
-							<div class="dropdown ml-auto">	<!-- ml-auto = 왼쪽 여백 자동 채움(margin-left: auto) -->
+							<div class="dropdown">	<!-- ml-auto = 왼쪽 여백 자동 채움(margin-left: auto) -->
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
@@ -168,8 +168,8 @@
 					</c:if>
 
 					<c:forEach var="item" items="${products}">
-						<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-							<div class="card product-item border-0 mb-4"
+						<div class="col-lg-4 col-md-4 col-sm-4 pb-1 product-col">
+							<div class="card product-item border-0 mb-4 h-100 d-flex flex-column"
 								style="width: 280px;">
 								<div
 									class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -180,29 +180,41 @@
 								</div>
 								<div
 									class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-									<h6 class="text-truncate mb-3">${item.item_name}</h6>
+									<h5 class="text-truncate mb-3">${item.item_name}</h5>
 									
-								<%-- 평점 리뷰 적용 --%>	
+								<%-- 평점/리뷰 하트채우기 : 리뷰가 없으면 표시 안 함 --%>
+								<c:set var="reviewCnt" value="${empty item.review_cnt ? 0 : item.review_cnt}" />
+								<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
+								<c:if test="${reviewCnt > 0}">
 									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
-										<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
+										<!-- 평점 하트 채우기(소수점 0~100% 채우기 표현) -->
 										<span class="mr-1">
 											<c:forEach begin="1" end="5" var="i">
+												<c:set var="diff" value="${rating - (i - 1)}" />												
 												<c:choose>
-													<c:when test="${i <= rating}">
-														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													<c:when test="${diff >= 1}">
+														<c:set var="fillPct" value="100" />
+													</c:when>
+													<c:when test="${diff <= 0}">
+														<c:set var="fillPct" value="0" />
 													</c:when>
 													<c:otherwise>
-														<i class="far fa-heart" style="color: #D19C97;"></i>
+														<fmt:formatNumber var="fillPct" value="${diff * 100}" pattern="0" />
 													</c:otherwise>
 												</c:choose>
+												<span class="heart-clip">
+													<i class="far fa-heart" style="color: #D19C97;"></i>
+													<span class="heart-fill" style="width: ${fillPct}%;">
+														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													</span>
+												</span>
 											</c:forEach>
 										</span>
-										<c:if test="${item.review_cnt > 0}">
-											<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
-										</c:if>
-										<span>(${item.review_cnt})</span>
+										<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
+										<span>(${reviewCnt}개 리뷰)</span>
 									</div>
-								<%-- 평점 리뷰 적용 --%>
+								</c:if>
+								<%-- 평점/리뷰 하트채우기 --%>
 									
 								<%-- 할인가 적용 --%>	
 									<div class="d-flex justify-content-center">
@@ -212,7 +224,7 @@
 												
 											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
 												<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
-												<h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
+												<h5><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h5>
 											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
 											
 												<h6 class="text-muted ml-2">
@@ -220,15 +232,13 @@
 												</h6>
 											</c:when>
 											<c:otherwise>
-												<h6><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h6>
+												<h5><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h5>
 											</c:otherwise>
 										</c:choose>
 									</div>
-								<%-- 할인가 적용 --%>
-									
 								</div>
 								<div
-									class="card-footer d-flex justify-content-between bg-light border">
+									class="card-footer d-flex justify-content-between bg-light border mt-auto">
 									<a href="detail?item_no=${item.item_no}"
 										class="btn btn-sm text-dark p-0"> <i
 										class="fas fa-eye text-primary mr-1"></i>상세정보
@@ -291,8 +301,9 @@
 	</div>
 
 	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-		<div class="row px-xl-5 pt-3">
+	<div class="container-fluid bg-secondary text-dark mt-5 pt-5"
+		style="margin-top: 300px !important;">
+		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -318,33 +329,30 @@
 							<a class="text-dark mb-2" href="/"><i
 								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
 								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
-								class="text-dark mb-2" href="mlist"><i
-								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
-								class="text-dark mb-2" href="cart"><i
-								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
-								class="text-dark mb-2" href="checkout"><i
-								class="fa fa-angle-right mr-2"></i>결제</a>
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
+							<!--  <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
+                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
+                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->
 						</div>
 					</div>
-					<div class="col-lg-8 col-md-12">
-						<div class="row">
-							<div class="col-md-12 mt-4 mb-5">
-								<p class="text-dark mb-2">
-									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
-									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
 
-								</p>
-								<br>
-								<p style="color: #999;">
-									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
-									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
-									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
-								</p>
-							</div>
+					<div class="row">
+						<div class="col-md-12 mt-4 mb-5">
+							<p class="text-dark mb-2">
+								<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+								&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
+
+							</p>
+							<br>
+							<p style="color: #999;">
+								법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+								통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+								채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+							</p>
 						</div>
-
 					</div>
+
+
 
 				</div>
 			</div>
@@ -427,6 +435,7 @@
 
 	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
 	<script src="/js/main.js" defer></script>
+	
 
 </body>
 
