@@ -146,8 +146,7 @@
 							<div class="col-lg-6 col-md-12 mb-3">
 								<div class="card">
 									<div class="card-body">
-										<h6 class="card-title">매출 흐름표</h6>
-										<!-- Inserted Chart canvas -->
+										<h6 class="card-title">월별 매출 / 주문건수</h6>
 										<div id="chartWrapSales" class="chart-box">
 											<canvas id="salesChart"></canvas>
 											<div id="status-salesChart"
@@ -199,8 +198,8 @@
 							<div class="col-lg-6 col-md-12 mb-3">
 								<div class="card">
 									<div class="card-body">
-										<h6 class="card-title">일별 주문건수</h6>
-										<p class="text-muted small">최근 7일간 주문건수</p>
+										<h6 class="card-title">일별 매출 / 주문건수</h6>
+										<p class="text-muted small">최근 7일간 매출 및 주문건수</p>
 										<div id="visitorsChartWrap" class="chart-box">
 											<canvas id="visitorsChart"></canvas>
 											<div id="status-visitorsChart"
@@ -234,8 +233,7 @@
 											</div>
 										</div>
 										<div class="table-responsive">
-											<table id="monthlyTable"
-												class="table table-bordered table-sm" style="width: 100%">
+											<table id="monthlyTable" class="table stats-table" style="width: 100%">
 												<thead>
 													<tr>
 														<th>연도</th>
@@ -267,15 +265,13 @@
 							</div>
 						</div>
 
-						<!-- 분류별 매출 정보 테이블 (매출/분류별 카드 아래) -->
+						<!-- 분류별 매출 정보 테이블 -->
 						<div class="row mb-3">
 							<div class="col-12">
 								<div class="card">
 									<div class="card-body">
 										<h6 class="card-title">분류별 매출 정보</h6>
-										<p class="text-muted small">단위: 만원 (샘플 데이터) — 서버 데이터로 대체
-											가능</p>
-										<!-- Added: Year/Month selector for monthly view -->
+										<p class="text-muted small">단위: 만원</p>
 										<div class="d-flex align-items-center mb-2">
 											<div class="form-inline">
 												<label class="mr-2 small text-muted" for="categoryYear">연도</label>
@@ -290,8 +286,7 @@
 											</div>
 										</div>
 										<div class="table-responsive">
-											<table id="categorySalesTable"
-												class="table table-striped table-sm">
+											<table id="categorySalesTable" class="table stats-table">
 												<thead>
 													<tr>
 														<th scope="col">분류</th>
@@ -301,36 +296,7 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>분류1</td>
-														<td>5200</td>
-														<td>35.4%</td>
-														<td>비고내용</td>
-													</tr>
-													<tr>
-														<td>분류2</td>
-														<td>3400</td>
-														<td>23.1%</td>
-														<td>비고내용</td>
-													</tr>
-													<tr>
-														<td>분류3</td>
-														<td>2800</td>
-														<td>19.1%</td>
-														<td>비고내용</td>
-													</tr>
-													<tr>
-														<td>분류4</td>
-														<td>1900</td>
-														<td>13.0%</td>
-														<td>비고내용</td>
-													</tr>
-													<tr>
-														<td>기타</td>
-														<td>700</td>
-														<td>4.4%</td>
-														<td>비고내용</td>
-													</tr>
+													<!-- JS로 채움 -->
 												</tbody>
 											</table>
 										</div>
@@ -339,77 +305,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- 방문자/주문 상세: 일간 및 월간 테이블 (분류별 매출 정보 아래) -->
-					<div class="row mb-4">
-						<div class="col-lg-6 col-md-12 mb-3">
-							<div class="card">
-								<div class="card-body">
-									<h6 class="card-title">일일 방문자수 / 주문건수 (최근 7일)</h6>
-									<p class="text-muted small">날짜별 방문자 및 주문 집계</p>
-									<div class="table-responsive">
-										<table id="dailyTable" class="table table-sm table-striped"
-											style="width: 100%">
-											<thead>
-												<tr>
-													<th>날짜</th>
-													<th>방문자수</th>
-													<th>주문건수</th>
-													<th>비고</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="d" items="${dailyMetrics}">
-													<tr>
-														<td>${d.date}</td>
-														<td>${d.visitors}</td>
-														<td>${d.orders}</td>
-														<td>${d.note}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-lg-6 col-md-12 mb-3">
-							<div class="card">
-								<div class="card-body">
-									<h6 class="card-title">월별 방문자수 / 주문건수 (최근 12개월)</h6>
-									<p class="text-muted small">월별 방문자 및 주문 합계</p>
-									<div class="table-responsive">
-										<table id="monthlyMetricsTable"
-											class="table table-sm table-bordered" style="width: 100%">
-											<thead>
-												<tr>
-													<th>연도</th>
-													<th>월</th>
-													<th>방문자수</th>
-													<th>주문건수</th>
-													<th>평균 주문/일</th>
-													<th>비고</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="m" items="${monthlyVisitors}">
-													<tr>
-														<td>${m.year}</td>
-														<td>${m.month}</td>
-														<td>${m.visitors}</td>
-														<td>${m.orders}</td>
-														<td>${m.avgPerDay}</td>
-														<td>${m.note}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</div>
 		</div>

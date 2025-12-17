@@ -40,11 +40,11 @@ public class StatsController {
 		return statsService.getMonthlyStats(year);
 	}
 
-	// 일별 매출 데이터 (최근 7일)
-	@GetMapping("/api/stats/daily-sales")
+	// 월별 매출 + 주문건수
+	@GetMapping("/api/stats/monthly-sales-orders")
 	@ResponseBody
-	public List<Map<String, Object>> getDailySales() {
-		return statsService.getDailySales();
+	public List<Map<String, Object>> getMonthlySalesOrders() {
+	    return statsService.getMonthlySalesOrders();
 	}
 
 	// 카테고리별 매출
@@ -82,6 +82,15 @@ public class StatsController {
 			result.put("message", "집계 실패: " + e.getMessage());
 		}
 		return result;
+	}
+	
+	// 분류별 매출 (연/월 선택)
+	@GetMapping("/api/stats/category-by-month")
+	@ResponseBody
+	public List<Map<String, Object>> getCategorySalesByMonth(
+	        @RequestParam String year, 
+	        @RequestParam String month) {
+	    return statsService.getCategorySalesByMonth(year, month);
 	}
 
 }

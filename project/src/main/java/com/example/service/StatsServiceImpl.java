@@ -15,8 +15,8 @@ public class StatsServiceImpl implements StatsService {
     private StatsRepository statsRepository;
 
     @Override
-    public List<Map<String, Object>> getDailySales() {
-        return statsRepository.getDailySales();
+    public List<Map<String, Object>> getMonthlySalesOrders() {
+        return statsRepository.getMonthlySalesOrders();
     }
 
     @Override
@@ -47,5 +47,10 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public List<String> getAvailableYears() {
         return statsRepository.getAvailableYears();
+    }
+    
+    @Override
+    public List<Map<String, Object>> getCategorySalesByMonth(String year, String month) {
+        return statsRepository.getCategorySalesByMonth(year, month);
     }
 }

@@ -14,8 +14,8 @@ public class StatsRepository {
     @Autowired
     private SqlSessionTemplate sess;
 
-    public List<Map<String, Object>> getDailySales() {
-        return sess.selectList("statsmapper.getDailySales");
+    public List<Map<String, Object>> getMonthlySalesOrders() {
+        return sess.selectList("statsmapper.getMonthlySalesOrders");
     }
 
     public List<Map<String, Object>> getCategorySales() {
@@ -42,5 +42,12 @@ public class StatsRepository {
 
     public List<String> getAvailableYears() {
         return sess.selectList("statsmapper.getAvailableYears");
+    }
+    
+    public List<Map<String, Object>> getCategorySalesByMonth(String year, String month) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("year", year);
+        param.put("month", month);
+        return sess.selectList("statsmapper.getCategorySalesByMonth", param);
     }
 }

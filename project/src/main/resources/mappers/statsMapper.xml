@@ -5,18 +5,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="statsmapper">
 
-    <!-- 일별 매출 (최근 7일) -->
-    <select id="getDailySales" resultType="map">
-        SELECT 
-            TO_CHAR(o.order_date, 'MM-DD') as label,
-            NVL(SUM(od.item_price * od.item_cnt), 0) as total
-        FROM orders o
-        LEFT JOIN order_detail od ON o.order_no = od.order_no
-        WHERE o.order_date >= TRUNC(SYSDATE) - 6
-          AND o.order_status != '취소'
-        GROUP BY TO_CHAR(o.order_date, 'MM-DD'), TRUNC(o.order_date)
-        ORDER BY TRUNC(o.order_date)
-    </select>
+    <!-- 월별 매출 + 주문건수 (최근 12개월) -->
+	<select id="getMonthlySalesOrders" resultType="map">
+	    SELECT 
+	        TO_CHAR(base_month, 'MM') || '월' as label,
+	        NVL(sales, 0) as sales,
+	        NVL(order_cnt, 0) as orders
+	    FROM (
+	        SELECT ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -LEVEL + 1) as base_month
+	        FROM dual
+	        CONNECT BY LEVEL &lt;= 12
+	    ) months
+	    LEFT JOIN (
+	        SELECT 
+	            TRUNC(o.order_date, 'MM') as sale_month,
+	            SUM(od.item_price * od.item_cnt) as sales,
+	            COUNT(DISTINCT o.order_no) as order_cnt
+	        FROM orders o
+	        JOIN order_detail od ON o.order_no = od.order_no
+	        WHERE o.order_status != '취소'
+	        GROUP BY TRUNC(o.order_date, 'MM')
+	    ) s ON months.base_month = s.sale_month
+	    ORDER BY base_month
+	</select>
 
     <!-- 카테고리별 매출 -->
     <select id="getCategorySales" resultType="map">
@@ -62,25 +73,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY base_date
     </select>
 
-    <!-- 일별 주문건수 (최근 7일) -->
-    <select id="getDailyOrders" resultType="map">
-        SELECT 
-            TO_CHAR(base_date, 'MM-DD') as label,
-            NVL(order_cnt, 0) as orders
-        FROM (
-            SELECT TRUNC(SYSDATE) - LEVEL + 1 as base_date
-            FROM dual
-            CONNECT BY LEVEL &lt;= 7
-        ) dates
-        LEFT JOIN (
-            SELECT TRUNC(order_date) as order_date,
-                   COUNT(*) as order_cnt
-            FROM orders
-            WHERE order_status != '취소'
-            GROUP BY TRUNC(order_date)
-        ) o ON dates.base_date = o.order_date
-        ORDER BY base_date
-    </select>
+    <!-- 일별 매출 + 주문건수 (최근 7일) -->
+	<select id="getDailyOrders" resultType="map">
+	    SELECT 
+	        TO_CHAR(base_date, 'MM-DD') as label,
+	        NVL(sales, 0) as sales,
+	        NVL(order_cnt, 0) as orders
+	    FROM (
+	        SELECT TRUNC(SYSDATE) - LEVEL + 1 as base_date
+	        FROM dual
+	        CONNECT BY LEVEL &lt;= 7
+	    ) dates
+	    LEFT JOIN (
+	        SELECT 
+	            TRUNC(o.order_date) as order_date,
+	            SUM(od.item_price * od.item_cnt) as sales,
+	            COUNT(DISTINCT o.order_no) as order_cnt
+	        FROM orders o
+	        JOIN order_detail od ON o.order_no = od.order_no
+	        WHERE o.order_status != '취소'
+	        GROUP BY TRUNC(o.order_date)
+	    ) o ON dates.base_date = o.order_date
+	    ORDER BY base_date
+	</select>
     
     <!-- 일별 통계 집계 (전날 데이터) -->
 	<insert id="insertDailyStats">
@@ -180,5 +195,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ORDER BY year DESC
 	</select>
 	
+	<!-- 분류별 매출 정보 (연/월 선택) -->
+	<select id="getCategorySalesByMonth" resultType="map" parameterType="map">
+	    SELECT 
+	        category,
+	        sales,
+	        CASE 
+	            WHEN total_sales > 0 
+	            THEN ROUND(sales / total_sales * 100, 1)
+	            ELSE 0 
+	        END as ratio
+	    FROM (
+	        SELECT 
+	            c.cate_name as category,
+	            NVL(ROUND(SUM(od.item_price * od.item_cnt) / 10000, 0), 0) as sales,
+	            (SELECT NVL(ROUND(SUM(od2.item_price * od2.item_cnt) / 10000, 0), 0)
+	             FROM order_detail od2 
+	             JOIN orders o2 ON od2.order_no = o2.order_no
+	             WHERE o2.order_status != '취소'
+	             AND TO_CHAR(o2.order_date, 'YYYY') = #{year}
+	             AND TO_CHAR(o2.order_date, 'MM') = #{month}) as total_sales
+	        FROM cate c
+	        LEFT JOIN product p ON c.cate_no = p.cate_no
+	        LEFT JOIN order_detail od ON p.item_no = od.item_no
+	        LEFT JOIN orders o ON od.order_no = o.order_no 
+	            AND o.order_status != '취소'
+	            AND TO_CHAR(o.order_date, 'YYYY') = #{year}
+	            AND TO_CHAR(o.order_date, 'MM') = #{month}
+	        GROUP BY c.cate_name, c.cate_no
+	    )
+	    ORDER BY sales DESC
+	</select>
 
 </mapper>
