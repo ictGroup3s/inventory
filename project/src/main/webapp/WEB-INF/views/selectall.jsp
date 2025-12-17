@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%-- 가격,숫자 포맷 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,7 +119,7 @@
 		<div class="row px-xl-5">
 			<div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-					<h5 class="p-3">Categories</h5>
+					<h5 class="p-3">MENU</h5>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이
@@ -180,28 +182,39 @@
 									class="card-body border-left border-right text-center p-0 pt-4 pb-3">
 									<h5 class="text-truncate mb-3">${item.item_name}</h5>
 									
-								<%-- 평점/리뷰: 리뷰가 없으면 표시 안 함 --%>
+								<%-- 평점/리뷰 하트채우기 : 리뷰가 없으면 표시 안 함 --%>
 								<c:set var="reviewCnt" value="${empty item.review_cnt ? 0 : item.review_cnt}" />
 								<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
 								<c:if test="${reviewCnt > 0}">
 									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
+										<!-- 평점 하트 채우기(소수점 0~100% 채우기 표현) -->
 										<span class="mr-1">
 											<c:forEach begin="1" end="5" var="i">
+												<c:set var="diff" value="${rating - (i - 1)}" />												
 												<c:choose>
-													<c:when test="${i <= rating}">
-														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													<c:when test="${diff >= 1}">
+														<c:set var="fillPct" value="100" />
+													</c:when>
+													<c:when test="${diff <= 0}">
+														<c:set var="fillPct" value="0" />
 													</c:when>
 													<c:otherwise>
-														<i class="far fa-heart" style="color: #D19C97;"></i>
+														<fmt:formatNumber var="fillPct" value="${diff * 100}" pattern="0" />
 													</c:otherwise>
 												</c:choose>
+												<span class="heart-clip">
+													<i class="far fa-heart" style="color: #D19C97;"></i>
+													<span class="heart-fill" style="width: ${fillPct}%;">
+														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													</span>
+												</span>
 											</c:forEach>
 										</span>
 										<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
 										<span>(${reviewCnt}개 리뷰)</span>
 									</div>
 								</c:if>
-								<%-- 평점/리뷰 --%>
+								<%-- 평점/리뷰 하트채우기 --%>
 									
 								<%-- 할인가 적용 --%>	
 									<div class="d-flex justify-content-center">
@@ -287,10 +300,13 @@
 		</div>
 	</div>
 
+		<!-- Footer Start -->
+	<!-- <div class="container-fluid text-dark mt-3 pt-3 pb-2" style="border-top: 2px solid #eeeeee;"> -->
+
+
 	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5"
-		style="margin-top: 550px !important;">
-		<div class="row px-xl-5 pt-5">
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" style="width:1450px; margin-left:65px;">
+		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -313,38 +329,36 @@
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
 						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="/"><i
-								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
-								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-							<!--  <a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-                            <a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-                            <a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a> -->
+							<a class="text-dark mb-2" href="/"> <i
+								class="fa fa-angle-right mr-2"></i>메인 홈
+							</a> <a class="text-dark mb-2" href="selectall"> <i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동
+							</a>
 						</div>
 					</div>
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-md-12 mt-4 mb-5">
+								<p class="text-dark mb-2">
+									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
 
-					<div class="row">
-						<div class="col-md-12 mt-4 mb-5">
-							<p class="text-dark mb-2">
-								<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
-								&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
-
-							</p>
-							<br>
-							<p style="color: #999;">
-								법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
-								통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
-								채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
-							</p>
+								</p>
+								<br>
+								<p style="color: #999;">
+									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
+								</p>
+							</div>
 						</div>
+
 					</div>
-
-
 
 				</div>
 			</div>
 		</div>
-		<div class="row border-top border-light mx-xl-5 py-4">
+		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
 					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
@@ -360,6 +374,7 @@
 		</div>
 	</div>
 	<!-- Footer End -->
+
 
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i
@@ -422,6 +437,7 @@
 
 	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
 	<script src="/js/main.js" defer></script>
+	
 
 </body>
 

@@ -18,12 +18,14 @@ import com.example.model.vo.CartItemVO;
 import com.example.model.CartRepository;
 import com.example.service.CartService;
 import com.example.service.ProductService;
+import com.example.service.ReviewService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;
+import com.example.model.vo.CustomerVO;
 import java.net.URLEncoder;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -34,6 +36,9 @@ import lombok.extern.slf4j.Slf4j;
 public class projectController {
     @Autowired
     private ProductService productService;    
+
+	@Autowired
+	private ReviewService reviewService;
 
 	@GetMapping("/")
 	public String home(Model m) throws Exception {
@@ -132,7 +137,7 @@ public class projectController {
     }
     
     @GetMapping("detail")
-    public String detail(@RequestParam(value = "item_no", required = false) Integer item_no, Model m) throws Exception {
+    public String detail(@RequestParam(value = "item_no", required = false) Integer item_no, Model m, HttpSession session)  {
         if (item_no != null) {
             ProductVO p = productService.getProductById(item_no);
             m.addAttribute("product", p);
@@ -140,6 +145,17 @@ public class projectController {
             // 랜덤 상품 10개 노출 적용 (bx slider용)
             List<ProductVO> randomProducts = productService.getRandomProducts(10);
             m.addAttribute("randomProducts", randomProducts);
+
+            // 리뷰 작성 가능 여부 확인
+            CustomerVO loginUser = (CustomerVO) session.getAttribute("loginUser");
+            if (loginUser != null && loginUser.getCustomer_id() != null && !loginUser.getCustomer_id().isBlank()) {
+                boolean canWriteReview = reviewService.canWriteReview(loginUser.getCustomer_id(), item_no);
+                m.addAttribute("canWriteReview", canWriteReview);
+                m.addAttribute("reviewBlockReason", reviewService.getReviewWriteBlockReason(loginUser.getCustomer_id(), item_no));
+            } else {
+                m.addAttribute("canWriteReview", false);
+                m.addAttribute("reviewBlockReason", "로그인 후 리뷰 작성이 가능합니다.");
+            }
         }
         return "detail";
     }
@@ -283,25 +299,6 @@ public class projectController {
 	public String order() {
 		return "order";
 	}
-	
-	@GetMapping("/mypage")
-	public String mypage() {
-		return "mypage";
-	}
-	
-	@GetMapping("/mycs")
-	public String mycs() {
-		return "mycs";
-	}
-	
-	@GetMapping("/myqna")
-	public String myqna() {
-		return "myqna";
-	}
-	
-	@GetMapping("/mydelivery")
-	public String mydelivery() {
-		return "mydelivery";
-	}	
+
 
 }

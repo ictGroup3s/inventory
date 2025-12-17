@@ -18,6 +18,60 @@
 	var currentPage = 1;
 	var itemsPerPage = 5;
 
+	// [공통 내부 함수] 하트(평점) HTML 생성 (읽기/수정 공용)
+	function buildHeartsHtml(options) {
+		options = options || {};
+		var rating;
+		if (options.rating === undefined || options.rating === null || options.rating === '') {
+			rating = 5;
+		} else {
+			rating = Number(options.rating);
+			if (Number.isNaN(rating)) rating = 5;
+		}
+		var editable = !!options.editable;
+		var html = '';
+
+		if (editable) {
+			html += '<div class="mb-2 edit-rating-container">';
+		}
+
+		for (var i = 1; i <= 5; i++) {
+			if (editable) {
+				var filled = i <= rating;
+				var baseClass = filled ? 'fas' : 'far';
+				var cls = baseClass + ' fa-heart fa-lg edit-rating-heart mr-1';
+				var style = 'style="cursor:pointer; color: #D19C97;"';
+				html += '<i class="' + cls + '" data-value="' + i + '" ' + style + '></i>';
+				continue;
+			}
+
+			// 평점 하트 채우기 (빈하트 + 꽉찬하트를 겹쳐 꽉찬하트의 채우기 너비 조절) (e.g., 2.8 -> 2 full + 80%)
+			var fraction = Math.max(0, Math.min(1, rating - (i - 1)));
+			var pct = Math.round(fraction * 100);
+			html += '<span class="heart-clip">'
+				+ '<i class="far fa-heart" style="color: #D19C97;"></i>'
+				+ '<span class="heart-fill" style="width:' + pct + '%">'
+				+ '<i class="fas fa-heart" style="color: #D19C97;"></i>'
+				+ '</span>'
+				+ '</span>';
+		}
+
+		if (editable) {
+			html += '<input type="hidden" class="edit-rating-input" value="' + rating + '"></div>';
+		}
+		return html;
+	}
+
+	// [공통 함수] 하트(평점) HTML 생성 (읽기 전용)
+	function buildReadOnlyHeartsHtml(ratingValue) {
+		return buildHeartsHtml({ rating: ratingValue, editable: false });
+	}
+
+	// [공통 함수] 하트(평점) HTML 생성 (수정용 - 클릭 가능)
+	function buildEditableHeartsHtml(currentRating) {
+		return buildHeartsHtml({ rating: currentRating, editable: true });
+	}
+
     // [공통 함수] 별점(하트) 상태 업데이트
     function updateStarState($elements, value) {
         $elements.each(function() {
@@ -56,7 +110,7 @@
 			success: function(reviews) {				
 				if (!reviews || reviews.length === 0) {
                     $('#review-summary').text('(0개)');
-                    $('#product-rating-summary').html('<i class="far fa-heart" style="color: #D19C97;"></i> 0.0 (0개 리뷰)');
+					$('#product-rating-summary').html(buildReadOnlyHeartsHtml(0) + ' 0.0 (0개 리뷰)');
 					reviewList.html('<p>등록된 리뷰가 없습니다.</p>');
 					$('#review-pagination').empty();
 					return;
@@ -72,11 +126,12 @@
                         count++;
                     }
                 });
-                var avg = count > 0 ? (totalRating / count).toFixed(1) : 0;
-                var summaryHtml = '<i class="fas fa-heart" style="color: #D19C97;"></i> ' + avg + ' / ' + reviews.length + '개';
+				var avg = count > 0 ? (totalRating / count).toFixed(1) : '0.0';
+				var avgHearts = buildReadOnlyHeartsHtml(parseFloat(avg));
+				var summaryHtml = avgHearts + ' ' + avg + ' / ' + reviews.length + '개';
                 
                 $('#review-summary').html(summaryHtml);
-                $('#product-rating-summary').html('<i class="fas fa-heart" style="color: #D19C97;"></i> ' + avg + ' (' + reviews.length + '개 리뷰)');
+				$('#product-rating-summary').html(avgHearts + ' ' + avg + ' (' + reviews.length + '개 리뷰)');
 
 				renderReviews(1);
 			},
@@ -97,15 +152,7 @@
 		
 		// 리뷰 항목 생성
 		slicedReviews.forEach(function(r) {
-            var ratingHtml = '';
-            var rating = r.rating || 5; // 기본값 5
-            for(var i=1; i<=5; i++) {
-                if(i <= Math.round(rating)) {	// 반올림 적용(하트 채우기)
-                    ratingHtml += '<i class="fas fa-heart" style="color: #D19C97;"></i>';
-                } else {
-                    ratingHtml += '<i class="far fa-heart" style="color: #D19C97;"></i>';
-                }
-            }
+			var ratingHtml = buildReadOnlyHeartsHtml(r.rating);
 
 			var html = '<div class="mb-3 border-bottom pb-2" id="review-' + r.review_no + '">'
 				+ '<div class="d-flex justify-content-between align-items-center">'
@@ -118,11 +165,9 @@
 			if (loginUser && String(loginUser) === String(r.customer_id)) {
 				html += '<div>'
 					+ '<button class="btn btn-sm btn-outline-primary mr-1 edit-review-btn" data-id="' 
-					+ r.review_no 
-					+ '">수정</button>'
+					+ r.review_no + '">수정</button>'
 					+ '<button class="btn btn-sm btn-outline-danger delete-review-btn" data-id="' 
-					+ r.review_no 
-					+ '">삭제</button>'
+					+ r.review_no + '">삭제</button>'
 					+ '</div>';
 			}
 			
@@ -165,14 +210,8 @@
 		var contentP = reviewDiv.find('.review-content');
 		var originalContent = contentP.text();
 
-        // 수정용 별점 HTML 생성
-        var starsHtml = '<div class="mb-2 edit-rating-container">';
-        for(var i=1; i<=5; i++) {
-            var starClass = (i <= currentRating) ? 'fas' : 'far';
-            starsHtml += '<i class="'+starClass+' fa-heart fa-lg edit-rating-heart mr-1" data-value="'
-					+ i+'" style="cursor:pointer; color: #D19C97;"></i>';
-        }
-        starsHtml += '<input type="hidden" class="edit-rating-input" value="'+currentRating+'"></div>';
+		// 수정용 별점 HTML 생성
+		var starsHtml = buildEditableHeartsHtml(currentRating);
 
 		var editHtml = '<div class="edit-form">'
             + starsHtml
@@ -264,7 +303,7 @@
 			renderReviews(page);
 		}
 	});
-// 		페이지 이동	끝 ----------------------------
+// 		리뷰 페이지 버튼 끝 ----------------------------
 
 // 		리뷰 등록
 	$('#addReview').on('click', function() {
@@ -288,8 +327,11 @@
 				loadReviews();	// 리뷰 목록 새로고침
 			},
 			error: function(err) {
-		//		console.error(err);
-				alert('리뷰 등록은 로그인 이후에 가능합니다.');
+				var msg = '리뷰 등록에 실패했습니다.';
+				try {
+					if (err && err.responseText) msg = err.responseText;
+				} catch (e) {}
+				alert(msg);
 			}
 		});
 	});
@@ -309,7 +351,7 @@
 			});
 		});
 
-	//  디테일js에서 이미지 슬라이더 클릭시 이동 처리 ------------------------
+	//  디테일jsp에서 이미지 슬라이더 클릭시 이동 처리 ------------------------
 	// 클릭 위임: 원본(비클론, aria-hidden != true) 슬라이드의 카드 클릭 시 디테일로 이동
 			$(document).on('click', '.bxslider .slider-card', function(e){
 				try{

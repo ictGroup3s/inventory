@@ -13,19 +13,19 @@
 			controls: true,			// 좌-우 화살표 (슬라이드 전환 효과) 설정
 			pause: 2000,			// 자동 슬라이드 시 각 슬라이드가 보여지는 시간 (밀리초)
 			// 전환이 너무 빠르면 '딱딱'해 보이므로 여유 있게 설정
-			speed: 650,				// 슬라이드 전환 속도 (밀리초)
+			speed: 400,				// 슬라이드 전환 속도 (밀리초)
 			useCSS: false,			// jQuery easing 적용을 위해 CSS transition 비활성화
 			easing: 'easeInOutCubic',
 			infiniteLoop: true,		// 무한 루프 설정
-			onSliderLoad: function(currentIndex){
-				try{ $('.bxslider').trigger('bxslider:loaded'); }catch(e){}
+			onSliderLoad: function(currentIndex) {
+				try { $('.bxslider').trigger('bxslider:loaded'); } catch (e) { }
 			},
 			minSlides: 2,      // 최소 보여줄 슬라이드
-			maxSlides: 6,      // 최대 보여줄 슬라이드
+			maxSlides: 4,      // 최대 보여줄 슬라이드
 			slideWidth: 250,   // 슬라이드 개별 너비
 			slideMargin: 10    // 슬라이드 간격
 		});
-		
+
 		// 상단으로 이동 버튼
 		$(window).scroll(function() {
 			if ($(this).scrollTop() > 100) {
@@ -114,7 +114,7 @@
 			}
 			input.val(newVal);
 		});
-		
+
 		//sidebar 클릭
 		const currentPath = window.location.pathname.split('/').pop();
 
@@ -124,7 +124,7 @@
 				if ($el.attr('href') === currentPath) {
 					$el.addClass('active');
 				}
-		});
+			});
 
 	})
 
@@ -395,3 +395,46 @@
 	});
 
 })(jQuery);
+
+// 교환 선택시 교환 상품 번호 입력란 표시
+$('select[name="type"]').change(function() {
+	if ($(this).val() === '교환') {
+		$('#returnNoGroup').show();
+	} else {
+		$('#returnNoGroup').hide();
+	}
+});
+
+// 취/반/교 상세보기
+function loadCrDetail(crNo) {
+	$.ajax({
+		url: '/mycs/detail/' + crNo,
+		method: 'GET',
+		success: function(data) {
+			if (data) {
+				let html = '<dl class="row">';
+				html += '<dt class="col-sm-4">신청번호</dt><dd class="col-sm-8">' + data.cr_no + '</dd>';
+				html += '<dt class="col-sm-4">주문번호</dt><dd class="col-sm-8">' + data.order_no + '</dd>';
+				html += '<dt class="col-sm-4">신청유형</dt><dd class="col-sm-8">' + data.type + '</dd>';
+				html += '<dt class="col-sm-4">상태</dt><dd class="col-sm-8">' + data.status + '</dd>';
+				html += '<dt class="col-sm-4">신청일</dt><dd class="col-sm-8">' + data.re_date + '</dd>';
+				html += '<dt class="col-sm-4">사유</dt><dd class="col-sm-8">' + data.reason + '</dd>';
+				html += '</dl>';
+				$('#detailContent').html(html);
+			} else {
+				$('#detailContent').html('<p class="text-center">데이터를 불러올 수 없습니다.</p>');
+			}
+		},
+		error: function() {
+			$('#detailContent').html('<p class="text-center text-danger">오류가 발생했습니다.</p>');
+		}
+	});
+}
+
+function loadCrDetail(crNo) {
+	console.log("상세보기 cr_no =", crNo);
+
+	document.getElementById("detailModalBody").innerHTML =
+		"상세 내용 로딩 중... (cr_no=" + crNo + ")";
+}
+

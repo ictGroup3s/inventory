@@ -94,6 +94,7 @@
 			<p>회원 아이디: ${sessionScope.loginUser.customer_id}</p>
 	   		 <p>이름: ${sessionScope.loginUser.name}</p>
 			<button type="submit" class="btn btn-outline-primary btn-block py-2 mt-2">탈퇴하기</button>
+			<a href="/mypage" class="btn btn-secondary w-100 mt-2">뒤로가기</a>
 			</form>
 
 		</div>

@@ -22,4 +22,13 @@ public class ordersVO {
 	private List<order_detailVO> detailList;
 	private Integer total_amount; 
 	private String request;
+
+	public List<order_detailVO> getDetailList() {
+	    return detailList;
+	}
+
+	public void setDetailList(List<order_detailVO> detailList) {
+	    this.detailList = detailList;
+	}
+	
 }
