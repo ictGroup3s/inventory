@@ -173,6 +173,7 @@
 														pattern="#,###" />원</td>
 												<td><span class="badge badge-secondary">
 														${order.order_status} </span></td>
+												<td>${order.order_date}</td>
 											</tr>
 										</c:forEach>
 									</c:forEach>
