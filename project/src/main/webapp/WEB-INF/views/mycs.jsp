@@ -56,34 +56,6 @@
 			</a>
 		</div>
 	</div>	
-	<!-- ✅ 사이드바 -->
-	<div class="container-fluid">
-		<div class="col-lg-9" aling="right">
-			<nav
-				class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-				<a href="" class="text-decoration-none d-block d-lg-none">
-					<h1 class="m-0 display-5 font-weight-semi-bold">
-						<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
-					</h1>
-				</a>
-				<button type="button" class="navbar-toggler" data-toggle="collapse"
-					data-target="#navbarCollapse">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse justify-content-between"
-					id="navbarCollapse">
-					<div class="navbar-nav ml-auto py-0"
-						style="padding-left: -50px; margin-right: -35%;">
-						<a href="login" class="nav-item nav-link">로그인</a> <a
-							href="register" class="nav-item nav-link">회원가입</a> <a
-							href="board" class="nav-item nav-link">고객센터</a>
-					</div>
-				</div>
-			</nav>
-		</div>
-	</div>
-
-
 	<!-- Main Layout -->
 	<div class="container-fluid">
 		<div class="row px-xl-5">
@@ -92,6 +64,7 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
+						<li class="nav-item"><a href="/mypage" class="nav-link">모든내역</a></li>
 						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
 						<li class="nav-item"><a href="/mycs" class="nav-link active">취소·반품·교환내역</a></li>
@@ -107,24 +80,24 @@
 					<h4>취소·반품·교환내역</h4>
 				</div>
 				<!-- 검색 결과 카운트 -->
-					<p class="mb-2">
-						총 <strong id="totalCount">${fn:length(crList)}</strong>건 <span
-							id="searchResultText"></span>
-					</p>
-				
-		<!-- ⭐ 검색 및 필터 섹션 ⭐ -->
+				<p class="mb-2">
+					총 <strong id="totalCount">${fn:length(crList)}</strong>건 <span
+						id="searchResultText"></span>
+				</p>
+
+				<!-- ⭐ 검색 및 필터 섹션 ⭐ -->
 				<div class="search-box">
 					<div class="row mb-3">
 						<div class="col-md-4">
-							<div class="input-group" >
+							<div class="input-group">
 								<select id="searchType" class="form-control"
 									style="max-width: 140px;">
 									<option value="all">전체</option>
 									<option value="order_no">주문번호</option>
 									<option value="item_name">상품명</option>
-								</select> 
-								<input type="text" id="searchInput" class="form-control" placeholder="검색어입력">
-								<div class="input-group-append" >
+								</select> <input type="text" id="searchInput" class="form-control"
+									placeholder="검색어입력">
+								<div class="input-group-append">
 									<button class="btn btn-primary" type="button"
 										onclick="searchCR()">
 										<i class="fa fa-search"></i> 검색
@@ -142,7 +115,7 @@
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
 						</div>
 					</c:if>
-				<!-- 	 ⭐ 초기화 버튼 아래로 이동 ⭐
+					<!-- 	 ⭐ 초기화 버튼 아래로 이동 ⭐
 					<div class="text-left">
 						<button class="btn btn-outline-secondary" onclick="resetSearch()">
 							<i class="fa fa-redo"></i> 초기화
@@ -150,67 +123,64 @@
 					</div>
 				</div> -->
 
-				<table class="table table-striped" id="crTable">
-				<thead>
-					<tr>
-						<th>주문번호</th>
-						<th>상품명</th>
-						<th>신청유형</th>
-						<th>상태</th>
-						<th>신청일</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody id="crTableBody">
-					<c:forEach var="cr" items="${crList}">
-						<tr class="cr-row" 
-							data-order-no="${cr.order_no}" 
-							data-item-name="${cr.item_name}" 
-							data-type="${cr.type}" 
-							data-status="${cr.status}">
-							<td>${cr.order_no}</td>
-							<td>${cr.item_name}</td>
-							<td>
-								<span class="badge 
+					<table class="table table-striped" id="crTable">
+						<thead>
+							<tr>
+								<th>주문번호</th>
+								<th>상품명</th>
+								<th>신청유형</th>
+								<th>상태</th>
+								<th>신청일</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody id="crTableBody">
+							<c:forEach var="cr" items="${crList}">
+								<tr class="cr-row" data-order-no="${cr.order_no}"
+									data-item-name="${cr.item_name}" data-type="${cr.type}"
+									data-status="${cr.status}">
+									<td>${cr.order_no}</td>
+									<td>${cr.item_name}</td>
+									<td><span
+										class="badge 
 									${cr.type == '취소' ? 'badge-warning' : 
 									  cr.type == '반품' ? 'badge-info' : 'badge-success'}">
-									${cr.type}
-								</span>
-							</td>
-							<td>
-								<span class="badge 
+											${cr.type} </span></td>
+									<td><span
+										class="badge 
 									${cr.status == '신청' ? 'badge-secondary' : 
 									  cr.status == '처리중' ? 'badge-primary' : 
 									  cr.status == '완료' ? 'badge-success' : 'badge-danger'}">
-									${cr.status}
-								</span>
-							</td>
-							<td><fmt:formatDate value="${cr.re_date}" pattern="yyyy-MM-dd HH:mm" /></td>
-							<td>
-								<button class="btn btn-sm btn-secondary" data-toggle="modal"
-									data-target="#detailModal_${cr.cr_no}">상세보기</button>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			
-			<!-- 검색 결과 없음 메시지 -->
-			<div id="noResultMessage" class="text-center py-4" style="display: none;">
-				<i class="fas fa-search fa-3x text-muted mb-3"></i>
-				<p class="text-muted">검색 결과가 없습니다.</p>
-			</div>
-			
-			<!-- 데이터 없음 메시지 -->
-			<c:if test="${empty crList}">
-				<div class="text-center py-4">
-					<i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-					<p class="text-muted">취소·반품·교환 신청 내역이 없습니다.</p>
+											${cr.status} </span></td>
+									<td><fmt:formatDate value="${cr.re_date}"
+											pattern="yyyy-MM-dd HH:mm" /></td>
+									<td>
+										<button class="btn btn-sm btn-secondary" data-toggle="modal"
+											data-target="#detailModal_${cr.cr_no}">상세보기</button>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+
+					<!-- 검색 결과 없음 메시지 -->
+					<div id="noResultMessage" class="text-center py-4"
+						style="display: none;">
+						<i class="fas fa-search fa-3x text-muted mb-3"></i>
+						<p class="text-muted">검색 결과가 없습니다.</p>
+					</div>
+
+					<!-- 데이터 없음 메시지 -->
+					<c:if test="${empty crList}">
+						<div class="text-center py-4">
+							<i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+							<p class="text-muted">취소·반품·교환 신청 내역이 없습니다.</p>
+						</div>
+					</c:if>
 				</div>
-			</c:if>
+			</div>
 		</div>
 	</div>
-</div>
 	<!-- 상세보기 모달 (각 항목별) -->
 	<c:forEach var="cr" items="${crList}">
 		<div class="modal fade" id="detailModal_${cr.cr_no}" tabindex="-1" role="dialog">

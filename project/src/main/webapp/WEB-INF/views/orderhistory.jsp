@@ -57,32 +57,6 @@
 			</a>
 		</div>
 	</div>
-	<!-- ✅ 사이드바 -->
-	<div class="container-fluid">
-		<div class="col-lg-9" aling="right">
-			<nav
-				class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-				<a href="" class="text-decoration-none d-block d-lg-none">
-					<h1 class="m-0 display-5 font-weight-semi-bold">
-						<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
-					</h1>
-				</a>
-				<button type="button" class="navbar-toggler" data-toggle="collapse"
-					data-target="#navbarCollapse">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse justify-content-between"
-					id="navbarCollapse">
-					<div class="navbar-nav ml-auto py-0"
-						style="padding-left: -50px; margin-right: -35%;">
-						<a href="login" class="nav-item nav-link">로그인</a> <a
-							href="register" class="nav-item nav-link">회원가입</a> <a
-							href="board" class="nav-item nav-link">고객센터</a>
-					</div>
-				</div>
-			</nav>
-		</div>
-	</div>
 	<!-- Main Layout -->
 	<div class="container-fluid">
 		<div class="row px-xl-5">
@@ -91,9 +65,10 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
-						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
+					<li class="nav-item"><a href="/mypage" class="nav-link">모든내역</a></li>
+						<li class="nav-item"><a href="/orderhistory" class="nav-link active">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
-						<li class="nav-item"><a href="/mycs" class="nav-link active">취소·반품·교환내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link ">취소·반품·교환내역</a></li>
 						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
 						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
 					</ul>
@@ -105,8 +80,22 @@
 			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
 					<h4 style="margin-top:50px;">주문내역</h4>
+					<span class="ml-2 text-muted"style="margin-right:970px;"> 총 <strong id="totalCount">0</strong>건
+					</span>
 				</div>
-					<table class="table table-striped">
+				<!-- ⭐ 기간 필터 섹션 ⭐ -->
+				<div class="filter-bar d-flex align-items-center mb-3">
+					<!-- 날짜 직접 선택 -->
+					<input type="date" id="startDate" class="form-control mr-2"
+						style="width: 160px;"> <span class="mr-2">~</span> <input
+						type="date" id="endDate" class="form-control mr-3"
+						style="width: 160px;">
+						
+					<button type="button"
+					class="btn btn-outline-primary btn-sm" 
+					onclick="filterByDateRange()">조회</button>
+				</div>
+				<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>주문번호</th>
@@ -116,27 +105,43 @@
 								<th>주문일시</th>
 							</tr>
 						</thead>
-						<tbody>
+					<tbody id="orderTableBody">
 						<c:choose>
-								<c:when test="${empty deliveryList}">
-									<tr>
-										<td colspan="5" class="text-center">주문 내역이 없습니다.</td>
+							<c:when test="${empty deliveryList}">
+								<tr>
+									<td colspan="5" class="text-center">주문 내역이 없습니다.</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="detail" items="${deliveryList}">
+									<tr class="order-row" data-order-date="${detail.order_date}"
+										data-status="${detail.order_status}">
+
+										<td>${detail.order_no}</td>
+										<td>${detail.item_name}</td>
+										<td><fmt:formatNumber value="${detail.item_price}"
+												pattern="#,###" />원</td>
+										<td>
+										<span class="badge 
+						                        ${detail.order_status == '결제완료' ? 'badge-success' : 
+						                          detail.order_status == '배송준비중' ? 'badge-warning' : 
+						                          detail.order_status == '배송중' ? 'badge-info' : 
+						                          detail.order_status == '배송완료' ? 'badge-secondary' : 'badge-light'}">
+												${detail.order_status} 
+										</span>
+										</td>
+										<td>${detail.order_date}</td>
 									</tr>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="detail" items="${deliveryList}">
-										<tr>
-											<td>${detail.order_no}</td>
-											<td>${detail.item_name}</td>
-											<td><fmt:formatNumber value="${detail.item_price}" pattern="#,###"/>원</td>
-											<td>${detail.order_status}</td>
-											<td>${detail.order_date}</td>
-										</tr>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						</tbody>
-					</table>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
+
+				<!-- 검색 결과 없음 메시지 -->
+				<div id="noResultMessage" class="text-center py-4" style="display: none;">
+					<i class="fas fa-search fa-3x text-muted mb-3"></i>
+					<p class="text-muted">조회 결과가 없습니다.</p>
 				</div>
 			</div>
 		</div>
@@ -199,8 +204,12 @@
 		</div>
 	</div>
 	<!-- ⭐⭐⭐ JavaScript Libraries ⭐⭐⭐ -->
+	<script>
+    window.hasOrderList = ${not empty deliveryList};
+</script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="js/checkout.js"></script>
 
 			
 </body>

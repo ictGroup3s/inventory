@@ -182,165 +182,120 @@ if (memoSelect) {
     });
 }
 
+// 주문내역 검색기능
+let currentPeriodFilter = 'all';
+let currentStatusFilter = 'all';
 
+// JSP에서 window.hasOrderList 로 주입받을 예정
+let hasOrderList = false;
 
+function filterByPeriod(period) {
+    currentPeriodFilter = period;
+    applyFilters();
+}
 
+function filterByStatus(status) {
+    currentStatusFilter = status;
+    applyFilters();
+}
 
-//마이페이지 검색기능
-let currentTypeFilter = 'all';
-	let currentStatusFilter = 'all';
-	let currentSearchText = '';
-	let currentSearchType = 'all';
-	const hasCrList = document.body.dataset.hasCrList === 'true';
+function parseOrderDate(dateStr) {
+    const parts = dateStr.split(' ')[0].split('-');
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+}
 
-	// 검색 기능
-	function searchCR() {
-		currentSearchText = document.getElementById('searchInput').value.toLowerCase().trim();
-		currentSearchType = document.getElementById('searchType').value;
-		applyFilters();
+function applyFilters() {
+    const rows = document.querySelectorAll('.order-row');
+    let visibleCount = 0;
+    const today = new Date();
+
+    rows.forEach(row => {
+        const orderDate = parseOrderDate(row.dataset.orderDate);
+        const status = row.dataset.status;
+
+        let matchesPeriod = true;
+        if (currentPeriodFilter !== 'all') {
+            const daysDiff = Math.floor((today - orderDate) / 86400000);
+            if (currentPeriodFilter === '1month') matchesPeriod = daysDiff <= 30;
+            if (currentPeriodFilter === '3month') matchesPeriod = daysDiff <= 90;
+            if (currentPeriodFilter === '6month') matchesPeriod = daysDiff <= 180;
+        }
+
+        const matchesStatus =
+            currentStatusFilter === 'all' || status === currentStatusFilter;
+
+        if (matchesPeriod && matchesStatus) {
+            row.style.display = '';
+            visibleCount++;
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    document.getElementById('totalCount').textContent = visibleCount;
+
+    const noResultMsg = document.getElementById('noResultMessage');
+    const table = document.getElementById('orderTable');
+
+    if (noResultMsg && table) {
+        if (visibleCount === 0 && hasOrderList) {
+            noResultMsg.style.display = 'block';
+            table.style.display = 'none';
+        } else {
+            noResultMsg.style.display = 'none';
+            table.style.display = 'table';
+        }
+    }
+}
+
+function resetFilters() {
+    currentPeriodFilter = 'all';
+    currentStatusFilter = 'all';
+    applyFilters();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    applyFilters();
+});
+
+function parseOrderDate(dateStr) {
+    // "2025-12-17 15:30:00" → Date
+    const parts = dateStr.split(' ')[0].split('-');
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+
+function filterByDateRange() {
+    const startInput = document.getElementById('startDate').value;
+    const endInput = document.getElementById('endDate').value;
+
+    const startDate = startInput ? new Date(startInput) : null;
+    const endDate = endInput ? new Date(endInput) : null;
+
+	// ⭐ 핵심: 종료일을 하루의 끝으로 설정
+	  if (endDate) {
+	      endDate.setHours(23, 59, 59, 999);
+	  }
+	  
+    const rows = document.querySelectorAll('.order-row');
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+        const orderDate = parseOrderDate(row.dataset.orderDate);
+        let visible = true;
+
+        if (startDate && orderDate < startDate) visible = false;
+        if (endDate && orderDate > endDate) visible = false;
+
+        row.style.display = visible ? '' : 'none';
+        if (visible) visibleCount++;
+    });
+
+    document.getElementById('totalCount').textContent = visibleCount;
+
+	 document.getElementById('totalCount').textContent = visibleCount;
+
+	    document.getElementById('noResultMessage').style.display =
+	        visibleCount === 0 ? 'block' : 'none';
 	}
 
-	// Enter 키로 검색
-	document.getElementById('searchInput').addEventListener('keypress', function(e) {
-		if (e.key === 'Enter') {
-			searchCR();
-		}
-	});
-
-	// 검색 타입 변경 시 placeholder 변경
-	document.getElementById('searchType').addEventListener('change', function() {
-		const searchInput = document.getElementById('searchInput');
-		const searchType = this.value;
-		
-		if (searchType === 'all') {
-			searchInput.placeholder = '검색어를 입력하세요';
-		} else if (searchType === 'order_no') {
-			searchInput.placeholder = '주문번호를 입력하세요';
-		} else if (searchType === 'item_name') {
-			searchInput.placeholder = '상품명을 입력하세요';
-		}
-	});
-
-	// 유형별 필터
-	function filterByType(type) {
-		currentTypeFilter = type;
-		
-		// 버튼 활성화 상태 변경
-		document.querySelectorAll('[data-type]').forEach(badge => {
-			badge.classList.remove('active', 'badge-secondary');
-			badge.classList.add('badge-light');
-		});
-		document.querySelector(`[data-type="${type}"]`).classList.add('active', 'badge-secondary');
-		document.querySelector(`[data-type="${type}"]`).classList.remove('badge-light');
-		
-		applyFilters();
-	}
-
-	// 상태별 필터
-	function filterByStatus(status) {
-		currentStatusFilter = status;
-		
-		// 버튼 활성화 상태 변경
-		document.querySelectorAll('[data-status]').forEach(badge => {
-			badge.classList.remove('active', 'badge-secondary');
-			badge.classList.add('badge-light');
-		});
-		document.querySelector(`[data-status="${status}"]`).classList.add('active', 'badge-secondary');
-		document.querySelector(`[data-status="${status}"]`).classList.remove('badge-light');
-		
-		applyFilters();
-	}
-
-	// 모든 필터 적용
-	function applyFilters() {
-		const rows = document.querySelectorAll('.cr-row');
-		let visibleCount = 0;
-		
-		rows.forEach(row => {
-			const orderNo = row.dataset.orderNo.toLowerCase();
-			const itemName = row.dataset.itemName.toLowerCase();
-			const type = row.dataset.type;
-			const status = row.dataset.status;
-			
-			// 검색어 필터
-			let matchesSearch = true;
-			if (currentSearchText !== '') {
-				if (currentSearchType === 'all') {
-					matchesSearch = orderNo.includes(currentSearchText) || itemName.includes(currentSearchText);
-				} else if (currentSearchType === 'order_no') {
-					matchesSearch = orderNo.includes(currentSearchText);
-				} else if (currentSearchType === 'item_name') {
-					matchesSearch = itemName.includes(currentSearchText);
-				}
-			}
-			
-			// 유형 필터
-			const matchesType = currentTypeFilter === 'all' || type === currentTypeFilter;
-			
-			// 상태 필터
-			const matchesStatus = currentStatusFilter === 'all' || status === currentStatusFilter;
-			
-			// 모든 조건 만족 시 표시
-			if (matchesSearch && matchesType && matchesStatus) {
-				row.style.display = '';
-				visibleCount++;
-			} else {
-				row.style.display = 'none';
-			}
-		});
-		
-		// 결과 카운트 업데이트
-		document.getElementById('totalCount').textContent = visibleCount;
-		
-		// 검색 결과 텍스트
-		let resultText = '';
-		if (currentSearchText) {
-			const searchTypeText = currentSearchType === 'order_no' ? '주문번호' : 
-								   currentSearchType === 'item_name' ? '상품명' : '전체';
-			resultText += `- "${currentSearchText}" (${searchTypeText})`;
-		}
-		if (currentTypeFilter !== 'all') {
-			resultText += ` [${currentTypeFilter}]`;
-		}
-		if (currentStatusFilter !== 'all') {
-			resultText += ` [${currentStatusFilter}]`;
-		}
-		document.getElementById('searchResultText').textContent = resultText;
-		
-		// 검색 결과 없음 메시지
-		const noResultMsg = document.getElementById('noResultMessage');
-		const table = document.getElementById('crTable');
-		if (visibleCount === 0 && hasCrList) {
-			noResultMsg.style.display = 'block';
-			table.style.display = 'none';
-		} else {
-			noResultMsg.style.display = 'none';
-			table.style.display = 'table';
-		}
-	}
-
-	// 초기화
-	function resetSearch() {
-		// 검색 필드 초기화
-		document.getElementById('searchInput').value = '';
-		document.getElementById('searchType').value = 'all';
-		document.getElementById('searchInput').placeholder = '검색어를 입력하세요';
-		
-		currentSearchText = '';
-		currentSearchType = 'all';
-		currentTypeFilter = 'all';
-		currentStatusFilter = 'all';
-		
-		// 모든 필터 버튼 초기화
-		document.querySelectorAll('.filter-badge').forEach(badge => {
-			badge.classList.remove('active', 'badge-secondary');
-			badge.classList.add('badge-light');
-		});
-		document.querySelector('[data-type="all"]').classList.add('active', 'badge-secondary');
-		document.querySelector('[data-type="all"]').classList.remove('badge-light');
-		document.querySelector('[data-status="all"]').classList.add('active', 'badge-secondary');
-		document.querySelector('[data-status="all"]').classList.remove('badge-light');
-		
-		applyFilters();
-	}
 

@@ -61,34 +61,6 @@
 			</a>
 		</div>
 	</div>
-			<!-- ✅ 사이드바 -->
-	<div class="container-fluid">
-	 <div class="row justify-content-end">
-		<div class="col-lg-9" aling="right">
-			<nav
-				class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-				<a href="" class="text-decoration-none d-block d-lg-none">
-					<h1 class="m-0 display-5 font-weight-semi-bold">
-						<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
-					</h1>
-				</a>
-				<button type="button" class="navbar-toggler" data-toggle="collapse"
-					data-target="#navbarCollapse">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse justify-content-between"
-					id="navbarCollapse">
-					<div class="navbar-nav ml-auto py-0"
-						style="padding-left: -50px; margin-right: -35%;">
-						<a href="login" class="nav-item nav-link">로그인</a> <a
-							href="register" class="nav-item nav-link">회원가입</a> <a
-							href="board" class="nav-item nav-link">고객센터</a>
-					</div>
-				</div>
-			</nav>
-		</div>
-	</div>
-</div>
 	<!-- Main Layout -->
 	<div class="container-fluid">
 		<div class="row px-xl-5">
@@ -164,17 +136,18 @@
 								</thead>
 								<tbody>
 									<c:forEach var="order" items="${deliveryList}">
-										<c:forEach var="detail" items="${order.detailList}" begin="0"
-											end="4">
-											<tr>
-												<td>${order.order_no}</td>
-												<td>${detail.item_name}</td>
-												<td><fmt:formatNumber value="${detail.item_price}"
-														pattern="#,###" />원</td>
-												<td><span class="badge badge-secondary">
-														${order.order_status} </span></td>
-											</tr>
-										</c:forEach>
+										<tr>
+											<td>${order.order_no}</td>
+											<td>${order.detailList[0].item_name} 
+											<c:if test="${fn:length(order.detailList) > 1}">외 ${fn:length(order.detailList)-1}건
+							            </c:if>
+											</td>
+											<td><fmt:formatNumber value="${order.total_amount}"
+													pattern="#,###" />원</td>
+											<td><span class="badge badge-secondary">${order.order_status}</span>
+											</td>
+											<td>${order.order_date}</td>
+										</tr>
 									</c:forEach>
 								</tbody>
 							</table>

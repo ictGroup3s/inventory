@@ -56,32 +56,6 @@
 			</a>
 		</div>
 	</div>
-	<!-- ✅ 사이드바 -->
-	<div class="container-fluid">
-		<div class="col-lg-9" aling="right">
-			<nav
-				class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-				<a href="" class="text-decoration-none d-block d-lg-none">
-					<h1 class="m-0 display-5 font-weight-semi-bold">
-						<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
-					</h1>
-				</a>
-				<button type="button" class="navbar-toggler" data-toggle="collapse"
-					data-target="#navbarCollapse">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse justify-content-between"
-					id="navbarCollapse">
-					<div class="navbar-nav ml-auto py-0"
-						style="padding-left: -50px; margin-right: -35%;">
-						<a href="login" class="nav-item nav-link">로그인</a> <a
-							href="register" class="nav-item nav-link">회원가입</a> <a
-							href="board" class="nav-item nav-link">고객센터</a>
-					</div>
-				</div>
-			</nav>
-		</div>
-	</div>
 	<!-- Main Layout -->
 	<div class="container-fluid">
 		<div class="row px-xl-5">
@@ -90,6 +64,7 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
+						<li class="nav-item"><a href="/mypage" class="nav-link">모든내역</a></li>
 						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery" class="nav-link active">배송내역</a></li>
 						<li class="nav-item"><a href="/mycs" class="nav-link">취소·반품·교환내역</a></li>
@@ -98,7 +73,7 @@
 					</ul>
 				</nav>
 			</div>
-		
+
 			<!-- Main Content -->
 			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
@@ -206,9 +181,9 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 	<!-- ⭐⭐⭐ 배송 상세 모달 - 모든 상품 표시 -->
-	<c:forEach var="order" items="${orderList}">
+	<c:forEach var="order" items="${deliveryList}">
 		<div class="modal fade" id="detailModal_${order.order_no}" tabindex="-1" role="dialog">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
@@ -231,17 +206,17 @@
 							<div class="col-md-12">
 								<strong>배송상태:</strong>
 								<c:choose>
-									<c:when test="${order.delivery_status == '배송준비중'}">
+									<c:when test="${order.order_status == '배송준비중'}">
 										<span class="badge badge-warning" style="background-color:#FFF3E0; color: #E65100;">배송준비중</span>
 									</c:when>
-									<c:when test="${order.delivery_status == '배송중'}">
+									<c:when test="${order.order_status == '배송중'}">
 														<span class="badge badge-info" style="background-color:#EDF1FF; color: #1565C0;">배송중</span>
 									</c:when>
-									<c:when test="${order.delivery_status == '배송완료'}">
+									<c:when test="${order.order_status == '배송완료'}">
 										<span class="badge badge-success" style="background-color:#E8F5E9; color: #2E7D32;">배송완료</span>
 									</c:when>
 									<c:otherwise>
-										<span class="badge badge-secondary">${order.delivery_status}</span>
+										<span class="badge badge-secondary">${order.order_status}</span>
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -278,14 +253,14 @@
 						<ul class="mt-2">
 							<li>${order.order_date}: 주문 접수</li>
 							<c:choose>
-								<c:when test="${order.delivery_status == '배송준비중'}">
+								<c:when test="${order.order_status == '배송준비중'}">
 									<li>현재: 상품 준비중</li>
 								</c:when>
-								<c:when test="${order.delivery_status == '배송중'}">
+								<c:when test="${order.order_status == '배송중'}">
 									<li>배송 시작됨</li>
 									<li>배송 예정일: 1-2일 이내</li>
 								</c:when>
-								<c:when test="${order.delivery_status == '배송완료'}">
+								<c:when test="${order.order_status == '배송완료'}">
 									<li>배송 완료</li>
 								</c:when>
 							</c:choose>

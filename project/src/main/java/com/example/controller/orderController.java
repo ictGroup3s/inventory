@@ -270,7 +270,7 @@ public class orderController {
 	            log.info("✅ 주문 생성 완료 - 주문번호: {}", orderNo);
 	            
 	            // 5. 주문 완료 페이지로 리다이렉트
-	            return "redirect:/order/complete?orderNo=" + orderNo;
+	            return "redirect:/ordercomplete?orderNo=" + orderNo;
 	            
 	        } catch (Exception e) {
 	            log.error("❌ 주문 처리 중 오류 발생", e);
@@ -278,7 +278,7 @@ public class orderController {
 	            return "redirect:/checkout";
 	        }
 	    }
-	    @GetMapping("/order/complete")
+	    @GetMapping("/ordercomplete")
 	    public String orderComplete(@RequestParam("orderNo") int orderNo, Model model, HttpSession session) {
 	        log.info("주문 완료 페이지 - 주문번호: {}", orderNo);
 	        
@@ -291,6 +291,6 @@ public class orderController {
 	        ordersVO order = orderService.getOrderByNo(orderNo);
 	        model.addAttribute("order", order);
 	        
-	        return "order/complete";
+	        return "/ordercomplete";
 	    }
 	}
