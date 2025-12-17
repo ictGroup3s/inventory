@@ -117,7 +117,7 @@ public class orderRepository {
 			pstmt.setString(1, customerId);
 			ResultSet rs = pstmt.executeQuery();
 
-			while (rs.next()) {
+			while (rs.next()) { 
 				ordersVO order = new ordersVO();
 				order.setOrder_no(rs.getInt("order_no"));
 				order.setOrder_name(rs.getString("order_name"));
