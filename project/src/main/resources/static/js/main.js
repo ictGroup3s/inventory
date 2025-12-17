@@ -6,19 +6,26 @@
 
 	$(document).ready(function() {
 		$('.bxslider').bxSlider({
-			auto: true,
-			moveSlides: 1,
-			pager: false,
-			controls: true,
-			pause: 2000,
-			speed: 100,
-			infiniteLoop: true,
+			auto: true,				// 자동 슬라이드 여부
+			touchEnabled: false,	// 터치 스와이프 기능 여부
+			moveSlides: 1,			// 한 번에 이동하는 슬라이드 수
+			pager: false,			// 페이지 네비게이션(하단 점) 표시 여부
+			controls: true,			// 좌-우 화살표 (슬라이드 전환 효과) 설정
+			pause: 2000,			// 자동 슬라이드 시 각 슬라이드가 보여지는 시간 (밀리초)
+			// 전환이 너무 빠르면 '딱딱'해 보이므로 여유 있게 설정
+			speed: 650,				// 슬라이드 전환 속도 (밀리초)
+			useCSS: false,			// jQuery easing 적용을 위해 CSS transition 비활성화
+			easing: 'easeInOutCubic',
+			infiniteLoop: true,		// 무한 루프 설정
+			onSliderLoad: function(currentIndex){
+				try{ $('.bxslider').trigger('bxslider:loaded'); }catch(e){}
+			},
 			minSlides: 2,      // 최소 보여줄 슬라이드
-			maxSlides: 4,      // 최대 보여줄 슬라이드
+			maxSlides: 6,      // 최대 보여줄 슬라이드
 			slideWidth: 250,   // 슬라이드 개별 너비
 			slideMargin: 10    // 슬라이드 간격
 		});
-
+		
 		// 상단으로 이동 버튼
 		$(window).scroll(function() {
 			if ($(this).scrollTop() > 100) {
@@ -84,21 +91,30 @@
 		});
 
 
-		// Product Quantity
+		// 장바구니 상품 수량 조절- ** 재고수량을 넘지 않도록 **
 		$('.quantity button').on('click', function() {
 			var button = $(this);
-			var oldValue = button.parent().parent().find('input').val();
+			var input = button.parent().parent().find('input');
+			var oldValue = parseFloat(input.val());
+			var maxVal = parseFloat(input.data('max')); // 최대 재고량 가져오기
+
 			if (button.hasClass('btn-plus')) {
-				var newVal = parseFloat(oldValue) + 1;
+				var newVal = oldValue + 1;
+				// 재고량 체크
+				if (!isNaN(maxVal) && newVal > maxVal) {
+					alert("재고가 부족합니다. (남은 수량: " + maxVal + "개)");
+					newVal = maxVal;
+				}
 			} else {
-				if (oldValue > 0) {
-					var newVal = parseFloat(oldValue) - 1;
+				if (oldValue > 1) { // 최소 1개 유지
+					var newVal = oldValue - 1;
 				} else {
-					newVal = 0;
+					newVal = 1;
 				}
 			}
-			button.parent().parent().find('input').val(newVal);
+			input.val(newVal);
 		});
+		
 		//sidebar 클릭
 		const currentPath = window.location.pathname.split('/').pop();
 
@@ -108,7 +124,7 @@
 				if ($el.attr('href') === currentPath) {
 					$el.addClass('active');
 				}
-			});
+		});
 
 	})
 
