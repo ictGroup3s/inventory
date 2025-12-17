@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%-- 가격,숫자 포맷 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -180,28 +182,39 @@
 									class="card-body border-left border-right text-center p-0 pt-4 pb-3">
 									<h5 class="text-truncate mb-3">${item.item_name}</h5>
 									
-								<%-- 평점/리뷰: 리뷰가 없으면 표시 안 함 --%>
+								<%-- 평점/리뷰 하트채우기 : 리뷰가 없으면 표시 안 함 --%>
 								<c:set var="reviewCnt" value="${empty item.review_cnt ? 0 : item.review_cnt}" />
 								<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
 								<c:if test="${reviewCnt > 0}">
 									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
+										<!-- 평점 하트 채우기(소수점 0~100% 채우기 표현) -->
 										<span class="mr-1">
 											<c:forEach begin="1" end="5" var="i">
+												<c:set var="diff" value="${rating - (i - 1)}" />												
 												<c:choose>
-													<c:when test="${i <= rating}">
-														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													<c:when test="${diff >= 1}">
+														<c:set var="fillPct" value="100" />
+													</c:when>
+													<c:when test="${diff <= 0}">
+														<c:set var="fillPct" value="0" />
 													</c:when>
 													<c:otherwise>
-														<i class="far fa-heart" style="color: #D19C97;"></i>
+														<fmt:formatNumber var="fillPct" value="${diff * 100}" pattern="0" />
 													</c:otherwise>
 												</c:choose>
+												<span class="heart-clip">
+													<i class="far fa-heart" style="color: #D19C97;"></i>
+													<span class="heart-fill" style="width: ${fillPct}%;">
+														<i class="fas fa-heart" style="color: #D19C97;"></i>
+													</span>
+												</span>
 											</c:forEach>
 										</span>
 										<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
 										<span>(${reviewCnt}개 리뷰)</span>
 									</div>
 								</c:if>
-								<%-- 평점/리뷰 --%>
+								<%-- 평점/리뷰 하트채우기 --%>
 									
 								<%-- 할인가 적용 --%>	
 									<div class="d-flex justify-content-center">
@@ -289,7 +302,7 @@
 
 	<!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5"
-		style="margin-top: 550px !important;">
+		style="margin-top: 300px !important;">
 		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
@@ -422,6 +435,7 @@
 
 	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
 	<script src="/js/main.js" defer></script>
+	
 
 </body>
 

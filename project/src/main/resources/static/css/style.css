@@ -12,7 +12,24 @@
     min-width: 250px;  /* 최소 크기 */
     height: auto;      /* 비율 유지 */
 }
- 
+
+/* 리뷰 하트 채우기 (소수점 채우기 표현) --- */
+.heart-clip {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.heart-clip .heart-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+ /* 리뷰 하트 채우기 (소수점 채우기 표현) --- */
  
 :root {
   --blue: #007bff;
