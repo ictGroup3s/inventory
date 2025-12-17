@@ -241,9 +241,17 @@
 					          
 						<div class="col-md-6">
 							<h4 class="mb-4">리뷰 작성</h4>
-							<form id="reviewForm">
-								<input type="hidden" name="item_no" value="${product.item_no}" />
-							    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
+							<c:choose>
+								<c:when test="${empty sessionScope.loginUser}">
+									<p class="text-muted">로그인 후 리뷰 작성이 가능합니다.</p>
+								</c:when>
+								<c:when test="${not empty sessionScope.loginUser and not canWriteReview}">
+									<p class="text-muted">${reviewBlockReason}</p>
+								</c:when>
+								<c:otherwise>
+									<form id="reviewForm">
+										<input type="hidden" name="item_no" value="${product.item_no}" />
+									    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
 								
 								<div class="form-group">
                                     <label class="mb-1">평점 *</label>
@@ -272,7 +280,9 @@
 									<input type="button" id="addReview" value="리뷰 남기기" class="btn btn-primary px-3">
 								</div>
 											
-							</form>
+								</form>
+								</c:otherwise>
+							</c:choose>
 
 						</div>
 					</div>
@@ -467,7 +477,9 @@
 	<script src="/js/CustomerChat.js?v=999"></script>
 	
 	<!-- Main JS -->
-	<script src="/js/main.js"></script>	
+	<script src="/js/main.js"></script>
+	<!-- 리뷰 js -->	
+	<script src="js/Review.js"></script>	
 
 	<!-- SockJS + STOMPJS (chat.js보다 위에) -->
 	<script
@@ -475,8 +487,7 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
-	<!-- 리뷰 js -->	
-	<script src="js/Review.js"></script>	
+		
 	
 
 </body>

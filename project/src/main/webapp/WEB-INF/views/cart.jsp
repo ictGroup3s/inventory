@@ -134,7 +134,7 @@
 										<td class="align-middle text-left">
 											<div class="d-flex flex-column align-items-center">		<!-- <div class="d-flex align-items-center"> w50-h50   -->
 												<a href="detail?item_no=${ci.product.item_no}">
-													<img src="/img/product/${ci.product.item_img}" alt="" style="width:150px; height:150px; object-fit:cover;" class="mb-2" /><!-- class="mr-3"   -->
+													<img src="/img/product/${ci.product.item_img}" alt="" style="width:150px; height:150px; object-fit:cover;" class="mb-2" /> <!-- class="mr-3" -->
 												</a>
 													<div class="cart-product-name" style="word-break:break-word; max-width:320px; font-size:16px; ">${ci.product.item_name}</div>												
 											</div>
