@@ -209,20 +209,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        SELECT 
 	            c.cate_name as category,
 	            NVL(ROUND(SUM(od.item_price * od.item_cnt) / 10000, 0), 0) as sales,
-	            (SELECT NVL(ROUND(SUM(od2.item_price * od2.item_cnt) / 10000, 0), 0)
-	             FROM order_detail od2 
-	             JOIN orders o2 ON od2.order_no = o2.order_no
+	            (SELECT NVL(ROUND(SUM(od2.item_price * od2.item_cnt) / 10000, 0), 1)
+	             FROM orders o2
+	             JOIN order_detail od2 ON o2.order_no = od2.order_no
 	             WHERE o2.order_status != '취소'
 	             AND TO_CHAR(o2.order_date, 'YYYY') = #{year}
 	             AND TO_CHAR(o2.order_date, 'MM') = #{month}) as total_sales
-	        FROM cate c
-	        LEFT JOIN product p ON c.cate_no = p.cate_no
-	        LEFT JOIN order_detail od ON p.item_no = od.item_no
-	        LEFT JOIN orders o ON od.order_no = o.order_no 
-	            AND o.order_status != '취소'
-	            AND TO_CHAR(o.order_date, 'YYYY') = #{year}
-	            AND TO_CHAR(o.order_date, 'MM') = #{month}
-	        GROUP BY c.cate_name, c.cate_no
+	        FROM orders o
+	        JOIN order_detail od ON o.order_no = od.order_no
+	        JOIN product p ON od.item_no = p.item_no
+	        JOIN cate c ON p.cate_no = c.cate_no
+	        WHERE o.order_status != '취소'
+	        AND TO_CHAR(o.order_date, 'YYYY') = #{year}
+	        AND TO_CHAR(o.order_date, 'MM') = #{month}
+	        GROUP BY c.cate_name
 	    )
 	    ORDER BY sales DESC
 	</select>

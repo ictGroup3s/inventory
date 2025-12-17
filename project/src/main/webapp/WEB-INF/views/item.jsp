@@ -120,25 +120,30 @@
 						</button>
 					</nav>
 
-					<div class="container-fluid py-5 px-0">
+					<div class="container py-5">
 
 						<!-- 상품 등록 영역 -->
-						<div class="row px-xl-0">
+						<div class="row" style="align-items: flex-start;">
+
 							<!-- 좌측: 상품 이미지 -->
-							<div class="col-lg-5 pb-5 text-center">
+							<div class="col-lg-4 d-flex justify-content-start"
+								style="padding-left: 0;">
 								<img id="preview" src="img/insert_pic.png" alt="상품 이미지"
-									class="img-fluid" style="width: 600px; height: 500px;">
+									class="img-fluid"
+									style="max-width: 350px; height: auto; margin-top: 70px;">
 							</div>
 
 							<!-- 우측: 상품 등록 폼 -->
-							<div class="col-lg-7 pb-5">
+							<div class="col-lg-8">
 								<h3 class="font-weight-semi-bold mb-4">상품관리</h3>
 
 								<form action="saveItem" method="post"
 									enctype="multipart/form-data">
 									<input type="hidden" name="item_no">
+
 									<!-- 상품 정보 입력 테이블 -->
-									<table class="table table-bordered">
+									<table class="table table-bordered mx-auto"
+										style="max-width: 600px;">
 										<tr>
 											<td>상품명</td>
 											<td><input type="text"
@@ -185,16 +190,15 @@
 												placeholder="판매가"> <small
 												class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
 										</tr>
-										
-										<!-- 기존 이미지 hidden input 추가 -->
+
 										<input type="hidden" name="existingItemImg" value="">
-																					
+
 										<tr>
 											<td>이미지 업로드</td>
 											<td><input type="file" id="uploadFile"
 												class="form-control required-field" name="item_imgFile">
-												<small class="error-msg text-danger d-none">필수 입력 항목입니다.</small>
-											</td>
+												<small class="error-msg text-danger d-none">필수 입력
+													항목입니다.</small></td>
 										</tr>
 
 										<tr>
@@ -204,27 +208,27 @@
 												<small class="error-msg text-danger d-none">필수 입력
 													항목입니다.</small></td>
 										</tr>
+
 										<tr>
-										    <td>할인률</td>
-										    <td>
-										        <div class="input-group">
-										            <input type="number" class="form-control required-field"
-										                name="dis_rate" placeholder="할인률">
-										            <div class="input-group-append">
-										                <span class="input-group-text">%</span>
-										            </div>
-										        </div>
-										        <small class="error-msg text-danger d-none">필수 입력 항목입니다.</small>
-										    </td>
+											<td>할인률</td>
+											<td>
+												<div class="input-group">
+													<input type="number" class="form-control required-field"
+														name="dis_rate" placeholder="할인률">
+													<div class="input-group-append">
+														<span class="input-group-text">%</span>
+													</div>
+												</div> <small class="error-msg text-danger d-none">필수 입력
+													항목입니다.</small>
+											</td>
 										</tr>
 									</table>
 
-									<!-- 등록/수정/삭제 버튼 -->
+									<!-- 등록/수정 버튼 -->
 									<div class="d-flex align-items-center mb-4 pt-2">
 										<button class="btn btn-primary mr-2 submit-btn register">등록</button>
 										<button class="btn btn-warning mr-2 submit-btn update"
 											formaction="/itemUpdate">수정</button>
-
 									</div>
 								</form>
 							</div>
