@@ -1,258 +1,118 @@
-// 주문자 정보 입력 필드들
+/*************************************************
+ * DOM 요소
+ *************************************************/
 const nameInput = document.getElementById('Name');
 const phoneInput = document.getElementById('Phone');
 const addressInput = document.getElementById('Address');
 
-// 수령지 주소 입력 필드들
 const shipNameInput = document.getElementById('shipName');
 const shipPhoneInput = document.getElementById('shipPhone');
 const shipAddressInput = document.getElementById('shipAddress');
 
-// 수령지 주소 섹션
-const shippingAddressSection = document.getElementById('shipping-address');
+const shipToCheckbox = document.getElementById('shipto');        // 수령지주소입력
+const sameAsAboveCheckbox = document.getElementById('newaccount'); // 위 내용과 동일
+const shippingSection = document.getElementById('shipping-address');
+const checkoutForm = document.getElementById('checkoutForm');
 
-// "위 내용과 동일" 체크박스 (원래 있던 newaccount를 사용)
-const sameAsAboveCheckbox = document.getElementById('newaccount');
-
-// 배송지 정보가 모두 입력되었는지 확인
-let isShippingSectionOpened = false;
-
-function checkAllFieldsFilled() {
-    if (!nameInput || !phoneInput || !addressInput || !shippingAddressSection) return;
-    
-    const name = nameInput.value.trim();
-    const phone = phoneInput.value.trim();
-    const address = addressInput.value.trim();
-    
-    // 모든 필드가 입력되었고 아직 펼쳐지지 않았다면
-    if (name !== '' && phone !== '' && address !== '' && !isShippingSectionOpened) {
-        $('#shipping-address').collapse('show');
-        isShippingSectionOpened = true;
-    }
-}
-
-// 각 입력 필드에 이벤트 리스너 추가 (입력할 때마다 체크)
-if (nameInput && phoneInput && addressInput) {
-    nameInput.addEventListener('input', checkAllFieldsFilled);
-    phoneInput.addEventListener('input', checkAllFieldsFilled);
-    addressInput.addEventListener('input', checkAllFieldsFilled);
-}
-
-// "위 내용과 동일" 체크박스 기능
-if (sameAsAboveCheckbox && shipNameInput && shipPhoneInput && shipAddressInput) {
-    sameAsAboveCheckbox.addEventListener('change', function() {
-        if (this.checked) {
-            // 주문자 정보를 수령지로 복사
-            shipNameInput.value = nameInput.value;
-            shipPhoneInput.value = phoneInput.value;
-            shipAddressInput.value = addressInput.value;
-            
-            // 입력 필드 비활성화 (수정 불가)
-            shipNameInput.disabled = true;
-            shipPhoneInput.disabled = true;
-            shipAddressInput.disabled = true;
-            
-            // 비활성화된 필드 스타일
-            shipNameInput.style.backgroundColor = '#e9ecef';
-            shipPhoneInput.style.backgroundColor = '#e9ecef';
-            shipAddressInput.style.backgroundColor = '#e9ecef';
-        } else {
-            // 체크 해제 시 입력 필드 활성화 (직접 입력 가능)
-            shipNameInput.disabled = false;
-            shipPhoneInput.disabled = false;
-            shipAddressInput.disabled = false;
-            
-            // 스타일 복원
-            shipNameInput.style.backgroundColor = '';
-            shipPhoneInput.style.backgroundColor = '';
-            shipAddressInput.style.backgroundColor = '';
-        }
-    });
-    
-    // 주문자 정보가 변경되면 "위 내용과 동일"이 체크되어 있을 때 자동 업데이트
-    const updateShippingAddress = function() {
-        if (sameAsAboveCheckbox.checked) {
-            shipNameInput.value = nameInput.value;
-            shipPhoneInput.value = phoneInput.value;
-            shipAddressInput.value = addressInput.value;
-        }
-    };
-    
-    if (nameInput) nameInput.addEventListener('input', updateShippingAddress);
-    if (phoneInput) phoneInput.addEventListener('input', updateShippingAddress);
-    if (addressInput) addressInput.addEventListener('input', updateShippingAddress);
-}
-
-// 옵션 1: 주소 입력 중에도 실시간으로 체크 (blur 대신 input 이벤트)
-nameInput.addEventListener('input', checkAllFieldsFilled);
-phoneInput.addEventListener('input', checkAllFieldsFilled);
-addressInput.addEventListener('input', checkAllFieldsFilled);
-
-// 옵션 2: 마지막 필드 입력 완료 시에만 펼치기
-addressInput.addEventListener('blur', function() {
-    const name = nameInput.value.trim();
-    const phone = phoneInput.value.trim();
-    const address = this.value.trim();
-    
-    if (name !== '' && phone !== '' && address !== '') {
-        $(shippingAddressSection).collapse('show');
-        // 부드러운 스크롤
-        setTimeout(() => {
-            shippingAddressSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 350); // collapse 애니메이션 시간 후
-    }
-});
-
-// 각 입력 필드에 이벤트 리스너 추가
-if (nameInput && phoneInput && addressInput) {
-    nameInput.addEventListener('blur', checkAllFieldsFilled);
-    phoneInput.addEventListener('blur', checkAllFieldsFilled);
-    addressInput.addEventListener('blur', checkAllFieldsFilled);
-}
-
-// "위 내용과 동일" 체크박스 클릭 시 주소 복사
-if (sameAsAboveCheckbox) {
-    sameAsAboveCheckbox.addEventListener('change', function() {
-        if (this.checked) {
-            // 주소 복사
-            shipNameInput.value = nameInput.value;
-            shipPhoneInput.value = phoneInput.value;
-            shipAddressInput.value = addressInput.value;
-            
-            // 입력 필드 비활성화 (수정 불가)
-            shipNameInput.disabled = true;
-            shipPhoneInput.disabled = true;
-            shipAddressInput.disabled = true;
-        } else {
-            // 체크 해제 시 입력 필드 활성화
-            shipNameInput.disabled = false;
-            shipPhoneInput.disabled = false;
-            shipAddressInput.disabled = false;
-            
-            // 값 초기화 (선택사항)
-            // shipNameInput.value = '';
-            // shipPhoneInput.value = '';
-            // shipAddressInput.value = '';
-        }
-    });
-}
-
-// 주소가 변경되면 "위 내용과 동일" 체크박스가 체크되어 있을 때 자동 업데이트
-if (nameInput && phoneInput && addressInput && sameAsAboveCheckbox) {
-    const updateShippingAddress = function() {
-        if (sameAsAboveCheckbox.checked) {
-            shipNameInput.value = nameInput.value;
-            shipPhoneInput.value = phoneInput.value;
-            shipAddressInput.value = addressInput.value;
-        }
-    };
-    
-    nameInput.addEventListener('input', updateShippingAddress);
-    phoneInput.addEventListener('input', updateShippingAddress);
-    addressInput.addEventListener('input', updateShippingAddress);
-}
-
-// 전화번호 입력 유효성 검사 (11자리 제한 + 정상 입력 후 원래 상태로 복구)
-const phone = document.getElementById('Phone');
-const PhoneError = document.getElementById('PhoneError');
-
-if (phoneInput) {
-
-    phoneInput.addEventListener('input', function () {
-
-        let value = phoneInput.value.replace(/[^0-9]/g, ''); // 숫자만 허용
-        phoneInput.value = value;
-
-        // ===============================
-        // ⭐ 원래 상태로 되돌리는 함수
-        // ===============================
-        function resetPhoneStyle() {
-            phoneInput.classList.remove('valid-phone', 'invalid-phone');
-            phoneInput.style.border = "";               // ★ 테두리 복구
-            phoneInput.style.backgroundColor = "";      // ★ 배경 복구
-            phoneError.textContent = "";
-        }
-
-        // 입력 없으면 원래 상태로
-        if (value.length === 0) {
-            resetPhoneStyle();
-            return;
-        }
-
-        // 11자리보다 적음 → 에러
-        if (value.length < 11) {
-            phoneInput.classList.remove('valid-phone');
-            phoneInput.classList.add('invalid-phone');
-
-            phoneInput.style.border = "2px solid #d9534f";
-            phoneInput.style.backgroundColor = "#fff5f5";
-
-            phoneError.textContent = "전화번호는 11자리여야 합니다.";
-            return;
-        }
-
-        // 11자리 초과 → 에러
-        if (value.length > 11) {
-
-            phoneInput.classList.remove('valid-phone');
-            phoneInput.classList.add('invalid-phone');
-
-            phoneInput.style.border = "2px solid #d9534f";
-            phoneInput.style.backgroundColor = "#fff5f5";
-
-            phoneError.textContent = "11자리를 초과했습니다. 다시 입력해주세요.";
-            return;
-        }
-
-        // ===============================
-        // ⭐ 정확히 11자리 → 성공 (초록색)
-        // ===============================
-        if (value.length === 11) {
-
-            phoneInput.classList.remove('invalid-phone');
-            phoneInput.classList.add('valid-phone');
-
-            phoneInput.style.border = "2px solid #5cb85c";
-            phoneInput.style.backgroundColor = "#f4fff4";
-
-            phoneError.textContent = "";
-            return;
-        }
-    });
-}
-
-// 주문자 전화번호
-const phoneError = document.getElementById("PhoneError");
-phoneInput.addEventListener("input", () => validatePhone(phoneInput, phoneError));
-phoneInput.addEventListener("blur", () => validatePhone(phoneInput, phoneError));
-
-// 수령지 전화번호
-const shipPhoneError = document.getElementById("shipPhoneError");
-if (shipPhoneInput) {
-    shipPhoneInput.addEventListener("input", () => validatePhone(shipPhoneInput, shipPhoneError));
-    shipPhoneInput.addEventListener("blur", () => validatePhone(shipPhoneInput, shipPhoneError));
-}
-
-/*요청사항 직접입력*/
-document.getElementById('memoSelect').addEventListener('change', function() {
-    const memoInput = document.getElementById('memoInput');
-    if(this.value === 'direct') {
-        memoInput.style.display = 'block';
-        memoInput.focus();
+/*************************************************
+ * 수령지 주소 열기 / 닫기
+ *************************************************/
+shipToCheckbox.addEventListener('change', function () {
+    if (this.checked) {
+        $(shippingSection).collapse('show');
     } else {
-        memoInput.style.display = 'none';
-        memoInput.value = '';
+        $(shippingSection).collapse('hide');
     }
 });
 
-/*결제 모달 및 결제 방식 처리 */
-let selectedCard = null;
+/*************************************************
+ * "위 내용과 동일" 체크
+ *************************************************/
+sameAsAboveCheckbox.addEventListener('change', function () {
 
-// 카드 선택
-function selectCard(cardType) {
-    selectedCard = cardType;
-    document.getElementById('selectedCardDisplay').innerText = '선택한 카드: ' + cardType;
+    if (this.checked) {
+        shipNameInput.value = nameInput.value;
+        shipPhoneInput.value = phoneInput.value;
+        shipAddressInput.value = addressInput.value;
 
+        shipNameInput.readOnly = true;
+        shipPhoneInput.readOnly = true;
+        shipAddressInput.readOnly = true;
+    } else {
+        shipNameInput.readOnly = false;
+        shipPhoneInput.readOnly = false;
+        shipAddressInput.readOnly = false;
+    }
+});
+
+/*************************************************
+ * 주문자 정보 변경 시 자동 동기화
+ *************************************************/
+function syncShipping() {
+    if (sameAsAboveCheckbox.checked) {
+        shipNameInput.value = nameInput.value;
+        shipPhoneInput.value = phoneInput.value;
+        shipAddressInput.value = addressInput.value;
+    }
+}
+
+nameInput.addEventListener('input', syncShipping);
+phoneInput.addEventListener('input', syncShipping);
+addressInput.addEventListener('input', syncShipping);
+
+/*************************************************
+ * ⭐ 최종 방어 (가장 중요)
+ * 수령지 입력 안 했으면 → 주문자 주소로 저장
+ *************************************************/
+if (checkoutForm) {
+    checkoutForm.addEventListener('submit', function () {
+        // 수령지주소입력 체크 안 했으면
+        if (!shipToCheckbox.checked) {
+            shipNameInput.value = nameInput.value;
+            shipPhoneInput.value = phoneInput.value;
+            shipAddressInput.value = addressInput.value;
+        }
+
+        // 수령지주소입력은 했지만 값이 비어있을 경우
+        if (!shipNameInput.value) shipNameInput.value = nameInput.value;
+        if (!shipPhoneInput.value) shipPhoneInput.value = phoneInput.value;
+        if (!shipAddressInput.value) shipAddressInput.value = addressInput.value;
+    });
+}
+
+/*************************************************
+ * ⭐ 결제 관련 코드 ⭐
+ *************************************************/
+let selectedCard = '';
+
+// 결제하기 버튼 클릭
+const btnOpenModal = document.getElementById('btnOpenModal');
+if (btnOpenModal) {
+    btnOpenModal.addEventListener('click', function() {
+        // 필수 입력 검증
+        if (!nameInput.value || !phoneInput.value || !addressInput.value) {
+            alert('주소 정보를 모두 입력해주세요.');
+            return;
+        }
+
+        // 결제 방식 선택 확인
+        const paymentMethod = document.querySelector('input[name="payment"]:checked');
+        if (!paymentMethod) {
+            alert('결제 방식을 선택해주세요.');
+            return;
+        }
+
+        // 모달 열기
+        $('#payModal').modal('show');
+    });
+}
+
+// 카드사 선택
+function selectCard(cardName) {
+    selectedCard = cardName;
+    document.getElementById('selectedCardDisplay').textContent = `선택된 카드: ${cardName}`;
+    
+    // 모든 버튼 비활성화 후 선택된 버튼만 활성화
     document.querySelectorAll('.card-btn').forEach(btn => {
         btn.classList.remove('btn-primary');
         btn.classList.add('btn-outline-primary');
@@ -261,188 +121,226 @@ function selectCard(cardType) {
     event.target.classList.add('btn-primary');
 }
 
-// ⭐⭐⭐ 공통 결제 처리 함수 - 모든 결제 수단에서 사용 ⭐⭐⭐
-function submitPayment(paymentType, additionalData = {}) {
-    // 주문 정보 수집
-    const name = $('#Name').val();
-    const phone = $('#Phone').val();
-    const address = $('#Address').val();
-    const region = $('select[name="region"]').val();
-    const shipName = $('#shipName').val() || name;
-    const shipPhone = $('#shipPhone').val() || phone;
-    const shipAddress = $('#shipAddress').val() || address;
-    const memo = $('#memoSelect').val() === 'direct' ? $('#memoInput').val() : $('#memoSelect').val();
-    
-    // 유효성 검사
-    if(!name || !phone || !address) {
-        alert('필수 정보를 입력해주세요.');
-        return;
-    }
-
-    // 서버로 주문 데이터 전송
-    const paymentData = {
-        name: name,
-        phone: phone,
-        address: address,
-        region: region,
-        shipName: shipName,
-        shipPhone: shipPhone,
-        shipAddress: shipAddress,
-        memo: memo,
-        paymentType: paymentType,  // ⭐ 결제 방식 추가
-        amount: '${cartTotal}',
-        ...additionalData  // 추가 데이터 (카드사 정보 등)
-    };
-
-    $.ajax({
-        url: '/processPayment',
-        method: 'POST',
-        data: paymentData,
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
-        success: function(response) {
-            // 모달이 열려있다면 닫기
-            $('#payModal').modal('hide');
-
-            // 주문 완료 페이지로 이동
-            window.location.href = '/ordercomplete?orderNo=' + response.orderNo;
-        },
-        error: function(error) {
-            alert('결제 처리 중 오류가 발생했습니다.');
-            console.error(error);
-        }
-    });
-}
-
-// 카드 결제 진행
+// 결제 진행
 function processPayment() {
     if (!selectedCard) {
-        alert('카드를 선택해주세요!');
+        alert('카드사를 선택해주세요.');
         return;
     }
 
-    // 카드결제는 paymentType='card'와 cardType 전송
-    submitPayment('card', { cardType: selectedCard });
+    // 폼 제출
+    document.getElementById('checkoutForm').submit();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const btnOpenModal = document.getElementById('btnOpenModal');
-    const paymentRadios = document.querySelectorAll('input[name="payment"]');
-    const bankRadio = document.getElementById('directcheck');
-    const bankInfo = document.getElementById('bankInfo');
+// 계좌이체 선택 시 계좌 정보 표시
+const directcheck = document.getElementById('directcheck');
+const bankInfo = document.getElementById('bankInfo');
+if (directcheck) {
+    directcheck.addEventListener('change', function() {
+        if (this.checked) {
+            bankInfo.style.display = 'block';
+        } else {
+            bankInfo.style.display = 'none';
+        }
+    });
+}
 
-    // 결제하기 버튼 클릭
-    btnOpenModal.addEventListener('click', function(e) {
-        e.preventDefault();
-        let selected = null;
-        paymentRadios.forEach(radio => {
-            if(radio.checked) selected = radio.id;
-        });
-
-        if(!selected) {
-            alert('결제 방식을 선택해주세요!');
+// 네이버페이 버튼
+const naverPayBtn = document.getElementById('naverPayBtn');
+if (naverPayBtn) {
+    naverPayBtn.addEventListener('click', function() {
+        if (!nameInput.value || !phoneInput.value || !addressInput.value) {
+            alert('주소 정보를 모두 입력해주세요.');
             return;
         }
+        alert('네이버페이 결제는 준비중입니다.');
+    });
+}
 
-        // 카드결제 - 모달 열기
-        if(selected === 'paypal') {
-            $('#payModal').modal('show');
-        } 
-        // 계좌이체 - 바로 처리
-        else if(selected === 'directcheck') {
-            submitPayment('bank');  // ⭐ paymentType='bank'로 전송
+// 카카오페이 버튼
+const kakaoPayBtn = document.getElementById('kakaoPayBtn');
+if (kakaoPayBtn) {
+    kakaoPayBtn.addEventListener('click', function() {
+        if (!nameInput.value || !phoneInput.value || !addressInput.value) {
+            alert('주소 정보를 모두 입력해주세요.');
+            return;
         }
+        alert('카카오페이 결제는 준비중입니다.');
     });
+}
 
-    // 계좌이체 선택 시 계좌번호 표시
-    paymentRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            if(bankRadio.checked) {
-                bankInfo.style.display = 'block';
-            } else {
-                bankInfo.style.display = 'none';
-            }
-        });
-    });
-
-    // ⭐⭐⭐ 네이버페이 버튼 클릭 - DB에 저장 후 이동 ⭐⭐⭐
-    const naverBtn = document.getElementById('naverPayBtn');
-    naverBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        submitPayment('naver');  // ⭐ paymentType='naver'로 전송
-    });
-
-    // ⭐⭐⭐ 카카오페이 버튼 클릭 - DB에 저장 후 이동 ⭐⭐⭐
-    const kakaoBtn = document.getElementById('kakaoPayBtn');
-    kakaoBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        submitPayment('kakao');  // ⭐ paymentType='kakao'로 전송
-    });
-    
-    // 폼 제출 시 장바구니 체크
-    const checkoutForm = document.getElementById('checkoutForm');
-    if (checkoutForm) {
-        checkoutForm.addEventListener('submit', function(e) {
-            const cartCountElement = document.getElementById('cartCount');
-            const cartCount = cartCountElement ? parseInt(cartCountElement.textContent) : 0;
-            
-            if (cartCount === 0 || isNaN(cartCount)) {
-                e.preventDefault();
-                alert('장바구니에 상품이 없습니다.');
-                window.location.href = 'cart';
-                return false;
-            }
-        });
-    }
-});
-
-//cs 모달창
-document.getElementById("order_no").addEventListener("change", function () {
-
-    const orderNo = this.value;
-    const detailSelect = document.getElementById("return_cnt");
-
-    detailSelect.innerHTML = '<option value="">상품을 선택하세요</option>';
-    if (!orderNo) return;
-
-    fetch(`/mycs/order/details?order_no=${orderNo}`)
-        .then(res => res.json())
-        .then(data => {
-            data.forEach(item => {
-                const opt = document.createElement("option");
-                opt.value = item.detail_no;
-                opt.textContent = `${item.item_name} (상품번호 ${item.detail_no})`;
-                detailSelect.appendChild(opt);
-            });
-        })
-        .catch(err => console.error(err));
-});
-
-$(document).ready(function () {
-
-    // 신청 유형 변경
-    $('#type').change(function () {
-        if ($(this).val() === '교환') {
-            $('#returnCntGroup').show();
-            $('#return_cnt').attr('required', true);
+// 메모 선택 (직접입력)
+const memoSelect = document.getElementById('memoSelect');
+const memoInput = document.getElementById('memoInput');
+if (memoSelect) {
+    memoSelect.addEventListener('change', function() {
+        if (this.value === 'direct') {
+            memoInput.style.display = 'block';
         } else {
-            $('#returnCntGroup').hide();
-            $('#return_cnt').val('');
-            $('#return_cnt').removeAttr('required');
+            memoInput.style.display = 'none';
         }
     });
+}
 
-    // 최종 방어 (UX)
-    $('#crApplyForm').submit(function (e) {
-        if ($('#type').val() === '교환' && !$('#return_cnt').val()) {
-            alert('교환할 상품을 선택해주세요.');
-            e.preventDefault();
-            return false;
-        }
-    });
 
-});
 
+
+
+//마이페이지 검색기능
+let currentTypeFilter = 'all';
+	let currentStatusFilter = 'all';
+	let currentSearchText = '';
+	let currentSearchType = 'all';
+	const hasCrList = document.body.dataset.hasCrList === 'true';
+
+	// 검색 기능
+	function searchCR() {
+		currentSearchText = document.getElementById('searchInput').value.toLowerCase().trim();
+		currentSearchType = document.getElementById('searchType').value;
+		applyFilters();
+	}
+
+	// Enter 키로 검색
+	document.getElementById('searchInput').addEventListener('keypress', function(e) {
+		if (e.key === 'Enter') {
+			searchCR();
+		}
+	});
+
+	// 검색 타입 변경 시 placeholder 변경
+	document.getElementById('searchType').addEventListener('change', function() {
+		const searchInput = document.getElementById('searchInput');
+		const searchType = this.value;
+		
+		if (searchType === 'all') {
+			searchInput.placeholder = '검색어를 입력하세요';
+		} else if (searchType === 'order_no') {
+			searchInput.placeholder = '주문번호를 입력하세요';
+		} else if (searchType === 'item_name') {
+			searchInput.placeholder = '상품명을 입력하세요';
+		}
+	});
+
+	// 유형별 필터
+	function filterByType(type) {
+		currentTypeFilter = type;
+		
+		// 버튼 활성화 상태 변경
+		document.querySelectorAll('[data-type]').forEach(badge => {
+			badge.classList.remove('active', 'badge-secondary');
+			badge.classList.add('badge-light');
+		});
+		document.querySelector(`[data-type="${type}"]`).classList.add('active', 'badge-secondary');
+		document.querySelector(`[data-type="${type}"]`).classList.remove('badge-light');
+		
+		applyFilters();
+	}
+
+	// 상태별 필터
+	function filterByStatus(status) {
+		currentStatusFilter = status;
+		
+		// 버튼 활성화 상태 변경
+		document.querySelectorAll('[data-status]').forEach(badge => {
+			badge.classList.remove('active', 'badge-secondary');
+			badge.classList.add('badge-light');
+		});
+		document.querySelector(`[data-status="${status}"]`).classList.add('active', 'badge-secondary');
+		document.querySelector(`[data-status="${status}"]`).classList.remove('badge-light');
+		
+		applyFilters();
+	}
+
+	// 모든 필터 적용
+	function applyFilters() {
+		const rows = document.querySelectorAll('.cr-row');
+		let visibleCount = 0;
+		
+		rows.forEach(row => {
+			const orderNo = row.dataset.orderNo.toLowerCase();
+			const itemName = row.dataset.itemName.toLowerCase();
+			const type = row.dataset.type;
+			const status = row.dataset.status;
+			
+			// 검색어 필터
+			let matchesSearch = true;
+			if (currentSearchText !== '') {
+				if (currentSearchType === 'all') {
+					matchesSearch = orderNo.includes(currentSearchText) || itemName.includes(currentSearchText);
+				} else if (currentSearchType === 'order_no') {
+					matchesSearch = orderNo.includes(currentSearchText);
+				} else if (currentSearchType === 'item_name') {
+					matchesSearch = itemName.includes(currentSearchText);
+				}
+			}
+			
+			// 유형 필터
+			const matchesType = currentTypeFilter === 'all' || type === currentTypeFilter;
+			
+			// 상태 필터
+			const matchesStatus = currentStatusFilter === 'all' || status === currentStatusFilter;
+			
+			// 모든 조건 만족 시 표시
+			if (matchesSearch && matchesType && matchesStatus) {
+				row.style.display = '';
+				visibleCount++;
+			} else {
+				row.style.display = 'none';
+			}
+		});
+		
+		// 결과 카운트 업데이트
+		document.getElementById('totalCount').textContent = visibleCount;
+		
+		// 검색 결과 텍스트
+		let resultText = '';
+		if (currentSearchText) {
+			const searchTypeText = currentSearchType === 'order_no' ? '주문번호' : 
+								   currentSearchType === 'item_name' ? '상품명' : '전체';
+			resultText += `- "${currentSearchText}" (${searchTypeText})`;
+		}
+		if (currentTypeFilter !== 'all') {
+			resultText += ` [${currentTypeFilter}]`;
+		}
+		if (currentStatusFilter !== 'all') {
+			resultText += ` [${currentStatusFilter}]`;
+		}
+		document.getElementById('searchResultText').textContent = resultText;
+		
+		// 검색 결과 없음 메시지
+		const noResultMsg = document.getElementById('noResultMessage');
+		const table = document.getElementById('crTable');
+		if (visibleCount === 0 && hasCrList) {
+			noResultMsg.style.display = 'block';
+			table.style.display = 'none';
+		} else {
+			noResultMsg.style.display = 'none';
+			table.style.display = 'table';
+		}
+	}
+
+	// 초기화
+	function resetSearch() {
+		// 검색 필드 초기화
+		document.getElementById('searchInput').value = '';
+		document.getElementById('searchType').value = 'all';
+		document.getElementById('searchInput').placeholder = '검색어를 입력하세요';
+		
+		currentSearchText = '';
+		currentSearchType = 'all';
+		currentTypeFilter = 'all';
+		currentStatusFilter = 'all';
+		
+		// 모든 필터 버튼 초기화
+		document.querySelectorAll('.filter-badge').forEach(badge => {
+			badge.classList.remove('active', 'badge-secondary');
+			badge.classList.add('badge-light');
+		});
+		document.querySelector('[data-type="all"]').classList.add('active', 'badge-secondary');
+		document.querySelector('[data-type="all"]').classList.remove('badge-light');
+		document.querySelector('[data-status="all"]').classList.add('active', 'badge-secondary');
+		document.querySelector('[data-status="all"]').classList.remove('badge-light');
+		
+		applyFilters();
+	}
 

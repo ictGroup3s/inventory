@@ -4,10 +4,12 @@ package com.example.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.orderRepository;
 import com.example.model.vo.CartItemVO;
@@ -15,6 +17,7 @@ import com.example.model.vo.CustomerVO;
 import com.example.model.vo.order_detailVO;
 import com.example.model.vo.ordersVO;
 import com.example.service.CartService;
+import com.example.service.orderService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +25,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class orderController {
-
-	    private final orderRepository repo;
-	    private final CartService cartService; // 장바구니 서비스
+	
+		@Autowired
+	    private orderRepository repo;
+		@Autowired
+	    private CartService cartService; // 장바구니 서비스
+		@Autowired
+	    private orderService orderService;
 
 	    public orderController(orderRepository repo, CartService cartService) {
 	        this.repo = repo;
@@ -197,7 +204,93 @@ public class orderController {
 	            return "mydelivery";
 	        }
 	    }
-	    
-	    
-	    
-}
+	    @PostMapping("/order/submit")
+	    public String submitOrder(
+	            @RequestParam("name") String name,
+	            @RequestParam("email") String email,
+	            @RequestParam("phone") String phone,
+	            @RequestParam("address") String address,
+	            @RequestParam("region") String region,
+	            @RequestParam(value = "shipName", required = false) String shipName,
+	            @RequestParam(value = "shipPhone", required = false) String shipPhone,
+	            @RequestParam(value = "shipAddress", required = false) String shipAddress,
+	            @RequestParam(value = "payment", required = false) String payment,
+	            @RequestParam(value = "memo", required = false) String memo,
+	            @RequestParam(value = "memoInput", required = false) String memoInput,
+	            HttpSession session,
+	            Model model) {
+	        
+	        log.info("=== 주문 제출 시작 ===");
+	        
+	        // 1. 세션에서 로그인 정보 가져오기
+	        CustomerVO loginUser = (CustomerVO) session.getAttribute("loginUser");
+	        
+	        if (loginUser == null) {
+	            log.warn("로그인 정보 없음");
+	            return "redirect:/login";
+	        }
+	        try {
+	            // 2. 장바구니 아이템 가져오기
+	            List<CartItemVO> cartItems = cartService.getCartItems(session);
+	            
+	            if (cartItems == null || cartItems.isEmpty()) {
+	                log.warn("장바구니가 비어있음");
+	                model.addAttribute("error", "장바구니가 비어있습니다.");
+	                return "redirect:/cart";
+	            }
+	            
+	            // 3. 주문 정보 생성
+	            ordersVO order = new ordersVO();
+	            order.setCustomer_id(loginUser.getCustomer_id());
+	            order.setOrder_name(name);
+	            order.setOrder_addr(address);
+	            order.setOrder_phone(Long.parseLong(phone));
+	            order.setOrder_status("결제완료");
+	            order.setPayment(payment != null ? payment : "card");
+	            
+	            // 배송지 주소 결정
+	            if (shipAddress != null && !shipAddress.isEmpty()) {
+	                order.setOrder_addr(shipAddress);
+	            } else {
+	                order.setOrder_addr(address);
+	            }
+	            
+	            // 메모 처리
+	            if ("direct".equals(memo) && memoInput != null) {
+	                order.setApi_pay(memoInput);
+	            } else if (memo != null) {
+	                order.setApi_pay(memo);
+	            }
+	            
+	            log.info("주문 정보: {}", order);
+	            
+	            // 4. 주문 생성 (장바구니 아이템과 함께)
+	            int orderNo = orderService.createOrder(order, cartItems);
+	            
+	            log.info("✅ 주문 생성 완료 - 주문번호: {}", orderNo);
+	            
+	            // 5. 주문 완료 페이지로 리다이렉트
+	            return "redirect:/order/complete?orderNo=" + orderNo;
+	            
+	        } catch (Exception e) {
+	            log.error("❌ 주문 처리 중 오류 발생", e);
+	            model.addAttribute("error", "주문 처리 중 오류가 발생했습니다.");
+	            return "redirect:/checkout";
+	        }
+	    }
+	    @GetMapping("/order/complete")
+	    public String orderComplete(@RequestParam("orderNo") int orderNo, Model model, HttpSession session) {
+	        log.info("주문 완료 페이지 - 주문번호: {}", orderNo);
+	        
+	        CustomerVO loginUser = (CustomerVO) session.getAttribute("loginUser");
+	        if (loginUser == null) {
+	            return "redirect:/login";
+	        }
+	        
+	        // 주문 정보 조회
+	        ordersVO order = orderService.getOrderByNo(orderNo);
+	        model.addAttribute("order", order);
+	        
+	        return "order/complete";
+	    }
+	}
