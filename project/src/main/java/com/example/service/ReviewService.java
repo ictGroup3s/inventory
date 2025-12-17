@@ -10,4 +10,7 @@ public interface ReviewService {
 	Integer addReview(ReviewVO review);
 	void deleteReview(Integer review_no);
 	void updateReview(ReviewVO review);
+
+	boolean canWriteReview(String customerId, Integer itemNo);
+	String getReviewWriteBlockReason(String customerId, Integer itemNo);
 }

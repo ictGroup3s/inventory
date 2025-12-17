@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 $(function() {
     
     // 숫자 포맷 (1000 → 1,000)
@@ -22,8 +18,6 @@ $(function() {
             $('#todayOrders').text(formatNumber(data.TODAY_ORDERS || data.today_orders || 0));
             $('#todaySales').text(formatNumber(data.TODAY_SALES || data.today_sales || 0));
             $('#monthSales').text(formatNumber(data.MONTH_SALES || data.month_sales || 0));
-            $('#totalOrders').text(formatNumber(data.TOTAL_ORDERS || data.total_orders || 0));
-            $('#totalSales').text(formatNumber(data.TOTAL_SALES || data.total_sales || 0));
         },
         error: function(err) {
             console.error('요약 데이터 로드 실패:', err);
@@ -31,30 +25,54 @@ $(function() {
     });
 
     // ---------------------------
-    // 2. 최근 주문 목록 로드
+    // 2. 주문 목록 (날짜 선택 기능)
     // ---------------------------
-    $.ajax({
-        url: '/api/dashboard/recent-orders',
-        method: 'GET',
-        success: function(data) {
-            console.log('최근 주문:', data);
-            
-            var html = '';
-            data.forEach(function(order) {
-                html += '<tr>';
-                html += '<td>' + (order.CUSTOMER_NAME || order.customer_name || '-') + '</td>';
-                html += '<td>' + (order.ITEM_NAME || order.item_name || '-') + '</td>';
-                html += '<td>' + (order.QTY || order.qty || 0) + '</td>';
-                html += '<td>₩' + formatNumber(order.AMOUNT || order.amount || 0) + '</td>';
-                html += '</tr>';
-            });
-            
-            $('#recentOrdersBody').html(html);
-        },
-        error: function(err) {
-            console.error('최근 주문 로드 실패:', err);
-        }
+    // 오늘 날짜 설정
+    var today = new Date().toISOString().split('T')[0];
+    $('#orderDatePicker').val(today);
+    
+    // 초기 로드
+    loadOrders(today);
+    
+    // 날짜 변경 시
+    $('#orderDatePicker').on('change', function() {
+        var selectedDate = $(this).val();
+        loadOrders(selectedDate);
     });
+
+    // 주문 조회 함수
+    function loadOrders(date) {
+        $.ajax({
+            url: '/api/dashboard/recent-orders',
+            method: 'GET',
+            data: { date: date },
+            success: function(data) {
+                console.log('주문 목록:', data);
+
+                var html = '';
+                var totalAmount = 0;
+
+                data.forEach(function(order) {
+                    var amount = order.AMOUNT || order.amount || 0;
+                    totalAmount += amount;
+
+                    html += '<tr>';
+                    html += '<td>' + (order.CUSTOMER_NAME || order.customer_name || '-') + '</td>';
+                    html += '<td>' + (order.ITEM_NAME || order.item_name || '-') + '</td>';
+                    html += '<td>' + (order.QTY || order.qty || 0) + '</td>';
+                    html += '<td>₩' + formatNumber(amount) + '</td>';
+                    html += '</tr>';
+                });
+
+                $('#recentOrdersBody').html(html);
+                $('#totalOrders').text(data.length);
+                $('#totalSales').text(formatNumber(totalAmount));
+            },
+            error: function(err) {
+                console.error('주문 로드 실패:', err);
+            }
+        });
+    }
 
     // ---------------------------
     // 3. 매출 흐름표 (라인 차트)

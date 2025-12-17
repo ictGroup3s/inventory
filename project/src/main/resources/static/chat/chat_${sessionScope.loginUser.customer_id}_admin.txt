@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 [2025-12-08 11:43:16] ${sessionScope.loginUser.customer_id}: ㅁㄻㄹ
 [2025-12-08 11:46:35] ${sessionScope.loginUser.customer_id}: 1
 [2025-12-08 11:48:39] ${sessionScope.loginUser.customer_id}: 111
@@ -16,24 +15,3 @@
 [2025-12-08 11:46:35] ${sessionScope.loginUser.customer_id}: 1
 [2025-12-08 11:48:39] ${sessionScope.loginUser.customer_id}: 111
 [2025-12-08 11:50:41] ${sessionScope.loginUser.customer_id}: 1
-
-=======
-[2025-12-08 11:43:16] ${sessionScope.loginUser.customer_id}: ㅁㄻㄹ
-[2025-12-08 11:46:35] ${sessionScope.loginUser.customer_id}: 1
-[2025-12-08 11:48:39] ${sessionScope.loginUser.customer_id}: 111
-[2025-12-08 11:50:41] ${sessionScope.loginUser.customer_id}: 1
-[2025-12-08 16:22:02] ${sessionScope.loginUser.customer_id}: ffff
-[2025-12-08 16:31:21] ${sessionScope.loginUser.customer_id}: 1
-[2025-12-08 16:31:43] ${sessionScope.loginUser.customer_id}: fff
-[2025-12-08 16:59:40] ${sessionScope.loginUser.customer_id}: FF
-[2025-12-08 16:59:57] ${sessionScope.loginUser.customer_id}: hello
-[2025-12-08 17:05:56] ${sessionScope.loginUser.customer_id}: 1
-[2025-12-08 17:06:24] ${sessionScope.loginUser.customer_id}: 1
-[2025-12-08 17:18:32] ${sessionScope.loginUser.customer_id}: 1
-[2025-12-08 17:23:45] ${sessionScope.loginUser.customer_id}: 1
-[2025-12-08 11:43:16] ${sessionScope.loginUser.customer_id}: ㅁㄻㄹ
-[2025-12-08 11:46:35] ${sessionScope.loginUser.customer_id}: 1
-[2025-12-08 11:48:39] ${sessionScope.loginUser.customer_id}: 111
-[2025-12-08 11:50:41] ${sessionScope.loginUser.customer_id}: 1
-
->>>>>>> refs/remotes/origin/main

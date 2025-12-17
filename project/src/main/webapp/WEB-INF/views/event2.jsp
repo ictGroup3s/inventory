@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%><!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en">
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <head>
     <meta charset="utf-8">
     <title>StockBob</title>
@@ -37,12 +37,14 @@
                     <span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1> -->
                 </a>
             </div>
-            <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+           	<div class="col-lg-6 col-6 text-left">
+			<form action="selectGui" method="get">
+				<div class="input-group">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
+					<div class="input-group-append">
+						<button class="input-group-text bg-transparent text-primary"
+							type="submit">
                                 <i class="fa fa-search"></i>
                             </span>
                         </div>
@@ -164,85 +166,67 @@
     </div>
 
 
-    <!-- Products Start -->
+  <!-- Products Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Just Arrived</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/fish_index.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">고등어 구이</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>10,000원</h6><h6 class="text-muted ml-2"></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img src="img/ggochi.png" style="width:100%; aspect-ratio:1/1; object-fit:cover;" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">꼬치</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>8,970원</h6><h6 class="text-muted ml-2"></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-
-                        <img src="img/gul.png" style="width:100%; aspect-ratio:1/1; object-fit:cover;" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">굴</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>4,560원</h6><h6 class="text-muted ml-2"><del></del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img src="img/bulgogi.jpg"  style="width:100%; aspect-ratio:1/1; object-fit:cover;"alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">불고기</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>15,000원</h6><h6 class="text-muted ml-2"></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
+            <h2 class="section-title px-5"><span class="px-2">NEW arrivals</span></h2>
         </div>
         
-    </div>
+   <div class="row px-xl-5 pb-3"> 
+  	<c:forEach var="item" items="${newArrivals}">
+  	<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+	<div class="card product-item border-0 mb-4" style="width: 280px;">
+	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+	<a href="detail?item_no=${item.item_no}"> 
+	<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
+	</a>
+		</div>
+	<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+		<h5 class="text-truncate mb-3">${item.item_name}</h5>
+		<div class="d-flex justify-content-center">
+		<h5>${item.sales_p}원</h5>
+		</div>
+		</div>
+<div class="card-footer d-flex justify-content-between bg-light border">
+		<a href="detail?item_no=${item.item_no}" class="btn btn-sm text-dark p-0"> 
+		<i class="fas fa-eye text-primary mr-1"></i>상세정보</a>
+	<form method="post" action="/cart/addForm" style="display: inline;">
+		<input type="hidden" name="item_no" value="${item.item_no}" />
+		<input type="hidden" name="qty" value="1" />
+	<button type="button" class="btn btn-sm text-dark p-0 add-to-cart-btn" data-item-no="${item.item_no}"
+		style="background: none; border: 0; padding: 0;">
+	<i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기</button>
+     </form>
+      </div>
+         </div>
+            </div>
+</c:forEach></div>
     <!-- Products End -->
+      <!-- 페이지 네비게이션 -->
+    <div class="pagination-container" >
+       <ul class="pagination justify-content-center mb-3">
+            <!-- 이전 페이지 버튼 -->
+            <c:if test="${currentPage > 1}">
+                <li class="page-item">
+                    <a class="page-link" href="event1?page=${currentPage - 1}&size=${size}">이전</a>
+                </li>
+            </c:if>
+            <!-- 페이지 번호 버튼들 -->
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <li class="page-item <c:if test="${i == currentPage}">active</c:if>">
+                    <a class="page-link" href="event1?page=${i}&size=${size}">${i}</a>
+                </li>
+            </c:forEach>
+
+            <!-- 다음 페이지 버튼 -->
+            <c:if test="${currentPage < totalPages}">
+                <li class="page-item">
+                    <a class="page-link" href="event1?page=${currentPage + 1}&size=${size}">다음</a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
+      <!-- 다른 이벤트페이지 링크 -->  
      <!-- Offer Start  -->
     <div class="container-fluid offer pt-5">
           <div class="row px-xl-5 justify-content-end">
@@ -260,6 +244,8 @@
         </div>
     </div>
  <!-- Offer End  -->
+ 
+					<!-- 상품 목록 페이지 이동 끝 -->
   	    <!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
         <div class="row px-xl-5 pt-3">

@@ -6,15 +6,22 @@
 
 	$(document).ready(function() {
 		$('.bxslider').bxSlider({
-			auto: true,
-			moveSlides: 1,
-			pager: false,
-			controls: true,
-			pause: 2000,
-			speed: 100,
-			infiniteLoop: true,
+			auto: true,				// 자동 슬라이드 여부
+			touchEnabled: false,	// 터치 스와이프 기능 여부
+			moveSlides: 1,			// 한 번에 이동하는 슬라이드 수
+			pager: false,			// 페이지 네비게이션(하단 점) 표시 여부
+			controls: true,			// 좌-우 화살표 (슬라이드 전환 효과) 설정
+			pause: 2000,			// 자동 슬라이드 시 각 슬라이드가 보여지는 시간 (밀리초)
+			// 전환이 너무 빠르면 '딱딱'해 보이므로 여유 있게 설정
+			speed: 650,				// 슬라이드 전환 속도 (밀리초)
+			useCSS: false,			// jQuery easing 적용을 위해 CSS transition 비활성화
+			easing: 'easeInOutCubic',
+			infiniteLoop: true,		// 무한 루프 설정
+			onSliderLoad: function(currentIndex) {
+				try { $('.bxslider').trigger('bxslider:loaded'); } catch (e) { }
+			},
 			minSlides: 2,      // 최소 보여줄 슬라이드
-			maxSlides: 4,      // 최대 보여줄 슬라이드
+			maxSlides: 6,      // 최대 보여줄 슬라이드
 			slideWidth: 250,   // 슬라이드 개별 너비
 			slideMargin: 10    // 슬라이드 간격
 		});
@@ -84,21 +91,30 @@
 		});
 
 
-		// Product Quantity
+		// 장바구니 상품 수량 조절- ** 재고수량을 넘지 않도록 **
 		$('.quantity button').on('click', function() {
 			var button = $(this);
-			var oldValue = button.parent().parent().find('input').val();
+			var input = button.parent().parent().find('input');
+			var oldValue = parseFloat(input.val());
+			var maxVal = parseFloat(input.data('max')); // 최대 재고량 가져오기
+
 			if (button.hasClass('btn-plus')) {
-				var newVal = parseFloat(oldValue) + 1;
+				var newVal = oldValue + 1;
+				// 재고량 체크
+				if (!isNaN(maxVal) && newVal > maxVal) {
+					alert("재고가 부족합니다. (남은 수량: " + maxVal + "개)");
+					newVal = maxVal;
+				}
 			} else {
-				if (oldValue > 0) {
-					var newVal = parseFloat(oldValue) - 1;
+				if (oldValue > 1) { // 최소 1개 유지
+					var newVal = oldValue - 1;
 				} else {
-					newVal = 0;
+					newVal = 1;
 				}
 			}
-			button.parent().parent().find('input').val(newVal);
+			input.val(newVal);
 		});
+
 		//sidebar 클릭
 		const currentPath = window.location.pathname.split('/').pop();
 
@@ -312,76 +328,91 @@
 
 	// 입력 시 해당 필드의 에러만 지움 (전체 검증 X)
 	$(document).on("input change", ".required-field", function() {
-	    const el = $(this);
-	    const msg = el.closest("td").find(".error-msg");
-	    
-	    if (el.val().trim() !== "") {
-	        el.removeClass("input-error");
-	        msg.addClass("d-none");
-	    }
+		const el = $(this);
+		const msg = el.closest("td").find(".error-msg");
+
+		if (el.val().trim() !== "") {
+			el.removeClass("input-error");
+			msg.addClass("d-none");
+		}
 	});
 
 	// 버튼 클릭 시 최종 검증
 	$(".submit-btn").on("click", function(e) {
-	    // 비활성화된 버튼이면 종료
-	    if ($(this).prop('disabled')) {
-	        e.preventDefault();
-	        return false;
-	    }
+		// 비활성화된 버튼이면 종료
+		if ($(this).prop('disabled')) {
+			e.preventDefault();
+			return false;
+		}
 
-	    // 유효성 검사
-	    if (!validateFields()) {
-	        e.preventDefault();
-	        return;
-	    }
+		// 유효성 검사
+		if (!validateFields()) {
+			e.preventDefault();
+			return;
+		}
 
-	    // 정상 submit → formaction 적용
-	    const form = $(this).closest("form");
-	    form.attr("action", $(this).attr("formaction") || form.attr("action"));
-	    form.submit();
+		// 정상 submit → formaction 적용
+		const form = $(this).closest("form");
+		form.attr("action", $(this).attr("formaction") || form.attr("action"));
+		form.submit();
+	});
+
+	// JS (admin-common.js에 추가)
+	const AdminAuth = {
+		showLoginRequired: function() {
+			document.getElementById('adminOverlay').classList.add('show');
+			document.getElementById('loginModal').classList.add('show');
+		}
+	};
+
+	// AJAX 401 에러 시 자동 표시
+	$(document).ajaxError(function(event, xhr) {
+		if (xhr.status === 401) {
+			AdminAuth.showLoginRequired();
+		}
 	});
 
 })(jQuery);
 
-	// 교환 선택시 교환 상품 번호 입력란 표시
-	$('select[name="type"]').change(function() {
-		if ($(this).val() === '교환') {
-			$('#returnNoGroup').show();
-		} else {
-			$('#returnNoGroup').hide();
+// 교환 선택시 교환 상품 번호 입력란 표시
+$('select[name="type"]').change(function() {
+	if ($(this).val() === '교환') {
+		$('#returnNoGroup').show();
+	} else {
+		$('#returnNoGroup').hide();
+	}
+});
+
+// 취/반/교 상세보기
+function loadCrDetail(crNo) {
+	$.ajax({
+		url: '/mycs/detail/' + crNo,
+		method: 'GET',
+		success: function(data) {
+			if (data) {
+				let html = '<dl class="row">';
+				html += '<dt class="col-sm-4">신청번호</dt><dd class="col-sm-8">' + data.cr_no + '</dd>';
+				html += '<dt class="col-sm-4">주문번호</dt><dd class="col-sm-8">' + data.order_no + '</dd>';
+				html += '<dt class="col-sm-4">신청유형</dt><dd class="col-sm-8">' + data.type + '</dd>';
+				html += '<dt class="col-sm-4">상태</dt><dd class="col-sm-8">' + data.status + '</dd>';
+				html += '<dt class="col-sm-4">신청일</dt><dd class="col-sm-8">' + data.re_date + '</dd>';
+				html += '<dt class="col-sm-4">사유</dt><dd class="col-sm-8">' + data.reason + '</dd>';
+				html += '</dl>';
+				$('#detailContent').html(html);
+			} else {
+				$('#detailContent').html('<p class="text-center">데이터를 불러올 수 없습니다.</p>');
+			}
+		},
+		error: function() {
+			$('#detailContent').html('<p class="text-center text-danger">오류가 발생했습니다.</p>');
 		}
 	});
-	
-	// 취/반/교 상세보기
-	function loadCrDetail(crNo) {
-		$.ajax({
-			url: '/mycs/detail/' + crNo,
-			method: 'GET',
-			success: function(data) {
-				if (data) {
-					let html = '<dl class="row">';
-					html += '<dt class="col-sm-4">신청번호</dt><dd class="col-sm-8">' + data.cr_no + '</dd>';
-					html += '<dt class="col-sm-4">주문번호</dt><dd class="col-sm-8">' + data.order_no + '</dd>';
-					html += '<dt class="col-sm-4">신청유형</dt><dd class="col-sm-8">' + data.type + '</dd>';
-					html += '<dt class="col-sm-4">상태</dt><dd class="col-sm-8">' + data.status + '</dd>';
-					html += '<dt class="col-sm-4">신청일</dt><dd class="col-sm-8">' + data.re_date + '</dd>';
-					html += '<dt class="col-sm-4">사유</dt><dd class="col-sm-8">' + data.reason + '</dd>';
-					html += '</dl>';
-					$('#detailContent').html(html);
-				} else {
-					$('#detailContent').html('<p class="text-center">데이터를 불러올 수 없습니다.</p>');
-				}
-			},
-			error: function() {
-				$('#detailContent').html('<p class="text-center text-danger">오류가 발생했습니다.</p>');
-			}
-		});
-	}
-	
-	function loadCrDetail(crNo) {
-	    console.log("상세보기 cr_no =", crNo);
+}
 
-	    document.getElementById("detailModalBody").innerHTML =
-	        "상세 내용 로딩 중... (cr_no=" + crNo + ")";
-	}
+function loadCrDetail(crNo) {
+	console.log("상세보기 cr_no =", crNo);
+
+	document.getElementById("detailModalBody").innerHTML =
+		"상세 내용 로딩 중... (cr_no=" + crNo + ")";
+}
 
