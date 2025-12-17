@@ -16,15 +16,17 @@ import lombok.RequiredArgsConstructor;
 public class ChatController {
 
     private final ChatService chatService;
-	/*
-	 * @PostMapping("/chat/save") public String saveChat(@RequestBody Map<String,
-	 * String> data) throws Exception {
-	 * 
-	 * ChatVO vo = new ChatVO(); vo.setCustomer_id(data.get("userId"));
-	 * vo.setAdmin_id(data.get("adminId")); //vo.setMessage(data.get("message"));
-	 * 
-	 * chatService.saveChat(vo);
-	 * 
-	 * return "OK"; }
-	 */
+
+    @PostMapping("/chat/save")
+    public String saveChat(@RequestBody Map<String, String> data) throws Exception {
+
+        ChatVO vo = new ChatVO();
+        vo.setCustomer_id(data.get("userId"));
+        vo.setAdmin_id(data.get("adminId"));
+        //vo.setMessage(data.get("message"));
+
+        chatService.saveChat(vo);
+
+        return "OK";
+    }
 }
