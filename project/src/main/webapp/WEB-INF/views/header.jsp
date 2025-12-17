@@ -48,7 +48,8 @@
 		<a href="#" class="text-decoration-none"> <img
 				src='../img/logo.png' class='logo' /> </a>
 		</div>
-		<div class="col-lg-6 col-6 text-left">
+	<!--  <div class="col-lg-6 col-6 text-left">-->	
+		<div class="col-lg-6 col-12 mx-auto">
 			<form action="selectall" method="get">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
