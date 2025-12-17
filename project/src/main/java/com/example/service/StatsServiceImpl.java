@@ -38,4 +38,14 @@ public class StatsServiceImpl implements StatsService {
     public void insertDailyStats() {
         statsRepository.insertDailyStats();
     }
+    
+    @Override
+    public List<Map<String, Object>> getMonthlyStats(String year) {
+        return statsRepository.getMonthlyStats(year);
+    }
+
+    @Override
+    public List<String> getAvailableYears() {
+        return statsRepository.getAvailableYears();
+    }
 }

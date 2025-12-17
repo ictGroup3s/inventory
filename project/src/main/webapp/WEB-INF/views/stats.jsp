@@ -72,8 +72,11 @@
 			<p>
 				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
 			</p>
-			<a href="${pageContext.request.contextPath}/login" class="btn-login"
-				style="display: block; text-decoration: none;">로그인</a>
+			<%-- 현재 페이지 이름만 전달 --%>
+			<a href="login?redirectURL=stats" class="btn-login"
+				style="display: block; text-decoration: none;">로그인</a> <a
+				href="${pageContext.request.contextPath}/" class="btn-home"
+				style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
@@ -112,7 +115,7 @@
 		<!-- Main Layout -->
 		<div class="container-fluid">
 			<div class="row px-xl-5">
-				<div class="col-lg-2 ">
+				<div class="col-lg-1 ">
 					<!-- Sidebar -->
 					<nav class="category-sidebar">
 						<h6>관리자 페이지</h6>
@@ -128,7 +131,7 @@
 					</nav>
 				</div>
 				<!-- Dashboard Content -->
-				<div class="col-lg-9">
+				<div class="col-lg-10">
 					<!-- Mobile toggler for sidebar -->
 					<nav class="navbar navbar-light bg-light d-lg-none">
 						<button class="navbar-toggler" type="button"
@@ -209,13 +212,27 @@
 							</div>
 						</div>
 
-						<!-- 연도별/월별 매출·지출 상세 테이블 -->
+						<!-- 연도별·월별 매출·지출 상세 테이블 -->
 						<div class="row mb-4">
 							<div class="col-12">
 								<div class="card">
 									<div class="card-body">
-										<h6 class="card-title">연도별·월별 매출 / 지출 (상세)</h6>
-										<p class="text-muted small">최근 데이터 — 서버에서 제공되는 값을 보여줍니다.</p>
+										<div
+											class="d-flex justify-content-between align-items-center mb-3">
+											<div>
+												<h6 class="card-title mb-0">연도별·월별 매출 / 지출 (상세)</h6>
+												<p class="text-muted small mb-0">선택한 연도의 월별 데이터를 보여줍니다.</p>
+											</div>
+											<div class="form-inline">
+												<label class="mr-2 small text-muted" for="yearSelect">연도</label>
+												<select id="yearSelect" class="form-control form-control-sm">
+													<c:forEach var="y" items="${availableYears}">
+														<option value="${y}"
+															${y == selectedYear ? 'selected' : ''}>${y}년</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
 										<div class="table-responsive">
 											<table id="monthlyTable"
 												class="table table-bordered table-sm" style="width: 100%">
@@ -230,16 +247,16 @@
 														<th>비고</th>
 													</tr>
 												</thead>
-												<tbody>
+												<tbody id="monthlyTableBody">
 													<c:forEach var="r" items="${monthlyData}">
 														<tr>
-															<td>${r.year}</td>
-															<td>${r.month}</td>
-															<td>${r.sales}</td>
-															<td>${r.expenses}</td>
-															<td>${r.profit}</td>
-															<td>${r.profitRate}</td>
-															<td>${r.note}</td>
+															<td>${r.YEAR}</td>
+															<td>${r.MONTH}</td>
+															<td>${r.SALES}</td>
+															<td>${r.EXPENSES}</td>
+															<td>${r.PROFIT}</td>
+															<td>${r.PROFITRATE}%</td>
+															<td></td>
 														</tr>
 													</c:forEach>
 												</tbody>

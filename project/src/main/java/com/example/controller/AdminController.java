@@ -80,24 +80,27 @@ public class AdminController {
 	}
 
 	@PostMapping("/itemUpdate")
-	public String updateItem(ProductVO vo) throws IOException {
-		// MultipartFile에 업로드된 파일이 있는지 확인
-		if (vo.getItem_imgFile() != null && !vo.getItem_imgFile().isEmpty()) {
-			MultipartFile file = vo.getItem_imgFile();
-			String fileName = file.getOriginalFilename();
-			
-			// 원하는 경로에 저장
-			file.transferTo(new File("src/main/resources/static/img/product/" + fileName));
+	public String updateItem(ProductVO vo, 
+	                         @RequestParam("existingItemImg") String existingImg) throws IOException {
 
-			// VO에 파일명 세팅 (DB 저장용)
-			vo.setItem_img(fileName);
-		}
+	    MultipartFile file = vo.getItem_imgFile();
 
-		// 서비스 호출
-		adminService.updateItem(vo);
+	    if (file != null && !file.isEmpty()) {
+	        // 새 이미지 업로드
+	        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+	        String savePath = "src/main/resources/static/img/product/";
+	        file.transferTo(new File(savePath + fileName));
+	        vo.setItem_img(fileName); // DB에 새 파일명 저장
+	    } else {
+	        // 새 이미지 없으면 기존 이미지 유지
+	        vo.setItem_img(existingImg);
+	    }
 
-		return "redirect:/item";
+	    adminService.updateItem(vo); // DB update
+	    return "redirect:/item";
 	}
+
+
 
 	@PostMapping("/deleteItem")
 	@ResponseBody

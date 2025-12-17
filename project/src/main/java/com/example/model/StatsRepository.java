@@ -1,5 +1,6 @@
 package com.example.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,15 @@ public class StatsRepository {
     
     public void insertDailyStats() {
         sess.insert("statsmapper.insertDailyStats");
+    }
+    
+    public List<Map<String, Object>> getMonthlyStats(String year) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("year", year);
+        return sess.selectList("statsmapper.getMonthlyStats", param);
+    }
+
+    public List<String> getAvailableYears() {
+        return sess.selectList("statsmapper.getAvailableYears");
     }
 }

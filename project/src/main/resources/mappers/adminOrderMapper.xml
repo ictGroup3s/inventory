@@ -20,6 +20,12 @@
 	        ) as item_names
 	    FROM orders o
 	    WHERE 1=1
+	    
+	    <!-- ✅ 검색 조건이 하나도 없으면 최근 1개월만 -->
+	    <if test="(orderNo == null or orderNo == '') and (customerName == null or customerName == '') and (status == null or status == '') and (startDate == null or startDate == '') and (endDate == null or endDate == '')">
+	        AND o.order_date >= ADD_MONTHS(SYSDATE, -1)
+	    </if>
+	    
 	    <if test="orderNo != null and orderNo != ''">
 	        AND o.order_no = #{orderNo}
 	    </if>
@@ -37,6 +43,7 @@
 	    </if>
 	    ORDER BY o.order_date DESC
 	</select>
+	
     <!-- 주문 단건 조회 -->
     <select id="getOrder" resultType="map" parameterType="int">
         SELECT 

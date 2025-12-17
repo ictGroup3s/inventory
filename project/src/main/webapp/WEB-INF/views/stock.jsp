@@ -46,8 +46,11 @@
 			<p>
 				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
 			</p>
-			<a href="${pageContext.request.contextPath}/login" class="btn-login"
-				style="display: block; text-decoration: none;">로그인</a>
+			<%-- 현재 페이지 이름만 전달 --%>
+			<a href="login?redirectURL=stock" class="btn-login"
+				style="display: block; text-decoration: none;">로그인</a> <a
+				href="${pageContext.request.contextPath}/" class="btn-home"
+				style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
@@ -86,7 +89,7 @@
 		<!-- Main Layout -->
 		<div class="container-fluid">
 			<div class="row px-xl-5">
-				<div class="col-lg-2 ">
+				<div class="col-lg-1 ">
 					<!-- Sidebar -->
 					<nav class="category-sidebar">
 						<h6>관리자 페이지</h6>
@@ -102,7 +105,7 @@
 					</nav>
 				</div>
 				<!-- Content -->
-				<div class="col-lg-10">
+				<div class="col-lg-11">
 					<!-- Mobile toggler for sidebar -->
 					<nav class="navbar navbar-light bg-light d-lg-none">
 						<button class="navbar-toggler" type="button"
@@ -221,46 +224,44 @@
 									</div>
 								</div>
 								<!-- 상품 목록 테이블: 가로 전체(w-100) -->
-								<table class="table table-bordered w-100">
-									<thead class="thead-light">
-										<tr>
-											<th>상품코드</th>
-											<th>상품명</th>
-											<th>원가</th>
-											<th>입고수량</th>
-											<th>출고수량</th>
-											<th>재고수량</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${list}" var="item">
-											<tr class="item-row" data-item_no="${item.item_no}"
-												data-item_name="${item.item_name}"
-												data-origin_p="${item.origin_p}"
-												data-sales_p="${item.sales_p}"
-												data-cate_no="${item.cate_no}"
-												data-stock_cnt="${item.stock_cnt}"
-												data-item_img="${item.item_img}">
-												<td>${item.item_no}</td>
-												<td>${item.item_name}</td>
-												<td>${item.origin_p}</td>
-												<td>${item.stock_in}</td>
-												<td>${item.stock_out}</td>
-												<td><c:choose>
-														<c:when test="${item.stock_cnt < 10}">
-															<span class="text-danger font-weight-bold"> <i
-																class="fas fa-exclamation-triangle"></i>
-																${item.stock_cnt}
-															</span>
-														</c:when>
-														<c:otherwise>
+								<div class="stock-table-wrapper">
+									<table class="table table-bordered w-100 stock-table">
+										<thead class="thead-light text-center">
+											<tr>
+												<th>상품코드</th>
+												<th>상품명</th>
+												<th>원가</th>
+												<th>재고수량</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${list}" var="item">
+												<tr class="item-row" data-item_no="${item.item_no}"
+													data-item_name="${item.item_name}"
+													data-origin_p="${item.origin_p}"
+													data-sales_p="${item.sales_p}"
+													data-cate_no="${item.cate_no}"
+													data-stock_cnt="${item.stock_cnt}"
+													data-item_img="${item.item_img}">
+													<td>${item.item_no}</td>
+													<td>${item.item_name}</td>
+													<td>${item.origin_p}</td>
+													<td><c:choose>
+															<c:when test="${item.stock_cnt < 10}">
+																<span class="text-danger font-weight-bold"> <i
+																	class="fas fa-exclamation-triangle"></i>
+																	${item.stock_cnt}
+																</span>
+															</c:when>
+															<c:otherwise>
 							                            ${item.stock_cnt}
 							                        </c:otherwise>
-													</c:choose></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+														</c:choose></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 						<!-- 상품 목록 row 끝 -->

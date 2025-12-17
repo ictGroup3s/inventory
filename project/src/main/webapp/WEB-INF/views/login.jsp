@@ -93,15 +93,17 @@
 				<c:if test="${not empty loginError}">
 					<div class="alert alert-danger">${loginError}</div>
 				</c:if>
+				
+				<input type="hidden" name="redirectURL" value="${param.redirectURL}">
 
 				<div class="form-group">
-					<label>아이디</label> <input type="text" name="login_id"
-						class="form-control" placeholder="아이디를 입력해주세요" required>
+					<label>아이디</label> 
+					<input type="text" name="login_id" class="form-control" placeholder="아이디를 입력해주세요" required>
 				</div>
 
 				<div class="form-group">
-					<label>비밀번호</label> <input type="password" name="login_pass"
-						class="form-control" placeholder="비밀번호를 입력해주세요" required>
+					<label>비밀번호</label> 
+					<input type="password" name="login_pass" class="form-control" placeholder="비밀번호를 입력해주세요" required>
 				</div>
 
 				<div class="text-right mb-2">

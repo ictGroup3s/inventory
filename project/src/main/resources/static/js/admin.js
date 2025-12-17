@@ -31,32 +31,35 @@ $(function() {
 		}
 	});
 
-	//상품목록 클릭 했을때 (수정모드)
+	//상품목록 클릭 했을때
 	$('.item-row').on('click', function() {
-		const $this = $(this);
-		$('input[name="item_no"]').val($this.data('item_no'));
-		$('input[name="item_name"]').val($this.data('item_name'));
-		$('textarea[name="item_content"]').val($this.data('item_content'));
-		$('input[name="origin_p"]').val($this.data('origin_p'));
-		$('input[name="sales_p"]').val($this.data('sales_p'));
-		$('input[name="stock_cnt"]').val($this.data('stock_cnt'));
-		$('select[name="cate_no"]').val($this.data('cate_no'));
-		$('input[name="dis_rate"]').val($(this).data('dis_rate')); 
-		
-		let imgPath = $this.data('item_img');
-		if (imgPath) {
-			$('#preview').attr('src', '/img/product/' + imgPath);
-			// 수정 모드: 이미지가 있으면 필수 해제 + 에러 메시지 숨김
-			$('#uploadFile').removeClass('required-field');
-			$('#uploadFile').siblings('.error-msg').addClass('d-none');
-		} else {
-			$('#preview').attr('src', 'img/insert_pic.png'); // 기본 이미지
-			$('#uploadFile').addClass('required-field');
-		}
+	    const $this = $(this);
+	    $('input[name="item_no"]').val($this.data('item_no'));
+	    $('input[name="item_name"]').val($this.data('item_name'));
+	    $('textarea[name="item_content"]').val($this.data('item_content'));
+	    $('input[name="origin_p"]').val($this.data('origin_p'));
+	    $('input[name="sales_p"]').val($this.data('sales_p'));
+	    $('input[name="stock_cnt"]').val($this.data('stock_cnt'));
+	    $('select[name="cate_no"]').val($this.data('cate_no'));
+	    $('input[name="dis_rate"]').val($(this).data('dis_rate')); 
+	    
+	    let imgPath = $this.data('item_img');
+	    if (imgPath) {
+	        $('#preview').attr('src', '/img/product/' + imgPath);
+	    } else {
+	        $('#preview').attr('src', 'img/insert_pic.png');
+	    }
 
-		// 수정 모드: 수정 버튼 활성화, 등록 버튼 비활성화
-		$('.submit-btn.update').prop('disabled', false);
-		$('.submit-btn.register').prop('disabled', true)
+	    // hidden input에 기존 이미지명 저장
+	    $('input[name="existingItemImg"]').val(imgPath || "");
+
+	    // ✅ 수정 모드: 이미지 필수 체크 해제
+	    $('#uploadFile').removeClass('required-field');
+	    $('#uploadFile').siblings('.error-msg').addClass('d-none');
+
+	    // 수정 모드: 수정 버튼 활성화, 등록 버튼 비활성화
+	    $('.submit-btn.update').prop('disabled', false);
+	    $('.submit-btn.register').prop('disabled', true);
 	});
 
 	// 비활성화된 등록 버튼 클릭 시
@@ -264,5 +267,36 @@ $(function() {
 		} else {
 			$('#preview').attr('src', 'img/insert_pic.png');
 		}
+	});
+	
+	// 폼 제출 전 검증
+	$('form').on('submit', function(e) {
+	    let isValid = true;
+	    
+	    // item_no 값이 있으면 수정 모드
+	    const isUpdateMode = $('input[name="item_no"]').val() !== '';
+	    
+	    $('.required-field').each(function() {
+	        const $field = $(this);
+	        const $errorMsg = $field.siblings('.error-msg');
+	        
+	        // ✅ 수정 모드일 때 이미지 필드는 검증 건너뛰기
+	        if (isUpdateMode && $field.attr('name') === 'item_imgFile') {
+	            $errorMsg.addClass('d-none');
+	            return true; // continue
+	        }
+	        
+	        // 빈 값 체크
+	        if ($field.val() === '' || $field.val() === null) {
+	            $errorMsg.removeClass('d-none');
+	            isValid = false;
+	        } else {
+	            $errorMsg.addClass('d-none');
+	        }
+	    });
+	    
+	    if (!isValid) {
+	        e.preventDefault();
+	    }
 	});
 });

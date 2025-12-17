@@ -131,5 +131,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ) sub
 	    WHERE sub.total_order > 0
 	</insert>
+	
+	<!-- 연도별·월별 매출/지출 (선택한 연도) -->
+	<select id="getMonthlyStats" resultType="map" parameterType="map">
+	    SELECT
+	        TO_CHAR(base_month, 'YYYY') as year,
+	        TO_CHAR(base_month, 'MM') as month,
+	        NVL(sales, 0) as sales,
+	        NVL(expenses, 0) as expenses,
+	        NVL(sales, 0) - NVL(expenses, 0) as profit,
+	        CASE
+	            WHEN NVL(sales, 0) > 0
+	            THEN ROUND((NVL(sales, 0) - NVL(expenses, 0)) / NVL(sales, 0) * 100, 1)
+	            ELSE 0
+	        END as profitRate
+	    FROM (
+	        SELECT ADD_MONTHS(TO_DATE(#{year} || '-01', 'YYYY-MM'), LEVEL - 1) as base_month
+	        FROM dual
+	        CONNECT BY LEVEL &lt;= 12
+	    ) months
+	    LEFT JOIN (
+	        SELECT
+	            TRUNC(o.order_date, 'MM') as sale_month,
+	            ROUND(SUM(od.item_price * od.item_cnt) / 10000, 0) as sales
+	        FROM orders o
+	        JOIN order_detail od ON o.order_no = od.order_no
+	        WHERE o.order_status != '취소'
+	          AND TO_CHAR(o.order_date, 'YYYY') = #{year}
+	        GROUP BY TRUNC(o.order_date, 'MM')
+	    ) s ON months.base_month = s.sale_month
+	    LEFT JOIN (
+	        SELECT
+	            TRUNC(st.in_date, 'MM') as expense_month,
+	            ROUND(SUM(st.stock_in * p.origin_p) / 10000, 0) as expenses
+	        FROM stock st
+	        JOIN product p ON st.item_no = p.item_no
+	        WHERE st.stock_in > 0
+	          AND TO_CHAR(st.in_date, 'YYYY') = #{year}
+	        GROUP BY TRUNC(st.in_date, 'MM')
+	    ) e ON months.base_month = e.expense_month
+	    ORDER BY base_month
+	</select>
+	
+	<!-- 주문 데이터가 있는 연도 목록 -->
+	<select id="getAvailableYears" resultType="string">
+	    SELECT DISTINCT TO_CHAR(order_date, 'YYYY') as year
+	    FROM orders
+	    ORDER BY year DESC
+	</select>
+	
 
 </mapper>

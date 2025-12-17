@@ -9,4 +9,5 @@ public interface StatsService {
     public List<Map<String, Object>> getIncomeExpense();
     public List<Map<String, Object>> getDailyOrders();
     public void insertDailyStats();
-}
+    public List<Map<String, Object>> getMonthlyStats(String year);
+    public List<String> getAvailableYears();}

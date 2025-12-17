@@ -9735,7 +9735,7 @@ a.text-dark:hover, a.text-dark:focus {
         position: relative;
         top: 200px;
         left: 0;
-        transform: translateX(-30px); /* 살짝 왼쪽 */
+        transform: translateX(-125px); /* 살짝 왼쪽 */
         margin-top: -150px;
         max-height: calc(100vh - 600px);
         background-color:#fff;
@@ -9911,7 +9911,6 @@ a.text-dark:hover, a.text-dark:focus {
     width: 100%;
     padding: 14px;
     background: linear-gradient(135deg, #D19C97, #B88480);
-    border: none;
     border-radius: 12px;
     font-size: 15px;
     font-weight: 600;
@@ -9920,8 +9919,24 @@ a.text-dark:hover, a.text-dark:focus {
     transition: all 0.25s ease;
 }
 
+.login-modal .btn-home {
+    width: 100%;
+    padding: 14px;
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #777;
+    border: 1px #D19C97 solid;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 7px;
+}
+
 /* hover */
-.login-modal .btn-login:hover {
+.login-modal .btn-login:hover, 
+.login-modal .btn-home:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(184,132,128,0.5);
 }
@@ -9929,4 +9944,41 @@ a.text-dark:hover, a.text-dark:focus {
 /* hide-content 클래스가 있을 때만 숨김 */
 .hide-content .admin-content {
     display: none !important;
+}
+
+/* stock css */
+/* 상품 목록 테이블 wrapper */
+.stock-table-wrapper {
+    max-height: 600px;   /* 👉 대략 15개 행 높이 */
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+}
+
+/* 테이블 레이아웃 고정 */
+.stock-table {
+    table-layout: fixed;
+    margin-bottom: 0;
+}
+
+/* thead 고정 */
+.stock-table thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 2;
+}
+
+/* td 내용 넘칠 때 처리 */
+.stock-table td,
+.stock-table th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+/* 행 hover (가독성) */
+.stock-table tbody tr:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
 }
