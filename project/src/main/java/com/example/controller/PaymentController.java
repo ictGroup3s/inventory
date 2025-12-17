@@ -58,11 +58,13 @@ public class PaymentController {
 	        @RequestParam(required = false) String shipAddress,
 	        @RequestParam(required = false) String memo,
 	        @RequestParam(required = false) String cardType,
+	        @RequestParam(required = false) String paymentType,  // ⭐⭐⭐ 추가!
 	        HttpSession session
 	    ) {
 	        log.info("========== 결제 처리 시작 ==========");
 	        log.info("받은 데이터 - 이름: {}, 전화번호: {}, 주소: {}", name, phone, address);
 	        log.info("배송지 - 이름: {}, 전화번호: {}, 주소: {}", shipName, shipPhone, shipAddress);
+	        log.info("⭐ 결제 방식: {}, 카드사: {}", paymentType, cardType);  // ⭐⭐⭐ 로그 추가!
 	        
 	        Map<String, Object> result = new HashMap<>();
 	        
@@ -119,25 +121,53 @@ public class PaymentController {
 	                return result;
 	            }
 	            
-	            // 4. ordersVO 객체 생성
+	            // ⭐⭐⭐ 4. 결제 방식 결정 로직 추가!
+	            String finalPayment = "";
+	            
+	            if (paymentType != null && !paymentType.isEmpty()) {
+	                switch (paymentType) {
+	                    case "card":
+	                        finalPayment = cardType != null ? cardType + " 카드결제" : "카드결제";
+	                        break;
+	                    case "bank":
+	                        finalPayment = "계좌이체";
+	                        break;
+	                    case "naver":
+	                        finalPayment = "네이버페이";
+	                        break;
+	                    case "kakao":
+	                        finalPayment = "카카오페이";
+	                        break;
+	                    default:
+	                        finalPayment = "카드결제";
+	                }
+	            } else {
+	                // paymentType이 없는 경우 (기존 방식 호환)
+	                finalPayment = cardType != null ? cardType : "카드결제";
+	            }
+	            
+	            log.info("⭐ 최종 저장될 결제 방식: {}", finalPayment);
+	            
+	            // 5. ordersVO 객체 생성
 	            ordersVO order = new ordersVO();
 	            order.setOrder_name(shipName != null && !shipName.isEmpty() ? shipName : name);
 	            order.setOrder_phone(Long.parseLong(cleanShipPhone));
 	            order.setOrder_addr(shipAddress != null && !shipAddress.isEmpty() ? shipAddress : address);
-	            order.setPayment(cardType != null ? cardType : "카드결제");
+	            order.setPayment(finalPayment);  // ⭐⭐⭐ 결제 방식 설정!
 	            order.setOrder_status("결제완료");
 	            order.setCustomer_id(customerId);
-	            order.setTotal_amount(totalAmount); 
+	            order.setTotal_amount(totalAmount);
+	            order.setRequest(memo);  // 요청사항 추가
 	            
 	            log.info("생성된 주문 객체: {}", order);
 	            log.info("DB 저장 시도...");
 	            
-	            // 5. ⭐ 주문 생성 (장바구니 아이템 포함)
+	            // 6. ⭐ 주문 생성 (장바구니 아이템 포함)
 	            int orderNo = orderService.createOrder(order, cartItems);
 	            
 	            log.info("✅ DB 저장 성공! 주문번호: {}", orderNo);
 	            
-	            // 6. 세션 장바구니 정보 제거
+	            // 7. 세션 장바구니 정보 제거
 	            session.removeAttribute("cartItems");
 	            session.removeAttribute("cartTotal");
 	            session.removeAttribute("cartCount");

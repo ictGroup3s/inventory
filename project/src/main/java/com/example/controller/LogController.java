@@ -9,7 +9,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.model.vo.CustomerVO;
 import com.example.service.LogService;
-import com.example.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 

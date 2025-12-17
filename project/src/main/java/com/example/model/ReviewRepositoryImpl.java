@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.model.vo.ReviewVO;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -33,6 +36,24 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 	}
 	public void update(ReviewVO review) {
 		sess.update("com.example.model.ReviewRepository.update", review);		
+	}
+
+	@Override
+	public int countReviewsByItemAndCustomer(Integer item_no, String customer_id) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("item_no", item_no);
+		param.put("customer_id", customer_id);
+		Integer result = sess.selectOne("com.example.model.ReviewRepository.countReviewsByItemAndCustomer", param);
+		return result == null ? 0 : result;
+	}
+
+	@Override
+	public int countPurchasesByItemAndCustomer(Integer item_no, String customer_id) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("item_no", item_no);
+		param.put("customer_id", customer_id);
+		Integer result = sess.selectOne("com.example.model.ReviewRepository.countPurchasesByItemAndCustomer", param);
+		return result == null ? 0 : result;
 	}
 
 }

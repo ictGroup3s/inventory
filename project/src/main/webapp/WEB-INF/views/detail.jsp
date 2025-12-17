@@ -126,7 +126,7 @@
 		 <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
 				<nav class="category-sidebar">
-					<h6 class="p-3">MENU</h6>
+					<h5 class="p-3">Categories</h5>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
@@ -241,9 +241,17 @@
 					          
 						<div class="col-md-6">
 							<h4 class="mb-4">리뷰 작성</h4>
-							<form id="reviewForm">
-								<input type="hidden" name="item_no" value="${product.item_no}" />
-							    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
+							<c:choose>
+								<c:when test="${empty sessionScope.loginUser}">
+									<p class="text-muted">로그인 후 리뷰 작성이 가능합니다.</p>
+								</c:when>
+								<c:when test="${not empty sessionScope.loginUser and not canWriteReview}">
+									<p class="text-muted">${reviewBlockReason}</p>
+								</c:when>
+								<c:otherwise>
+									<form id="reviewForm">
+										<input type="hidden" name="item_no" value="${product.item_no}" />
+									    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
 								
 								<div class="form-group">
                                     <label class="mb-1">평점 *</label>
@@ -272,7 +280,9 @@
 									<input type="button" id="addReview" value="리뷰 남기기" class="btn btn-primary px-3">
 								</div>
 											
-							</form>
+								</form>
+								</c:otherwise>
+							</c:choose>
 
 						</div>
 					</div>
@@ -336,11 +346,7 @@
 </div>
 <!-- Image Slider End -->
 
-		<!-- Footer Start -->
-	<!-- <div class="container-fluid text-dark mt-3 pt-3 pb-2" style="border-top: 2px solid #eeeeee;"> -->
-
-
-	<!-- Footer Start -->
+	 <!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
 		<div class="row px-xl-5 pt-3">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
@@ -365,11 +371,16 @@
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
 						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="/"> <i
-								class="fa fa-angle-right mr-2"></i>메인 홈
-							</a> <a class="text-dark mb-2" href="selectall"> <i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동
-							</a>
+							<a class="text-dark mb-2" href="/"><i
+								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
+								class="text-dark mb-2" href="selectall"><i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
+								class="text-dark mb-2" href="mlist"><i
+								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
+								class="text-dark mb-2" href="cart"><i
+								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
+								class="text-dark mb-2" href="checkout"><i
+								class="fa fa-angle-right mr-2"></i>결제</a>
 						</div>
 					</div>
 					<div class="col-lg-8 col-md-12">
@@ -394,7 +405,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
+		<div class="row border-top border-light mx-xl-5 py-4">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
 					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
@@ -410,7 +421,6 @@
 		</div>
 	</div>
 	<!-- Footer End -->
-
 
 
 	<!-- Back to Top -->
@@ -467,7 +477,9 @@
 	<script src="/js/CustomerChat.js?v=999"></script>
 	
 	<!-- Main JS -->
-	<script src="/js/main.js"></script>	
+	<script src="/js/main.js"></script>
+	<!-- 리뷰 js -->	
+	<script src="js/Review.js"></script>	
 
 	<!-- SockJS + STOMPJS (chat.js보다 위에) -->
 	<script
@@ -475,8 +487,7 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
-	<!-- 리뷰 js -->	
-	<script src="js/Review.js"></script>	
+		
 	
 
 </body>

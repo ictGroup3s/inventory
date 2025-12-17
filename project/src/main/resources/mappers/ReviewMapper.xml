@@ -4,6 +4,22 @@
 
 <mapper namespace="com.example.model.ReviewRepository">
 
+<select id="countReviewsByItemAndCustomer" parameterType="map" resultType="int">
+	SELECT COUNT(*)
+	FROM review
+	WHERE item_no = #{item_no}
+	  AND customer_id = #{customer_id}
+</select>
+
+<select id="countPurchasesByItemAndCustomer" parameterType="map" resultType="int">
+	SELECT COUNT(DISTINCT o.order_no)
+	FROM orders o
+	JOIN order_detail od ON o.order_no = od.order_no
+	WHERE o.customer_id = #{customer_id}
+	  AND od.item_no = #{item_no}
+	  AND (o.order_status IS NULL OR o.order_status &lt;&gt; '취소')
+</select>
+
 <select id="selectReviewsByItemNo" parameterType="int" resultType="com.example.model.vo.ReviewVO">
 	SELECT	review_no
 		    , re_title

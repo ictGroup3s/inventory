@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				FROM product p
 				<where>
 					<if test="q != null and q != ''">
-						(p.item_name LIKE '%' || #{q} || '%' OR p.item_content LIKE '%' || #{q} || '%')
+						(p.item_name LIKE '%' || #{q} || '%')
 					</if>
 					<if test="cate_no != null">
 						AND p.cate_no = #{cate_no}
@@ -72,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM product
 		<where>
 			<if test="q != null and q != ''">
-				(item_name LIKE '%' || #{q} || '%' OR item_content LIKE '%' || #{q} || '%')
+				(item_name LIKE '%' || #{q} || '%')
 			</if>
 			<if test="cate_no != null">
 				AND cate_no = #{cate_no}

@@ -15,5 +15,6 @@ public class order_detailVO {
 	private String order_status;
 	
 	private Integer amount;	
+	private Integer additional_count;
 	
 }
