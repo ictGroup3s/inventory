@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,19 +13,13 @@
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <!-- Font Awesome -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
 <!-- Bootstrap CSS -->
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
@@ -65,100 +58,128 @@
 		</div>
 	</div>
 
-	<!-- ================= 메인 ================= -->
-	<div class="container-fluid pt-2">
-		<div class="row px-xl-5">
-			<div class="col-lg-2">
-				<!-- 사이드바 -->
-				<nav class="category-sidebar" style="margin-left: -80px;">
-					<h6 class="p-3">고객센터</h6>
-					<ul class="nav flex-column">
-						<li class="nav-item"><a href="board" class="nav-link active"
-							id="noticeLink">공지사항</a></li>
+<!-- ================= 상단바 ================= -->
+<div class="row align-items-center py-3 px-xl-5 bg-light">
+    <div class="col-lg-3 d-none d-lg-block">
+        <a href="/" class="text-decoration-none">
+            <img src="img/logo.png" class="logo"/>
+        </a>
+    </div>
+    <div class="col-lg-6 col-6 text-left">
+        <form action="">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for products">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-transparent text-primary">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-3 col-6 text-right">
+        <a href="#" class="btn border">
+            <i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+        </a>
+        <a href="cart" class="btn border">
+            <i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+        </a>
+    </div>
+</div>
 
-						<li class="nav-item"><a href="/board?tab=faq"
-							class="nav-link" id="faqLink"
-							onclick="loadFaqPage(1); return false;">자주 묻는 질문</a></li>
+<!-- ================= 메인 ================= -->
+<div class="container-fluid">
+<div class="row px-xl-2">
 
-					</ul>
-				</nav>
-				</div>
+<!-- 사이드바 -->
+<nav class="category-sidebar">
+    <h6 class="p-3">고객센터</h6>
+    <ul class="nav flex-column">
+        <li class="nav-item"><a href="board" class="nav-link active" id="noticeLink">공지사항</a></li>
 
-				<!-- 콘텐츠 -->
-				<div class="col-lg-10 dashboard-content">
-					<h3 class="mb-4">공지사항 게시판</h3>
+        <li class="nav-item">
+    <a href="/board?tab=faq" class="nav-link" id="faqLink" onclick="loadFaqPage(1); return false;">자주 묻는 질문</a>
+</li>
 
-					<div id="contentArea">
+    </ul>
+</nav>
 
-						<!-- 게시글 목록 -->
-						<div class="table-responsive mb-4">
-							<table class="table table-bordered text-center">
-								<thead class="thead-light">
-									<tr>
-										<th style="width: 80px;">번호</th>
-										<th>제목</th>
-										<th style="width: 150px;">작성자</th>
-										<th style="width: 150px;">작성일</th>
-									</tr>
-								</thead>
-								<tbody>
+<!-- 콘텐츠 -->
+<div class="col-lg-10 dashboard-content">
+<h3 class="mb-4">공지사항 게시판</h3>
 
-									<c:forEach var="b" items="${list}">
-										<tr>
-											<td>${b.board_no}</td>
-											<td><a href="boardDetail?id=${b.board_no}">
-													${b.title} </a></td>
-											<td>${b.customer_id}</td>
-											<td>${b.b_date}</td>
-										</tr>
-									</c:forEach>
+<div id="contentArea">
 
-									<c:if test="${empty list}">
-										<tr>
-											<td colspan="4">등록된 공지사항이 없습니다.</td>
-										</tr>
-									</c:if>
+<!-- 게시글 목록 -->
+<div class="table-responsive mb-4">
+<table class="table table-bordered text-center">
+<thead class="thead-light">
+<tr>
+    <th style="width:80px;">번호</th>
+    <th>제목</th>
+    <th style="width:150px;">작성자</th>
+    <th style="width:150px;">작성일</th>
+</tr>
+</thead>
+<tbody>
 
-								</tbody>
-							</table>
-						</div>
+<c:forEach var="b" items="${list}">
+<tr>
+    <td>${b.board_no}</td>
+    <td>
+        <a href="boardDetail?id=${b.board_no}">
+            ${b.title}
+        </a>
+    </td>
+    <td>${b.customer_id}</td>
+    <td>${b.b_date}</td>
+</tr>
+</c:forEach>
 
-						<!-- 글쓰기 -->
-						<div class="text-right mb-3">
-							<button class="btn btn-primary" onclick="showWriteForm()">글쓰기</button>
-						</div>
+<c:if test="${empty list}">
+<tr>
+    <td colspan="4">등록된 공지사항이 없습니다.</td>
+</tr>
+</c:if>
 
-						<!-- 🔥 페이징 영역 (위치만 이동 + 스타일 추가) -->
-						<div class="text-center mt-4">
-							<c:if test="${page > 1}">
-								<a class="btn btn-outline-secondary btn-sm" href="/board?page=1">&laquo;</a>
-								<a class="btn btn-outline-secondary btn-sm"
-									href="/board?page=${page-1}">&lsaquo;</a>
-							</c:if>
+</tbody>
+</table>
+</div>
 
-							<span class="mx-2 font-weight-bold"> ${page} /
-								${totalPage} </span>
+<!-- 글쓰기 -->
+<div class="text-right mb-3">
+    <button class="btn btn-primary" onclick="showWriteForm()">글쓰기</button>
+</div>
 
-							<c:if test="${page < totalPage}">
-								<a class="btn btn-outline-secondary btn-sm"
-									href="/board?page=${page+1}">&rsaquo;</a>
-								<a class="btn btn-outline-secondary btn-sm"
-									href="/board?page=${totalPage}">&raquo;</a>
-							</c:if>
-						</div>
+<!-- 🔥 페이징 영역 (위치만 이동 + 스타일 추가) -->
+<div class="text-center mt-4">
+    <c:if test="${page > 1}">
+        <a class="btn btn-outline-secondary btn-sm" href="/board?page=1">&laquo;</a>
+        <a class="btn btn-outline-secondary btn-sm" href="/board?page=${page-1}">&lsaquo;</a>
+    </c:if>
 
-					</div>
-				</div>
-			</div>
-		</div>
+    <span class="mx-2 font-weight-bold">
+        ${page} / ${totalPage}
+    </span>
+
+    <c:if test="${page < totalPage}">
+        <a class="btn btn-outline-secondary btn-sm" href="/board?page=${page+1}">&rsaquo;</a>
+        <a class="btn btn-outline-secondary btn-sm" href="/board?page=${totalPage}">&raquo;</a>
+    </c:if>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
 
 
 
-		<!-- JS -->
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<!-- JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 
-		<script>
+<script>
 function showWriteForm(){
     $("#contentArea").load("<%=request.getContextPath()%>/boardWrite");
 }
@@ -201,19 +222,21 @@ function deleteFaq(id, page){
     if(!confirm("삭제하시겠습니까?")) return;
     setActiveMenu(true);
     // 삭제 후 목록으로 자동 복귀
-    $("#contentArea").load("<%=request.getContextPath()%>
-		/faqDelete?id=" + id
-							+ "&page=" + page);
-		}
+    $("#contentArea").load("<%=request.getContextPath()%>/faqDelete?id=" + id + "&page=" + page);
+}
 
-		//  URL 파라미터로 FAQ 탭 자동 오픈
 
-		$(function() {
-			var params = new URLSearchParams(window.location.search);
-			if (params.get("tab") === "faq") {
-				loadFaqPage(1);
-			}
-		});
-	</script>
+//  URL 파라미터로 FAQ 탭 자동 오픈
+  
+$(function(){
+    var params = new URLSearchParams(window.location.search);
+    if(params.get("tab") === "faq"){
+        loadFaqPage(1);
+    }
+});
+
+</script>
+
+
 </body>
 </html>
