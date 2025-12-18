@@ -38,15 +38,14 @@
 			<img  src='../img/logo.png' class='logo' />
 			</a>
 		</div>
-		<div class="col-lg-6 col-6 text-left">
-			<form action="selectall" method="get">
+			<div class="col-lg-6 col-6 text-left">
+			<form action="selectall" method="get" style="margin-left:150px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<button class="input-group-text bg-transparent text-primary"
-							type="submit">
-							<i class="fa fa-search"></i>
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
 						</button>
 					</div>
 				</div>
@@ -58,7 +57,7 @@
 			</a>
 		</div>
 	</div>
-			<div class="col-lg-9">
+			<div class="col-lg-12">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
 					<a href="/" class="text-decoration-none d-block d-lg-none"> <img
@@ -69,7 +68,7 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
+						id="navbarCollapse" >
 
 						<div class="navbar-nav ml-auto py-0">
 							<!-- 로그인전 -->
@@ -104,19 +103,22 @@
 	<div class="container-fluid bg-secondary mb-5">
 		<div
 			class="d-flex flex-column align-items-center justify-content-center"
-			style="min-height: 250px">
+			style="min-height: 150px; width:1200px;">
 			<h1 class="font-weight-semi-bold text-uppercase mb-3">장바구니</h1>
 			<div class="d-inline-flex">
 				<p class="m-0">
-					<a href="header"><h4>쇼핑 계속 하기</h4></a>
+					<a href="header"><h4>메인으로</h4></a>
 				</p>				
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid pt-5">
-		<div class="row px-xl-5">
+	<!-- 장바구니 타이틀 끝 -->
+	
+	<div class="container-fluid pt-5" >
+			<div class="row px-xl-5"  >
+		
 			<div class="col-lg-8 table-responsive mb-5">
-				<table class="table table-bordered text-center mb-0">
+				<table class="table table-bordered text-center mb-0 ">
 					<thead class="bg-secondary text-dark">
 						<tr>
 							<th>상품명</th>
@@ -217,8 +219,9 @@
 	</div>
 	
 <!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-		<div class="row px-xl-5 pt-3">
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 
+	style="width:1500px; margin-left:10px; ">
+		<div class="row px-xl-5 pt-3" style="margin-left:-100px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -241,16 +244,11 @@
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
 						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="/"><i
-								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
-								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
-								class="text-dark mb-2" href="mlist"><i
-								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
-								class="text-dark mb-2" href="cart"><i
-								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
-								class="text-dark mb-2" href="checkout"><i
-								class="fa fa-angle-right mr-2"></i>결제</a>
+							<a class="text-dark mb-2" href="/"> <i
+								class="fa fa-angle-right mr-2"></i>메인 홈
+							</a> <a class="text-dark mb-2" href="selectall"> <i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-8 col-md-12">
@@ -275,14 +273,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="row border-top border-light mx-xl-5 py-4">
+		<div class="row border-top border-light py-4" style="margin-left:-60px; margin-right:60px;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
-					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
 						Site Name</a>. All Rights Reserved. Designed by <a
 						class="text-dark font-weight-semi-bold"
 						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
 					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+
 				</p>
 			</div>
 			<div class="col-md-6 px-xl-0 text-center text-md-right">
@@ -290,7 +289,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- Footer End -->
+	
+	<!-- footer end -->
 
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i

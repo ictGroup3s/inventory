@@ -41,7 +41,7 @@
 			<form action="">
 				<div class="input-group">
 					<input type="text" class="form-control"
-						placeholder="Search for products">
+						placeholder="찾고 싶은 상품을 검색하세요." >
 					<div class="input-group-append">
 						<span class="input-group-text bg-transparent text-primary">
 							<i class="fa fa-search"></i>
@@ -51,9 +51,7 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="#" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -87,13 +85,13 @@
         <!-- 아이디 (수정 불가) -->
         <div class="mb-3">
             <label>아이디</label>
-            <input type="text" class="form-control" value="${customer.customer_id}" disabled>
+            <input type="text" class="form-control" value="${sessionScope.loginUser.customer_id}" disabled>
         </div>
-
+	
         <!-- 이름 -->
         <div class="mb-3">
             <label>이름</label>
-            <input type="text" name="name" class="form-control" value="${customer.name}" required>
+            <input type="text" name="name" class="form-control" value="${sessionScope.loginUser.name}" required>
         </div>
 
         <!-- 비밀번호 -->
@@ -105,19 +103,19 @@
         <!-- 전화번호 -->
         <div class="mb-3">
             <label>전화번호</label>
-            <input type="text" name="phone" class="form-control" value="${customer.phone}">
+            <input type="text" name="phone" class="form-control" value="${sessionScope.loginUser.phone}">
         </div>
 
         <!-- 이메일 -->
         <div class="mb-3">
             <label>이메일</label>
-            <input type="email" name="email" class="form-control" value="${customer.email}">
+            <input type="email" name="email" class="form-control" value="${sessionScope.loginUser.email}">
         </div>
 
         <!-- 주소 -->
         <div class="mb-3">
             <label>주소</label>
-            <input type="text" name="addr" class="form-control" value="${customer.addr}">
+            <input type="text" name="addr" class="form-control" value="${sessionScope.loginUser.addr}">
         </div>
 
         <button type="submit" class="btn btn-primary w-100">수정하기</button>

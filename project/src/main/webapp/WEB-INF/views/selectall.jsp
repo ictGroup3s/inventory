@@ -40,14 +40,14 @@
 
 <body>
 
-	<div class="row align-items-center py-3 px-xl-5">
+	<div class="row align-items-center py-3 px-xl-5" style="margin-left:20px;">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
 				src="\img\logo.png" class='logo' />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="selectall" method="get">
+			<form action="selectall" method="get" style="margin-left:30px; margin-right:90px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
@@ -60,7 +60,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right">
+		<div class="col-lg-3 col-6 text-right" style="margin-left:-105px;">
 			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
@@ -70,7 +70,7 @@
 
 	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
 	<div class="container-fluid">
-		<div class="row border-top px-xl-5">
+		<div class="row border-top px-xl-5" style="margin-left: -80px;">
 			<div class="col-lg-12">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
@@ -83,7 +83,7 @@
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
-						<div class="navbar-nav ml-auto py-0">
+						<div class="navbar-nav py-0" style="margin-left: 970px;">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
 								<a href="login" class="nav-item nav-link">로그인</a>
@@ -115,13 +115,15 @@
 	</div>
 
 
-	<div class="container-fluid pt-5">
+	<div class="container-fluid pt-2">
 		<div class="row px-xl-5">
-			<div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar">
-					<h5 class="p-3">MENU</h5>
-					<ul class="nav flex-column">
-						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
+			<div class="col-lg-2">
+				<!-- Sidebar -->
+				<nav class="category-sidebar" style="margin-left:-80px;">
+                <h6 class="p-3">MENU</h6>
+                   <ul class="nav flex-column">
+						<li class="nav-item"><a href="selectall"
+							class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이
 								．찜 ．볶음</a></li>
 						<li class="nav-item"><a href="selectSoup" class="nav-link">국
@@ -134,8 +136,9 @@
 						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
 								．음료</a></li>
 					</ul>
-				</nav>
+                </nav>
 			</div>
+			
 			<div class="col-lg-9 col-md-12">
 				<div class="row pb-3 product-grid">
 					<div class="col-12 pb-1">
@@ -300,13 +303,9 @@
 		</div>
 	</div>
 
-		<!-- Footer Start -->
-	<!-- <div class="container-fluid text-dark mt-3 pt-3 pb-2" style="border-top: 2px solid #eeeeee;"> -->
-
-
-	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" style="width:1450px; margin-left:65px;">
-		<div class="row px-xl-5 pt-3">
+  <!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 	style="width:1350px; margin-left:150px;" >
+		<div class="row px-xl-5 pt-3" style="margin-left:-100px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -358,14 +357,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
+		<div class="row border-top border-light py-4" style="margin-left:-60px; margin-right:60px;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
-					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
 						Site Name</a>. All Rights Reserved. Designed by <a
 						class="text-dark font-weight-semi-bold"
 						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
 					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+
 				</p>
 			</div>
 			<div class="col-md-6 px-xl-0 text-center text-md-right">
@@ -373,7 +373,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- Footer End -->
+	
+	<!-- footer end -->
 
 
 	<!-- Back to Top -->
