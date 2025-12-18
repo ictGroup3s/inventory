@@ -149,100 +149,102 @@ $(function() {
 
 	// 채팅 목록 불러오기
 	function loadAdminChatList() {
-		$.getJSON("/admin/chat/rooms?adminId=" + adminId, function(data) {
-			$("#admin-chat-list").empty();
+	    $.getJSON("/admin/chat/rooms?adminId=" + adminId, function(data) {
+	        $("#admin-chat-list").empty();
 
-			if (data.length === 0) {
-				$("#admin-chat-list").append("<div class='no-chat'>채팅방이 없습니다</div>");
-				return;
-			}
+	        if (data.length === 0) {
+	            $("#admin-chat-list").append("<div class='no-chat'>채팅방이 없습니다</div>");
+	            return;
+	        }
 
-			data.forEach(function(room) {
-				const isClosed = room.status === 'CLOSED';
-				const statusClass = isClosed ? 'closed' : 'active';
-				const statusText = isClosed ? '🔒' : '💬';
+	        data.forEach(function(room) {
+	            const isClosed = room.status === 'CLOSED';
+	            const statusClass = isClosed ? 'closed' : 'active';
+	            const statusText = isClosed ? '🔒' : '💬';
 
-				const div = $(`
+	            const div = $(`
 	                <div class="chat-room ${statusClass}" data-customer-id="${room.customer_id}" data-chat-no="${room.chat_no}">
 	                    <span class="chat-info">${statusText} ${room.customer_id} (#${room.chat_no})</span>
 	                    <button class="delete-chat-btn" data-chat-no="${room.chat_no}">✕</button>
 	                </div>
 	            `);
 
-				// 안읽은 메시지 확인 (진행중인 채팅만)
-				if (!isClosed) {
-					$.getJSON("/admin/chat/unread?adminId=" + adminId + "&customerId=" + room.customer_id, function(count) {
-						if (count > 0) {
-							div.addClass("has-unread");
-						}
-					});
-				}
+	            // 먼저 목록에 추가
+	            $("#admin-chat-list").append(div);
 
-				// 채팅방 클릭
-				div.find(".chat-info").click(function() {
-					currentCustomerId = room.customer_id;
-					currentChatNo = room.chat_no;
-					console.log("✅ 선택된 고객:", currentCustomerId);
-					$("#current-chat-user").text(room.customer_id + "님과의 채팅");
-					loadAdminChatHistory(room.chat_no);
-					$(".chat-room").removeClass("active-room");
-					div.addClass("active-room");
-					div.removeClass("has-unread");
+	            // 안읽은 메시지 확인 (진행중인 채팅만)
+	            if (!isClosed) {
+	                $.getJSON("/admin/chat/unread?adminId=" + adminId + "&customerId=" + room.customer_id, function(count) {
+	                    if (count > 0) {
+	                        // data-customer-id로 정확히 찾아서 클래스 추가
+	                        $(`.chat-room[data-customer-id="${room.customer_id}"]`).addClass("has-unread");
+	                    }
+	                });
+	            }
 
-					// 종료된 채팅이면 입력창 비활성화
-					if (isClosed) {
-						$("#admin-chat-text").prop("disabled", true);
-						$("#admin-chat-send").prop("disabled", true);
-						$("#close-chat").prop("disabled", true);
-					} else {
-						$("#admin-chat-text").prop("disabled", false);
-						$("#admin-chat-send").prop("disabled", false);
-						$("#close-chat").prop("disabled", false);
+	            // 채팅방 클릭
+	            div.find(".chat-info").click(function() {
+	                currentCustomerId = room.customer_id;
+	                currentChatNo = room.chat_no;
+	                console.log("✅ 선택된 고객:", currentCustomerId);
+	                $("#current-chat-user").text(room.customer_id + "님과의 채팅");
+	                loadAdminChatHistory(room.chat_no);
+	                $(".chat-room").removeClass("active-room");
+	                div.addClass("active-room");
+	                div.removeClass("has-unread");
 
-						// 읽음 처리
-						$.post("/admin/chat/read?adminId=" + adminId + "&customerId=" + room.customer_id);
+	                // 종료된 채팅이면 입력창 비활성화
+	                if (isClosed) {
+	                    $("#admin-chat-text").prop("disabled", true);
+	                    $("#admin-chat-send").prop("disabled", true);
+	                    $("#close-chat").prop("disabled", true);
+	                } else {
+	                    $("#admin-chat-text").prop("disabled", false);
+	                    $("#admin-chat-send").prop("disabled", false);
+	                    $("#close-chat").prop("disabled", false);
 
-						// 방 입장 (세션 등록)
-						joinRoom(room.customer_id);
-					}
-				});
+	                    // 읽음 처리
+	                    $.post("/admin/chat/read?adminId=" + adminId + "&customerId=" + room.customer_id);
 
-				// 삭제 버튼 클릭
-				div.find(".delete-chat-btn").click(function(e) {
-					e.stopPropagation();
+	                    // 방 입장 (세션 등록)
+	                    joinRoom(room.customer_id);
+	                }
+	            });
 
-					// 진행중인 채팅은 삭제 불가
-					if (!isClosed) {
-						showToast("진행중인 채팅은 삭제할 수 없습니다.\n먼저 채팅을 종료해주세요.");
-						return;
-					}
+	            // 삭제 버튼 클릭
+	            div.find(".delete-chat-btn").click(function(e) {
+	                e.stopPropagation();
 
-					if (confirm("이 채팅을 삭제하시겠습니까?")) {
-						$.ajax({
-							url: "/admin/chat/delete/" + room.chat_no,
-							type: "DELETE",
-							success: function() {
-								showToast("삭제되었습니다.");
-								loadAdminChatList();
-								if (currentChatNo === room.chat_no) {
-									$("#admin-chat-messages").empty();
-									$("#current-chat-user").text("채팅방을 선택해주세요");
-									currentChatNo = null;
-									currentCustomerId = null;
-								}
-							},
-							error: function() {
-								showToast("삭제에 실패했습니다.");
-							}
-						});
-					}
-				});
+	                // 진행중인 채팅은 삭제 불가
+	                if (!isClosed) {
+	                    showToast("진행중인 채팅은 삭제할 수 없습니다.\n먼저 채팅을 종료해주세요.");
+	                    return;
+	                }
 
-				$("#admin-chat-list").append(div);
-			});
-		}).fail(function() {
-			console.error("채팅 목록 불러오기 실패");
-		});
+	                if (confirm("이 채팅을 삭제하시겠습니까?")) {
+	                    $.ajax({
+	                        url: "/admin/chat/delete/" + room.chat_no,
+	                        type: "DELETE",
+	                        success: function() {
+	                            showToast("삭제되었습니다.");
+	                            loadAdminChatList();
+	                            if (currentChatNo === room.chat_no) {
+	                                $("#admin-chat-messages").empty();
+	                                $("#current-chat-user").text("채팅방을 선택해주세요");
+	                                currentChatNo = null;
+	                                currentCustomerId = null;
+	                            }
+	                        },
+	                        error: function() {
+	                            showToast("삭제에 실패했습니다.");
+	                        }
+	                    });
+	                }
+	            });
+	        });
+	    }).fail(function() {
+	        console.error("채팅 목록 불러오기 실패");
+	    });
 	}
 
 	// 방 입장 (세션 등록)

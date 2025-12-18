@@ -64,7 +64,7 @@ $(function() {
 				html += '<td>₩' + formatNumber(order.TOTAL_AMOUNT || order.total_amount) + '</td>';
 				html += '<td class="order-date" title="' + (order.ORDER_DATE || order.order_date || '-') + '">' + (order.ORDER_DATE || order.order_date || '-') + '</td>';
 				html += '<td style="width: 120px;"><div style="display: flex; justify-content: center; flex-direction: row; white-space: nowrap; "><span class="status-badge status-' + status + '">' + status + '</span></div></td>';
-				html += '<td><button class="btn btn-sm btn-info btn-detail" data-order-no="' + (order.ORDER_NO || order.order_no) + '">상세</button></td>';
+				html += '<td><button class="btn btn-detail" data-order-no="' + (order.ORDER_NO || order.order_no) + '">상세</button></td>';
 				html += '</tr>';
 			});
 		}
@@ -156,50 +156,73 @@ $(function() {
 
 	// 저장 버튼
 	$('#saveOrderBtn').on('click', function() {
-		var status = $('#modalStatus').val();
-		var tracking = $('#modalTracking').val();
-		var orderName = $('#modalOrderName').val();
-		var orderPhone = $('#modalOrderPhone').val().replace(/-/g, '');
-		var orderAddr = $('#modalOrderAddr').val();
-		var originalStatus = $('#modalStatus').data('original');
+	    var status = $('#modalStatus').val();
+	    var tracking = $('#modalTracking').val();
+	    var orderName = $('#modalOrderName').val();
+	    var orderPhone = $('#modalOrderPhone').val().replace(/-/g, '');
+	    var orderAddr = $('#modalOrderAddr').val();
+	    var originalStatus = $('#modalStatus').data('original');
+	    var reason = '';
 
-		// 취소로 변경하는 경우 확인
-		if (status === '취소' && originalStatus !== '취소') {
-			if (!confirm('주문을 취소하시겠습니까?\n취소 시 재고가 복구됩니다.')) {
-				return;
-			}
-		}
+	    // 취소/반품으로 변경하는 경우
+	    if ((status === '취소' || status === '반품') && 
+	        originalStatus !== '취소' && originalStatus !== '반품') {
+	        
+	        reason = prompt('취소/반품 사유를 입력해주세요:', '');
+	        if (reason === null) {
+	            return;
+	        }
+	        if (reason.trim() === '') {
+	            reason = '주문 전체 ' + status;
+	        }
+	        
+	        if (!confirm('주문을 ' + status + ' 처리하시겠습니까?\n모든 상품의 재고가 복구됩니다.')) {
+	            return;
+	        }
+	    }
 
-		// 취소에서 다른 상태로 변경하는 경우 확인
-		if (originalStatus === '취소' && status !== '취소') {
-			if (!confirm('취소된 주문을 다시 활성화하시겠습니까?\n재고가 차감됩니다.')) {
-				return;
-			}
-		}
+	    // 취소/반품에서 다른 상태로 변경하는 경우 (철회)
+	    if ((originalStatus === '취소' || originalStatus === '반품') && 
+	        status !== '취소' && status !== '반품') {
+	        
+	        reason = prompt('철회 사유를 입력해주세요:', '');
+	        if (reason === null) {
+	            return;
+	        }
+	        if (reason.trim() === '') {
+	            reason = '주문 철회';
+	        }
+	        
+	        if (!confirm('취소/반품을 철회하시겠습니까?\n재고가 다시 차감됩니다.')) {
+	            return;
+	        }
+	    }
 
-		$.ajax({
-			url: '/api/admin/orders/' + currentOrderNo,
-			method: 'PUT',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				order_status: status,
-				tracking: tracking,
-				order_name: orderName,
-				order_phone: orderPhone,
-				order_addr: orderAddr,
-				original_status: originalStatus
-			}),
-			success: function(res) {
-				alert('저장되었습니다.');
-				$('#orderModal').modal('hide');
-				loadOrders();
-			},
-			error: function(err) {
-				console.error('저장 실패:', err);
-				alert('저장에 실패했습니다.');
-			}
-		});
+	    $.ajax({
+	        url: '/api/admin/orders/' + currentOrderNo,
+	        method: 'PUT',
+	        contentType: 'application/json',
+	        data: JSON.stringify({
+	            order_status: status,
+	            tracking: tracking,
+	            order_name: orderName,
+	            order_phone: orderPhone,
+	            order_addr: orderAddr,
+	            original_status: originalStatus,
+	            reason: reason
+	        }),
+	        success: function(res) {
+	            alert('저장되었습니다.');
+	            $('#orderModal').modal('hide');
+	            loadOrders();
+	        },
+	        error: function(err) {
+	            console.error('저장 실패:', err);
+	            alert('저장에 실패했습니다.');
+	        }
+	    });
 	});
+
 	// 상세보기 버튼 클릭
 	$(document).on('click', '.btn-detail', function() {
 		var orderNo = $(this).data('order-no');
@@ -280,6 +303,19 @@ $(function() {
 		var itemNo = $(this).data('item-no');
 		var itemCnt = $(this).data('item-cnt');
 
+		// 사유 입력 받기
+		var reason = prompt('사유를 입력해주세요:', '');
+		if (reason === null) {
+			// 취소 버튼 클릭
+			$(this).val('');
+			return;
+		}
+		if (reason.trim() === '') {
+			alert('사유를 입력해주세요.');
+			$(this).val('');
+			return;
+		}
+
 		if (!confirm('해당 상품을 ' + newStatus + ' 처리하시겠습니까?\n재고가 복구됩니다.')) {
 			$(this).val('');
 			return;
@@ -292,7 +328,9 @@ $(function() {
 			data: JSON.stringify({
 				detail_status: newStatus,
 				item_no: itemNo,
-				item_cnt: itemCnt
+				item_cnt: itemCnt,
+				order_no: currentOrderNo,  // 추가!
+				reason: reason              // 추가!
 			}),
 			success: function(res) {
 				if (res.success) {

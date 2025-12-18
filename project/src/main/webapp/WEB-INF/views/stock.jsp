@@ -32,6 +32,7 @@
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/stats.css">
 
 </head>
 <body
@@ -66,14 +67,15 @@
 				</a>
 			</div>
 			<div class="col-lg-6 col-6 text-left">
-				<form action="">
+				<form action="selectall" method="get">
 					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for products">
+						<input type="text" name="q" class="form-control"
+							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
+							<button class="input-group-text bg-transparent text-primary"
+								type="submit">
 								<i class="fa fa-search"></i>
-							</span>
+							</button>
 						</div>
 					</div>
 				</form>
@@ -99,7 +101,7 @@
 							<li class="nav-item"><a href="stock" class="nav-link active">입고/재고관리</a></li>
 							<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
 							<li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
-							<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
+							<li class="nav-item"><a href="mlist" class="nav-link">채팅관리</a></li>
 							<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
 						</ul>
 					</nav>
@@ -135,8 +137,8 @@
 
 									<!-- 재고 부족 경고 -->
 									<div id="stockWarning"
-										class="alert alert-warning d-flex align-items-center"
-										style="display: none !important;">
+										class="alert alert-warning align-items-center"
+										style="display: none;">
 										<i class="fas fa-exclamation-triangle mr-2"></i> <span>재고가
 											10개 미만입니다! 입고가 필요합니다.</span>
 									</div>
@@ -238,8 +240,9 @@
 										<table class="table table-bordered w-100 stock-table">
 											<thead class="thead-light text-center">
 												<tr>
-													<th>상품코드</th>
+													<th class="item_no">상품코드</th>
 													<th>상품명</th>
+													<th>카테고리</th>
 													<th>원가</th>
 													<th>재고수량</th>
 												</tr>
@@ -254,7 +257,8 @@
 														data-stock_cnt="${item.stock_cnt}"
 														data-item_img="${item.item_img}">
 														<td>${item.item_no}</td>
-														<td>${item.item_name}</td>
+														<td class="item_name">${item.item_name}</td>
+														<td>${item.cate_name}</td>
 														<td>${item.origin_p}</td>
 														<td><c:choose>
 																<c:when test="${item.stock_cnt < 10}">

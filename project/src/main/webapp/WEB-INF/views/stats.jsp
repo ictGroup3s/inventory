@@ -91,14 +91,15 @@
 				</a>
 			</div>
 			<div class="col-lg-6 col-6 text-left">
-				<form action="">
+				<form action="selectall" method="get">
 					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for products">
+						<input type="text" name="q" class="form-control"
+							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
+							<button class="input-group-text bg-transparent text-primary"
+								type="submit">
 								<i class="fa fa-search"></i>
-							</span>
+							</button>
 						</div>
 					</div>
 				</form>
@@ -115,9 +116,9 @@
 		<!-- Main Layout -->
 		<div class="container-fluid">
 			<div class="row px-xl-5">
-				<div class="col-lg-1 ">
-					<!-- Sidebar -->
-					<nav class="category-sidebar">
+				<!-- LEFT SIDEBAR (PC ONLY) -->
+				<div class="col-lg-2 d-none d-lg-block">
+					<nav class="category-sidebar" id="mainSidebar">
 						<h6>관리자 페이지</h6>
 						<ul class="nav flex-column">
 							<li class="nav-item"><a href="dashboard" class="nav-link">대쉬보드</a></li>
@@ -125,7 +126,7 @@
 							<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
 							<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
 							<li class="nav-item"><a href="stats" class="nav-link active">통계</a></li>
-							<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
+							<li class="nav-item"><a href="mlist" class="nav-link">채팅관리</a></li>
 							<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
 						</ul>
 					</nav>
@@ -233,7 +234,8 @@
 											</div>
 										</div>
 										<div class="table-responsive">
-											<table id="monthlyTable" class="table stats-table" style="width: 100%">
+											<table id="monthlyTable" class="table stats-table"
+												style="width: 100%">
 												<thead>
 													<tr>
 														<th>연도</th>

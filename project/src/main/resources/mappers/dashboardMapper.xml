@@ -7,40 +7,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 대시보드 요약 (카드 4개) -->
     <select id="getSummary" resultType="map">
-        SELECT
-            -- 신규 회원수 (오늘 가입)
-            (SELECT COUNT(*) FROM customer 
-             WHERE TRUNC(TO_DATE(reg_date, 'YYYY-MM-DD')) = TRUNC(SYSDATE)) as new_members,
-            
-            -- 오늘 주문건수
-            (SELECT COUNT(*) FROM orders 
-             WHERE TRUNC(order_date) = TRUNC(SYSDATE) 
-             AND order_status != '취소') as today_orders,
-            
-            -- 오늘 매출
-            (SELECT NVL(SUM(od.item_price * od.item_cnt), 0) 
-             FROM orders o
-             JOIN order_detail od ON o.order_no = od.order_no
-             WHERE TRUNC(o.order_date) = TRUNC(SYSDATE)
-             AND o.order_status != '취소') as today_sales,
-            
-            -- 이번달 매출
-            (SELECT NVL(SUM(od.item_price * od.item_cnt), 0)
-             FROM orders o
-             JOIN order_detail od ON o.order_no = od.order_no
-             WHERE TO_CHAR(o.order_date, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
-             AND o.order_status != '취소') as month_sales,
-            
-            -- 총 주문건수
-            (SELECT COUNT(*) FROM orders WHERE order_status != '취소') as total_orders,
-            
-            -- 총 매출
-            (SELECT NVL(SUM(od.item_price * od.item_cnt), 0)
-             FROM orders o
-             JOIN order_detail od ON o.order_no = od.order_no
-             WHERE o.order_status != '취소') as total_sales
-        FROM dual
-    </select>
+	    SELECT
+	        -- 🔥 취소/반품 건수 (첫 번째 카드)
+	        (SELECT COUNT(*) FROM orders 
+	         WHERE order_status IN ('취소', '반품')) as cancel_return_count,
+	        
+	        -- 오늘 주문건수
+	        (SELECT COUNT(*) FROM orders 
+	         WHERE TRUNC(order_date) = TRUNC(SYSDATE) 
+	         AND order_status != '취소') as today_orders,
+	        
+	        -- 오늘 매출
+	        (SELECT NVL(SUM(od.item_price * od.item_cnt), 0) 
+	         FROM orders o
+	         JOIN order_detail od ON o.order_no = od.order_no
+	         WHERE TRUNC(o.order_date) = TRUNC(SYSDATE)
+	         AND o.order_status != '취소') as today_sales,
+	        
+	        -- 이번달 매출
+	        (SELECT NVL(SUM(od.item_price * od.item_cnt), 0)
+	         FROM orders o
+	         JOIN order_detail od ON o.order_no = od.order_no
+	         WHERE TO_CHAR(o.order_date, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+	         AND o.order_status != '취소') as month_sales,
+	        
+	        -- 총 주문건수
+	        (SELECT COUNT(*) FROM orders WHERE order_status != '취소') as total_orders,
+	        
+	        -- 총 매출
+	        (SELECT NVL(SUM(od.item_price * od.item_cnt), 0)
+	         FROM orders o
+	         JOIN order_detail od ON o.order_no = od.order_no
+	         WHERE o.order_status != '취소') as total_sales
+	
+	    FROM dual
+	</select>
+
 
     <!-- 주문 전체 (매일 자정 자동 초기화) -->
 	<!-- 날짜별 주문 조회 -->

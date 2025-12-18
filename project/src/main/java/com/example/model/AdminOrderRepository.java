@@ -28,7 +28,7 @@ public class AdminOrderRepository {
     public void updateOrder(Map<String, Object> params) {
         sess.update("adminordermapper.updateOrder", params);
     }
-    
+
     public void restoreStock(int orderNo) {
         sess.update("adminordermapper.restoreStock", orderNo);
     }
@@ -36,7 +36,7 @@ public class AdminOrderRepository {
     public void deductStock(int orderNo) {
         sess.update("adminordermapper.deductStock", orderNo);
     }
-    
+
     public void updateDetailStatus(Map<String, Object> params) {
         sess.update("adminordermapper.updateDetailStatus", params);
     }
@@ -51,5 +51,26 @@ public class AdminOrderRepository {
 
     public void deductItemStock(Map<String, Object> params) {
         sess.update("adminordermapper.deductItemStock", params);
+    }
+
+    // ===== CR (취소/반품) 관련 =====
+    public void insertCR(Map<String, Object> params) {
+        sess.insert("adminordermapper.insertCR", params);
+    }
+
+    public List<Map<String, Object>> getCRByOrder(int orderNo) {
+        return sess.selectList("adminordermapper.getCRByOrder", orderNo);
+    }
+
+    public void updateCRStatus(Map<String, Object> params) {
+        sess.update("adminordermapper.updateCRStatus", params);
+    }
+    
+    public void updateCRStatusByDetail(Map<String, Object> params) {
+        sess.update("adminordermapper.updateCRStatusByDetail", params);
+    }
+    
+    public void updateCRStatusByOrder(Map<String, Object> params) {
+        sess.update("adminordermapper.updateCRStatusByOrder", params);
     }
 }

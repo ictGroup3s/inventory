@@ -131,7 +131,7 @@
 							<!-- 회원 로그인 후   -->
 							<c:if test="${not empty sessionScope.loginUser}">
 								<span class="nav-item nav-link">안녕하세요,
-									${sessionScope.loginUser.customer_id}님!</span>
+									${sessionScope.loginUser.name}님!</span>
 
 
 								<c:if test="${sessionScope.loginRole == 0}">
@@ -453,7 +453,7 @@
 				<button id="chat-send">Send</button>
 			</div>
 			<button id="new-chat-btn"
-				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+				style="display: none; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
 				새 채팅 시작</button>
 		</div>
 
