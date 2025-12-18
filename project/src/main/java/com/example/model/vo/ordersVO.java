@@ -22,6 +22,12 @@ public class ordersVO {
 	private List<order_detailVO> detailList;
 	private Integer total_amount; 
 	private String request;
+	
+	 // 수령지 정보
+    private String shipName;
+    private String shipPhone;
+    private String shipAddress;
+    private String memo;
 
 	public List<order_detailVO> getDetailList() {
 	    return detailList;

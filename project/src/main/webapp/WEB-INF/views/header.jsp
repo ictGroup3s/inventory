@@ -111,7 +111,8 @@
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
 
-						<div class="navbar-nav ml-auto py-0 text-right">
+							<div class="navbar-nav ml-auto py-0 text-right">
+
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
 								<a href="login" class="nav-item nav-link">로그인</a>
@@ -291,7 +292,7 @@
 
 	<!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
 	<div class="container-fluid"
-		style="width: 1500px; padding-left: 350px; margin-bottom: 0px;">
+		style="width: 1500px; padding-left: 290px; margin-bottom: 0px;">
 		<h5 align="center">추천상품</h5>
 		<ul class="bxslider">
 			<c:forEach var="rp" items="${randomProducts}">

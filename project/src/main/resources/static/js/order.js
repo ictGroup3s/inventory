@@ -1,385 +1,163 @@
-/**
- * 
- */
+/* =========================
+   전체 선택 / 해제
+========================= */
+function toggleAllProducts(orderNo) {
+    const selectAll = document.getElementById('selectAll_' + orderNo);
+    const products = document.querySelectorAll(
+        '.product-checkbox[data-order-no="' + orderNo + '"]'
+    );
 
-$(function() {
+    products.forEach(cb => cb.checked = selectAll.checked);
+}
 
-	var currentOrderNo = null;
+/* =========================
+   취소 / 반품 / 교환 버튼 처리
+========================= */
+function handleCRRequest(orderNo, type) {
 
-	// 숫자 포맷
-	function formatNumber(num) {
-		return num ? num.toLocaleString() : '0';
-	}
+    // 선택된 상품
+    const checked = document.querySelectorAll(
+        '.product-checkbox[data-order-no="' + orderNo + '"]:checked'
+    );
 
-	// 전화번호 포맷
-	function formatPhone(phone) {
-		if (!phone) return '-';
-		var str = phone.toString();
-		if (str.length === 11) {
-			return str.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-		}
-		return str;
-	}
+    // 아무것도 선택 안 함
+    if (checked.length === 0) {
+        alert("상품을 선택해주세요.");
+        return;
+    }
 
-	// 주문 목록 로드
-	function loadOrders(params) {
-		$.ajax({
-			url: '/api/admin/orders',
-			method: 'GET',
-			data: params || {},
-			success: function(data) {
-				console.log('주문 목록:', data);
-				renderOrderTable(data);
-			},
-			error: function(err) {
-				console.error('주문 목록 로드 실패:', err);
-			}
-		});
-	}
+    // 전체 상품
+    const all = document.querySelectorAll(
+        '.product-checkbox[data-order-no="' + orderNo + '"]'
+    );
 
-	// 테이블 렌더링
-	function renderOrderTable(orders) {
-		var html = '';
+    const isFullOrder = checked.length === all.length;
 
-		if (orders.length === 0) {
-			html = '<tr><td colspan="7" class="text-center">주문 내역이 없습니다.</td></tr>';
-		} else {
-			orders.forEach(function(order) {
-				var status = order.ORDER_STATUS || order.order_status || '-';
-				var itemNames = order.ITEM_NAMES || order.item_names || '-';
+    // ❌ 부분 선택 → 채팅 자동 열기 + 메시지 자동 입력
+    if (!isFullOrder) {
 
-				// 상품명 줄이기 (2개만 표시)
-				var itemsArray = itemNames.split(', ');
-				var displayItems = '';
-				if (itemsArray.length <= 2) {
-					displayItems = itemNames;
-				} else {
-					displayItems = itemsArray.slice(0, 2).join(', ') + ' 외 ' + (itemsArray.length - 2) + '건';
-				}
+        alert(
+            '부분 ' + type + '은 온라인 신청이 불가능합니다.\n\n' +
+            '관리자 채팅으로 연결됩니다.'
+        );
 
-				html += '<tr>';
-				html += '<td>' + (order.ORDER_NO || order.order_no) + '</td>';
-				html += '<td>' + (order.ORDER_NAME || order.order_name || '-') + '</td>';
-				html += '<td class="item-cell text-left" title="' + itemNames + '">' + displayItems + '</td>';
-				html += '<td>₩' + formatNumber(order.TOTAL_AMOUNT || order.total_amount) + '</td>';
-				html += '<td class="order-date" title="' + (order.ORDER_DATE || order.order_date || '-') + '">' + (order.ORDER_DATE || order.order_date || '-') + '</td>';
-				html += '<td style="width: 120px;"><div style="display: flex; justify-content: center; flex-direction: row; white-space: nowrap; "><span class="status-badge status-' + status + '">' + status + '</span></div></td>';
-				html += '<td><button class="btn btn-detail" data-order-no="' + (order.ORDER_NO || order.order_no) + '">상세</button></td>';
-				html += '</tr>';
-			});
-		}
+        // 1️⃣ 채팅창 열기 (기존 버튼 강제 클릭)
+        const chatOpenBtn = document.getElementById('chat-open');
+        if (!chatOpenBtn) {
+            console.error('❌ chat-open 버튼 없음');
+            return;
+        }
+        chatOpenBtn.click();
 
-		$('#orderTableBody').html(html);
-	}
+        // 2️⃣ 채팅 입력창에 메시지 자동 입력
+        setTimeout(function () {
+            const chatInput = document.getElementById('chat-text');
+            if (chatInput) {
+                chatInput.value =
+                    '[부분 ' + type + ' 문의]\n' +
+                    '주문번호: ' + orderNo + '\n' +
+                    '선택 상품에 대해 문의드립니다.';
+                chatInput.focus();
+            }
+        }, 400); // 채팅창 DOM 열릴 시간 확보
+
+        return;
+    }
+
+    // ✅ 전체 선택 → 기존 신청 폼
+    showCRForm(orderNo, type, true);
+}
 
 
-	// 주문 상세 조회
-	function loadOrderDetail(orderNo) {
-		$.ajax({
-			url: '/api/admin/orders/' + orderNo,
-			method: 'GET',
-			success: function(data) {
-				console.log('주문 상세:', data);
-				showOrderModal(data);
-			},
-			error: function(err) {
-				console.error('주문 상세 로드 실패:', err);
-				alert('주문 정보를 불러오는데 실패했습니다.');
-			}
-		});
-	}
 
-	// 모달에 데이터 표시
-	function showOrderModal(data) {
-		var order = data.order;
-		var items = data.items;
+/* =========================
+   전체 취소/반품/교환 폼 표시
+========================= */
+function showCRForm(orderNo, type) {
 
-		currentOrderNo = order.ORDER_NO || order.order_no;
+    const checkedBoxes = document.querySelectorAll(
+        '.product-checkbox[data-order-no="' + orderNo + '"]:checked'
+    );
 
-		// 기본 정보
-		$('#modalOrderNo').text(order.ORDER_NO || order.order_no);
-		$('#modalOrderDate').text(order.ORDER_DATE || order.order_date);
-		$('#modalPayment').text(order.PAYMENT || order.payment || '-');
-		$('#modalCustomerId').text(order.CUSTOMER_ID || order.customer_id);
-		$('#modalTotalAmount').text(formatNumber(order.TOTAL_AMOUNT || order.total_amount));
+    const selectedItems = Array.from(checkedBoxes)
+        .map(cb => cb.value)
+        .join(',');
 
-		// 배송 정보
-		$('#modalOrderName').val(order.ORDER_NAME || order.order_name || '');
-		$('#modalOrderPhone').val(formatPhone(order.ORDER_PHONE || order.order_phone));
-		$('#modalOrderAddr').val(order.ORDER_ADDR || order.order_addr || '');
+    // 폼 표시
+    const container = document.getElementById('crFormContainer_' + orderNo);
+    container.style.display = 'block';
 
-		// 상태 및 운송장
-		var orderStatus = order.ORDER_STATUS || order.order_status || '결제완료';
-		$('#modalStatus').val(orderStatus);
-		$('#modalStatus').data('original', orderStatus);
-		$('#modalTracking').val(order.TRACKING || order.tracking || '');
+    // 값 세팅
+    document.getElementById('crType_' + orderNo).value = type;
+    document.getElementById('selectedItems_' + orderNo).value = selectedItems;
+    document.getElementById('isFullOrder_' + orderNo).value = true;
 
-		// 주문 상품 목록
-		var itemsHtml = '';
-		items.forEach(function(item) {
-			var price = item.ITEM_PRICE || item.item_price || 0;
-			var cnt = item.ITEM_CNT || item.item_cnt || 0;
-			var amount = item.AMOUNT || item.amount || (price * cnt);
-			var detailNo = item.DETAIL_NO || item.detail_no;
-			var detailStatus = item.DETAIL_STATUS || item.detail_status || '정상';
-			var statusDate = item.STATUS_DATE || item.status_date || '';
+    // 제목
+    let title = '전체 ' + type + ' 신청';
+    document.getElementById('crFormTitle_' + orderNo).textContent = title;
 
-			itemsHtml += '<tr data-detail-no="' + detailNo + '">';
-			itemsHtml += '<td>' + (item.ITEM_NAME || item.item_name || '-') + '</td>';
-			itemsHtml += '<td>' + cnt + '</td>';
-			itemsHtml += '<td>₩' + formatNumber(price) + '</td>';
-			itemsHtml += '<td>₩' + formatNumber(amount) + '</td>';
-			itemsHtml += '<td class="detail-status-' + detailStatus + '">' + detailStatus;
-			if (statusDate) {
-				itemsHtml += '<br><small>(' + statusDate + ')</small>';
-			}
-			itemsHtml += '</td>';
-			itemsHtml += '<td>';
-			if (detailStatus === '정상') {
-				itemsHtml += '<select class="form-control form-control-sm detail-status-select" data-detail-no="' + detailNo + '" data-item-no="' + (item.ITEM_NO || item.item_no) + '" data-item-cnt="' + cnt + '">';
-				itemsHtml += '<option value="">변경</option>';
-				itemsHtml += '<option value="취소">취소</option>';
-				itemsHtml += '<option value="반품">반품</option>';
-				itemsHtml += '<option value="교환">교환</option>';
-				itemsHtml += '</select>';
-			} else {
-				itemsHtml += '<button class="btn btn-sm btn-outline-secondary btn-restore" data-detail-no="' + detailNo + '" data-item-no="' + (item.ITEM_NO || item.item_no) + '" data-item-cnt="' + cnt + '">복구</button>';
-			}
-			itemsHtml += '</td>';
-			itemsHtml += '</tr>';
-		});
-		$('#modalOrderItems').html(itemsHtml);
+    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
 
-		// 모달 열기
-		$('#orderModal').modal('show');
-	}
+/* =========================
+   부분 선택 시 메시지
+========================= */
+ function showPartialCancelMessage(type, orderNo, selectedItems) {
+    const ok = confirm(
+        '부분 ' + type + '은 온라인 신청이 불가능합니다.\n\n' +
+        '확인을 누르면 관리자 채팅으로 연결됩니다.'
+    );
 
-	// 저장 버튼
-	$('#saveOrderBtn').on('click', function() {
-	    var status = $('#modalStatus').val();
-	    var tracking = $('#modalTracking').val();
-	    var orderName = $('#modalOrderName').val();
-	    var orderPhone = $('#modalOrderPhone').val().replace(/-/g, '');
-	    var orderAddr = $('#modalOrderAddr').val();
-	    var originalStatus = $('#modalStatus').data('original');
-	    var reason = '';
+    if (!ok) return;
 
-	    // 취소/반품으로 변경하는 경우
-	    if ((status === '취소' || status === '반품') && 
-	        originalStatus !== '취소' && originalStatus !== '반품') {
-	        
-	        reason = prompt('취소/반품 사유를 입력해주세요:', '');
-	        if (reason === null) {
-	            return;
-	        }
-	        if (reason.trim() === '') {
-	            reason = '주문 전체 ' + status;
-	        }
-	        
-	        if (!confirm('주문을 ' + status + ' 처리하시겠습니까?\n모든 상품의 재고가 복구됩니다.')) {
-	            return;
-	        }
-	    }
+    // ✅ 채팅 열기 (이미 있는 로직 사용)
+    $("#chat-open").trigger("click");
 
-	    // 취소/반품에서 다른 상태로 변경하는 경우 (철회)
-	    if ((originalStatus === '취소' || originalStatus === '반품') && 
-	        status !== '취소' && status !== '반품') {
-	        
-	        reason = prompt('철회 사유를 입력해주세요:', '');
-	        if (reason === null) {
-	            return;
-	        }
-	        if (reason.trim() === '') {
-	            reason = '주문 철회';
-	        }
-	        
-	        if (!confirm('취소/반품을 철회하시겠습니까?\n재고가 다시 차감됩니다.')) {
-	            return;
-	        }
-	    }
+    // ✅ 채팅 UI 렌더링 후 메시지 자동 입력
+    setTimeout(function () {
+        const $input = $("#chat-text");
 
-	    $.ajax({
-	        url: '/api/admin/orders/' + currentOrderNo,
-	        method: 'PUT',
-	        contentType: 'application/json',
-	        data: JSON.stringify({
-	            order_status: status,
-	            tracking: tracking,
-	            order_name: orderName,
-	            order_phone: orderPhone,
-	            order_addr: orderAddr,
-	            original_status: originalStatus,
-	            reason: reason
-	        }),
-	        success: function(res) {
-	            alert('저장되었습니다.');
-	            $('#orderModal').modal('hide');
-	            loadOrders();
-	        },
-	        error: function(err) {
-	            console.error('저장 실패:', err);
-	            alert('저장에 실패했습니다.');
-	        }
-	    });
-	});
+        if ($input.length === 0) {
+            console.error("채팅 입력창을 찾을 수 없음");
+            return;
+        }
 
-	// 상세보기 버튼 클릭
-	$(document).on('click', '.btn-detail', function() {
-		var orderNo = $(this).data('order-no');
-		loadOrderDetail(orderNo);
-	});
+        $input.val(
+            "주문번호: " + orderNo + "\n" +
+            "요청 유형: 부분 " + type + "\n" +
+            "선택 상품: " + selectedItems + "\n\n" +
+            "부분 " + type + " 문의드립니다."
+        );
 
-	// 검색
-	$('#searchForm').on('submit', function(e) {
-		e.preventDefault();
-		var params = {
-			orderNo: $('#searchOrderNo').val(),
-			customerName: $('#searchCustomer').val(),
-			status: $('#searchStatus').val(),
-			startDate: $('#searchStartDate').val(),
-			endDate: $('#searchEndDate').val()
-		};
-		console.log('검색 파라미터:', params);
-		loadOrders(params);
-	});
+        $input.focus();
+    }, 500);
+}
 
-	// 초기화
-	$('#resetBtn').on('click', function() {
-		$('#searchOrderNo').val('');
-		$('#searchCustomer').val('');
-		$('#searchStatus').val('');
-		$('#searchStartDate').val('');
-		$('#searchEndDate').val('');
-		loadOrders();
-	});
+function openChat() {
+    document.getElementById('chatToggle').click(); // ← 실제 채팅 버튼
+}
 
-	// 초기화
-	$('#resetBtn').on('click', function() {
-		$('#searchOrderNo').val('');
-		$('#searchCustomer').val('');
-		$('#searchStatus').val('');
-		loadOrders();
-	});
+/* =========================
+   폼 닫기
+========================= */
+function hideCRForm(orderNo) {
+    document.getElementById('crFormContainer_' + orderNo).style.display = 'none';
+    document.getElementById('crForm_' + orderNo).reset();
+}
 
-	// 초기 로드
-	loadOrders();
+/* =========================
+   개별 체크 시 전체선택 동기화
+========================= */
+document.addEventListener('change', function (e) {
+    if (!e.target.classList.contains('product-checkbox')) return;
 
-	// 배송정보 수정 모드 토글
-	var isEditingShipping = false;
+    const orderNo = e.target.dataset.orderNo;
+    const allCheckbox = document.getElementById('selectAll_' + orderNo);
 
-	$('#editShippingBtn').on('click', function() {
-		isEditingShipping = !isEditingShipping;
+    const boxes = document.querySelectorAll(
+        '.product-checkbox[data-order-no="' + orderNo + '"]'
+    );
 
-		if (isEditingShipping) {
-			// 수정 모드 ON
-			$('.shipping-input').prop('readonly', false);
-			$('.shipping-input').css('background-color', '#fff');
-			$(this).html('<i class="fas fa-times"></i> 취소');
-			$(this).removeClass('btn-outline-secondary').addClass('btn-outline-danger');
-		} else {
-			// 수정 모드 OFF
-			$('.shipping-input').prop('readonly', true);
-			$('.shipping-input').css('background-color', '#e9ecef');
-			$(this).html('<i class="fas fa-edit"></i> 수정');
-			$(this).removeClass('btn-outline-danger').addClass('btn-outline-secondary');
-		}
-	});
-
-	// 모달 닫힐 때 수정 모드 초기화
-	$('#orderModal').on('hidden.bs.modal', function() {
-		isEditingShipping = false;
-		$('.shipping-input').prop('readonly', true);
-		$('.shipping-input').css('background-color', '#e9ecef');
-		$('#editShippingBtn').html('<i class="fas fa-edit"></i> 수정');
-		$('#editShippingBtn').removeClass('btn-outline-danger').addClass('btn-outline-secondary');
-	});
-
-	// 상품별 상태 변경
-	$(document).on('change', '.detail-status-select', function() {
-		var newStatus = $(this).val();
-		if (!newStatus) return;
-
-		var detailNo = $(this).data('detail-no');
-		var itemNo = $(this).data('item-no');
-		var itemCnt = $(this).data('item-cnt');
-
-		// 사유 입력 받기
-		var reason = prompt('사유를 입력해주세요:', '');
-		if (reason === null) {
-			// 취소 버튼 클릭
-			$(this).val('');
-			return;
-		}
-		if (reason.trim() === '') {
-			alert('사유를 입력해주세요.');
-			$(this).val('');
-			return;
-		}
-
-		if (!confirm('해당 상품을 ' + newStatus + ' 처리하시겠습니까?\n재고가 복구됩니다.')) {
-			$(this).val('');
-			return;
-		}
-
-		$.ajax({
-			url: '/api/admin/orders/detail/' + detailNo + '/status',
-			method: 'PUT',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				detail_status: newStatus,
-				item_no: itemNo,
-				item_cnt: itemCnt,
-				order_no: currentOrderNo,  // 추가!
-				reason: reason              // 추가!
-			}),
-			success: function(res) {
-				if (res.success) {
-					console.log('응답: ', res);
-					alert(newStatus + ' 처리되었습니다.');
-					loadOrderDetail(currentOrderNo);
-					loadOrders();
-				} else {
-					alert(res.message || '처리에 실패했습니다.');
-				}
-			},
-			error: function(err) {
-				console.error('상태 변경 실패:', err);
-				console.error('응답 내용:', err.responseText);
-				alert('처리에 실패했습니다.');
-			}
-		});
-	});
-
-	// 상품 복구
-	$(document).on('click', '.btn-restore', function() {
-		var detailNo = $(this).data('detail-no');
-		var itemNo = $(this).data('item-no');
-		var itemCnt = $(this).data('item-cnt');
-
-		if (!confirm('해당 상품을 정상으로 복구하시겠습니까?\n재고가 차감됩니다.')) {
-			return;
-		}
-
-		$.ajax({
-			url: '/api/admin/orders/detail/' + detailNo + '/restore',
-			method: 'PUT',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				item_no: itemNo,
-				item_cnt: itemCnt
-			}),
-			success: function(res) {
-				console.log('응답:', res);
-				alert('복구되었습니다.');
-				loadOrderDetail(currentOrderNo);
-				loadOrders();
-			},
-			error: function(err) {
-				console.error('복구 실패:', err);
-				console.error('응답 내용:', err.responseText);
-				alert('복구에 실패했습니다.');
-			}
-		});
-	});
-
+    const checkedCount = Array.from(boxes).filter(cb => cb.checked).length;
+    allCheckbox.checked = (checkedCount === boxes.length);
 });

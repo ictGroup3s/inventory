@@ -66,27 +66,8 @@
 					src="img/logo.png" class="logo" />
 				</a>
 			</div>
-			<div class="col-lg-6 col-6 text-left">
-				<form action="selectall" method="get">
-					<div class="input-group">
-						<input type="text" name="q" class="form-control"
-							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
-						<div class="input-group-append">
-							<button class="input-group-text bg-transparent text-primary"
-								type="submit">
-								<i class="fa fa-search"></i>
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="col-lg-3 col-6 text-right">
-				<a href="#" class="btn border"> <i
-					class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-				</a> <a href="cart" class="btn border"> <i
-					class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
-				</a>
-			</div>
+	
+		
 		</div>
 
 		<!-- Main Layout -->
@@ -236,80 +217,7 @@
 			</div>
 		</div>
 
-		<!-- Footer Start -->
-		<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2"
-			style="width: 1350px; margin-left: 150px; margin-top:200px !important; " >
-			<div class="row px-xl-5 pt-3" style="margin-left: -100px;">
-				<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
-					<p class="mb-2">
-						<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
-						Seoul, KOREA
-					</p>
-					<p class="mb-2">
-						<i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com
-					</p>
-					<p>
-						<i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전
-						9시30분~5시30분
-					</p>
-					<h2 class="mb-0">
-						<i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
-					</h2>
-				</div>
-				<div class="col-lg-8 col-md-12">
-					<div class="row">
-						<div class="col-md-4 mb-3">
-							<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
-							<div class="d-flex flex-column justify-content-start">
-								<a class="text-dark mb-2" href="/"> <i
-									class="fa fa-angle-right mr-2"></i>메인 홈
-								</a> <a class="text-dark mb-2" href="selectall"> <i
-									class="fa fa-angle-right mr-2"></i>상품페이지로 이동
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-8 col-md-12">
-							<div class="row">
-								<div class="col-md-12 mt-4 mb-5">
-									<p class="text-dark mb-2">
-										<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
-										&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
-
-									</p>
-									<br>
-									<p style="color: #999;">
-										법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
-										통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
-										채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
-									</p>
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-			</div>
-			<div class="row border-top border-light py-4"
-				style="margin-left: -60px; margin-right: 60px; ">
-				<div class="col-md-6 px-xl-0">
-					<p class="mb-md-0 text-center text-md-left text-dark">
-						&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
-							Site Name</a>. All Rights Reserved. Designed by <a
-							class="text-dark font-weight-semi-bold"
-							href="https://htmlcodex.com">HTML Codex</a><br> Distributed
-						By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-
-					</p>
-				</div>
-				<div class="col-md-6 px-xl-0 text-center text-md-right">
-					<img class="img-fluid" src="img/payments.png" alt="">
-				</div>
-			</div>
-		</div>
-
-		<!-- footer end -->
 		<!-- JS -->
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 		<script
