@@ -9706,7 +9706,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 /* 상단으로 이동 버튼 */
 .back-to-top {
-  position: static;
+  position: fixed;
   display: none;
   right: 30px;
   bottom: 30px;
