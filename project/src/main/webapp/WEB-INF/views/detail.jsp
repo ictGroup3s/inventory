@@ -120,11 +120,11 @@
 			</div>
 		</div>	
 	</div>		
-	<div class="container-fluid pt-4" >
+	<div class="container-fluid pt-2" >
 		<div class="row px-xl-5">
 		  <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
-              	<nav class="category-sidebar" style="margin-left:20px;">
+              	<nav class="category-sidebar" style="margin-left:-40px;">
                 <h6 class="p-3">MENU</h6>
                    <ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall"
@@ -146,11 +146,11 @@
 			
 <!-- Shop Detail Start ######## 이미지 파일 #########################-->
 	<div class="col-lg-10 col-md-12 p-0 m-0" >		 
-		<div class="container py-5">
+		<div class="container py-5" style="margin-left:-80px;">
 		    <div class="d-flex flex-wrap align-items-center">
 		        <!-- 이미지 -->
 		        <div class="p-2 flex-shrink-0 mr-5">
-		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
+		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" height="350px">
 		        </div>
 		        <!-- 텍스트 -->
 		         <div class="p-2 flex-grow-1">

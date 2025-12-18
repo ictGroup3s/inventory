@@ -40,14 +40,14 @@
 
 <body>
 
-	<div class="row align-items-center py-3 px-xl-5" style="margin-left:70px;">
+	<div class="row align-items-center py-3 px-xl-5" style="margin-left:20px;">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
 				src="\img\logo.png" class='logo' />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="selectall" method="get" style="margin-left:-20px; margin-right:90px;">
+			<form action="selectall" method="get" style="margin-left:30px; margin-right:90px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
@@ -60,7 +60,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right" style="margin-left:-120px;">
+		<div class="col-lg-3 col-6 text-right" style="margin-left:-105px;">
 			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
@@ -70,7 +70,7 @@
 
 	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
 	<div class="container-fluid">
-		<div class="row border-top px-xl-5">
+		<div class="row border-top px-xl-5" style="margin-left: -80px;">
 			<div class="col-lg-12">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
@@ -83,7 +83,7 @@
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
-						<div class="navbar-nav py-0" style="margin-left: 790px;">
+						<div class="navbar-nav py-0" style="margin-left: 850px;">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
 								<a href="login" class="nav-item nav-link">로그인</a>
@@ -117,8 +117,9 @@
 
 	<div class="container-fluid pt-2">
 		<div class="row px-xl-5">
-			<div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar" style="margin-left:-40px;">
+			<div class="col-lg-2">
+				<!-- Sidebar -->
+				<nav class="category-sidebar" style="margin-left:-80px;">
                 <h6 class="p-3">MENU</h6>
                    <ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall"
