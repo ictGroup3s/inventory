@@ -672,6 +672,7 @@ pre code {
   margin-right: -15px;
   margin-left: -15px;
   margin-bottom : -15px;
+
 }
 
 .no-gutters {
@@ -695,6 +696,7 @@ pre code {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
+  
 }
 
 .col {
@@ -9494,6 +9496,20 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
+/*.bxslider li {*/
+/*    display: block;*/
+/*    flex-direction: column;  */   /* 세로 배치 */
+/*    align-items: center;    */    /* 가로 가운데 정렬 */
+/*    text-align: center;     */    /* 텍스트 가운데 정렬 */
+/*    border: 0.5px solid #eee;   */  /* 테두리 */
+/*}
+.slider-card img {
+    width: 100%;  */
+/*   height: 250px;     */     /* 이미지 최대 높이 */
+/*    margin-bottom: 10px;   */     /* 이미지 아래 여백 */   
+/* }
+*/
+
 /* 슬라이더 */
 .bxslider li {
     display: block;
@@ -9506,6 +9522,11 @@ a.text-dark:hover, a.text-dark:focus {
     align-items: center;        /* 가로 가운데 정렬 */
 }
 
+.bx-wrapper{
+	max-width : 1035px !important;
+	margin : 0 auto;
+	
+}
  .slider-card img {
             width: 200px;
             height: 180px;
@@ -9515,9 +9536,8 @@ a.text-dark:hover, a.text-dark:focus {
   
  .slider-card {
             text-align: center;
-            padding: 10px;
-            padding-left: 0.25px;
-  }
+            padding: 8px;
+              }
 
 
 /********** Custom CSS ************/
@@ -9616,7 +9636,6 @@ a.text-dark:hover, a.text-dark:focus {
 
 .cat-item .cat-img img,
 .product-item .product-img img {
-	height: 250px;
 	object-fit: cover;   
   transition: .5s;
 }
@@ -9639,7 +9658,7 @@ a.text-dark:hover, a.text-dark:focus {
 /* --- Scoped: Header category images (6개) 정사각형으로 표시 --- */
 /* 대상: header의 "Categories" 섹션(.container-fluid.pt-5) 내부의 .cat-item들 */
 .container-fluid.pt-5 .cat-item .cat-img {
-  aspect-ratio: 1 / 1 !important;
+  aspect-ratio: 1 / 1 !important; 
   overflow: hidden;
 }
 .container-fluid.pt-5 .cat-item .cat-img img,
@@ -9766,11 +9785,12 @@ a.text-dark:hover, a.text-dark:focus {
 
 
  .category-sidebar{
- 	position:fixed;
+ 	position: sticky;
  	background-color: #f8f9fa;
-    top: 200px;    /* 상단 네비게이션 높이만큼 조정  */
-    max-height: calc(100vh - 600px);  /* 화면 높이에서 상단 네비 높이 제외  */
-    width:180px;
+    top: 70px;    /* 상단 네비게이션 높이만큼 조정  */
+	min-height: 400px;  /*    화면 높이에서 상단 네비 높이 제외  */
+	
+    width:230px;
 }
 
 .category-sidebar h6 {
@@ -9859,22 +9879,6 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* 캔버스가 컨테이너를 완전히 채우도록 강제합니다 (Chart.js는 캔버스 크기를 그대로 따릅니다). */
 .chart-box canvas { width:100% !important; display:block; }
-
-
-/*.bxslider li {*/
-/*    display: block;*/
-/*    flex-direction: column;  */   /* 세로 배치 */
-/*    align-items: center;    */    /* 가로 가운데 정렬 */
-/*    text-align: center;     */    /* 텍스트 가운데 정렬 */
-/*    border: 0.5px solid #eee;   */  /* 테두리 */
-/*}
-.slider-card img {
-    width: 100%;  */
-/*   height: 250px;     */     /* 이미지 최대 높이 */
-/*    margin-bottom: 10px;   */     /* 이미지 아래 여백 */   
-/* }
-*/
-
 
 .item-row {
     cursor: pointer;

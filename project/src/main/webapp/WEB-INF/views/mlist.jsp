@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>고객관리</title>
+<title>채팅</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <!-- Favicon -->
@@ -44,8 +44,11 @@
 			<p>
 				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
 			</p>
-			<a href="${pageContext.request.contextPath}/login" class="btn-login"
-				style="display: block; text-decoration: none;">로그인</a>
+			<%-- 현재 페이지 이름만 전달 --%>
+			<a href="login?redirectURL=mlist" class="btn-login"
+				style="display: block; text-decoration: none;">로그인</a> <a
+				href="${pageContext.request.contextPath}/" class="btn-home"
+				style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
@@ -54,40 +57,38 @@
 		<!-- 기존 관리자 페이지 내용 -->
 
 		<!-- Topbar -->
-		<div class="row align-items-center py-3 px-xl-5 bg-light">
-			<div class="col-lg-3 d-none d-lg-block">
-				<a href="/" class="text-decoration-none"> <img
-					src="img/logo.png" class="logo" />
+	<div class="row align-items-center py-3 px-xl-5 bg-light">
+			<div class="col-lg-3 offset-lg-1 d-none d-lg-block">
+				<a href="/" class="text-decoration-none"> 
+				<img src="img/logo.png" class="logo" />
 				</a>
 			</div>
-			<div class="col-lg-6 col-6 text-left">
-				<form action="">
-					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for products">
-						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
-								<i class="fa fa-search"></i>
-							</span>
+		 <div class="ml-auto d-flex align-items-center gap-2">
+							<!-- 회원 로그인 후   -->
+							<c:if test="${not empty sessionScope.loginUser}">
+								<span class="nav-item nav-link">안녕하세요,
+									${sessionScope.loginUser.name}님!</span>
+
+
+								<c:if test="${sessionScope.loginRole == 0}">
+									<a href="mypage" class="nav-item nav-link">마이페이지</a>
+								</c:if>
+
+								<c:if test="${sessionScope.loginRole == 1}">
+									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+								</c:if>
+								<!-- 로그아웃 링크 -->
+								<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+							</c:if>
 						</div>
 					</div>
-				</form>
-			</div>
-			<div class="col-lg-3 col-6 text-right">
-				<a href="#" class="btn border"><i
-					class="fas fa-heart text-primary"></i> <span class="badge">0</span></a>
-				<a href="cart" class="btn border"><i
-					class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span></a>
-			</div>
-		</div>
-
 		<!-- Main Layout -->
 		<div class="container-fluid">
 			<div class="row px-xl-5">
-
-				<div class="col-lg-2">
-					<!-- Sidebar -->
-					<nav class="category-sidebar">
+				<!-- LEFT SIDEBAR (PC ONLY) -->
+				<div class="col-lg-2 d-none d-lg-block">
+					<nav class="category-sidebar" id="mainSidebar">
 						<h6>관리자 페이지</h6>
 						<ul class="nav flex-column">
 							<li class="nav-item"><a href="dashboard" class="nav-link">대쉬보드</a></li>
@@ -95,7 +96,7 @@
 							<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
 							<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
 							<li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
-							<li class="nav-item"><a href="mlist" class="nav-link active">고객관리</a></li>
+							<li class="nav-item"><a href="mlist" class="nav-link active">채팅관리</a></li>
 							<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
 						</ul>
 					</nav>
@@ -149,84 +150,10 @@
 			<!-- END row -->
 		</div>
 		<!-- END container-fluid -->
-
-		<!-- Footer -->
-		<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-			<div class="row px-xl-5 pt-5">
-				<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-					<a href="#" class="text-decoration-none">
-						<h1 class="mb-4 display-5 font-weight-semi-bold">
-							<span
-								class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-						</h1>
-					</a>
-					<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
-						ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-					<p class="mb-2">
-						<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
-						New York, USA
-					</p>
-					<p class="mb-2">
-						<i class="fa fa-envelope text-primary mr-3"></i>info@example.com
-					</p>
-					<p class="mb-0">
-						<i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890
-					</p>
-				</div>
-
-				<div class="col-lg-8 col-md-12">
-					<div class="row">
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-							<div class="d-flex flex-column justify-content-start">
-								<a class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Home</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Checkout</a> <a
-									class="text-dark" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Contact Us</a>
-							</div>
-						</div>
-
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-							<div class="d-flex flex-column justify-content-start">
-								<a class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Home</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Our Shop</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Shopping Cart</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Checkout</a> <a
-									class="text-dark" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Contact Us</a>
-							</div>
-						</div>
-
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-							<form action="">
-								<input type="text" class="form-control mb-2"
-									placeholder="Your Name" required> <input type="email"
-									class="form-control mb-2" placeholder="Your Email" required>
-								<button class="btn btn-primary btn-block" type="submit">Subscribe</button>
-							</form>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
 	</div>
+
+	<!-- Footer -->
+
 
 	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

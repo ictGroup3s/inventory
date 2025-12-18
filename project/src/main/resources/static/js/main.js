@@ -23,8 +23,8 @@
 			minSlides: 2,      // 최소 보여줄 슬라이드
 			maxSlides: 4,      // 최대 보여줄 슬라이드
 			slideWidth: 250,   // 슬라이드 개별 너비
-			slideMargin: 10    // 슬라이드 간격
-		});
+			slideMargin: 10,    // 슬라이드 간격
+					});
 
 		// 상단으로 이동 버튼
 		$(window).scroll(function() {
@@ -308,11 +308,34 @@
 	function validateFields() {
 		let allValid = true;
 
+		// ✅ 함수 호출 시점에 필드 다시 찾기
+		const fields = $(".required-field");
+
+		// item 페이지의 수정 모드일 때만 체크
+		const isItemUpdateMode = $('input[name="item_no"]').length > 0
+			&& $('input[name="item_no"]').val() !== '';
+
 		fields.each(function() {
 			const el = $(this);
-			const msg = el.closest("td").find(".error-msg");
+			const td = el.closest("td");
+			const msg = td.find(".error-msg");
 
-			if (el.val().trim() === "") {
+			// item 수정 모드일 때 이미지 필드만 건너뛰기
+			if (isItemUpdateMode && el.attr('name') === 'item_imgFile') {
+				el.removeClass("input-error");
+				msg.addClass("d-none");
+				return true;
+			}
+
+			// 빈 값 체크
+			let isEmpty = false;
+			if (el.attr('type') === 'file') {
+				isEmpty = el.get(0).files.length === 0;
+			} else {
+				isEmpty = el.val() === null || el.val().toString().trim() === "";
+			}
+
+			if (isEmpty) {
 				el.addClass("input-error");
 				msg.removeClass("d-none");
 				allValid = false;
@@ -325,7 +348,6 @@
 		return allValid;
 	}
 
-
 	// 입력 시 해당 필드의 에러만 지움 (전체 검증 X)
 	$(document).on("input change", ".required-field", function() {
 		const el = $(this);
@@ -337,24 +359,24 @@
 		}
 	});
 
-	// 버튼 클릭 시 최종 검증
-	$(".submit-btn").on("click", function(e) {
-		// 비활성화된 버튼이면 종료
-		if ($(this).prop('disabled')) {
-			e.preventDefault();
-			return false;
-		}
+	// 버튼 클릭 시 최종 검증 - ✅ $(document).on으로 변경
+	$(document).on("click", ".submit-btn", function(e) {
+	    // 비활성화된 버튼이면 종료
+	    if ($(this).prop('disabled')) {
+	        e.preventDefault();
+	        return false;
+	    }
 
-		// 유효성 검사
-		if (!validateFields()) {
-			e.preventDefault();
-			return;
-		}
+	    // 유효성 검사
+	    if (!validateFields()) {
+	        e.preventDefault();
+	        return;
+	    }
 
-		// 정상 submit → formaction 적용
-		const form = $(this).closest("form");
-		form.attr("action", $(this).attr("formaction") || form.attr("action"));
-		form.submit();
+	    // 정상 submit → formaction 적용
+	    const form = $(this).closest("form");
+	    form.attr("action", $(this).attr("formaction") || form.attr("action"));
+	    form.submit();
 	});
 
 	// JS (admin-common.js에 추가)

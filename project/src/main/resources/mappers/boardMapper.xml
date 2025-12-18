@@ -5,19 +5,26 @@
 
 <mapper namespace="boardMapper">
 
-    <!-- 목록 조회 -->
+    <!-- ===================== -->
+    <!-- 1. 게시글 목록 (전체) -->
+    <!-- ===================== -->
     <select id="getBoardList" resultType="com.example.model.vo.BoardVO">
         SELECT
             BOARD_NO AS board_no,
             TITLE AS title,
             B_CONTENT AS b_content,
             TO_CHAR(B_DATE,'YYYY-MM-DD') AS b_date,
-            CUSTOMER_ID AS customer_id
+            CUSTOMER_ID AS customer_id,
+            BOARD_TYPE AS board_type,
+            FAQ_CATEGORY AS faq_category
         FROM BOARD
+        WHERE BOARD_TYPE = 'NOTICE'
         ORDER BY BOARD_NO DESC
     </select>
 
-    <!-- 🔥 상세 조회 -->
+    <!-- ===================== -->
+    <!-- 2. 게시글 상세 조회 -->
+    <!-- ===================== -->
     <select id="getBoardDetail"
             parameterType="int"
             resultType="com.example.model.vo.BoardVO">
@@ -26,17 +33,149 @@
             TITLE AS title,
             B_CONTENT AS b_content,
             TO_CHAR(B_DATE,'YYYY-MM-DD') AS b_date,
-            CUSTOMER_ID AS customer_id
+            CUSTOMER_ID AS customer_id,
+            BOARD_TYPE AS board_type,
+            FAQ_CATEGORY AS faq_category
         FROM BOARD
         WHERE BOARD_NO = #{value}
+          AND BOARD_TYPE = 'NOTICE'
     </select>
 
-    <!-- 글 등록 -->
+    <!-- ===================== -->
+    <!-- 3. 글 등록 -->
+    <!-- ===================== -->
     <insert id="insertBoard" parameterType="com.example.model.vo.BoardVO">
         INSERT INTO BOARD
-            (BOARD_NO, TITLE, B_CONTENT, B_DATE, CUSTOMER_ID)
+            (BOARD_NO, TITLE, B_CONTENT, B_DATE, CUSTOMER_ID, BOARD_TYPE, FAQ_CATEGORY)
         VALUES
-            (BOARD_SEQ.NEXTVAL, #{title}, #{b_content}, SYSDATE, #{customer_id})
+            (BOARD_SEQ.NEXTVAL, #{title}, #{b_content}, SYSDATE, #{customer_id}, 'NOTICE', NULL)
     </insert>
+
+    <!-- ===================== -->
+    <!-- 4. 글 수정 -->
+    <!-- ===================== -->
+    <update id="updateBoard" parameterType="com.example.model.vo.BoardVO">
+        UPDATE BOARD
+        SET
+            TITLE = #{title},
+            B_CONTENT = #{b_content}
+        WHERE BOARD_NO = #{board_no}
+          AND BOARD_TYPE = 'NOTICE'
+    </update>
+
+    <!-- ===================== -->
+    <!-- 5. 글 삭제 -->
+    <!-- ===================== -->
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM BOARD
+        WHERE BOARD_NO = #{value}
+          AND BOARD_TYPE = 'NOTICE'
+    </delete>
+
+    <!-- ===================== -->
+    <!-- 6. 페이징 목록 조회 -->
+    <!-- ===================== -->
+    <select id="getBoardListPaging"
+            parameterType="map"
+            resultType="com.example.model.vo.BoardVO">
+        SELECT *
+        FROM (
+            SELECT
+                ROW_NUMBER() OVER (ORDER BY BOARD_NO DESC) rn,
+                BOARD_NO AS board_no,
+                TITLE AS title,
+                B_CONTENT AS b_content,
+                TO_CHAR(B_DATE,'YYYY-MM-DD') AS b_date,
+                CUSTOMER_ID AS customer_id,
+                BOARD_TYPE AS board_type,
+                FAQ_CATEGORY AS faq_category
+            FROM BOARD
+            WHERE BOARD_TYPE = 'NOTICE'
+        )
+        WHERE rn BETWEEN #{start} AND #{end}
+    </select>
+
+    <!-- ===================== -->
+    <!-- 7. 게시글 전체 개수 -->
+    <!-- ===================== -->
+    <select id="getBoardCount" resultType="int">
+        SELECT COUNT(*) FROM BOARD
+        WHERE BOARD_TYPE = 'NOTICE'
+    </select>
+
+
+    <!-- ===================================== -->
+    <!-- FAQ 전용 쿼리 -->
+    <!-- ===================================== -->
+
+    <!-- 8. FAQ 페이징 목록 -->
+    <select id="getFaqListPaging"
+            parameterType="map"
+            resultType="com.example.model.vo.BoardVO">
+        SELECT *
+        FROM (
+            SELECT
+                ROW_NUMBER() OVER (ORDER BY BOARD_NO DESC) rn,
+                BOARD_NO AS board_no,
+                TITLE AS title,
+                B_CONTENT AS b_content,
+                TO_CHAR(B_DATE,'YYYY-MM-DD') AS b_date,
+                CUSTOMER_ID AS customer_id,
+                BOARD_TYPE AS board_type,
+                FAQ_CATEGORY AS faq_category
+            FROM BOARD
+            WHERE BOARD_TYPE = 'FAQ'
+        )
+        WHERE rn BETWEEN #{start} AND #{end}
+    </select>
+
+    <!-- 9. FAQ 전체 개수 -->
+    <select id="getFaqCount" resultType="int">
+        SELECT COUNT(*) FROM BOARD
+        WHERE BOARD_TYPE = 'FAQ'
+    </select>
+
+    <!-- 10. FAQ 상세 -->
+    <select id="getFaqDetail"
+            parameterType="int"
+            resultType="com.example.model.vo.BoardVO">
+        SELECT
+            BOARD_NO AS board_no,
+            TITLE AS title,
+            B_CONTENT AS b_content,
+            TO_CHAR(B_DATE,'YYYY-MM-DD') AS b_date,
+            CUSTOMER_ID AS customer_id,
+            BOARD_TYPE AS board_type,
+            FAQ_CATEGORY AS faq_category
+        FROM BOARD
+        WHERE BOARD_NO = #{value}
+          AND BOARD_TYPE = 'FAQ'
+    </select>
+
+    <!-- 11. FAQ 등록 -->
+    <insert id="insertFaq" parameterType="com.example.model.vo.BoardVO">
+        INSERT INTO BOARD
+            (BOARD_NO, TITLE, B_CONTENT, B_DATE, CUSTOMER_ID, BOARD_TYPE, FAQ_CATEGORY)
+        VALUES
+            (BOARD_SEQ.NEXTVAL, #{title}, #{b_content}, SYSDATE, #{customer_id}, 'FAQ', #{faq_category})
+    </insert>
+
+    <!-- 12. FAQ 수정 -->
+    <update id="updateFaq" parameterType="com.example.model.vo.BoardVO">
+        UPDATE BOARD
+        SET
+            TITLE = #{title},
+            B_CONTENT = #{b_content},
+            FAQ_CATEGORY = #{faq_category}
+        WHERE BOARD_NO = #{board_no}
+          AND BOARD_TYPE = 'FAQ'
+    </update>
+
+    <!-- 13. FAQ 삭제 -->
+    <delete id="deleteFaq" parameterType="int">
+        DELETE FROM BOARD
+        WHERE BOARD_NO = #{value}
+          AND BOARD_TYPE = 'FAQ'
+    </delete>
 
 </mapper>

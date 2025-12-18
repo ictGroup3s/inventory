@@ -20,6 +20,12 @@
 	        ) as item_names
 	    FROM orders o
 	    WHERE 1=1
+	    
+	    <!-- ✅ 검색 조건이 하나도 없으면 최근 1개월만 -->
+	    <if test="(orderNo == null or orderNo == '') and (customerName == null or customerName == '') and (status == null or status == '') and (startDate == null or startDate == '') and (endDate == null or endDate == '')">
+	        AND o.order_date >= ADD_MONTHS(SYSDATE, -1)
+	    </if>
+	    
 	    <if test="orderNo != null and orderNo != ''">
 	        AND o.order_no = #{orderNo}
 	    </if>
@@ -37,6 +43,7 @@
 	    </if>
 	    ORDER BY o.order_date DESC
 	</select>
+	
     <!-- 주문 단건 조회 -->
     <select id="getOrder" resultType="map" parameterType="int">
         SELECT 
@@ -141,5 +148,69 @@
 	    SET stock_cnt = stock_cnt - #{item_cnt}
 	    WHERE item_no = #{item_no}
 	</update>
+	
+	<!-- 취소/반품 요청 등록 -->
+	<insert id="insertCR" parameterType="map">
+	    INSERT INTO cr (
+	        cr_no,
+	        order_no,
+	        detail_no,
+	        type,
+	        return_cnt,
+	        status,
+	        reason,
+	        re_date
+	    ) VALUES (
+	        cr_seq.NEXTVAL,
+	        #{order_no},
+	        #{detail_no},
+	        #{type},
+	        #{return_cnt},
+	        #{status},
+	        #{reason},
+	        SYSDATE
+	    )
+	</insert>
+	
+	<!-- 취소/반품 요청 조회 (주문별) -->
+	<select id="getCRByOrder" resultType="map" parameterType="int">
+	    SELECT 
+	        cr.cr_no,
+	        cr.order_no,
+	        cr.detail_no,
+	        cr.type,
+	        cr.return_cnt,
+	        cr.status,
+	        cr.reason,
+	        TO_CHAR(cr.re_date, 'YYYY-MM-DD HH24:MI') as re_date,
+	        p.item_name
+	    FROM cr
+	    JOIN order_detail od ON cr.detail_no = od.detail_no
+	    JOIN product p ON od.item_no = p.item_no
+	    WHERE cr.order_no = #{orderNo}
+	    ORDER BY cr.re_date DESC
+	</select>
+	
+	<!-- 취소/반품 상태 변경 -->
+	<update id="updateCRStatus" parameterType="map">
+	    UPDATE cr
+	    SET status = #{status}
+	    WHERE cr_no = #{cr_no}
+	</update>
+	
+	<!-- CR 상태 변경 (detail_no 기준) -->
+	<update id="updateCRStatusByDetail" parameterType="map">
+	    UPDATE cr
+	    SET status = #{status}
+	    WHERE detail_no = #{detail_no}
+	    AND status = '승인'
+	</update>
 
+	<!-- CR 상태 변경 (order_no 기준 - 전체 철회) -->
+	<update id="updateCRStatusByOrder" parameterType="map">
+	    UPDATE cr
+	    SET status = #{status}
+	    WHERE order_no = #{order_no}
+	    AND status = '승인'
+	</update>
 </mapper>
