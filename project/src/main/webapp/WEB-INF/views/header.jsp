@@ -30,7 +30,8 @@
 <!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
@@ -40,14 +41,17 @@
 <body>
 	<!-- Topbar Start -->
 
-	<div class="row align-items-center py-3 px-xl-5" style="margin-left:20px;">
+	<div class="row align-items-center py-3 px-xl-5"
+		style="margin-left: 20px;">
 		<div class="col-lg-3 d-none d-lg-block">
-		<a href="#" class="text-decoration-none"> <img
-				src='../img/logo.png' class='logo' /> </a>
+			<a href="#" class="text-decoration-none"> <img
+				src='../img/logo.png' class='logo' />
+			</a>
 		</div>
-	<!--  <div class="col-lg-6 col-6 text-left">-->	
+		<!--  <div class="col-lg-6 col-6 text-left">-->
 		<div class="col-lg-6 col-12 mx-auto">
-			<form action="selectall" method="get" style="margin-left:-60px; margin-right:110px;">
+			<form action="selectall" method="get"
+				style="margin-left: -60px; margin-right: 110px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
@@ -60,8 +64,8 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right" style="margin-left:-120px;">
-		 <a href="cart" class="btn border"> <i
+		<div class="col-lg-3 col-6 text-right" style="margin-left: -120px;">
+			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -74,9 +78,9 @@
 	<div class="container-fluid mb-5 ml-4">
 		<div class="row border-top">
 			<div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar" style="margin-left:-40px;">
-                <h6 class="p-3">MENU</h6>
-                   <ul class="nav flex-column">
+				<nav class="category-sidebar" style="margin-left: -40px;">
+					<h6 class="p-3">MENU</h6>
+					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall"
 							class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이
@@ -91,7 +95,7 @@
 						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
 								．음료</a></li>
 					</ul>
-                </nav>
+				</nav>
 			</div>
 			<div class="col-lg-9">
 				<nav
@@ -120,6 +124,7 @@
                         </div> -->
 					<!--  	<div class="navbar-nav py-0" style="margin-left: 620px;">-->
 							<div class="navbar-nav ml-auto py-0 text-right">
+
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
 								<a href="login" class="nav-item nav-link">로그인</a>
@@ -203,12 +208,12 @@
 	<!-- Navbar End -->
 
 	<!-- Offer Start -->
-	 <div class="container-fluid offer pt-1"  
-	 style="width:1200px;  margin-left:230px;"> 
-		<div class="row px-xl-4" >
-			<div class="col-md-6 pb-4" ">
+	<div class="container-fluid offer pt-1"
+		style="width: 1200px; margin-left: 230px;">
+		<div class="row px-xl-4">
+			<div class="col-md-6 pb-4"">
 				<div
-					class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5" >
+					class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-2 px-5">
 					<img src="img/bingsu.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">season off</h5>
@@ -221,7 +226,7 @@
 			</div>
 			<div class="col-md-6 pb-4">
 				<div
-					class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5" >
+					class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-2 px-5">
 					<img src="img/boong1.png" alt="">
 					<div class="position-relative" style="z-index: 1;">
 						<h5 class="text-uppercase text-primary mb-3">new arrival</h5>
@@ -236,13 +241,14 @@
 	<!-- Offer End -->
 
 	<!-- Images Start -->
-<div class="container-fluid pt-5" style="width:1200px; margin-left:220px;">
+	<div class="container-fluid pt-5"
+		style="width: 1200px; margin-left: 220px;">
 		<div class="row px-xl-5 pb-3">
 			<div class="col-lg-4 col-md-6 pb-1">
 				<div class="cat-item d-flex flex-column  mb-4">
 					<a href="selectGui"
-						class="cat-img position-relative overflow-hidden mb-3"> 
-				<img class="img-fluid cat-img-fill" src="img/guizzim.png" alt="">
+						class="cat-img position-relative overflow-hidden mb-3"> <img
+						class="img-fluid cat-img-fill" src="img/guizzim.png" alt="">
 					</a>
 					<h5>구이 ．찜 ．볶음</h5>
 				</div>
@@ -296,21 +302,25 @@
 	</div>
 	<!-- Images End -->
 
-	 <!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
-		<div class="container-fluid" style="width:1500px; padding-left:350px; margin-bottom:0px;">
-			<h5 align="center">추천상품</h5>
-			<ul class="bxslider">
-				<c:forEach var="rp" items="${randomProducts}">  
-               <li>
-                    <div class="slider-card" data-item-no="${rp.item_no}">
-                        <a href="detail?item_no=${rp.item_no}">
-                            <img src="/img/product/${rp.item_img}" alt="${rp.item_name}" class="d-block mx-auto"/>
-                        </a>
-                        <h6 class="slider-title mt-2">${rp.item_name}</h6>
+	<!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
+	<div class="container-fluid"
+		style="width: 1500px; padding-left: 350px; margin-bottom: 0px;">
+		<h5 align="center">추천상품</h5>
+		<ul class="bxslider">
+			<c:forEach var="rp" items="${randomProducts}">
+				<li>
+					<div class="slider-card" data-item-no="${rp.item_no}">
+						<a href="detail?item_no=${rp.item_no}"> <img
+							src="/img/product/${rp.item_img}" alt="${rp.item_name}"
+							class="d-block mx-auto" />
+						</a>
+						<h6 class="slider-title mt-2">${rp.item_name}</h6>
 
-                        <!-- 평점 리뷰 적용 -->
-						<c:set var="reviewCnt" value="${empty rp.review_cnt ? 0 : rp.review_cnt}" />
-						<c:set var="rating" value="${empty rp.avg_rating ? 0 : rp.avg_rating}" />
+						<!-- 평점 리뷰 적용 -->
+						<c:set var="reviewCnt"
+							value="${empty rp.review_cnt ? 0 : rp.review_cnt}" />
+						<c:set var="rating"
+							value="${empty rp.avg_rating ? 0 : rp.avg_rating}" />
 						<c:if test="${rating > 0 || reviewCnt > 0}">
 							<div class="mb-2" style="font-size: 0.9rem; color: #666;">
 								<c:choose>
@@ -321,38 +331,50 @@
 										<i class="far fa-heart" style="color: #D19C97;"></i>
 									</c:otherwise>
 								</c:choose>
-								<fmt:formatNumber value="${rating}" pattern="#.0"/>
+								<fmt:formatNumber value="${rating}" pattern="#.0" />
 								<c:if test="${reviewCnt > 0}"> (${reviewCnt}개 리뷰)</c:if>
 							</div>
 						</c:if>
 
-                        <c:choose>
-                            <c:when test="${not empty rp.dis_rate and rp.dis_rate > 0}">
-                                <c:set var="discounted" value="${rp.sales_p * (100 - rp.dis_rate) / 100}" />
-                                <div class="d-flex flex-column">
-                                    <h6 class="text-muted mb-0" style="font-size: 0.8rem;">
-                                        <del><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</del>
-                                    </h6>
-                                    <fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
-                                    <h6><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h6>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <h6><fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />원</h6>
-                            </c:otherwise>
-                        </c:choose>
-                        
-                    </div>
-               </li>
-            </c:forEach>
-			</ul>      
-		</div>
+						<c:choose>
+							<c:when test="${not empty rp.dis_rate and rp.dis_rate > 0}">
+								<c:set var="discounted"
+									value="${rp.sales_p * (100 - rp.dis_rate) / 100}" />
+								<div class="d-flex flex-column">
+									<h6 class="text-muted mb-0" style="font-size: 0.8rem;">
+										<del>
+											<fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />
+											원
+										</del>
+									</h6>
+									<fmt:parseNumber var="flooredPrice" value="${discounted / 10}"
+										integerOnly="true" />
+									<h6>
+										<fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />
+										원
+									</h6>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<h6>
+									<fmt:formatNumber value="${rp.sales_p}" pattern="#,###" />
+									원
+								</h6>
+							</c:otherwise>
+						</c:choose>
+
+					</div>
+				</li>
+			</c:forEach>
+		</ul>
+	</div>
 	</div>
 	<!-- Image Slider End -->
 
-  <!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 	style="width:1400px; margin-left:150px;" >
-		<div class="row px-xl-5 pt-3" style="margin-left:-100px;">
+	<!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2"
+		style="width: 1400px; margin-left: 150px;">
+		<div class="row px-xl-5 pt-3" style="margin-left: -100px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -404,10 +426,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="row border-top border-light py-4" style="margin-left:-60px; margin-right:60px;">
+		<div class="row border-top border-light py-4"
+			style="margin-left: -60px; margin-right: 60px;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
-						&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
 						Site Name</a>. All Rights Reserved. Designed by <a
 						class="text-dark font-weight-semi-bold"
 						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
@@ -420,7 +443,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- footer end -->
 
 
@@ -469,7 +492,8 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
 
 	<!-- Contact JS -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
@@ -487,7 +511,7 @@
 
 	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
 	<script src="/js/main.js" defer></script>
-	<!-- 리뷰 js -->	
+	<!-- 리뷰 js -->
 	<script src="js/Review.js"></script>
 
 </body>
