@@ -30,22 +30,21 @@
 
 <body>
 
-	<!-- ================= 상단바 ================= -->
-	<div class="row align-items-center py-3 px-xl-5 bg-light">
+	<!-- Topbar -->
+	<div class="row align-items-center py-3 px-xl-4" style="margin-left:70px;">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img src="img/logo.png"
 				class="logo" />
 			</a>
 		</div>
-		<div class="col-lg-6 col-6 text-left">
-			<form action="">
+			<div class="col-lg-6 col-6 text-left">
+			<form action="selectall" method="get" style="margin-left:-20px; margin-right:90px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<button class="input-group-text bg-transparent text-primary"
-							type="submit">
-							<i class="fa fa-search"></i>
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
 						</button>
 					</div>
 				</div>
@@ -57,42 +56,39 @@
 			</a>
 		</div>
 	</div>
+	<div class="d-flex justify-content-end align-items-center gap-2"style="margin-right:50px;">
+							<!-- 로그인전 -->
+							<c:if test="${empty sessionScope.loginUser}">
+								<a href="login" class="nav-item nav-link " style="color:black;">로그인</a>
+								<a href="register" class="nav-item nav-link"style="color:black;">회원가입</a>
+								<a href="board" class="nav-item nav-link"style="color:black;">고객센터</a>
+							</c:if>
+							
+							<!-- 회원 로그인 후   -->
+							<c:if test="${not empty sessionScope.loginUser}">
+								<span class="nav-item nav-link">안녕하세요,
+									${sessionScope.loginUser.name}님!</span>
 
-<!-- ================= 상단바 ================= -->
-<div class="row align-items-center py-3 px-xl-5 bg-light">
-    <div class="col-lg-3 d-none d-lg-block">
-        <a href="/" class="text-decoration-none">
-            <img src="img/logo.png" class="logo"/>
-        </a>
-    </div>
-    <div class="col-lg-6 col-6 text-left">
-        <form action="">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for products">
-                <div class="input-group-append">
-                    <span class="input-group-text bg-transparent text-primary">
-                        <i class="fa fa-search"></i>
-                    </span>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="col-lg-3 col-6 text-right">
-        <a href="#" class="btn border">
-            <i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-        </a>
-        <a href="cart" class="btn border">
-            <i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
-        </a>
-    </div>
-</div>
 
-<!-- ================= 메인 ================= -->
+								<c:if test="${sessionScope.loginRole == 0}">
+									<a href="mypage" class="nav-item nav-link">마이페이지</a>
+								</c:if>
+
+								<c:if test="${sessionScope.loginRole == 1}">
+									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+								</c:if>
+								<!-- 로그아웃 링크 -->
+								<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+							</c:if>
+						</div>
+					</div>
+	<!-- Main Layout -->
 <div class="container-fluid">
-<div class="row px-xl-2">
-
+<div class="row px-xl-5">
+<div class="col-lg-2">
 <!-- 사이드바 -->
-<nav class="category-sidebar">
+<nav class="category-sidebar" style="margin-left:-50px;">
     <h6 class="p-3">고객센터</h6>
     <ul class="nav flex-column">
         <li class="nav-item"><a href="board" class="nav-link active" id="noticeLink">공지사항</a></li>
@@ -103,10 +99,10 @@
 
     </ul>
 </nav>
-
+</div>
 <!-- 콘텐츠 -->
-<div class="col-lg-10 dashboard-content">
-<h3 class="mb-4">공지사항 게시판</h3>
+<div class="col-lg-10 dashboard-content pt-5">
+
 
 <div id="contentArea">
 
