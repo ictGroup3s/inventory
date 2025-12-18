@@ -237,8 +237,8 @@
 									</div>
 									<!-- 상품 목록 테이블: 가로 전체(w-100) -->
 									<div class="stock-table-wrapper">
-										<table class="table table-bordered w-100 stock-table">
-											<thead class="thead-light text-center">
+										<table class="stock-table">
+											<thead class="thead-light">
 												<tr>
 													<th class="item_no">상품코드</th>
 													<th>상품명</th>

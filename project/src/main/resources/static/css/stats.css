@@ -699,24 +699,27 @@ input[type="file"].form-control::file-selector-button:hover {
 
 /* 상품 목록 테이블 */
 .stock-table {
-	border-collapse: separate;
-	border-spacing: 0;
-	border-radius: 15px;
-	overflow: hidden;
-	box-shadow: 0 4px 20px var(--shadow);
-	text-align: center;
+	border-collapse: separate; /* sticky 위해 필요 */
+    border-spacing: 0;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    table-layout: fixed;       /* 열 균등 분배 */
 }
 
 .stock-table thead.thead-light th {
-	background: var(--gradient2) !important;
-	color: #fff !important;
-	font-weight: 600;
-	padding: 14px 18px;
-	border: none;
-	font-size: 13px;
-	text-transform: uppercase;
-	letter-spacing: 0.5px;
-	text-align: center;
+	position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    background: var(--gradient2) !important;
+    color: #fff !important;
+    font-weight: 600;
+    padding: 14px 18px;
+    border: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
 }
 
 .table .thead-light th {
@@ -768,10 +771,19 @@ input[type="file"].form-control::file-selector-button:hover {
 /* 테이블 래퍼 */
 .stock-table-wrapper {
 	border-radius: 15px;
-	overflow: hidden;
-	box-shadow: 0 4px 20px var(--shadow);
+    box-shadow: 0 4px 20px var(--shadow);
+    max-height: 600px;        /* 스크롤 높이 */
+    overflow-y: auto;         /* 세로 스크롤 */
+    overflow-x: hidden;
 }
 
+.item_no{
+	width:86px;
+}
+
+.item_name{
+	width: 210px;
+}
 /* 상품 이미지 미리보기 */
 #preview {
 	border-radius: 20px;
@@ -955,41 +967,3 @@ h4.mb-0 {
 	transform: translateX(-50%) translateY(-10px);
 }
 
-/* ===== 상품 목록 테이블 스크롤 ===== */
-.stock-table-wrapper {
-	border-radius: 15px;
-	overflow: hidden;
-	box-shadow: 0 4px 20px var(--shadow);
-	max-height: 600px;
-	overflow-y: auto;
-}
-
-.stock-table-wrapper::-webkit-scrollbar {
-	width: 8px;
-}
-
-.stock-table-wrapper::-webkit-scrollbar-track {
-	background: #f1f1f1;
-	border-radius: 10px;
-}
-
-.stock-table-wrapper::-webkit-scrollbar-thumb {
-	background: var(--primary);
-	border-radius: 10px;
-}
-
-.stock-table-wrapper::-webkit-scrollbar-thumb:hover {
-	background: var(--primary-dark);
-}
-
-/* 테이블 헤더 고정 */
-.stock-table thead th {
-	position: sticky;
-	top: 0;
-	z-index: 10;
-}
-
-.stock-table {
-	table-layout: fixed;
-	margin-bottom: 0;
-}
