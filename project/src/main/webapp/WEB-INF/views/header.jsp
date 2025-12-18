@@ -110,19 +110,7 @@
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
-						<!-- <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">메인</a>
-                            <a href="shop" class="nav-item nav-link">상품</a>
-                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="cart" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout" class="dropdown-item">Checkout</a>
-                                </div>
-                            </div>
-                             
-                        </div> -->
-					<!--  	<div class="navbar-nav py-0" style="margin-left: 620px;">-->
+
 							<div class="navbar-nav ml-auto py-0 text-right">
 
 							<!-- 로그인전 -->

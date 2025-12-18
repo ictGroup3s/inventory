@@ -66,35 +66,32 @@
 		<!-- 기존 관리자 페이지 내용 -->
 
 		<!-- Topbar -->
-		<div class="row align-items-center py-3 px-xl-5 bg-light">
-			<div class="col-lg-3 d-none d-lg-block">
-				<a href="/" class="text-decoration-none"> <img
-					src="img/logo.png" class="logo" />
+	<div class="row align-items-center py-3 px-xl-5 bg-light">
+			<div class="col-lg-3 offset-lg-1 d-none d-lg-block">
+				<a href="/" class="text-decoration-none"> 
+				<img src="img/logo.png" class="logo" />
 				</a>
 			</div>
-			<div class="col-lg-6 col-6 text-left">
-				<form action="selectall" method="get">
-					<div class="input-group">
-						<input type="text" name="q" class="form-control"
-							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
-						<div class="input-group-append">
-							<button class="input-group-text bg-transparent text-primary"
-								type="submit">
-								<i class="fa fa-search"></i>
-							</button>
+		 <div class="ml-auto d-flex align-items-center gap-2">
+							<!-- 회원 로그인 후   -->
+							<c:if test="${not empty sessionScope.loginUser}">
+								<span class="nav-item nav-link">안녕하세요,
+									${sessionScope.loginUser.name}님!</span>
+
+
+								<c:if test="${sessionScope.loginRole == 0}">
+									<a href="mypage" class="nav-item nav-link">마이페이지</a>
+								</c:if>
+
+								<c:if test="${sessionScope.loginRole == 1}">
+									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+								</c:if>
+								<!-- 로그아웃 링크 -->
+								<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+							</c:if>
 						</div>
 					</div>
-				</form>
-			</div>
-			<div class="col-lg-3 col-6 text-right">
-				<a href="#" class="btn border"> <i
-					class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-				</a> <a href="cart" class="btn border"> <i
-					class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
-				</a>
-			</div>
-		</div>
-
 		<!-- Main Layout -->
 		<div class="container-fluid">
 			<div class="row px-xl-5">
@@ -308,52 +305,7 @@
 				</div>
 			</div>
 
-			<!-- Footer -->
-			<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-				<div class="row px-xl-5 pt-5">
-					<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-						<a href="#" class="text-decoration-none">
-							<h1 class="mb-4 display-5 font-weight-semi-bold">
-								<span
-									class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-							</h1>
-						</a>
-						<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
-							ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-					</div>
-					<div class="col-lg-8 col-md-12">
-						<div class="row">
-							<div class="col-md-4 mb-5">
-								<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-								<div class="d-flex flex-column justify-content-start">
-									<a class="text-dark mb-2" href="#"><i
-										class="fa fa-angle-right mr-2"></i>Home</a> <a
-										class="text-dark mb-2" href="#"><i
-										class="fa fa-angle-right mr-2"></i>Our Shop</a>
-								</div>
-							</div>
-							<div class="col-md-4 mb-5">
-								<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-								<div class="d-flex flex-column justify-content-start">
-									<a class="text-dark mb-2" href="#"><i
-										class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-										class="text-dark mb-2" href="#"><i
-										class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-								</div>
-							</div>
-							<div class="col-md-4 mb-5">
-								<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-								<form action="">
-									<input type="text" class="form-control mb-2"
-										placeholder="Your Name" required> <input type="email"
-										class="form-control mb-2" placeholder="Your Email" required>
-									<button class="btn btn-primary btn-block" type="submit">Subscribe</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+
 		</div>
 		<script
 			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

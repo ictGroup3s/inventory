@@ -78,6 +78,7 @@
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
 					<a href="/" class="text-decoration-none d-block d-lg-none"> <img
 						src="\img\logo.png" class='logo' />
+						
 					</a>
 					<button type="button" class="navbar-toggler" data-toggle="collapse"
 						data-target="#navbarCollapse">
