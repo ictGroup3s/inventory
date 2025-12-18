@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%-- 가격,숫자 포맷 --%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,14 +40,16 @@
 
 <body>
 
-	<div class="row align-items-center py-3 px-xl-5" style="margin-left:20px;">
+	<div class="row align-items-center py-3 px-xl-5"
+		style="margin-left: 20px;">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none"> <img
 				src="\img\logo.png" class='logo' />
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="selectall" method="get" style="margin-left:30px; margin-right:90px;">
+			<form action="selectall" method="get"
+				style="margin-left: 30px; margin-right: 90px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
@@ -60,7 +62,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right" style="margin-left:-105px;">
+		<div class="col-lg-3 col-6 text-right" style="margin-left: -105px;">
 			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
@@ -83,7 +85,8 @@
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
-						<div class="navbar-nav py-0" style="margin-left: 970px;">
+						
+						<div class="navbar-nav ml-auto py-0 text-right">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
 								<a href="login" class="nav-item nav-link">로그인</a>
@@ -106,9 +109,9 @@
 								</c:if>
 								<!-- 로그아웃 링크 -->
 								<a href="logout" class="nav-item nav-link">로그아웃</a>
-								</c:if>
-							</div>
+							</c:if>
 						</div>
+					</div>
 				</nav>
 			</div>
 		</div>
@@ -119,9 +122,9 @@
 		<div class="row px-xl-5">
 			<div class="col-lg-2">
 				<!-- Sidebar -->
-				<nav class="category-sidebar" style="margin-left:-80px;">
-                <h6 class="p-3">MENU</h6>
-                   <ul class="nav flex-column">
+				<nav class="category-sidebar" style="margin-left: -80px;">
+					<h6 class="p-3">MENU</h6>
+					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall"
 							class="nav-link active">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link">구이
@@ -136,15 +139,16 @@
 						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
 								．음료</a></li>
 					</ul>
-                </nav>
+				</nav>
 			</div>
-			
+
 			<div class="col-lg-9 col-md-12">
 				<div class="row pb-3 product-grid">
 					<div class="col-12 pb-1">
 						<div
-							class="d-flex align-items-center justify-content-between mb-4">							
-							<div class="dropdown">	<!-- ml-auto = 왼쪽 여백 자동 채움(margin-left: auto) -->
+							class="d-flex align-items-center justify-content-between mb-4">
+							<div class="dropdown">
+								<!-- ml-auto = 왼쪽 여백 자동 채움(margin-left: auto) -->
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
@@ -172,7 +176,8 @@
 
 					<c:forEach var="item" items="${products}">
 						<div class="col-lg-4 col-md-4 col-sm-4 pb-1 product-col">
-							<div class="card product-item border-0 mb-4 h-100 d-flex flex-column"
+							<div
+								class="card product-item border-0 mb-4 h-100 d-flex flex-column"
 								style="width: 280px;">
 								<div
 									class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -184,58 +189,76 @@
 								<div
 									class="card-body border-left border-right text-center p-0 pt-4 pb-3">
 									<h5 class="text-truncate mb-3">${item.item_name}</h5>
-									
-								<%-- 평점/리뷰 하트채우기 : 리뷰가 없으면 표시 안 함 --%>
-								<c:set var="reviewCnt" value="${empty item.review_cnt ? 0 : item.review_cnt}" />
-								<c:set var="rating" value="${empty item.avg_rating ? 0 : item.avg_rating}" />
-								<c:if test="${reviewCnt > 0}">
-									<div class="d-flex justify-content-center mb-2 align-items-center" style="font-size: 0.8rem; color: #666;">
-										<!-- 평점 하트 채우기(소수점 0~100% 채우기 표현) -->
-										<span class="mr-1">
-											<c:forEach begin="1" end="5" var="i">
-												<c:set var="diff" value="${rating - (i - 1)}" />												
-												<c:choose>
-													<c:when test="${diff >= 1}">
-														<c:set var="fillPct" value="100" />
-													</c:when>
-													<c:when test="${diff <= 0}">
-														<c:set var="fillPct" value="0" />
-													</c:when>
-													<c:otherwise>
-														<fmt:formatNumber var="fillPct" value="${diff * 100}" pattern="0" />
-													</c:otherwise>
-												</c:choose>
-												<span class="heart-clip">
-													<i class="far fa-heart" style="color: #D19C97;"></i>
-													<span class="heart-fill" style="width: ${fillPct}%;">
-														<i class="fas fa-heart" style="color: #D19C97;"></i>
+
+									<%-- 평점/리뷰 하트채우기 : 리뷰가 없으면 표시 안 함 --%>
+									<c:set var="reviewCnt"
+										value="${empty item.review_cnt ? 0 : item.review_cnt}" />
+									<c:set var="rating"
+										value="${empty item.avg_rating ? 0 : item.avg_rating}" />
+									<c:if test="${reviewCnt > 0}">
+										<div
+											class="d-flex justify-content-center mb-2 align-items-center"
+											style="font-size: 0.8rem; color: #666;">
+											<!-- 평점 하트 채우기(소수점 0~100% 채우기 표현) -->
+											<span class="mr-1"> <c:forEach begin="1" end="5"
+													var="i">
+													<c:set var="diff" value="${rating - (i - 1)}" />
+													<c:choose>
+														<c:when test="${diff >= 1}">
+															<c:set var="fillPct" value="100" />
+														</c:when>
+														<c:when test="${diff <= 0}">
+															<c:set var="fillPct" value="0" />
+														</c:when>
+														<c:otherwise>
+															<fmt:formatNumber var="fillPct" value="${diff * 100}"
+																pattern="0" />
+														</c:otherwise>
+													</c:choose>
+													<span class="heart-clip"> <i class="far fa-heart"
+														style="color: #D19C97;"></i> <span class="heart-fill"
+														style="width: ${fillPct}%;"> <i
+															class="fas fa-heart" style="color: #D19C97;"></i>
 													</span>
-												</span>
-											</c:forEach>
-										</span>
-										<span class="mr-1"><fmt:formatNumber value="${rating}" pattern="#.0"/></span>
-										<span>(${reviewCnt}개 리뷰)</span>
-									</div>
-								</c:if>
-								<%-- 평점/리뷰 하트채우기 --%>
-									
-								<%-- 할인가 적용 --%>	
+													</span>
+												</c:forEach>
+											</span> <span class="mr-1"><fmt:formatNumber
+													value="${rating}" pattern="#.0" /></span> <span>(${reviewCnt}개
+												리뷰)</span>
+										</div>
+									</c:if>
+									<%-- 평점/리뷰 하트채우기 --%>
+
+									<%-- 할인가 적용 --%>
 									<div class="d-flex justify-content-center">
 										<c:choose>
-											<c:when test="${not empty item.dis_rate and item.dis_rate > 0}">
-												<c:set var="discounted" value="${item.sales_p * (100 - item.dis_rate) / 100}" />
-												
-											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
-												<fmt:parseNumber var="flooredPrice" value="${discounted / 10}" integerOnly="true" />
-												<h5><fmt:formatNumber value="${flooredPrice * 10}" pattern="#,###" />원</h5>
-											<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
-											
+											<c:when
+												test="${not empty item.dis_rate and item.dis_rate > 0}">
+												<c:set var="discounted"
+													value="${item.sales_p * (100 - item.dis_rate) / 100}" />
+
+												<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+												<fmt:parseNumber var="flooredPrice"
+													value="${discounted / 10}" integerOnly="true" />
+												<h5>
+													<fmt:formatNumber value="${flooredPrice * 10}"
+														pattern="#,###" />
+													원
+												</h5>
+												<%-- 1원 단위 절삭 설정(내림) parseNumber(소수자리 버림) --%>
+
 												<h6 class="text-muted ml-2">
-													<del><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</del>
+													<del>
+														<fmt:formatNumber value="${item.sales_p}" pattern="#,###" />
+														원
+													</del>
 												</h6>
 											</c:when>
 											<c:otherwise>
-												<h5><fmt:formatNumber value="${item.sales_p}" pattern="#,###" />원</h5>
+												<h5>
+													<fmt:formatNumber value="${item.sales_p}" pattern="#,###" />
+													원
+												</h5>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -303,9 +326,10 @@
 		</div>
 	</div>
 
-  <!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 	style="width:1350px; margin-left:150px;" >
-		<div class="row px-xl-5 pt-3" style="margin-left:-100px;">
+	<!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2"
+		style="width: 1350px; margin-left: 150px;">
+		<div class="row px-xl-5 pt-3" style="margin-left: -100px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -357,10 +381,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="row border-top border-light py-4" style="margin-left:-60px; margin-right:60px;">
+		<div class="row border-top border-light py-4"
+			style="margin-left: -60px; margin-right: 60px;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
-						&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
 						Site Name</a>. All Rights Reserved. Designed by <a
 						class="text-dark font-weight-semi-bold"
 						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
@@ -373,7 +398,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- footer end -->
 
 
@@ -438,7 +463,7 @@
 
 	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
 	<script src="/js/main.js" defer></script>
-	
+
 
 </body>
 
