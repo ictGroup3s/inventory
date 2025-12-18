@@ -304,7 +304,7 @@
 
 	<!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
 	<div class="container-fluid"
-		style="width: 1500px; padding-left: 350px; margin-bottom: 0px;">
+		style="width: 1500px; padding-left: 290px; margin-bottom: 0px;">
 		<h5 align="center">추천상품</h5>
 		<ul class="bxslider">
 			<c:forEach var="rp" items="${randomProducts}">
