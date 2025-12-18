@@ -54,43 +54,37 @@
 
 	<%-- 관리자일 때만 보이는 실제 내용 --%>
 	<div class="admin-content">
-		<!-- 기존 관리자 페이지 내용 -->
 
-		<!-- Topbar -->
-		<div class="row align-items-center py-3 px-xl-5 bg-light">
+		<!-- 로고(왼쪽) -->
+		<div class="row align-items-center py-3 px-xl-5" style="margin-left:60px;">
 			<div class="col-lg-3 d-none d-lg-block">
-				<a href="/" class="text-decoration-none"> <img
-					src="img/logo.png" class="logo" />
+				<a href="/" class="text-decoration-none"> 
+				<img src="img/logo.png" class="logo" />
 				</a>
 			</div>
-			<div class="col-lg-6 col-6 text-left">
-				<form action="">
-					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for products">
-						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
-								<i class="fa fa-search"></i>
-							</span>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="col-lg-3 col-6 text-right">
-				<a href="#" class="btn border"> <i
-					class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-				</a> <a href="cart" class="btn border"> <i
-					class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
-				</a>
-			</div>
-		</div>
+		
+			<!-- 로그인 정보 -->
+	<div class="col-lg-9 d-flex justify-content-end align-items-center"">
+        <c:if test="${not empty sessionScope.loginUser}">
+            <span class="mr-3">
+                안녕하세요, ${sessionScope.loginUser.customer_id}님!
+            </span>
+            <a href="logout" class="text-decoration-none">
+                로그아웃
+            </a>
+        </c:if>
+    </div>
+</div>
+</div>
+
 
 		<!-- Main Layout -->
 		<div class="container-fluid">
 			<div class="row px-xl-5">
 				<!-- LEFT SIDEBAR (PC ONLY) -->
 				<div class="col-lg-2 d-none d-lg-block">
-					<nav class="category-sidebar" id="mainSidebar">
+					<nav class="category-sidebar" id="mainSidebar" 
+					style="margin-left:-20px;">
 						<h5 class="p-3"> 관리자 페이지</h5>
 						<ul class="nav flex-column">
 							<li class="nav-item"><a href="dashboard" class="nav-link active">대쉬보드</a></li>
@@ -220,10 +214,10 @@
 			</div>
 		</div>
 
-	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark pt-2 pb-2" 
-	style="width:1600px;">
-		<div class="row px-xl-5 pt-3">
+	  <!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 	
+	style="width:1350px; margin-left:150px; margin-top: 50px !important;">
+		<div class="row px-xl-5 pt-2" style="margin-left:-120px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -275,14 +269,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
+		<div class="row border-top border-light py-4" style="margin-left:-60px; margin-right:60px;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
-					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
 						Site Name</a>. All Rights Reserved. Designed by <a
 						class="text-dark font-weight-semi-bold"
 						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
 					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+
 				</p>
 			</div>
 			<div class="col-md-6 px-xl-0 text-center text-md-right">
@@ -290,7 +285,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- Footer End -->
+	
+	<!-- footer end -->
 	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
