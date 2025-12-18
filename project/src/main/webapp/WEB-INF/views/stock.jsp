@@ -101,7 +101,7 @@
 							<li class="nav-item"><a href="stock" class="nav-link active">입고/재고관리</a></li>
 							<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
 							<li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
-							<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
+							<li class="nav-item"><a href="mlist" class="nav-link">채팅관리</a></li>
 							<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
 						</ul>
 					</nav>

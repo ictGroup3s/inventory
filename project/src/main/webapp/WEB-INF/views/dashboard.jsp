@@ -103,7 +103,7 @@
 							<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
 							<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
 							<li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
-							<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
+							<li class="nav-item"><a href="mlist" class="nav-link">채팅관리</a></li>
 							<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
 						</ul>
 					</nav>
@@ -157,12 +157,15 @@
 							<div class="col-lg-6 col-md-12">
 								<div class="row">
 									<div class="col-6 mb-3">
-										<div class="card h-100">
-											<div class="card-body text-center">
-												<h6>신규 회원</h6>
-												<p id="newMembers">0</p>
+										<a href="/order" class="text-decoration-none text-dark">
+											<div class="card h-100">
+												<div class="card-body text-center">
+													<h6>취소/반품 건수</h6>
+													<p id="cancelReturnCount">0</p>
+
+												</div>
 											</div>
-										</div>
+										</a>
 									</div>
 									<div class="col-6 mb-3">
 										<a href="/stats" class="text-decoration-none text-dark">

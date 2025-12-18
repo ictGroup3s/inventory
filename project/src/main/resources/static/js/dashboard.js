@@ -14,7 +14,7 @@ $(function() {
         success: function(data) {
             console.log('요약 데이터:', data);
             
-            $('#newMembers').text(formatNumber(data.NEW_MEMBERS || data.new_members || 0));
+			$('#cancelReturnCount').text(formatNumber(data.CANCEL_RETURN_COUNT || data.cancel_return_count || 0));
             $('#todayOrders').text(formatNumber(data.TODAY_ORDERS || data.today_orders || 0));
             $('#todaySales').text(formatNumber(data.TODAY_SALES || data.today_sales || 0));
             $('#monthSales').text(formatNumber(data.MONTH_SALES || data.month_sales || 0));

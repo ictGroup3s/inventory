@@ -1825,11 +1825,11 @@ pre code {
   border-color: #454d55;
 }
 
-.table .thead-light th {
+/* .table .thead-light th {
   color: #495057;
   background-color: #e9ecef;
   border-color: #EDF1FF;
-}
+} */
 
 .table-dark {
   color: #fff;

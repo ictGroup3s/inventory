@@ -453,7 +453,7 @@
 				<button id="chat-send">Send</button>
 			</div>
 			<button id="new-chat-btn"
-				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+				style="display: none; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
 				새 채팅 시작</button>
 		</div>
 

@@ -64,7 +64,7 @@ $(function() {
 				html += '<td>₩' + formatNumber(order.TOTAL_AMOUNT || order.total_amount) + '</td>';
 				html += '<td class="order-date" title="' + (order.ORDER_DATE || order.order_date || '-') + '">' + (order.ORDER_DATE || order.order_date || '-') + '</td>';
 				html += '<td style="width: 120px;"><div style="display: flex; justify-content: center; flex-direction: row; white-space: nowrap; "><span class="status-badge status-' + status + '">' + status + '</span></div></td>';
-				html += '<td><button class="btn btn-sm btn-info btn-detail" data-order-no="' + (order.ORDER_NO || order.order_no) + '">상세</button></td>';
+				html += '<td><button class="btn btn-detail" data-order-no="' + (order.ORDER_NO || order.order_no) + '">상세</button></td>';
 				html += '</tr>';
 			});
 		}
