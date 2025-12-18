@@ -1,36 +1,32 @@
 package com.example.controller;
 
-import java.time.Instant;
-import java.util.UUID;
+import java.util.Map;
 
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.example.chat.ChatMessage;
-import com.example.chat.ChatService;
+import com.example.model.vo.ChatVO;
+import com.example.service.ChatService;
 
-@Controller
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
 public class ChatController {
 
-	private final SimpMessagingTemplate messagingTemplate;
-	private final ChatService chatService;  // optional, 히스토리 저장용
-	
-	public ChatController(SimpMessagingTemplate messagingTemplate, ChatService chatService) {
-		this.messagingTemplate = messagingTemplate;
-		this.chatService = chatService;
-	}
+    private final ChatService chatService;
 
-	// 클라이언트가 /app/chat.send 로 메시지를 보냄
-    @MessageMapping("/chat.send")
-    public void sendMessage(@Payload ChatMessage message) {
-        if (message.getId() == null || message.getId().isEmpty()) {
-            // 클라이언트가 id를 안 넣은 경우 서버에서 생성(선택)
-            message.setId(UUID.randomUUID().toString());
-        }
-        message.setTimestamp(Instant.now().toEpochMilli());
-        chatService.saveMessage(message.getRoomId(), message);
-        messagingTemplate.convertAndSend("/topic/chat/" + message.getRoomId(), message);
+    @PostMapping("/chat/save")
+    public String saveChat(@RequestBody Map<String, String> data) throws Exception {
+
+        ChatVO vo = new ChatVO();
+        vo.setCustomer_id(data.get("userId"));
+        vo.setAdmin_id(data.get("adminId"));
+        //vo.setMessage(data.get("message"));
+
+        chatService.saveChat(vo);
+
+        return "OK";
     }
 }

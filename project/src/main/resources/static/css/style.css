@@ -7,12 +7,29 @@
  */
  
  .logo {
-    width: 20vw;       /* 화면 너비 대비 20% */
+    width: 12vw;       /* 화면 너비 대비 20% */
     max-width: 500px;  /* 최대 크기 */
     min-width: 250px;  /* 최소 크기 */
     height: auto;      /* 비율 유지 */
 }
- 
+
+/* 리뷰 하트 채우기 (소수점 채우기 표현) --- */
+.heart-clip {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.heart-clip .heart-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+ /* 리뷰 하트 채우기 (소수점 채우기 표현) --- */
  
 :root {
   --blue: #007bff;
@@ -61,10 +78,11 @@ html {
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
-
+/* 
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
+
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -72,6 +90,16 @@ body {
   text-align: left;
   background-color: #fff;
 }
+ */
+ 
+body {
+  font-size: 18px;              /* 기본 글씨 크기 */
+  width: 100%;          /* 너비를 100%로 설정하여 화면 크기에 맞게 늘어나게 함 */
+  max-width: 1500px;    /* 최대 너비를 1500px로 제한 */
+  height: 800px;        /* 높이는 고정 (필요에 따라 수정 가능) */
+  margin: 0 auto;       /* 페이지 중앙에 배치 */
+}
+
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
@@ -608,8 +636,8 @@ pre code {
 .container-lg,
 .container-xl {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0px;
+  padding-left: 150px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -643,6 +671,8 @@ pre code {
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
+  margin-bottom : -15px;
+
 }
 
 .no-gutters {
@@ -666,6 +696,7 @@ pre code {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
+  
 }
 
 .col {
@@ -1557,11 +1588,13 @@ pre code {
 }
 
 .table tbody + tbody {
+ font-size: 18px;
   border-top: 2px solid #EDF1FF;
 }
 
 .table-sm th,
 .table-sm td {
+  font-size: 18px; 
   padding: 0.3rem;
 }
 
@@ -1571,11 +1604,13 @@ pre code {
 
 .table-bordered th,
 .table-bordered td {
+  font-size: 18px; 
   border: 1px solid #EDF1FF;
 }
 
 .table-bordered thead th,
 .table-bordered thead td {
+	font-size: 18px; 
   border-bottom-width: 2px;
 }
 
@@ -2953,7 +2988,7 @@ fieldset:disabled a.btn {
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 18px;
   line-height: 1.5;
   border-radius: 0;
 }
@@ -4407,7 +4442,7 @@ input[type="button"].btn-block {
 .card-body {
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.25rem;
+  padding: 1rem;
 }
 
 .card-title {
@@ -4951,7 +4986,7 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-dark .alert-link {
-  color: black;
+	color: black;
 }
 
 @keyframes progress-bar-stripes {
@@ -6034,6 +6069,7 @@ a.close.disabled {
     transform: rotate(360deg);
   }
 }
+
 
 .spinner-border {
   display: inline-block;
@@ -9460,6 +9496,50 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
+/*.bxslider li {*/
+/*    display: block;*/
+/*    flex-direction: column;  */   /* 세로 배치 */
+/*    align-items: center;    */    /* 가로 가운데 정렬 */
+/*    text-align: center;     */    /* 텍스트 가운데 정렬 */
+/*    border: 0.5px solid #eee;   */  /* 테두리 */
+/*}
+.slider-card img {
+    width: 100%;  */
+/*   height: 250px;     */     /* 이미지 최대 높이 */
+/*    margin-bottom: 10px;   */     /* 이미지 아래 여백 */   
+/* }
+*/
+
+/* 슬라이더 */
+.bxslider li {
+    display: block;
+    text-align: center;         /* 텍스트 가운데 정렬 */
+    border-top: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0.5px solid #eee; /* 세로 구분선만 */
+    /*flex-direction: column;     세로 배치 */
+    align-items: center;        /* 가로 가운데 정렬 */
+}
+
+.bx-wrapper{
+	max-width : 1035px !important;
+	margin : 0 auto;
+	
+}
+ .slider-card img {
+            width: 200px;
+            height: 180px;
+            object-fit: cover;
+            margin-bottom: 10px;
+  }
+  
+ .slider-card {
+            text-align: center;
+            padding: 8px;
+              }
+
+
 /********** Custom CSS ************/
 .font-weight-medium {
   font-weight: 500;
@@ -9556,6 +9636,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .cat-item .cat-img img,
 .product-item .product-img img {
+	object-fit: cover;   
   transition: .5s;
 }
 
@@ -9574,6 +9655,56 @@ a.text-dark:hover, a.text-dark:focus {
   list-style-type: none;
 }
 
+/* --- Scoped: Header category images (6개) 정사각형으로 표시 --- */
+/* 대상: header의 "Categories" 섹션(.container-fluid.pt-5) 내부의 .cat-item들 */
+.container-fluid.pt-5 .cat-item .cat-img {
+  aspect-ratio: 1 / 1 !important; 
+  overflow: hidden;
+}
+.container-fluid.pt-5 .cat-item .cat-img img,
+.container-fluid.pt-5 .cat-item .cat-img .cat-img-fill {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Hover effect: 살짝 확대(원래 규칙과 동일하게 유지) */
+.container-fluid.pt-5 .cat-item:hover .cat-img img {
+  transform: scale(1.12);
+}
+/* Fix: remove max-height caps so 1:1 aspect-ratio displays correctly (not flattened) */
+.container-fluid.pt-5 .cat-item {
+  /* 조금 더 여유있는 패딩으로 카드가 납작해보이지 않도록 함 */
+  padding: 18px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  /* 테두리 스타일 개선 */
+  border: none !important;              /* 테두리 제거 */
+  border-radius: 0;                     /* 둥근 모서리 제거 */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* 부드러운 그림자 */
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover 효과: 살짝 떠오르면서 그림자 진하게 */
+.container-fluid.pt-5 .cat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  /* border-color 제거 */
+}
+.container-fluid.pt-5 .cat-item .cat-img {
+  /* aspect-ratio: 1/1 이 적용되어 있으므로 높이는 너비에 맞춰 결정됩니다.
+     별도 max-height를 두지 않아 납작해지는 현상을 방지합니다. */
+  overflow: hidden;
+  border-radius: 0; /* 이미지 둥글게 제거 */
+}
+/* 상단으로 이동 버튼 */
 .back-to-top {
   position: fixed;
   display: none;
@@ -9592,41 +9723,13 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-/* 간단한 스타일: 버튼과 채팅박스 ----채팅관려 추가 시작-------- */
-  .chat-button {
-    position: fixed; right: 20px; bottom: 20px; z-index:1050;
-    width:56px; height:56px; border-radius:50%; background:#007bff; color:#fff;
-    display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.18);
-    font-size:22px;
-  }
-  .chat-box {
-    position: fixed; right: 20px; bottom: 90px; z-index:1060;
-    width: 320px; max-width: calc(100% - 40px); height: 420px;
-    background:#fff; border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,0.15);
-    display: none; flex-direction:column; overflow:hidden;
-  }
-  .chat-header { background:#007bff; color:#fff; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; }
-  .chat-messages { padding:12px; background:#f7f7f7; overflow-y:auto; flex:1; }
-  .chat-input { display:flex; gap:8px; padding:8px; border-top:1px solid #eee; }
-  .chat-input input[type="text"]{ flex:1; padding:8px; border-radius:6px; border:1px solid #ddd; }
-  .msg { margin-bottom:10px; }
-  .msg .meta { font-size:11px; color:#666; margin-bottom:4px; }
-  .msg .text { display:inline-block; padding:8px 10px; border-radius:8px; max-width:80%; }
-  .msg.customer .text { background:#e9f2ff; color:#044; float:left; }
-  .msg.admin .text { background:#007bff; color:#fff; float:right; }
-  /* 데스크탑 */
-.chat-button {
-  right: 90px;
-  z-index: 1060;
-}
-
 /* 작은 화면에서는 버튼을 왼쪽으로 이동(혹은 기본 위치로) */
 @media (max-width: 576px) {
   .chat-button {
     right: 20px;      /* 또는 left:20px; 로 완전히 왼쪽으로 보낼 수 있음 */
     transform: none;
     width: 40px;
-    height: 40px;
+  height: 40px;
   }
 }
 /* 간단한 스타일: 버튼과 채팅박스 ----채팅관려 추가 끝------- */
@@ -9681,21 +9784,21 @@ a.text-dark:hover, a.text-dark:focus {
 /* 관리자 페이지 사이드바 스타일을 카테고리에 적용 */
 
 
-.category-sidebar{
-    /* background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6; */
-    padding: 1rem 0;
-
-    position: sticky; 
-    top: 100px; /* 상단 네비게이션 높이만큼 조정 */
-    max-height: calc(100vh - 600px); /* 화면 높이에서 상단 네비 높이 제외 */
-    overflow-y: auto; /* 내용이 길면 스크롤 가능 */
+ .category-sidebar{
+ 	position: sticky;
+ 	background-color: #f8f9fa;
+    top: 70px;    /* 상단 네비게이션 높이만큼 조정  */
+	min-height: 400px;  /*    화면 높이에서 상단 네비 높이 제외  */
+	
+    width:230px;
 }
+
 .category-sidebar h6 {
     padding: 0 1rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
+
 .category-sidebar .nav-item .nav-link {
     padding: 0.5rem 1rem;
     color: #D19C97; 
@@ -9703,6 +9806,7 @@ a.text-dark:hover, a.text-dark:focus {
     background-color: transparent;
     transition: background-color 0.3s, color 0.3s;
 }
+
 /* 일반 항목 호버 시 스타일 */
 .category-sidebar .nav-item:hover .nav-link:hover {
     background-color: #D19C97; 
@@ -9717,23 +9821,45 @@ a.text-dark:hover, a.text-dark:focus {
     font-weight: 600;
 }
 
+/* 데스크톱 이상 */
+@media (min-width: 992px) {
+    .category-sidebar {
+        position: relative;
+        top: 200px;
+        left: 0;
+        transform: translateX(-30px); /* 살짝 왼쪽 */
+        margin-top: -150px;
+        max-height: calc(100vh - 600px);
+        background-color:#fff;
+    }
+}
 
+/* 태블릿 & 모바일 */
+@media (max-width: 991px) {
+    .category-sidebar {
+        position: static;   /* 고정 해제 */
+        transform: none;
+        width: 100%;
+        max-height: none;
+        margin-bottom: 1rem;
+	}
+}
 /* stats stsyle */
 /* 차트 컨테이너 높이를 일관되게 유지하기 위해 작은 인라인 스타일을 추가 
  부모 컨테이너가 계속해서 커지는 것을 방지하려면 명시적으로 고정된 높이를 사용하세요.
  maintainAspectRatio가 true이고 aspectRatio가 설정되어 있으면
  Chart.js는 캔버스 크기를 그대로 따릅니다. */
 
-.chart-box { width:100%; height:320px; max-height:60vh; }
 
-/* 중간 크기(screen)에서는 비슷한 비율을 유지하되, 차트가 지나치게 길어지지 않도록 최대 높이를 제한합니다. */
-@media (max-width: 992px) {
-  .chart-box { height:300px; max-height:55vh; }
+/* checkout  */
+.invalid-phone {
+    border: 2px solid #d9534f !important;
+    background-color: #fff5f5;
 }
 
-/* 작은 화면에서는 너무 많은 세로 공간을 차지하지 않도록 높이를 제한합니다. */
-@media (max-width: 576px) {
-  .chart-box { height:220px; max-height:40vh; }
+ .valid-phone {
+    border: 2px solid #5cb85c !important;
+    background-color: #f4fff4;
 }
 
 /* 카드 본문을 flex로 유지하여 chart-box가 사용 가능한 공간을 채우도록 합니다. */
@@ -9742,33 +9868,239 @@ a.text-dark:hover, a.text-dark:focus {
 .card.h-100 { height: auto !important; }
 .card.h-100 > .card-body { /* keep default flow to avoid forcing equal-height stretching */ }
 
+/* 상품목록(select*): 카드 높이 균일화
+   - 전역 .row { align-items:flex-start; } / .card.h-100 { height:auto !important; } 때문에
+     목록 카드에서 h-100이 무력화되어 높이가 들쭉날쭉해질 수 있어, 목록 영역에서만 재정의 */
+.product-grid.row { align-items: stretch; }
+.product-grid > .product-col { display: flex; }
+.product-grid .card { width: 100%; }
+.product-grid .card { height: 300px; }
+/*.product-grid .card.h-100 { height: 100% !important; }*/
+
 /* 캔버스가 컨테이너를 완전히 채우도록 강제합니다 (Chart.js는 캔버스 크기를 그대로 따릅니다). */
 .chart-box canvas { width:100% !important; display:block; }
 
-/* --- 표 조정: 지표 테이블의 글자 크기를 줄이고 패딩을 더 타이트하게 조정 --- */
-/* 날짜가 한 줄에 들어가도록 일일(daily) 테이블을 더 컴팩트하게 만들기 */
-#dailyTable, #monthlyMetricsTable, #monthlyTable {
-  font-size: 12px; /* smaller */
+.item-row {
+    cursor: pointer;
 }
-#dailyTable td, #dailyTable th, #monthlyMetricsTable td, #monthlyMetricsTable th {
-  padding: .25rem .4rem; /* tighter cell padding */
+
+.item-row:hover {
+    background-color: #f5f5f5;
 }
-/* 일일 테이블에서 날짜 열이 줄바꿈되지 않도록 하고 고정된 최소 너비를 지정합니다 */
-#dailyTable th:first-child, #dailyTable td:first-child {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 92px; /* 날짜 열이 충분한 너비를 가지도록 합니다 */
-  max-width: 120px;
+
+/* +,- */
+#plusBtn, #minusBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #999;
 }
-/* 아주 작은 화면에서 여전히 공간이 부족하면 글꼴 크기를 조금 더 줄입니다 */
-@media (max-width: 768px) {
-  #dailyTable { font-size: 11px; }
-  #dailyTable th:first-child, #dailyTable td:first-child { min-width: 80px; }
+
+#adjust_qty {
+    font-size: 18px;
+    font-weight: bold;
 }
-@media (max-width: 576px) {
-  #dailyTable, #monthlyMetricsTable, #monthlyTable { font-size: 11px; }
+
+#new_stock {
+    font-weight: bold;
+    font-size: 16px;
 }
-#categorySalesTable th, td {
-	font-size: 12px;
+
+/* 재고 조정 버튼 */
+.stock-adjust-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.stock-adjust-btn:hover {
+    background-color: #FFD333;
+    border-color: #FFD333;
+    color: #3D464D;
+}
+
+/* 수량 입력창 */
+#adjust_qty {
+    font-weight: 500;
+}
+
+/* 입고/출고 라벨 */
+.adjust-in {
+    color: #3D464D;
+    font-weight: 500;
+}
+
+.adjust-out {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.input-error {
+    border: 2px solid #e74c3c; /* 진한 빨간색 테두리 */
+    background-color: #fdecea; /* 연한 빨간 배경 */
+}
+
+/* 마이페이지 대쉬보드 */
+.dashboard-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    padding: 25px;
+}
+
+.dashboard-card h5 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.stats-box {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.stats-box h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #D19C97;
+    margin-bottom: 5px;
+}
+
+.stats-box p {
+    color: #6c757d;
+    margin: 0;
+}
+
+.mini-table {
+    font-size: 0.9rem;
+}
+
+.mini-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.view-more-btn {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.category-sidebar {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.category-sidebar h6 {
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #D19C97;
+}
+
+.category-sidebar .nav-link {
+    color: #333;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.category-sidebar .nav-link:hover {
+    background: #f8f9fa;
+}
+
+.category-sidebar .nav-link.active {
+    background: #D19C97;
+    color: white;
+}
+ 
+/* admin 공용 style */
+.admin-content {
+    display: block;
+}
+
+.admin-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.55);
+    z-index: 9999;
+}
+
+/* 로그인 모달 */
+.login-modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    padding: 40px 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+    text-align: center;
+    z-index: 10000;
+}
+
+/* 🔒 아이콘 배경 */
+.login-modal .lock-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #D19C97, #B88480);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 20px;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(209,156,151,0.45);
+}
+
+/* 타이틀 */
+.login-modal h3 {
+    color: #7A4A47;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+/* 설명 */
+.login-modal p {
+    color: #9A6B68;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+/* 로그인 버튼 */
+.login-modal .btn-login {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #D19C97, #B88480);
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* hover */
+.login-modal .btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(184,132,128,0.5);
+}
+
+/* hide-content 클래스가 있을 때만 숨김 */
+.hide-content .admin-content {
+    display: none !important;
 }

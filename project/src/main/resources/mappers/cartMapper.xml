@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cartMapper">
+
+  <resultMap id="CartResult" type="map">
+    <result property="cart_no" column="cart_no" />
+    <result property="item_no" column="item_no" />
+    <result property="cart_cnt" column="cart_cnt" />
+    <result property="customer_id" column="customer_id" />
+    <result property="item_name" column="item_name" />
+    <result property="item_img" column="item_img" />
+    <result property="sales_p" column="sales_p" />
+  </resultMap>
+
+  <!-- 특정 고객의 장바구니 행을(각 행에 해당하는 상품 정보와 함께) 조회 -->
+  <select id="selectCartByCustomer" parameterType="string" resultMap="CartResult">
+    SELECT c.cart_no
+         , c.item_no
+         , c.cart_cnt
+         , c.customer_id
+         , p.item_name
+         , p.item_img
+         , p.sales_p
+    FROM cart c
+    LEFT JOIN product p ON p.item_no = c.item_no
+    WHERE c.customer_id = #{customerId}
+    ORDER BY c.cart_no
+  </select>
+
+  <!-- 특정 고객(customer)과 특정 상품(item)에 해당하는 장바구니 행 검색 -->
+  <select id="selectCartByCustomerAndItem" parameterType="map" resultType="map">
+    SELECT cart_no
+    	 , cart_cnt 
+    FROM cart 
+    WHERE customer_id = #{customerId} AND item_no = #{itemNo}
+  </select>
+
+  <!-- 장바구니 행 삽입 -->
+  <insert id="insertCartItem" parameterType="map">
+    INSERT INTO cart (
+    		cart_no
+    		, item_no
+    		, cart_cnt
+    		, customer_id)
+    VALUES (cart_seq.nextval, #{itemNo}, #{cartCnt}, #{customerId})
+  </insert>
+
+  <!-- 기존 장바구니 (cart_no)을 찾아 수량(qty)을 증가 -->
+  <update id="increaseCartCntByCartNo" parameterType="map">
+    UPDATE cart 
+    SET cart_cnt = cart_cnt + #{qty} 
+    WHERE cart_no = #{cartNo}
+  </update>
+
+  <!-- 장바구니 (cart_no)을 찾아 수량(qty)을 설정 -->
+  <update id="updateCartCntByCartNo" parameterType="map">
+    UPDATE cart 
+    SET cart_cnt = #{cartCnt} 
+    WHERE cart_no = #{cartNo}
+  </update>
+
+  <!-- 장바구니 (cart_no)을 찾아 삭제 -->
+  <delete id="deleteCartByCartNo" parameterType="int">
+    DELETE FROM cart WHERE cart_no = #{cartNo}
+  </delete>
+
+  <!-- 특정 고객(customer)과 특정 상품(item)에 해당하는 장바구니 행 찾아 삭제 -->
+  <delete id="deleteCartByCustomerAndItem" parameterType="map">
+    DELETE 
+    FROM cart 
+    WHERE customer_id = #{customerId} AND item_no = #{itemNo}
+  </delete>
+
+  <!-- 특정 고객(customerId)에 대해 cart 테이블의 cart_cnt 컬럼 합계를 계산 -->
+  <select id="countByCustomer" parameterType="string" resultType="int">
+    SELECT NVL(SUM(cart_cnt), 0) 
+    FROM cart 
+    WHERE customer_id = #{customerId}
+  </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+  <select id="getCartTotal" parameterType="string" resultType="int">
+    SELECT NVL(SUM(p.sales_p * c.cart_cnt), 0)
+    FROM cart c
+    LEFT JOIN product p ON p.item_no = c.item_no
+    WHERE c.customer_id = #{userId}
+</select>
+
+<!-- 특정 고객의 장바구니 전체 삭제 -->
+<delete id="deleteCartByCustomer" parameterType="string">
+    DELETE FROM cart 
+    WHERE customer_id = #{customerId}
+</delete>
+
+  
+  
+  
+
+</mapper>

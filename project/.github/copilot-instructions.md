@@ -1,0 +1,105 @@
+# GitHub Copilot Instructions for Inventory Project
+
+This guide provides essential context for AI coding agents working on this Spring Boot + JSP inventory and chat application.
+
+## Architecture & Tech Stack
+- **Framework**: Spring Boot 3.5.8 (Java 17)
+- **Database**: Oracle (ojdbc11) with MyBatis 3.0.5
+- **Frontend**: JSP (Jakarta JSTL) + Static Resources (CSS/JS in `src/main/resources/static`)
+- **Real-time**: Spring WebSocket (`TextWebSocketHandler`)
+- **Build**: Maven (`mvnw`)
+
+## Code Structure & Patterns
+
+### Layered Architecture
+1.  **Controller**: 
+    - `@RestController` for JSON APIs (e.g., `ReviewController`).
+    - `@Controller` for JSP views (e.g., `AdminController`).
+2.  **Service**: 
+    - Interface + Implementation pattern (e.g., `ReviewService` interface and `ReviewServiceImpl` class).
+3.  **Repository (Data Access)**:
+    - **Pattern**: Manual implementation using `SqlSessionTemplate`.
+    - **Structure**: Interface (`ReviewRepository`) + Implementation (`ReviewRepositoryImpl`).
+    - **MyBatis Usage**: `sess.selectList("namespace.id", param)` inside the implementation.
+4.  **Model**:
+    - VOs in `com.example.model.vo` using Lombok `@Data`.
+    - Mappers in `src/main/resources/mappers/`.
+
+### MyBatis Convention (Crucial)
+Do **not** use `@Mapper` interfaces directly. Use the `RepositoryImpl` pattern:
+
+**Repository Implementation (`src/main/java/com/example/model/ReviewRepositoryImpl.java`):**
+```java
+@Repository
+public class ReviewRepositoryImpl implements ReviewRepository {
+    @Autowired
+    private SqlSessionTemplate sess;
+
+    @Override
+    public List<ReviewVO> selectReviewsByItemNo(Integer item_no) {
+        // Namespace must match the XML mapper namespace
+        return sess.selectList("com.example.model.ReviewRepository.selectReviewsByItemNo", item_no);
+    }
+}
+```
+
+**Mapper XML (`src/main/resources/mappers/ReviewMapper.xml`):**
+```xml
+<mapper namespace="com.example.model.ReviewRepository">
+    <select id="selectReviewsByItemNo" parameterType="int" resultType="com.example.model.vo.ReviewVO">
+        SELECT * FROM review WHERE item_no = #{item_no}
+    </select>
+</mapper>
+```
+
+### Chat System Architecture
+- **Handler**: `UnifiedChatHandler` (`/ws/chat`).
+- **Protocol**: JSON messages.
+    - `__JOIN__`: Register session (no broadcast).
+    - `__CLOSE__`: End chat, broadcast close, remove cache.
+    - Normal Message: Broadcast to room, save to file, save to DB.
+- **Storage**:
+    - Files: `src/main/resources/static/chat/chat_{customerId}_{adminId}_{timestamp}.txt`.
+    - DB: `ChatService` saves metadata.
+
+## Developer Workflow
+
+### Build & Run (PowerShell)
+```powershell
+# Run Application (Port 8080)
+.\mvnw.cmd spring-boot:run
+
+# Clean & Package
+.\mvnw.cmd clean package
+
+# Run Tests
+.\mvnw.cmd test
+```
+
+### Common Tasks
+
+**Adding a New Feature:**
+1.  **VO**: Create `YourVO.java` in `com.example.model.vo`.
+2.  **Mapper**: Create/Update XML in `src/main/resources/mappers/`. Use `<selectKey>` for Oracle sequences if needed.
+3.  **Repository**: Add method to Interface, implement in `Impl` using `SqlSessionTemplate`.
+4.  **Service**: Add business logic.
+5.  **Controller**: Expose endpoint.
+6.  **View**: Add JSP in `src/main/webapp/WEB-INF/views/`.
+
+**Oracle Sequence Example:**
+```xml
+<insert id="add" parameterType="com.example.model.vo.ReviewVO">
+    <selectKey keyProperty="review_no" resultType="int" order="BEFORE">
+        SELECT review_seq.NEXTVAL FROM dual
+    </selectKey>
+    INSERT INTO review (review_no, ...) VALUES (#{review_no}, ...)
+</insert>
+```
+
+## Key Directories
+- **Controllers**: `src/main/java/com/example/controller/`
+- **Services**: `src/main/java/com/example/service/`
+- **Repositories**: `src/main/java/com/example/model/`
+- **Mappers**: `src/main/resources/mappers/`
+- **Views (JSP)**: `src/main/webapp/WEB-INF/views/`
+- **Static Assets**: `src/main/resources/static/`

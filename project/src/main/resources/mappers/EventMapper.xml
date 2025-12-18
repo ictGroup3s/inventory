@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.model.EventRepository">
+
+	<select id="selectDiscount"  parameterType="map" resultType="com.example.model.vo.ProductVO">
+	    SELECT *
+        FROM (
+            SELECT p.*, ROWNUM AS rn
+            FROM product p
+            WHERE dis_rate IS NOT NULL AND dis_rate > 0
+            ORDER BY CREATED_AT DESC
+        )
+        WHERE rn &gt; #{offset} AND rn &lt;= #{offset} + #{size}
+    </select>
+	
+	<select id="selectNewArrivals" parameterType="map" resultType="com.example.model.vo.ProductVO">
+	    SELECT * FROM (
+	        SELECT p.*, ROWNUM AS rn
+	        FROM (
+	            SELECT * 
+	            FROM product p 
+	            ORDER BY CREATED_AT DESC
+	        ) p
+	    ) 
+	    WHERE rn &gt; #{offset} AND rn &lt;= #{offset} + #{size}
+	</select>
+
+		
+	<select id="selectNewArrivalsCount" resultType="int">
+    SELECT COUNT(*)
+    FROM product
+ 	</select>
+
+	<select id="selectDiscountCount" resultType="int">
+    SELECT COUNT(*)
+    FROM product
+    WHERE dis_rate is not null
+	</select>
+</mapper>

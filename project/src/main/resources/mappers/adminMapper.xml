@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminmapper">
+	<insert id="saveItem" parameterType="ProductVO">
+		INSERT INTO product (
+		item_no,
+		item_img,
+		item_name,
+		item_content,
+		origin_p,
+		sales_p,
+		stock_cnt,
+		cate_no,
+		dis_rate
+		)
+		VALUES (
+		product_seq.NEXTVAL,
+		#{item_img},
+		#{item_name},
+		#{item_content},
+		#{origin_p},
+		#{sales_p},
+		#{stock_cnt},
+		#{cate_no},
+		#{dis_rate}
+		)
+	</insert>
+
+	<select id="getItemList" resultType="ProductVO">
+		SELECT p.item_no,
+			p.item_name,
+			c.cate_name,    <!-- cate 테이블에서 가져오기 -->
+			p.origin_p,
+			p.sales_p,
+			p.item_img,
+			p.item_content,
+			p.stock_cnt,
+			p.cate_no,
+			p.dis_rate
+		FROM product p
+		LEFT JOIN cate c ON p.cate_no = c.cate_no
+	</select>
+	
+	<!-- stock.jsp 전용 - 입고/출고 포함 -->
+	<select id="getStockList" resultType="ProductVO">
+	    SELECT 
+		    p.item_no,
+		    p.item_name,
+		    c.cate_name,
+		    p.origin_p,
+		    p.sales_p,
+		    p.item_img,
+		    p.item_content,
+		    p.stock_cnt,
+		    p.cate_no,
+		    NVL(s.stock_in, 0) as stock_in,
+		    NVL(s.stock_out, 0) as stock_out
+		FROM product p
+		LEFT JOIN cate c ON p.cate_no = c.cate_no
+		LEFT JOIN (
+		    SELECT 
+		        item_no,
+		        SUM(NVL(stock_in, 0)) as stock_in,
+		        SUM(NVL(stock_out, 0)) as stock_out
+		    FROM stock
+		    GROUP BY item_no
+		) s ON p.item_no = s.item_no
+		ORDER BY p.updated_at DESC  -- 변경된 순서대로 (최신 변경이 위로)
+	</select>
+
+	<update id="updateItem" parameterType="ProductVO">
+		UPDATE product
+		SET
+			item_name = #{item_name},
+			item_content =
+			#{item_content},
+			origin_p = #{origin_p},
+			sales_p = #{sales_p},
+			stock_cnt
+			= #{stock_cnt},
+			cate_no = #{cate_no},
+			dis_rate = #{dis_rate}
+		<if test="item_img != null">
+			, item_img = #{item_img}
+		</if>
+		WHERE item_no = #{item_no}
+	</update>
+
+	<delete id="deleteItem" parameterType="int">
+		DELETE FROM product
+		WHERE
+		item_no = #{itemNo}
+	</delete>
+	<!-- <update id="updateStock" parameterType="ProductVO"> UPDATE product 
+		SET item_name = #{item_name}, origin_p = #{origin_p}, sales_p = #{sales_p}, 
+		stock_cnt = #{stock_cnt} WHERE item_no = #{item_no} </update> -->
+	<insert id="insertDailyStats">
+		INSERT INTO stats (
+		stats_id, stats_date, total_order,
+		total_sales, cancel_cnt,
+		return_cnt, total_price, margin,
+		total_discount
+		)
+		SELECT
+		stats_seq.NEXTVAL,
+		TRUNC(SYSDATE),
+		COUNT(DISTINCT
+		o.order_id),
+		SUM(od.qty),
+		SUM(CASE WHEN od.status = '취소' THEN od.qty
+		ELSE 0 END),
+		SUM(CASE WHEN od.status = '반품' THEN od.qty ELSE 0 END),
+		SUM(od.price * od.qty),
+		ROUND(
+		(SUM(od.price * od.qty) - SUM(p.cost *
+		od.qty)) / SUM(od.price * od.qty) * 100,
+		2
+		),
+		SUM(od.discount)
+		FROM orders
+		o
+		JOIN order_detail od ON o.order_id = od.order_id
+		JOIN product p ON
+		od.product_id = p.product_id
+		WHERE TRUNC(o.order_date) = TRUNC(SYSDATE)
+	</insert>
+
+	<!-- 상품 단건 조회 (재고 비교용) -->
+	<select id="getProductByNo" parameterType="int"
+		resultType="ProductVO">
+		SELECT item_no, item_name, stock_cnt
+		FROM product
+		WHERE
+		item_no = #{item_no}
+	</select>
+
+	<!-- 재고 이력 저장 -->
+	<insert id="insertStockHistory" parameterType="StockVO">
+		INSERT INTO stock
+		(
+		stock_no,
+		stock,
+		stock_in,
+		stock_out,
+		in_date,
+		item_no,
+		order_no
+		) VALUES (
+		stock_seq.NEXTVAL,
+		#{stock},
+		#{stock_in},
+		#{stock_out},
+		SYSDATE,
+		#{item_no},
+		#{order_no, jdbcType=INTEGER}
+		)
+	</insert>
+
+	<!-- updateStock에 updated_at 추가 -->
+	<update id="updateStock" parameterType="ProductVO">
+		UPDATE product
+		SET
+		item_name = #{item_name},
+		origin_p = #{origin_p},
+		sales_p = #{sales_p},
+		stock_cnt = #{stock_cnt},
+		updated_at = SYSDATE
+		WHERE item_no = #{item_no}
+	</update>
+
+	<!-- 재고만 업데이트 (출고용) -->
+	<update id="updateStockOnly" parameterType="ProductVO">
+		UPDATE product
+		SET stock_cnt = #{stock_cnt},
+		updated_at = SYSDATE
+		WHERE item_no = #{item_no}
+	</update>
+	
+</mapper>

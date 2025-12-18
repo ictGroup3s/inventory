@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="statsmapper">
+
+    <!-- 월별 매출 + 주문건수 (최근 12개월) -->
+	<select id="getMonthlySalesOrders" resultType="map">
+	    SELECT 
+	        TO_CHAR(base_month, 'MM') || '월' as label,
+	        NVL(sales, 0) as sales,
+	        NVL(order_cnt, 0) as orders
+	    FROM (
+	        SELECT ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -LEVEL + 1) as base_month
+	        FROM dual
+	        CONNECT BY LEVEL &lt;= 12
+	    ) months
+	    LEFT JOIN (
+	        SELECT 
+	            TRUNC(o.order_date, 'MM') as sale_month,
+	            SUM(od.item_price * od.item_cnt) as sales,
+	            COUNT(DISTINCT o.order_no) as order_cnt
+	        FROM orders o
+	        JOIN order_detail od ON o.order_no = od.order_no
+	        WHERE o.order_status != '취소'
+	        GROUP BY TRUNC(o.order_date, 'MM')
+	    ) s ON months.base_month = s.sale_month
+	    ORDER BY base_month
+	</select>
+
+    <!-- 카테고리별 매출 -->
+    <select id="getCategorySales" resultType="map">
+        SELECT 
+            c.cate_name as label,
+            NVL(SUM(od.item_price * od.item_cnt), 0) as total
+        FROM order_detail od
+        JOIN product p ON od.item_no = p.item_no
+        JOIN cate c ON p.cate_no = c.cate_no
+        JOIN orders o ON od.order_no = o.order_no
+        WHERE o.order_status != '취소'
+        GROUP BY c.cate_name
+        ORDER BY total DESC
+    </select>
+
+    <!-- 수입/지출 (최근 7일) -->
+    <select id="getIncomeExpense" resultType="map">
+        SELECT 
+            TO_CHAR(base_date, 'MM-DD') as label,
+            NVL(income, 0) as income,
+            NVL(expense, 0) as expense
+        FROM (
+            SELECT TRUNC(SYSDATE) - LEVEL + 1 as base_date
+            FROM dual
+            CONNECT BY LEVEL &lt;= 7
+        ) dates
+        LEFT JOIN (
+            SELECT TRUNC(o.order_date) as sale_date,
+                   SUM(od.item_price * od.item_cnt) as income
+            FROM orders o
+            JOIN order_detail od ON o.order_no = od.order_no
+            WHERE o.order_status != '취소'
+            GROUP BY TRUNC(o.order_date)
+        ) sales ON dates.base_date = sales.sale_date
+        LEFT JOIN (
+            SELECT TRUNC(s.in_date) as stock_date,
+                   SUM(s.stock_in * p.origin_p) as expense
+            FROM stock s
+            JOIN product p ON s.item_no = p.item_no
+            WHERE s.stock_in > 0
+            GROUP BY TRUNC(s.in_date)
+        ) stocks ON dates.base_date = stocks.stock_date
+        ORDER BY base_date
+    </select>
+
+    <!-- 일별 매출 + 주문건수 (최근 7일) -->
+	<select id="getDailyOrders" resultType="map">
+	    SELECT 
+	        TO_CHAR(base_date, 'MM-DD') as label,
+	        NVL(sales, 0) as sales,
+	        NVL(order_cnt, 0) as orders
+	    FROM (
+	        SELECT TRUNC(SYSDATE) - LEVEL + 1 as base_date
+	        FROM dual
+	        CONNECT BY LEVEL &lt;= 7
+	    ) dates
+	    LEFT JOIN (
+	        SELECT 
+	            TRUNC(o.order_date) as order_date,
+	            SUM(od.item_price * od.item_cnt) as sales,
+	            COUNT(DISTINCT o.order_no) as order_cnt
+	        FROM orders o
+	        JOIN order_detail od ON o.order_no = od.order_no
+	        WHERE o.order_status != '취소'
+	        GROUP BY TRUNC(o.order_date)
+	    ) o ON dates.base_date = o.order_date
+	    ORDER BY base_date
+	</select>
+    
+    <!-- 일별 통계 집계 (전날 데이터) -->
+	<insert id="insertDailyStats">
+	    INSERT INTO stats (
+	        stats_id,
+	        stats_date,
+	        total_order,
+	        total_sales,
+	        cancel_cnt,
+	        return_cnt,
+	        total_price,
+	        margin,
+	        total_discount
+	    )
+	    SELECT 
+	        stats_seq.NEXTVAL,
+	        stats_date,
+	        total_order,
+	        total_sales,
+	        cancel_cnt,
+	        return_cnt,
+	        total_price,
+	        margin,
+	        total_discount
+	    FROM (
+	        SELECT 
+	            TRUNC(SYSDATE - 1) as stats_date,
+	            COUNT(DISTINCT o.order_no) as total_order,
+	            NVL(SUM(od.item_cnt), 0) as total_sales,
+	            NVL((SELECT COUNT(*) FROM cr WHERE type = '취소' AND TRUNC(re_date) = TRUNC(SYSDATE - 1)), 0) as cancel_cnt,
+	            NVL((SELECT SUM(return_cnt) FROM cr WHERE type = '반품' AND TRUNC(re_date) = TRUNC(SYSDATE - 1)), 0) as return_cnt,
+	            NVL(SUM(od.item_price * od.item_cnt), 0) as total_price,
+	            CASE 
+	                WHEN SUM(od.item_price * od.item_cnt) > 0 
+	                THEN ROUND(
+	                    (SUM(od.item_price * od.item_cnt) - SUM(p.origin_p * od.item_cnt)) 
+	                    / SUM(od.item_price * od.item_cnt) * 100, 2
+	                )
+	                ELSE 0 
+	            END as margin,
+	            0 as total_discount
+	        FROM orders o
+	        LEFT JOIN order_detail od ON o.order_no = od.order_no
+	        LEFT JOIN product p ON od.item_no = p.item_no
+	        WHERE TRUNC(o.order_date) = TRUNC(SYSDATE - 1)
+	          AND o.order_status != '취소'
+	        GROUP BY TRUNC(SYSDATE - 1)
+	    ) sub
+	    WHERE sub.total_order > 0
+	</insert>
+	
+	<!-- 연도별·월별 매출/지출 (선택한 연도) -->
+	<select id="getMonthlyStats" resultType="map" parameterType="map">
+	    SELECT
+	        TO_CHAR(base_month, 'YYYY') as year,
+	        TO_CHAR(base_month, 'MM') as month,
+	        NVL(sales, 0) as sales,
+	        NVL(expenses, 0) as expenses,
+	        NVL(sales, 0) - NVL(expenses, 0) as profit,
+	        CASE
+	            WHEN NVL(sales, 0) > 0
+	            THEN ROUND((NVL(sales, 0) - NVL(expenses, 0)) / NVL(sales, 0) * 100, 1)
+	            ELSE 0
+	        END as profitRate
+	    FROM (
+	        SELECT ADD_MONTHS(TO_DATE(#{year} || '-01', 'YYYY-MM'), LEVEL - 1) as base_month
+	        FROM dual
+	        CONNECT BY LEVEL &lt;= 12
+	    ) months
+	    LEFT JOIN (
+	        SELECT
+	            TRUNC(o.order_date, 'MM') as sale_month,
+	            ROUND(SUM(od.item_price * od.item_cnt) / 10000, 0) as sales
+	        FROM orders o
+	        JOIN order_detail od ON o.order_no = od.order_no
+	        WHERE o.order_status != '취소'
+	          AND TO_CHAR(o.order_date, 'YYYY') = #{year}
+	        GROUP BY TRUNC(o.order_date, 'MM')
+	    ) s ON months.base_month = s.sale_month
+	    LEFT JOIN (
+	        SELECT
+	            TRUNC(st.in_date, 'MM') as expense_month,
+	            ROUND(SUM(st.stock_in * p.origin_p) / 10000, 0) as expenses
+	        FROM stock st
+	        JOIN product p ON st.item_no = p.item_no
+	        WHERE st.stock_in > 0
+	          AND TO_CHAR(st.in_date, 'YYYY') = #{year}
+	        GROUP BY TRUNC(st.in_date, 'MM')
+	    ) e ON months.base_month = e.expense_month
+	    ORDER BY base_month
+	</select>
+	
+	<!-- 주문 데이터가 있는 연도 목록 -->
+	<select id="getAvailableYears" resultType="string">
+	    SELECT DISTINCT TO_CHAR(order_date, 'YYYY') as year
+	    FROM orders
+	    ORDER BY year DESC
+	</select>
+	
+	<!-- 분류별 매출 정보 (연/월 선택) -->
+	<select id="getCategorySalesByMonth" resultType="map" parameterType="map">
+	    SELECT 
+	        category,
+	        sales,
+	        CASE 
+	            WHEN total_sales > 0 
+	            THEN ROUND(sales / total_sales * 100, 1)
+	            ELSE 0 
+	        END as ratio
+	    FROM (
+	        SELECT 
+	            c.cate_name as category,
+	            NVL(ROUND(SUM(od.item_price * od.item_cnt) / 10000, 0), 0) as sales,
+	            (SELECT NVL(ROUND(SUM(od2.item_price * od2.item_cnt) / 10000, 0), 1)
+	             FROM orders o2
+	             JOIN order_detail od2 ON o2.order_no = od2.order_no
+	             WHERE o2.order_status != '취소'
+	             AND TO_CHAR(o2.order_date, 'YYYY') = #{year}
+	             AND TO_CHAR(o2.order_date, 'MM') = #{month}) as total_sales
+	        FROM orders o
+	        JOIN order_detail od ON o.order_no = od.order_no
+	        JOIN product p ON od.item_no = p.item_no
+	        JOIN cate c ON p.cate_no = c.cate_no
+	        WHERE o.order_status != '취소'
+	        AND TO_CHAR(o.order_date, 'YYYY') = #{year}
+	        AND TO_CHAR(o.order_date, 'MM') = #{month}
+	        GROUP BY c.cate_name
+	    )
+	    ORDER BY sales DESC
+	</select>
+
+</mapper>

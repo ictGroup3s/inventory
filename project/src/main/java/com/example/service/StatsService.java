@@ -1,0 +1,15 @@
+package com.example.service;
+
+import java.util.List;
+import java.util.Map;
+
+public interface StatsService {
+	public List<Map<String, Object>> getMonthlySalesOrders();
+    public List<Map<String, Object>> getCategorySales();
+    public List<Map<String, Object>> getIncomeExpense();
+    public List<Map<String, Object>> getDailyOrders();
+    public void insertDailyStats();
+    public List<Map<String, Object>> getMonthlyStats(String year);
+    public List<String> getAvailableYears();
+    public List<Map<String, Object>> getCategorySalesByMonth(String year, String month);
+}

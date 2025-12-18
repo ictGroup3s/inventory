@@ -1,0 +1,329 @@
+.status-badge {
+	padding: 5px 10px;
+	border-radius: 15px;
+	font-size: 12px;
+	font-weight: 500;
+	white-space: nowrap;
+	display: inline-flex;
+}
+
+.status-결제완료 {
+	background: #fff3cd;
+	color: #856404;
+}
+
+.status-배송준비중 {
+	background: #cce5ff;
+	color: #004085;
+}
+
+.status-배송중 {
+	background: #d4edda;
+	color: #155724;
+}
+
+.status-배송완료 {
+	background: #d1ecf1;
+	color: #0c5460;
+}
+
+.status-취소 {
+	background: #f8d7da;
+	color: #721c24;
+}
+
+.status-반품 {
+	background: #e2e3e5;
+	color: #383d41;
+}
+
+.status-교환 {
+	background: #fff3cd;
+	color: #856404;
+}
+
+.modal-header {
+	background: #f8f9fa;
+}
+
+.order-info-label {
+	font-weight: 600;
+	color: #666;
+}
+
+.order-items-table {
+	font-size: 14px;
+}
+
+/* 테이블 스타일 */
+.order-table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+.order-table th, .order-table td {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.order-table .col-order-no {
+	width: 85px;
+}
+
+.order-table .col-customer {
+	width: 80px;
+}
+
+.order-table {
+	width: auto;
+	text-align: center;
+}
+
+.order-table .col-amount {
+	width: 100px;
+}
+
+.order-table .col-date {
+	width: 100px;
+}
+
+.order-table .col-status {
+	width: 85px;
+	text-align: center;
+}
+
+.order-table .col-action {
+	width: 70px;
+}
+
+.item-cell {
+	max-width: 300px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.item-cell:hover {
+	white-space: normal;
+	overflow: visible;
+	background: #fff;
+	position: relative;
+	z-index: 1;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	padding: 8px;
+	border-radius: 4px;
+}
+
+.detail-status-정상 {
+	color: #155724;
+}
+
+.detail-status-취소 {
+	color: #721c24;
+}
+
+.detail-status-반품 {
+	color: #856404;
+}
+
+.detail-status-교환 {
+	color: #004085;
+}
+
+@media ( min-width : 992px) {
+	.order-table {
+		table-layout: fixed; /* 고정 폭 */
+		width: 100%;
+	}
+	.order-table thead, .order-table tbody {
+		display: table-header-group;
+		display: table-row-group;
+	}
+	.order-table tr {
+		display: table-row;
+	}
+	.order-table th, .order-table td {
+		display: table-cell;
+		white-space: nowrap;
+		vertical-align: middle;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	/* 컬럼별 고정 너비 */
+	.order-table .col-order-no {
+		width: 10%;
+	}
+	.order-table .col-customer {
+		width: 10%;
+	}
+	.order-table .col-items {
+		width: 35%;
+	}
+	.order-table .col-amount {
+		width: 10%;
+	}
+	.order-table .col-date {
+		width: 15%;
+	}
+	.order-table .col-status {
+		width: 10%;
+	}
+	.order-table .col-action {
+		width: 10%;
+	}
+}
+
+.order-date {
+	position: relative;
+	cursor: pointer;
+}
+
+.order-date:hover::after {
+	content: attr(data-full-date);
+	position: absolute;
+	bottom: 100%; /* 위쪽에 표시 */
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(0, 0, 0, 0.75);
+	color: #fff;
+	padding: 4px 8px;
+	border-radius: 4px;
+	white-space: nowrap;
+	z-index: 10;
+	font-size: 12px;
+}
+
+/* ===== 검색 폼 반응형 개선 ===== */
+#searchForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+#searchForm .form-control,
+#searchForm select {
+    width: auto;
+    min-width: 100px;
+}
+
+#searchForm input[type="text"] {
+    width: 110px;
+}
+
+#searchForm input[type="date"] {
+    width: 140px;
+}
+
+#searchForm select {
+    width: 120px;
+}
+
+/* 버튼들을 같은 줄에 유지 */
+#searchForm .btn {
+    white-space: nowrap;
+}
+
+/* 작은 화면에서 검색 폼 조정 */
+@media (max-width: 1200px) {
+    #searchForm input[type="text"] {
+        width: 100px;
+    }
+    
+    #searchForm input[type="date"] {
+        width: 130px;
+    }
+    
+    #searchForm select {
+        width: 110px;
+    }
+}
+
+@media (max-width: 992px) {
+    #searchForm {
+        gap: 6px;
+    }
+    
+    #searchForm .form-control,
+    #searchForm select,
+    #searchForm .btn {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+    
+    #searchForm input[type="text"] {
+        width: 90px;
+    }
+    
+    #searchForm input[type="date"] {
+        width: 120px;
+    }
+}
+
+/* 사이드바 너비 조정 */
+.category-sidebar {
+    min-width: 140px;
+}
+
+/* 상품 목록 테이블 wrapper */
+.stock-table-wrapper {
+    max-height: 420px;   /* 👉 대략 10개 행 높이 */
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+}
+
+/* 테이블 레이아웃 고정 */
+.stock-table {
+    table-layout: fixed;
+    margin-bottom: 0;
+}
+
+/* thead 고정 */
+.stock-table thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 2;
+}
+
+/* td 내용 넘칠 때 처리 */
+.stock-table td,
+.stock-table th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+/* 행 hover (가독성) */
+.stock-table tbody tr:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+#resetBtn{
+	border-radius: 13px;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.btn-detail{
+	border: 1px solid #D19C97;
+	background: #f1e1e0;
+	border-radius: 10px;
+}
+
+.modal-footer .btn-secondary{
+	border-radius:10px;
+	width: 77px;
+	height: 44px; 
+}
+
+
+
+/* #searchForm .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+	    border-bottom-right-radius : 10px;
+	    border-top-right-radius : 10px;
+} */

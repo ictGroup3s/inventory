@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chatMapper">
+
+	<insert id="insertChat" parameterType="ChatVO">
+	    MERGE INTO chat c
+	    USING (
+	        SELECT #{customer_id} as customer_id, #{admin_id} as admin_id FROM dual
+	    ) src
+	    ON (c.customer_id = src.customer_id AND c.admin_id = src.admin_id AND (c.status IS NULL OR c.status = 'ACTIVE'))
+	    WHEN MATCHED THEN
+	        UPDATE SET
+	            chat_file = #{chat_file},
+	            chat_time = SYSDATE,
+	            read_flag = #{read_flag}
+	    WHEN NOT MATCHED THEN
+	        INSERT (chat_no, chat_file, chat_time, customer_id, admin_id, read_flag, status)
+	        VALUES (chat_seq.NEXTVAL, #{chat_file}, SYSDATE, #{customer_id}, #{admin_id}, #{read_flag}, 'ACTIVE')
+	</insert>
+
+	<select id="selectRoomsByCustomer" parameterType="string"
+		resultType="ChatVO">
+		SELECT * FROM chat
+		WHERE customer_id = #{customerId}
+		ORDER BY
+		chat_time DESC
+	</select>
+
+	<select id="selectRoomsByAdmin" parameterType="string"
+		resultType="ChatVO">
+		SELECT * FROM chat
+		WHERE admin_id = #{adminId}
+		ORDER BY
+		chat_time DESC
+	</select>
+
+	<select id="selectChatByNo" parameterType="int"
+		resultType="ChatVO">
+		SELECT * FROM chat
+		WHERE chat_no = #{chatNo}
+	</select>
+
+	<update id="updateReadFlag" parameterType="int">
+		UPDATE chat
+		SET
+		read_flag = 'Y'
+		WHERE chat_no = #{chatNo}
+	</update>
+
+	<select id="findRoleByUserId" parameterType="string" resultType="string">
+		SELECT ROLE FROM CUSTOMER WHERE customer_id = #{userId}
+	</select>
+
+	<!-- ============ 자동 배정 관련 쿼리 추가 ============ -->
+
+	<select id="findExistingChatRoom" parameterType="string" resultType="ChatVO">
+		SELECT * FROM chat
+	    WHERE customer_id = #{customerId}
+	    AND (status IS NULL OR status = 'ACTIVE')
+	    ORDER BY chat_time DESC
+	    FETCH FIRST 1 ROW ONLY
+	</select>
+
+	<!-- 특정 관리자 ID 가져오기 (테스트용) -->
+	<select id="findSpecificAdmin" resultType="string">
+		SELECT customer_id
+		FROM customer
+		WHERE role = 1
+		FETCH FIRST 1 ROW ONLY
+	</select>
+
+	<!-- 랜덤 관리자 선택 -->
+	<select id="findRandomAdmin" resultType="string">
+		SELECT customer_id FROM
+		customer
+		WHERE role = 1
+		ORDER BY DBMS_RANDOM.VALUE
+		FETCH FIRST 1 ROW ONLY
+	</select>
+
+	<!-- 채팅 개수가 가장 적은 관리자 선택 (라운드 로빈) -->
+	<select id="findLeastBusyAdmin" resultType="string">
+		SELECT admin_id
+		FROM (
+		SELECT c.customer_id as admin_id, COUNT(ch.chat_no) as chat_count
+		FROM
+		customer c
+		LEFT JOIN chat ch ON c.customer_id = ch.admin_id
+		WHERE c.role
+		= 1
+		GROUP BY c.customer_id
+		ORDER BY chat_count ASC, DBMS_RANDOM.VALUE
+		)
+		WHERE ROWNUM = 1
+	</select>
+
+	<!-- 모든 관리자 목록 -->
+	<select id="findAllAdmins" resultType="string">
+		SELECT customer_id FROM
+		customer
+		WHERE role = 1
+	</select>
+
+	<!-- 안읽은 메시지 개수 조회 (고객용 - 관리자가 보낸 메시지 중 안읽은 것) -->
+	<select id="countUnreadForCustomer" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM chat
+		WHERE customer_id = #{customerId}
+		AND read_flag = 'N'
+	</select>
+
+	<!-- 안읽은 메시지 개수 조회 (관리자용 - 고객이 보낸 메시지 중 안읽은 것) -->
+	<select id="countUnreadForAdmin" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM chat
+		WHERE admin_id = #{adminId}
+		AND
+		read_flag = 'N'
+	</select>
+
+	<!-- 읽음 처리 (고객이 채팅방 열었을 때) -->
+	<update id="markAsReadForCustomer" parameterType="string">
+		UPDATE chat
+		SET
+		read_flag = 'Y'
+		WHERE customer_id = #{customerId}
+		AND read_flag = 'N'
+	</update>
+
+	<!-- 읽음 처리 (관리자가 채팅방 열었을 때) -->
+	<update id="markAsReadForAdmin" parameterType="map">
+		UPDATE chat
+		SET
+		read_flag = 'Y'
+		WHERE admin_id = #{adminId}
+		AND customer_id =
+		#{customerId}
+		AND read_flag = 'N'
+	</update>
+
+	<!-- 특정 채팅방의 안읽은 메시지 확인 (관리자용 - 각 고객별) -->
+	<select id="countUnreadByCustomer" parameterType="map"
+		resultType="int">
+		SELECT COUNT(*) FROM chat
+		WHERE admin_id = #{adminId}
+		AND
+		customer_id = #{customerId}
+		AND read_flag = 'N'
+	</select>
+
+	<!-- 채팅 종료 처리 -->
+	<update id="closeChat" parameterType="int">
+		UPDATE chat
+		SET status =
+		'CLOSED'
+		WHERE chat_no = #{chatNo}
+	</update>
+
+	<!-- 진행 중인 채팅방만 조회 (고객용) -->
+	<select id="selectActiveRoomsByCustomer" parameterType="string"
+		resultType="ChatVO">
+		SELECT * FROM chat
+		WHERE customer_id = #{customerId}
+		AND
+		(status IS NULL OR status = 'ACTIVE')
+		ORDER BY chat_time DESC
+	</select>
+
+	<!-- 진행 중인 채팅방만 조회 (관리자용) -->
+	<select id="selectActiveRoomsByAdmin" parameterType="string"
+		resultType="ChatVO">
+		SELECT * FROM chat
+		WHERE admin_id = #{adminId}
+		AND (status IS
+		NULL OR status = 'ACTIVE')
+		ORDER BY chat_time DESC
+	</select>
+	
+	<!-- 채팅 삭제 -->
+	<delete id="deleteChat" parameterType="int">
+	    DELETE FROM chat 
+	    WHERE chat_no = #{chatNo}
+	</delete>
+	
+	<!-- 관리자용 모든 채팅방 조회 (종료된 것 포함) -->
+	<select id="selectAllRoomsByAdmin" parameterType="string" resultType="ChatVO">
+	    SELECT * FROM chat
+	    WHERE admin_id = #{adminId}
+	    ORDER BY 
+	        CASE WHEN status = 'ACTIVE' OR status IS NULL THEN 0 ELSE 1 END,
+	        chat_time DESC
+	</select>
+</mapper>

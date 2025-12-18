@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "crMapper">
+
+	 <!-- ResultMap 정의 -->
+    <resultMap id="crResultMap" type="com.example.model.vo.crVO">
+        <id property="cr_no" column="cr_no"/>
+        <result property="order_no" column="order_no"/>
+        <result property="detail_no" column="detail_no"/>
+        <result property="type" column="type"/>
+        <result property="return_no" column="return_no"/>
+        <result property="status" column="status"/>
+        <result property="reason" column="reason"/>
+        <result property="re_date" column="re_date"/>
+    </resultMap>
+
+    <!-- 사용자별 취소/반품/교환 내역 조회 -->
+    <select id="findByUserId" resultMap="crResultMap">
+        SELECT 
+            cr.*,
+            od.item_name
+        FROM cr cr
+        INNER JOIN order_detail od ON cr.detail_no = od.detail_no
+        INNER JOIN orders o ON cr.order_no = o.order_no
+        WHERE o.user_id = #{userId}
+        ORDER BY cr.re_date DESC
+    </select>
+
+    <!-- 취소/반품/교환 상세 조회 -->
+    <select id="findById" resultMap="crResultMap">
+        SELECT 
+            cr.*,
+            od.item_name
+        FROM cr cr
+        INNER JOIN order_detail od ON cr.detail_no = od.detail_no
+        WHERE cr.cr_no = #{crNo}
+    </select>
+
+    <!-- 취소/반품/교환 신청 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="cr_no">
+        INSERT INTO cr (
+            order_no,
+            detail_no,
+            type,
+            reason,
+            return_no,
+            status,
+            re_date
+        ) VALUES (
+            #{order_no},
+            #{detail_no},
+            #{type},
+            #{reason},
+            #{return_no},
+            '신청',
+            NOW()
+        )
+    </insert>
+
+    <!-- 상태 업데이트 -->
+    <update id="updateStatus">
+        UPDATE cr
+        SET status = #{status}
+        WHERE cr_no = #{crNo}
+    </update>
+
+    <!-- 주문번호로 조회 -->
+    <select id="findByOrderNo" resultMap="crResultMap">
+        SELECT 
+            cr.*,
+            od.item_name
+        FROM cr cr
+        INNER JOIN order_detail od ON cr.detail_no = od.detail_no
+        WHERE cr.order_no = #{orderNo}
+        ORDER BY cr.re_date DESC
+    </select>
+
+    <!-- 주문 상세번호로 조회 (중복 신청 방지) -->
+    <select id="countByDetailNo" resultType="int">
+        SELECT COUNT(*)
+        FROM cr
+        WHERE detail_no = #{detailNo}
+          AND status NOT IN ('취소', '거부')
+    </select>
+
+
+	
+</mapper>

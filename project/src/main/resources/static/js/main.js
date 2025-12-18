@@ -1,22 +1,32 @@
 (function($) {
+	//sidebar
+	$("#sidebarMenu").html($("#mainSidebar").html());
+
 	"use strict";
 
 	$(document).ready(function() {
 		$('.bxslider').bxSlider({
-			auto: true,
-			moveSlides: 1,
-			pager: false,
-			controls: true,
-			pause: 3000,
-			speed: 100,
-			infiniteLoop: true,
+			auto: true,				// 자동 슬라이드 여부
+			touchEnabled: false,	// 터치 스와이프 기능 여부
+			moveSlides: 1,			// 한 번에 이동하는 슬라이드 수
+			pager: false,			// 페이지 네비게이션(하단 점) 표시 여부
+			controls: true,			// 좌-우 화살표 (슬라이드 전환 효과) 설정
+			pause: 2000,			// 자동 슬라이드 시 각 슬라이드가 보여지는 시간 (밀리초)
+			// 전환이 너무 빠르면 '딱딱'해 보이므로 여유 있게 설정
+			speed: 400,				// 슬라이드 전환 속도 (밀리초)
+			useCSS: false,			// jQuery easing 적용을 위해 CSS transition 비활성화
+			easing: 'easeInOutCubic',
+			infiniteLoop: true,		// 무한 루프 설정
+			onSliderLoad: function(currentIndex) {
+				try { $('.bxslider').trigger('bxslider:loaded'); } catch (e) { }
+			},
 			minSlides: 2,      // 최소 보여줄 슬라이드
 			maxSlides: 4,      // 최대 보여줄 슬라이드
 			slideWidth: 250,   // 슬라이드 개별 너비
-			slideMargin: 10    // 슬라이드 간격
-		});
+			slideMargin: 10,    // 슬라이드 간격
+					});
 
-		// Back to top button
+		// 상단으로 이동 버튼
 		$(window).scroll(function() {
 			if ($(this).scrollTop() > 100) {
 				$('.back-to-top').fadeIn('slow');
@@ -81,32 +91,350 @@
 		});
 
 
-		// Product Quantity
+		// 장바구니 상품 수량 조절- ** 재고수량을 넘지 않도록 **
 		$('.quantity button').on('click', function() {
 			var button = $(this);
-			var oldValue = button.parent().parent().find('input').val();
+			var input = button.parent().parent().find('input');
+			var oldValue = parseFloat(input.val());
+			var maxVal = parseFloat(input.data('max')); // 최대 재고량 가져오기
+
 			if (button.hasClass('btn-plus')) {
-				var newVal = parseFloat(oldValue) + 1;
+				var newVal = oldValue + 1;
+				// 재고량 체크
+				if (!isNaN(maxVal) && newVal > maxVal) {
+					alert("재고가 부족합니다. (남은 수량: " + maxVal + "개)");
+					newVal = maxVal;
+				}
 			} else {
-				if (oldValue > 0) {
-					var newVal = parseFloat(oldValue) - 1;
+				if (oldValue > 1) { // 최소 1개 유지
+					var newVal = oldValue - 1;
 				} else {
-					newVal = 0;
+					newVal = 1;
 				}
 			}
-			button.parent().parent().find('input').val(newVal);
+			input.val(newVal);
 		});
-		//sidebar 클릭
-	const currentPath = window.location.pathname.split('/').pop();
 
-	$('.category-sidebar .nav-link').removeClass('active') 
-		.each(function() {
-			const $el = $(this);
-			if ($el.attr('href') === currentPath) {
-				$el.addClass('active');
-			}
-		});
+		//sidebar 클릭
+		const currentPath = window.location.pathname.split('/').pop();
+
+		$('.category-sidebar .nav-link').removeClass('active')
+			.each(function() {
+				const $el = $(this);
+				if ($el.attr('href') === currentPath) {
+					$el.addClass('active');
+				}
+			});
 
 	})
 
-})/*(jQuery);*/
+
+	// 서버에 장바구니 수량을 요청하여 배지 업데이트
+	function updateCartBadge() {
+		$.get('/cart/count', function(res) {
+			try {
+				var count = (res && res.cartCount) ? res.cartCount : 0;
+				// 모든 장바구니 아이콘의 부모를 찾아 그 자식 .badge를 업데이트합니다
+				$('.fa-shopping-cart').each(function() {
+					var $icon = $(this);
+					var $a = $icon.closest('a');
+					if ($a.length) {
+						var $badge = $a.find('.badge');
+						if ($badge.length) {
+							$badge.text(count);
+						}
+					}
+				});
+			} catch (e) { console.error('updateCartBadge error', e); }
+		}, 'json').fail(function() { console.warn('Failed to fetch /cart/count'); });
+	}
+
+	// 페이지 로드 시 초기 배지 업데이트
+	try { updateCartBadge(); } catch (e) {/*ignore*/ }
+
+	// 간단한 토스트 알림 헬퍼 (비차단)
+	function showToast(message, timeout) {
+		try {
+			var t = timeout || 2500;
+			var $toast = $('<div class="copilot-toast" />').text(message).css({
+				position: 'fixed',
+				right: '20px',
+				top: '20px',
+				background: 'rgba(0,0,0,0.8)',
+				color: '#fff',
+				padding: '10px 14px',
+				'border-radius': '4px',
+				'z-index': 2147483647,
+				'box-shadow': '0 2px 8px rgba(0,0,0,0.2)'
+			});
+			$('body').append($toast);
+			$toast.hide().fadeIn(150);
+			setTimeout(function() { $toast.fadeOut(300, function() { $toast.remove(); }); }, t);
+		} catch (e) { console.warn('showToast failed', e); }
+	}
+
+	// 상품명과 '장바구니 보기' 버튼을 포함한 풍부한 장바구니 토스트
+	function showAddToast(productName, count, imageUrl) {
+		try {
+			var t = 3500;
+			var $toast = $('<div class="copilot-toast add-toast" />').css({
+				position: 'fixed',
+				right: '20px',
+				top: '20px',
+				background: '#fff',
+				color: '#333',
+				padding: '10px 14px',
+				'border-radius': '6px',
+				'z-index': 2147483647,
+				'box-shadow': '0 2px 16px rgba(0,0,0,0.12)',
+				'max-width': '320px'
+			});
+			var imgHtml = '';
+			if (imageUrl) imgHtml = '<img src="' + imageUrl + '" style="width:48px;height:48px;object-fit:cover;margin-right:8px;float:left;border-radius:4px;"/>';
+			var title = productName ? ('<strong style="display:block;margin-bottom:6px;">' + productName + '</strong>') : '';
+			var body = '<div style="overflow:hidden;">' + imgHtml + '<div style="margin-left:56px;">' + title + '장바구니에 담겼습니다. 총 <strong>' + (count || 0) + '</strong>개</div></div>';
+			var actions = '<div style="margin-top:8px;text-align:right;"><a href="/cart" class="btn btn-sm btn-primary" style="color:#fff;text-decoration:none;padding:6px 10px;border-radius:4px;">장바구니 보기</a></div>';
+			$toast.html(body + actions);
+			$('body').append($toast);
+			$toast.hide().fadeIn(150);
+			setTimeout(function() { $toast.fadeOut(300, function() { $toast.remove(); }); }, t);
+		} catch (e) { console.warn('showAddToast failed', e); }
+	}
+
+
+	// 장바구니 추가 폼 제출을 가로채서 AJAX로 추가하고 배지 업데이트를 수행합니다
+	$(document).on('submit', 'form[action="/cart/addForm"]', function(e) {
+		e.preventDefault();
+		var $form = $(this);
+		var itemNo = $form.find('input[name="item_no"]').val();
+		var qty = $form.find('input[name="qty"]').val() || 1;
+		if (!itemNo) { showToast('item_no가 필요합니다.'); return; }
+		$.post('/cart/add', { item_no: itemNo, qty: qty }, function(res) {
+			if (res && res.success) {
+				// 배지를 업데이트하고 간단한 피드백을 표시합니다
+				updateCartBadge();
+				// 토스트에 표시할 상품명을 DOM에서 찾습니다
+				var productName = null;
+				try {
+					var $card = $form.closest('.product-item');
+					if ($card && $card.length) productName = $card.find('.text-truncate').first().text().trim();
+				} catch (e) { }
+				showAddToast(productName, res.cartCount);
+			} else {
+				showToast('장바구니에 추가하지 못했습니다.');
+			}
+		}, 'json').fail(function() {
+			showToast('네트워크 오류.');
+		});
+	});
+
+	// `.add-to-cart-btn` 직접 클릭도 지원합니다
+	$(document).on('click', '.add-to-cart-btn', function(e) {
+		var $btn = $(this);
+		e.preventDefault();
+		// data 속성을 우선 사용하고, 없으면 주변 폼 입력값을 사용합니다
+		var itemNo = $btn.data('item-no') || $btn.attr('data-item-no');
+		var qty = $btn.data('qty') || 1;
+		var $form = $btn.closest('form[action="/cart/addForm"]');
+		if ((!itemNo || itemNo === '') && $form.length) {
+			itemNo = $form.find('input[name="item_no"]').val();
+			qty = $form.find('input[name="qty"]').val() || qty;
+		}
+		if (!itemNo) { showToast('item_no가 필요합니다.'); return; }
+		// 더 나은 토스트를 위해 DOM에서 상품명을 찾으려고 시도합니다
+		var productName = null;
+		try {
+			var $card = $btn.closest('.product-item');
+			if ($card && $card.length) {
+				productName = $card.find('.text-truncate').first().text().trim();
+			}
+		} catch (e) { /* ignore */ }
+		$.post('/cart/add', { item_no: itemNo, qty: qty }, function(res) {
+			if (res && res.success) {
+				updateCartBadge();
+				showAddToast(productName, res.cartCount);
+			} else {
+				showToast('장바구니에 추가하지 못했습니다.');
+			}
+		}, 'json').fail(function(jqxhr, status, err) {
+			console.error('/cart/add failed (click)', status, err, jqxhr && jqxhr.responseText);
+			showToast('네트워크 오류.');
+		});
+	});
+
+
+	// 장바구니 추가 헬퍼 (버튼에서 호출: addToCart(itemNo, qty))
+	function addToCart(itemNo, qty) {
+		if (!itemNo) {
+			console.warn('addToCart missing itemNo');
+			showToast('item_no가 필요합니다.');
+			return;
+		}
+		// data-item-no 속성이 있는 요소에서 상품명을 시도하여 찾습니다
+		var productName = null;
+		try {
+			var $el = $('[data-item-no="' + itemNo + '"]').first();
+			if ($el && $el.length) {
+				var $card = $el.closest('.product-item');
+				if ($card && $card.length) productName = $card.find('.text-truncate').first().text().trim();
+			}
+		} catch (e) { }
+		$.post('/cart/add', { item_no: itemNo, qty: qty || 1 }, function(res) {
+			if (res && res.success) {
+				// 페이지 이동 대신 배지 업데이트 및 상품 토스트를 표시합니다
+				updateCartBadge();
+				showAddToast(productName, res.cartCount);
+			} else {
+				showToast('장바구니에 추가하지 못했습니다.');
+			}
+		}, 'json').fail(function(jqxhr, status, err) {
+			console.error('/cart/add failed', status, err, jqxhr.responseText);
+			showToast('네트워크 오류가 발생했습니다. 콘솔을 확인하세요.');
+		});
+	}
+	window.addToCart = addToCart;
+
+	// 데이터 기반 장바구니 버튼들을 위한 위임 클릭 핸들러
+	$(document).on('click', '.add-to-cart', function(e) {
+		e.preventDefault();
+		var $btn = $(this);
+		var itemNo = $btn.data('item-no');
+		addToCart(itemNo);
+	});
+
+	const fields = $(".required-field");
+
+	// 필드 검증 함수
+	function validateFields() {
+		let allValid = true;
+
+		// ✅ 함수 호출 시점에 필드 다시 찾기
+		const fields = $(".required-field");
+
+		// item 페이지의 수정 모드일 때만 체크
+		const isItemUpdateMode = $('input[name="item_no"]').length > 0
+			&& $('input[name="item_no"]').val() !== '';
+
+		fields.each(function() {
+			const el = $(this);
+			const td = el.closest("td");
+			const msg = td.find(".error-msg");
+
+			// item 수정 모드일 때 이미지 필드만 건너뛰기
+			if (isItemUpdateMode && el.attr('name') === 'item_imgFile') {
+				el.removeClass("input-error");
+				msg.addClass("d-none");
+				return true;
+			}
+
+			// 빈 값 체크
+			let isEmpty = false;
+			if (el.attr('type') === 'file') {
+				isEmpty = el.get(0).files.length === 0;
+			} else {
+				isEmpty = el.val() === null || el.val().toString().trim() === "";
+			}
+
+			if (isEmpty) {
+				el.addClass("input-error");
+				msg.removeClass("d-none");
+				allValid = false;
+			} else {
+				el.removeClass("input-error");
+				msg.addClass("d-none");
+			}
+		});
+
+		return allValid;
+	}
+
+	// 입력 시 해당 필드의 에러만 지움 (전체 검증 X)
+	$(document).on("input change", ".required-field", function() {
+		const el = $(this);
+		const msg = el.closest("td").find(".error-msg");
+
+		if (el.val().trim() !== "") {
+			el.removeClass("input-error");
+			msg.addClass("d-none");
+		}
+	});
+
+	// 버튼 클릭 시 최종 검증 - ✅ $(document).on으로 변경
+	$(document).on("click", ".submit-btn", function(e) {
+	    // 비활성화된 버튼이면 종료
+	    if ($(this).prop('disabled')) {
+	        e.preventDefault();
+	        return false;
+	    }
+
+	    // 유효성 검사
+	    if (!validateFields()) {
+	        e.preventDefault();
+	        return;
+	    }
+
+	    // 정상 submit → formaction 적용
+	    const form = $(this).closest("form");
+	    form.attr("action", $(this).attr("formaction") || form.attr("action"));
+	    form.submit();
+	});
+
+	// JS (admin-common.js에 추가)
+	const AdminAuth = {
+		showLoginRequired: function() {
+			document.getElementById('adminOverlay').classList.add('show');
+			document.getElementById('loginModal').classList.add('show');
+		}
+	};
+
+	// AJAX 401 에러 시 자동 표시
+	$(document).ajaxError(function(event, xhr) {
+		if (xhr.status === 401) {
+			AdminAuth.showLoginRequired();
+		}
+	});
+
+})(jQuery);
+
+// 교환 선택시 교환 상품 번호 입력란 표시
+$('select[name="type"]').change(function() {
+	if ($(this).val() === '교환') {
+		$('#returnNoGroup').show();
+	} else {
+		$('#returnNoGroup').hide();
+	}
+});
+
+// 취/반/교 상세보기
+function loadCrDetail(crNo) {
+	$.ajax({
+		url: '/mycs/detail/' + crNo,
+		method: 'GET',
+		success: function(data) {
+			if (data) {
+				let html = '<dl class="row">';
+				html += '<dt class="col-sm-4">신청번호</dt><dd class="col-sm-8">' + data.cr_no + '</dd>';
+				html += '<dt class="col-sm-4">주문번호</dt><dd class="col-sm-8">' + data.order_no + '</dd>';
+				html += '<dt class="col-sm-4">신청유형</dt><dd class="col-sm-8">' + data.type + '</dd>';
+				html += '<dt class="col-sm-4">상태</dt><dd class="col-sm-8">' + data.status + '</dd>';
+				html += '<dt class="col-sm-4">신청일</dt><dd class="col-sm-8">' + data.re_date + '</dd>';
+				html += '<dt class="col-sm-4">사유</dt><dd class="col-sm-8">' + data.reason + '</dd>';
+				html += '</dl>';
+				$('#detailContent').html(html);
+			} else {
+				$('#detailContent').html('<p class="text-center">데이터를 불러올 수 없습니다.</p>');
+			}
+		},
+		error: function() {
+			$('#detailContent').html('<p class="text-center text-danger">오류가 발생했습니다.</p>');
+		}
+	});
+}
+
+function loadCrDetail(crNo) {
+	console.log("상세보기 cr_no =", crNo);
+
+	document.getElementById("detailModalBody").innerHTML =
+		"상세 내용 로딩 중... (cr_no=" + crNo + ")";
+}
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.model.ReviewRepository">
+
+<select id="countReviewsByItemAndCustomer" parameterType="map" resultType="int">
+	SELECT COUNT(*)
+	FROM review
+	WHERE item_no = #{item_no}
+	  AND customer_id = #{customer_id}
+</select>
+
+<select id="countPurchasesByItemAndCustomer" parameterType="map" resultType="int">
+	SELECT COUNT(DISTINCT o.order_no)
+	FROM orders o
+	JOIN order_detail od ON o.order_no = od.order_no
+	WHERE o.customer_id = #{customer_id}
+	  AND od.item_no = #{item_no}
+	  AND (o.order_status IS NULL OR o.order_status &lt;&gt; '취소')
+</select>
+
+<select id="selectReviewsByItemNo" parameterType="int" resultType="com.example.model.vo.ReviewVO">
+	SELECT	review_no
+		    , re_title
+	        , re_content
+	        , re_date
+	        , item_no
+	        , customer_id
+	        , rating
+	FROM	review
+	WHERE 	item_no = #{item_no}
+	ORDER BY re_date DESC
+</select>
+
+<insert id="add" parameterType="com.example.model.vo.ReviewVO">
+	<selectKey keyProperty="review_no" resultType="int" order="BEFORE">
+	    SELECT review_seq.NEXTVAL FROM dual
+	</selectKey>
+	INSERT INTO review (review_no, re_title, re_content, re_date, item_no, customer_id, rating)
+	VALUES (#{review_no}
+			, #{re_title}
+			, #{re_content}
+			, sysdate
+			, #{item_no}
+			, #{customer_id}
+			, #{rating})
+</insert>
+
+<delete id="delete" parameterType="int">
+	DELETE FROM review WHERE review_no = #{review_no}
+</delete>
+
+<update id="update" parameterType="com.example.model.vo.ReviewVO">
+	UPDATE review
+	SET re_content = #{re_content},
+	    rating = #{rating}
+	WHERE review_no = #{review_no}
+</update>
+
+</mapper>
