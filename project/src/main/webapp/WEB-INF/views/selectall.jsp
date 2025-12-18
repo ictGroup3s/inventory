@@ -164,7 +164,7 @@
 
 					<!-- 상품 목록 시작 (상품검색시 결과) -->
 					<c:if test="${empty products}">
-						<div class="col-12">
+						<div class="col-12" style="height: 800px;">
 							<div class="alert alert-info text-center">상품이 없습니다. 검색어를
 								변경하거나 관리자에게 문의하세요.</div>
 						</div>

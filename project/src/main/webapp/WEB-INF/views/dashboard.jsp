@@ -59,10 +59,11 @@
 	<div class="admin-content">
 
 		<!-- 로고(왼쪽) -->
-		<div class="row align-items-center py-3 px-xl-5" style="margin-left:60px;">
+		<div class="row align-items-center py-3 px-xl-5"
+			style="margin-left: 60px;">
 			<div class="col-lg-3 d-none d-lg-block">
-				<a href="/" class="text-decoration-none"> 
-				<img src="img/logo.png" class="logo" />
+				<a href="/" class="text-decoration-none"> <img
+					src="img/logo.png" class="logo" />
 				</a>
 			</div>
 			<div class="col-lg-6 col-6 text-left">
@@ -235,11 +236,11 @@
 			</div>
 		</div>
 
-	  <!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 	
-	style="width:1350px; margin-left:150px; margin-top: 50px !important;">
-		<div class="row px-xl-5 pt-2" style="margin-left:-120px;">
-			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
+		<!-- Footer Start -->
+		<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2"
+			style="width: 1350px; margin-left: 150px; margin-top:200px !important; " >
+			<div class="row px-xl-5 pt-3" style="margin-left: -100px;">
+				<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 					<p class="mb-2">
 						<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
@@ -290,33 +291,32 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row border-top border-light py-4" style="margin-left:-60px; margin-right:60px;">
-			<div class="col-md-6 px-xl-0">
-				<p class="mb-md-0 text-center text-md-left text-dark">
+			<div class="row border-top border-light py-4"
+				style="margin-left: -60px; margin-right: 60px; ">
+				<div class="col-md-6 px-xl-0">
+					<p class="mb-md-0 text-center text-md-left text-dark">
 						&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
-						Site Name</a>. All Rights Reserved. Designed by <a
-						class="text-dark font-weight-semi-bold"
-						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
-					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+							Site Name</a>. All Rights Reserved. Designed by <a
+							class="text-dark font-weight-semi-bold"
+							href="https://htmlcodex.com">HTML Codex</a><br> Distributed
+						By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
 
-				</p>
-			</div>
-			<div class="col-md-6 px-xl-0 text-center text-md-right">
-				<img class="img-fluid" src="img/payments.png" alt="">
+					</p>
+				</div>
+				<div class="col-md-6 px-xl-0 text-center text-md-right">
+					<img class="img-fluid" src="img/payments.png" alt="">
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<!-- footer end -->
-	<!-- JS -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="js/main.js"></script>
-	<script src="js/dashboard.js"></script>
 
+		<!-- footer end -->
+		<!-- JS -->
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+		<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/dashboard.js"></script>
 </body>
 </html>
