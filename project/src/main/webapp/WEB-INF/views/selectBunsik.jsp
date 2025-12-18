@@ -81,7 +81,7 @@
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
-						<div class="navbar-nav py-0" style="margin-left: 970px;">
+						<div class="navbar-nav ml-auto py-0 text-right">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
 								<a href="login" class="nav-item nav-link">로그인</a>
