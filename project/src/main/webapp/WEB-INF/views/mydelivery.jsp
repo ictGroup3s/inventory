@@ -10,7 +10,7 @@
 <title>배송내역</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-				<!-- Favicon -->
+<!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
@@ -19,6 +19,7 @@
 
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
 <!-- ⭐ Bootstrap CSS-->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 
@@ -80,10 +81,7 @@
 					<h4 style="margin-top:50px;">배송내역</h4>
 				</div>
 				<!-- 검색 결과 카운트 -->
-					<p class="mb-2">
-						총 <strong id="totalCount">${fn:length(deliveryList)}</strong>건 <span
-							id="searchResultText"></span>
-					</p>
+				<span class="ml-2 text-muted" style="margin-right:970px;"> 총 <strong id="totalCount">${fn:length(deliveryList)}</strong>건</span>
 				
 		<!-- ⭐ 검색 및 필터 섹션 ⭐ -->
 				<div class="search-box">
@@ -337,6 +335,7 @@
 		<!-- ⭐⭐⭐ JavaScript Libraries ⭐⭐⭐ -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	
 	<script src="js/checkout.js"></script>
 
 </body>

@@ -297,32 +297,5 @@ function filterByDateRange() {
 	    document.getElementById('noResultMessage').style.display =
 	        visibleCount === 0 ? 'block' : 'none';
 	}
-	
-	//배송내역 검색창
-	function searchCR() {
-	    const type = document.getElementById('searchType').value;
-	    const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
-
-	    const rows = document.querySelectorAll('tbody tr');
-	    let count = 0;
-
-	    rows.forEach(row => {
-	        let text = '';
-
-	        if (type === 'order_no') {
-	            text = row.dataset.orderNo || '';
-	        } else if (type === 'item_name') {
-	            text = row.dataset.itemName || '';
-	        } else {
-	            text = (row.dataset.orderNo || '') + ' ' + (row.dataset.itemName || '');
-	        }
-
-	        const match = text.toLowerCase().includes(keyword);
-	        row.style.display = match ? '' : 'none';
-	        if (match) count++;
-	    });
-
-	    document.getElementById('totalCount').textContent = count;
-	}
 
 

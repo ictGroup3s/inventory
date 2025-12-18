@@ -65,10 +65,11 @@
 				<nav class="category-sidebar">
 					<h6>마이페이지</h6>
 					<ul class="nav flex-column">
-					<li class="nav-item"><a href="/mypage" class="nav-link">모든내역</a></li>
-						<li class="nav-item"><a href="/orderhistory" class="nav-link active">주문내역</a></li>
+						<li class="nav-item"><a href="/mypage" class="nav-link ">모든내역</a></li>
+						<li class="nav-item"><a href="/orderhistory"
+							class="nav-link  active">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
-						<li class="nav-item"><a href="/mycs" class="nav-link ">취소·반품·교환내역</a></li>
+						<li class="nav-item"><a href="/mycs" class="nav-link">취소·반품·교환내역</a></li>
 						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
 						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
 					</ul>
@@ -77,10 +78,12 @@
 
 
 			<!-- Main Content -->
-			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
+			<div class="col-lg-10"
+				style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
 					<h4 style="margin-top:50px;">주문내역</h4>
-					<span class="ml-2 text-muted"style="margin-right:970px;"> 총 <strong id="totalCount">0</strong>건
+					<span class="ml-2 text-muted"style="margin-right:970px;"> 총 
+					<strong id="totalCount">${fn:length(deliveryList)}</strong>건
 					</span>
 				</div>
 				<!-- ⭐ 기간 필터 섹션 ⭐ -->
@@ -96,41 +99,55 @@
 					onclick="filterByDateRange()">조회</button>
 				</div>
 				<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>주문번호</th>
-								<th>상품명</th>
-								<th>결제금액</th>
-								<th>주문상태</th>
-								<th>주문일시</th>
-							</tr>
-						</thead>
-					<tbody id="orderTableBody">
+					<thead>
+						<tr>
+							<th>주문번호</th>
+							<th>상품명</th>
+							<th>결제금액</th>
+							<th>주문상태</th>
+							<th>주문일시</th>
+						</tr>
+					</thead>
+					<tbody>
 						<c:choose>
 							<c:when test="${empty deliveryList}">
 								<tr>
-									<td colspan="5" class="text-center">주문 내역이 없습니다.</td>
+									<td colspan="6" class="text-center">주문 내역이 없습니다.</td>
 								</tr>
 							</c:when>
 							<c:otherwise>
-								<c:forEach var="detail" items="${deliveryList}">
-									<tr class="order-row" data-order-date="${detail.order_date}"
-										data-status="${detail.order_status}">
+								<c:forEach var="order" items="${deliveryList}">
+									<tr class="order-row" data-order-date="${order.order_date}"
+										data-status="${order.order_status}"
+										data-order-no="${order.order_no}">
 
-										<td>${detail.order_no}</td>
-										<td>${detail.item_name}</td>
-										<td><fmt:formatNumber value="${detail.item_price}"
-												pattern="#,###" />원</td>
+										<td>${order.order_no}</td>
 										<td>
-										<span class="badge 
-						                        ${detail.order_status == '결제완료' ? 'badge-success' : 
-						                          detail.order_status == '배송준비중' ? 'badge-warning' : 
-						                          detail.order_status == '배송중' ? 'badge-info' : 
-						                          detail.order_status == '배송완료' ? 'badge-secondary' : 'badge-light'}">
-												${detail.order_status} 
-										</span>
+											<!-- ⭐ 첫 번째 상품명 + 외 N개 표시 --> <c:if
+												test="${not empty order.detailList}">
+                            							${order.detailList[0].item_name}
+                           						 <c:if
+													test="${fn:length(order.detailList) > 1}">
+													<span class="text-muted"> 외
+														${fn:length(order.detailList) - 1}개</span>
+												</c:if>
+											</c:if>
 										</td>
-										<td>${detail.order_date}</td>
+										<td><fmt:formatNumber value="${order.total_amount}"
+												pattern="#,###" />원</td>
+										<td><span
+											class="badge 
+				                            ${order.order_status == '결제완료' ? 'badge-success' : 
+				                              order.order_status == '배송준비중' ? 'badge-warning' : 
+				                              order.order_status == '배송중' ? 'badge-info' : 
+				                              order.order_status == '배송완료' ? 'badge-secondary' : 'badge-light'}">
+												${order.order_status} </span></td>
+										<td>${order.order_date}</td>
+										<td>
+											<button class="btn btn-sm btn-secondary" data-toggle="modal"
+												data-target="#orderDetailModal_${order.order_no}">
+												상세보기</button>
+										</td>
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -139,13 +156,187 @@
 				</table>
 
 				<!-- 검색 결과 없음 메시지 -->
-				<div id="noResultMessage" class="text-center py-4" style="display: none;">
+				<div id="noResultMessage" class="text-center py-4"
+					style="display: none;">
 					<i class="fas fa-search fa-3x text-muted mb-3"></i>
 					<p class="text-muted">조회 결과가 없습니다.</p>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- ⭐ 주문 상세보기 모달 (버튼 추가) -->
+	<c:forEach var="order" items="${deliveryList}">
+		<div class="modal fade" id="orderDetailModal_${order.order_no}"
+			tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">주문 상세내역</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<strong>주문번호:</strong> ${order.order_no}
+							</div>
+							<div class="col-md-6">
+								<strong>주문일:</strong> ${order.order_date}
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-md-12">
+								<strong>주문상태:</strong> <span class="badge badge-secondary">${order.order_status}</span>
+							</div>
+						</div>
+						<hr>
+						<h6>
+							<strong>주문 상품</strong>
+						</h6>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>상품명</th>
+									<th>수량</th>
+									<th>금액</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="detail" items="${order.detailList}">
+									<tr>
+										<td>${detail.item_name}</td>
+										<td>${detail.item_cnt}개</td>
+										<td><fmt:formatNumber value="${detail.amount}"
+												pattern="#,###" />원</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="2" class="text-right"><strong>총
+											결제금액:</strong></td>
+									<td><strong><fmt:formatNumber
+												value="${order.total_amount}" pattern="#,###" />원</strong></td>
+								</tr>
+							</tfoot>
+						</table>
+
+						<!-- ⭐ 취소/반품/교환 버튼 그룹 -->
+						<hr>
+						<h6>
+							<strong>주문 관리</strong>
+						</h6>
+
+						<%--상품이 1개인 경우 --%>
+						<c:choose>
+							<c:when test="${fn:length(order.detailList) == 1}">
+								<div class="row mb-3">
+									<div class="col-md-4">
+										<button type="button" class="btn btn-warning btn-block"
+											onclick="showCRForm(${order.order_no}, '취소')">
+											<i class="fas fa-ban mr-2"></i>전체 취소
+										</button>
+									</div>
+									<div class="col-md-4">
+										<button type="button" class="btn btn-info btn-block"
+											onclick="showCRForm(${order.order_no}, '반품')">
+											<i class="fas fa-undo mr-2"></i>전체 반품
+										</button>
+									</div>
+									<div class="col-md-4">
+										<button type="button" class="btn btn-success btn-block"
+											onclick="showCRForm(${order.order_no}, '교환')">
+											<i class="fas fa-exchange-alt mr-2"></i>전체 교환
+										</button>
+									</div>
+								</div>
+							</c:when>
+
+							<%-- 상품이 여러 개인 경우 --%>
+							<c:otherwise>
+								<div class="alert alert-warning">
+									<i class="fas fa-info-circle mr-2"></i> <strong>여러 상품이
+										포함된 주문입니다.</strong><br> 부분 취소/반품/교환은 관리자 문의가 필요합니다.
+								</div>
+								<div class="row mb-3">
+									<div class="col-md-4">
+										<button type="button" class="btn btn-warning btn-block"
+											onclick="showCRForm(${order.order_no}, '취소')">
+											<i class="fas fa-ban mr-2"></i>전체 취소
+										</button>
+									</div>
+									<div class="col-md-4">
+										<button type="button" class="btn btn-info btn-block"
+											onclick="showCRForm(${order.order_no}, '반품')">
+											<i class="fas fa-undo mr-2"></i>전체 반품
+										</button>
+									</div>
+									<div class="col-md-4">
+										<button type="button" class="btn btn-success btn-block"
+											onclick="showCRForm(${order.order_no}, '교환')">
+											<i class="fas fa-exchange-alt mr-2"></i>전체 교환
+										</button>
+									</div>
+								</div>
+								<div class="text-center">
+									<button type="button" class="btn btn-outline-primary"
+										onclick="openAdminChat(${order.order_no})">
+										<i class="fas fa-comments mr-2"></i>부분 취소/교환은 관리자 문의
+									</button>
+								</div>
+							</c:otherwise>
+						</c:choose>
+
+						<%--취소/반품/교환 신청 폼 (처음에는 숨김)--%>
+						<div id="crFormContainer_${order.order_no}"
+							style="display: none; margin-top: 20px;">
+							<hr>
+							<h6>
+								<strong id="crFormTitle_${order.order_no}">취소·반품·교환 신청</strong>
+							</h6>
+							<form action="/mycs/apply" method="post"
+								id="crForm_${order.order_no}">
+								<input type="hidden" name="orderNo" value="${order.order_no}">
+								<input type="hidden" name="type" id="crType_${order.order_no}"
+									value="">
+
+								<!-- 교환인 경우만 상품 선택 표시 -->
+								<div class="form-group"
+									id="productSelectGroup_${order.order_no}"
+									style="display: none;">
+								</div>
+
+								<%-- 사유 --%>
+								<div class="form-group">
+									<label>사유 <span class="text-danger">*</span></label>
+									<textarea name="reason" id="reason_${order.order_no}"
+										class="form-control" rows="4" placeholder="사유를 입력해주세요"
+										required></textarea>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<button type="button" class="btn btn-secondary btn-block"
+											onclick="hideCRForm(${order.order_no})">취소</button>
+									</div>
+									<div class="col-md-6">
+										<button type="submit" class="btn btn-primary btn-block">
+											<i class="fas fa-check mr-2"></i>신청하기
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
 	<!-- Footer -->
 	<div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
 		<div class="row px-xl-5 pt-5">
@@ -210,6 +401,8 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="js/checkout.js"></script>
+	<script src="js/order.js"></script>
+
 
 			
 </body>

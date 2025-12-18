@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 $(function() {
 
@@ -345,3 +342,111 @@ $(function() {
 	});
 
 });
+// 취소/반품/교환 폼 표시
+function showCRForm(orderNo, type) {
+    // 폼 컨테이너 표시
+    document.getElementById('crFormContainer_' + orderNo).style.display = 'block';
+    
+    // 타입 설정
+    document.getElementById('crType_' + orderNo).value = type;
+    
+    // 제목 변경
+    let title = '';
+    if (type === '취소') {
+        title = '전체 취소 신청';
+    } else if (type === '반품') {
+        title = '전체 반품 신청';
+    } else if (type === '교환') {
+        title = '전체 교환 신청';
+    }
+    document.getElementById('crFormTitle_' + orderNo).textContent = title;
+    
+    // 폼으로 스크롤
+    document.getElementById('crFormContainer_' + orderNo).scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+    });
+}
+
+// 취소/반품/교환 폼 숨김
+function hideCRForm(orderNo) {
+    document.getElementById('crFormContainer_' + orderNo).style.display = 'none';
+    document.getElementById('crForm_' + orderNo).reset();
+}
+
+// 관리자 채팅 열기
+function openAdminChat(orderNo) {
+    // 채팅 버튼 클릭
+    const chatToggle = document.getElementById('chatToggle');
+    if (chatToggle) {
+        chatToggle.click();
+        
+        // 메시지 자동 입력
+        setTimeout(function() {
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.value = '주문번호 ' + orderNo + '에 대해 문의드립니다.';
+                messageInput.focus();
+            }
+        }, 500);
+    } else {
+        alert('채팅 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+    }
+}
+
+// 날짜 필터링 함수
+function filterByDateRange() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const rows = document.querySelectorAll('.order-row');
+    const noResultMsg = document.getElementById('noResultMessage');
+    const table = document.querySelector('table');
+    
+    let visibleCount = 0;
+    
+    rows.forEach(row => {
+        const orderDate = row.getAttribute('data-order-date');
+        let shouldShow = true;
+        
+        if (startDate && endDate) {
+            // 날짜 비교 (YYYY-MM-DD 형식)
+            const orderDateOnly = orderDate.split(' ')[0]; // "2024-12-18 10:30:00" -> "2024-12-18"
+            shouldShow = orderDateOnly >= startDate && orderDateOnly <= endDate;
+        }
+        
+        if (shouldShow) {
+            row.style.display = '';
+            visibleCount++;
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    // 결과 카운트 업데이트
+    document.getElementById('totalCount').textContent = visibleCount;
+    
+    // 결과 없음 메시지 표시
+    if (visibleCount === 0) {
+        table.style.display = 'none';
+        noResultMsg.style.display = 'block';
+    } else {
+        table.style.display = 'table';
+        noResultMsg.style.display = 'none';
+    }
+}
+
+// 폼 제출 전 확인
+$(document).ready(function() {
+    $('form[id^="crForm_"]').on('submit', function(e) {
+        const type = $(this).find('input[name="type"]').val();
+        const confirmed = confirm('정말 ' + type + ' 신청하시겠습니까?');
+        
+        if (!confirmed) {
+            e.preventDefault();
+            return false;
+        }
+    });
+});
+
+
+

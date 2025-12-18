@@ -1,7 +1,4 @@
 package com.example.controller;
-
-
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,21 +86,20 @@ public class orderController {
 	            log.info("      - 이름: {}", loginUser.getName());
 	            log.info("      - 이메일: {}", loginUser.getEmail());
 	            
-	            // 3. DB 조회
+	            // 3. DB 조회 - ⭐ ordersVO 타입으로 변경
 	            log.info("📌 STEP 3: DB 조회 시작");
 	            log.info("   - 조회 대상 customer_id: {}", customerId);
-	            log.info("   - orderRepository 객체: {}", repo != null ? "정상" : "NULL!");
+	            log.info("   - orderService 객체: {}", orderService != null ? "정상" : "NULL!");
 	            
-	            List<order_detailVO> deliveryList = null;
+	            List<ordersVO> deliveryList = null;
 	            
 	            try {
-	                deliveryList = repo.getDeliveryList(customerId);
+	                // ⭐ 주문번호별로 그룹핑된 데이터 조회
+	                deliveryList = orderService.getDeliveryGroupedList(customerId);
 	                log.info("   ✅ DB 조회 성공!");
-	            } catch (SQLException e) {
-	                log.error("   ❌ DB 조회 중 SQL 에러 발생!", e);
-	                log.error("   SQL 에러 메시지: {}", e.getMessage());
-	                log.error("   SQL State: {}", e.getSQLState());
-	                log.error("   Error Code: {}", e.getErrorCode());
+	            } catch (Exception e) {
+	                log.error("   ❌ DB 조회 중 에러 발생!", e);
+	                log.error("   에러 메시지: {}", e.getMessage());
 	                throw e;
 	            }
 	            
@@ -115,17 +111,23 @@ public class orderController {
 	            if (deliveryList != null && !deliveryList.isEmpty()) {
 	                log.info("   ✅ 주문 내역 상세:");
 	                for (int i = 0; i < deliveryList.size(); i++) {
-	                    order_detailVO item = deliveryList.get(i);
+	                    ordersVO order = deliveryList.get(i);
 	                    log.info("   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 	                    log.info("   [주문 #{}]", (i + 1));
-	                    log.info("      - 주문번호: {}", item.getOrder_no());
-	                    log.info("      - 상품명: {}", item.getItem_name());
-	                    log.info("      - 상품번호: {}", item.getItem_no());
-	                    log.info("      - 수량: {}", item.getItem_cnt());
-	                    log.info("      - 단가: {}원", item.getItem_price());
-	                    log.info("      - 금액: {}원", item.getAmount());
-	                    log.info("      - 주문상태: {}", item.getOrder_status());
-	                    log.info("      - 주문일시: {}", item.getOrder_date());
+	                    log.info("      - 주문번호: {}", order.getOrder_no());
+	                    log.info("      - 총 금액: {}원", order.getTotal_amount());
+	                    log.info("      - 주문상태: {}", order.getOrder_status());
+	                    log.info("      - 주문일시: {}", order.getOrder_date());
+	                    log.info("      - 상품 개수: {}", order.getDetailList() != null ? order.getDetailList().size() : 0);
+	                    
+	                    // 상품 상세 정보
+	                    if (order.getDetailList() != null && !order.getDetailList().isEmpty()) {
+	                        for (int j = 0; j < order.getDetailList().size(); j++) {
+	                            order_detailVO detail = order.getDetailList().get(j);
+	                            log.info("         [상품 {}] {}, 수량: {}개, 금액: {}원", 
+	                                (j + 1), detail.getItem_name(), detail.getItem_cnt(), detail.getAmount());
+	                        }
+	                    }
 	                }
 	            } else {
 	                log.warn("   ⚠️ 조회된 주문내역이 없습니다!");
@@ -147,18 +149,9 @@ public class orderController {
 	            
 	            return "orderhistory";
 	            
-	        } catch (SQLException e) {
-	            log.error("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-	            log.error("┃  ❌ SQL 에러 발생!                                  ┃");
-	            log.error("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-	            log.error("에러 메시지: {}", e.getMessage());
-	            e.printStackTrace();
-	            model.addAttribute("error", "주문내역을 불러오는데 실패했습니다: " + e.getMessage());
-	            return "orderhistory";
-	            
 	        } catch (Exception e) {
 	            log.error("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-	            log.error("┃  ❌ 예상치 못한 에러 발생!                          ┃");
+	            log.error("┃  ❌ 에러 발생!                                      ┃");
 	            log.error("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 	            log.error("에러 타입: {}", e.getClass().getName());
 	            log.error("에러 메시지: {}", e.getMessage());
@@ -204,80 +197,86 @@ public class orderController {
 	            return "mydelivery";
 	        }
 	    }
-	    @PostMapping("/order/submit")
-	    public String submitOrder(
-	            @RequestParam("name") String name,
-	            @RequestParam("email") String email,
-	            @RequestParam("phone") String phone,
-	            @RequestParam("address") String address,
-	            @RequestParam("region") String region,
-	            @RequestParam(value = "shipName", required = false) String shipName,
-	            @RequestParam(value = "shipPhone", required = false) String shipPhone,
-	            @RequestParam(value = "shipAddress", required = false) String shipAddress,
-	            @RequestParam(value = "payment", required = false) String payment,
-	            @RequestParam(value = "memo", required = false) String memo,
-	            @RequestParam(value = "memoInput", required = false) String memoInput,
-	            HttpSession session,
-	            Model model) {
-	        
-	        log.info("=== 주문 제출 시작 ===");
-	        
-	        // 1. 세션에서 로그인 정보 가져오기
-	        CustomerVO loginUser = (CustomerVO) session.getAttribute("loginUser");
-	        
-	        if (loginUser == null) {
-	            log.warn("로그인 정보 없음");
-	            return "redirect:/login";
-	        }
-	        try {
-	            // 2. 장바구니 아이템 가져오기
-	            List<CartItemVO> cartItems = cartService.getCartItems(session);
-	            
-	            if (cartItems == null || cartItems.isEmpty()) {
-	                log.warn("장바구니가 비어있음");
-	                model.addAttribute("error", "장바구니가 비어있습니다.");
-	                return "redirect:/cart";
-	            }
-	            
-	            // 3. 주문 정보 생성
-	            ordersVO order = new ordersVO();
-	            order.setCustomer_id(loginUser.getCustomer_id());
-	            order.setOrder_name(name);
-	            order.setOrder_addr(address);
-	            order.setOrder_phone(Long.parseLong(phone));
-	            order.setOrder_status("결제완료");
-	            order.setPayment(payment != null ? payment : "card");
-	            
-	            // 배송지 주소 결정
-	            if (shipAddress != null && !shipAddress.isEmpty()) {
-	                order.setOrder_addr(shipAddress);
-	            } else {
-	                order.setOrder_addr(address);
-	            }
-	            
-	            // 메모 처리
-	            if ("direct".equals(memo) && memoInput != null) {
-	                order.setApi_pay(memoInput);
-	            } else if (memo != null) {
-	                order.setApi_pay(memo);
-	            }
-	            
-	            log.info("주문 정보: {}", order);
-	            
-	            // 4. 주문 생성 (장바구니 아이템과 함께)
-	            int orderNo = orderService.createOrder(order, cartItems);
-	            
-	            log.info("✅ 주문 생성 완료 - 주문번호: {}", orderNo);
-	            
-	            // 5. 주문 완료 페이지로 리다이렉트
-	            return "redirect:/ordercomplete?orderNo=" + orderNo;
-	            
-	        } catch (Exception e) {
-	            log.error("❌ 주문 처리 중 오류 발생", e);
-	            model.addAttribute("error", "주문 처리 중 오류가 발생했습니다.");
-	            return "redirect:/checkout";
-	        }
-	    }
+
+		/*
+		 * @PostMapping("/order/submit") public String submitOrder(
+		 * 
+		 * @RequestParam("name") String name,
+		 * 
+		 * @RequestParam("email") String email,
+		 * 
+		 * @RequestParam("phone") String phone,
+		 * 
+		 * @RequestParam("address") String address,
+		 * 
+		 * @RequestParam("region") String region,
+		 * 
+		 * @RequestParam(value = "shipName", required = false) String shipName,
+		 * 
+		 * @RequestParam(value = "shipPhone", required = false) String shipPhone,
+		 * 
+		 * @RequestParam(value = "shipAddress", required = false) String shipAddress,
+		 * 
+		 * @RequestParam(value = "payment", required = false) String payment,
+		 * 
+		 * @RequestParam(value = "memo", required = false) String memo,
+		 * 
+		 * @RequestParam(value = "memoInput", required = false) String memoInput,
+		 * HttpSession session, Model model) {
+		 * 
+		 * log.info("=== 주문 제출 시작 ===");
+		 * 
+		 * // 1. 세션에서 로그인 정보 가져오기 CustomerVO loginUser = (CustomerVO)
+		 * session.getAttribute("loginUser");
+		 * 
+		 * if (loginUser == null) { log.warn("로그인 정보 없음"); return "redirect:/login"; }
+		 * try { // 2. 장바구니 아이템 가져오기 List<CartItemVO> cartItems =
+		 * cartService.getCartItems(session);
+		 * 
+		 * if (cartItems == null || cartItems.isEmpty()) { log.warn("장바구니가 비어있음");
+		 * model.addAttribute("error", "장바구니가 비어있습니다."); return "redirect:/cart"; }
+		 * 
+		 * // 3. 주문 정보 생성 ordersVO order = new ordersVO();
+		 * order.setCustomer_id(loginUser.getCustomer_id()); order.setOrder_name(name);
+		 * order.setOrder_addr(address); order.setOrder_phone(Long.parseLong(phone));
+		 * order.setOrder_status("결제완료"); order.setPayment(payment != null ? payment :
+		 * "결제완료");
+		 * 
+		 * 
+		 * 
+		 * // 배송지 주소 결정 if (shipAddress != null && !shipAddress.isEmpty()) {
+		 * order.setOrder_addr(shipAddress); } else { order.setOrder_addr(address); }
+		 * 
+		 * // 수령지 정보 설정 (입력된 값이 있으면 사용, 없으면 주문자 정보 사용) if (shipName != null &&
+		 * !shipName.trim().isEmpty()) { order.setShip_name(shipName); } else {
+		 * order.setShip_name(name); }
+		 * 
+		 * if (shipPhone != null && !shipPhone.trim().isEmpty()) {
+		 * order.setShip_phone(shipPhone); } else { order.setShip_phone(phone); }
+		 * 
+		 * if (shipAddress != null && !shipAddress.trim().isEmpty()) {
+		 * order.setShip_addr(shipAddress); } else { order.setShip_addr(address); }
+		 * 
+		 * // 메모 처리 String finalMemo = ""; if ("direct".equals(memo) && memoInput !=
+		 * null && !memoInput.trim().isEmpty()) { finalMemo = memoInput; } else if (memo
+		 * != null && !"요청사항".equals(memo)) { finalMemo = memo; }
+		 * order.setMemo(finalMemo);
+		 * 
+		 * log.info("주문 정보: {}", order); log.info("수령지 이름: {}", order.getShip_name());
+		 * log.info("수령지 전화번호: {}", order.getShip_phone()); log.info("수령지 주소: {}",
+		 * order.getShip_addr()); log.info("메모: {}", order.getMemo());
+		 * 
+		 * // 4. 주문 생성 (장바구니 아이템과 함께) int orderNo = orderService.createOrder(order,
+		 * cartItems);
+		 * 
+		 * log.info("✅ 주문 생성 완료 - 주문번호: {}", orderNo);
+		 * 
+		 * // 5. 주문 완료 페이지로 리다이렉트 return "redirect:/ordercomplete?orderNo=" + orderNo;
+		 * 
+		 * } catch (Exception e) { log.error("❌ 주문 처리 중 오류 발생", e);
+		 * model.addAttribute("error", "주문 처리 중 오류가 발생했습니다."); return
+		 * "redirect:/checkout"; } }
+		 */
 	    @GetMapping("/ordercomplete")
 	    public String orderComplete(@RequestParam("orderNo") int orderNo, Model model, HttpSession session) {
 	        log.info("주문 완료 페이지 - 주문번호: {}", orderNo);
