@@ -43,7 +43,11 @@
             order_phone,
             order_date,
             order_status,
-            payment
+            payment,
+            ship_name,
+	        ship_phone,
+	        ship_addr,
+	        memo
             
         ) VALUES (
             #{order_no},
@@ -53,7 +57,11 @@
             #{order_phone},
             SYSDATE,
             #{order_status},
-            #{payment}
+            #{payment},
+            #{ship_name},
+	        #{ship_phone},
+	        #{ship_addr},
+	        #{memo}
   
         )
     </insert>
