@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   <%-- 이거 추가! --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- 이거 추가! --%>
 
 <!DOCTYPE html>
 <html>
@@ -29,25 +31,30 @@
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/stats.css">
 <link rel="stylesheet" href="css/order.css">
 
 
+
+
 </head>
-<body class="${empty sessionScope.loginUser || sessionScope.loginRole != '1' ? 'hide-content' : ''}">
+<body
+	class="${empty sessionScope.loginUser || sessionScope.loginRole != '1' ? 'hide-content' : ''}">
 	<%-- 관리자 아니면 모달 띄우고 페이지 내용 숨김 --%>
-	<c:if test="${empty sessionScope.loginUser || sessionScope.loginRole != '1'}">
-    <div class="admin-overlay"></div>
-    <div class="login-modal">
-        <div class="lock-icon">🔒</div>
-        <h3>로그인이 필요합니다</h3>
-        <p>
-            관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
-        </p>
-        <%-- 현재 페이지 이름만 전달 --%>
-        <a href="login?redirectURL=order" 
-           class="btn-login" style="display: block; text-decoration: none;">로그인</a>
-			<a href="${pageContext.request.contextPath}/" class="btn-home"
-			style="display: block; text-decoration: none;">홈으로</a>
+	<c:if
+		test="${empty sessionScope.loginUser || sessionScope.loginRole != '1'}">
+		<div class="admin-overlay"></div>
+		<div class="login-modal">
+			<div class="lock-icon">🔒</div>
+			<h3>로그인이 필요합니다</h3>
+			<p>
+				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
+			</p>
+			<%-- 현재 페이지 이름만 전달 --%>
+			<a href="login?redirectURL=order" class="btn-login"
+				style="display: block; text-decoration: none;">로그인</a> <a
+				href="${pageContext.request.contextPath}/" class="btn-home"
+				style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
@@ -65,12 +72,13 @@
 			<div class="col-lg-6 col-6 text-left">
 				<form action="selectall" method="get">
 					<div class="input-group">
-						<input type="text" class="form-control"
+						<input type="text" name="q" class="form-control"
 							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
+							<button class="input-group-text bg-transparent text-primary"
+								type="submit">
 								<i class="fa fa-search"></i>
-							</span>
+							</button>
 						</div>
 					</div>
 				</form>
@@ -86,9 +94,9 @@
 		<!-- Main Layout -->
 		<div class="container-fluid">
 			<div class="row px-xl-5">
-				<div class="col-lg-1">
-					<!-- Sidebar -->
-					<nav class="category-sidebar">
+				<!-- LEFT SIDEBAR (PC ONLY) -->
+				<div class="col-lg-2 d-none d-lg-block">
+					<nav class="category-sidebar" id="mainSidebar">
 						<h6>관리자 페이지</h6>
 						<ul class="nav flex-column">
 							<li class="nav-item"><a href="dashboard" class="nav-link">대쉬보드</a></li>
@@ -96,21 +104,22 @@
 							<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
 							<li class="nav-item"><a href="order" class="nav-link active">주문관리</a></li>
 							<li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
-							<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
+							<li class="nav-item"><a href="mlist" class="nav-link">채팅관리</a></li>
 							<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
 						</ul>
 					</nav>
 				</div>
 
 				<!-- Content -->
-				<div class="col-lg-11 dashboard-content">
+				<div class="col-lg-10">
 					<h3 class="mb-4">주문관리</h3>
-					
+
 					<!-- ✅ 안내 문구 추가 -->
-				    <p class="text-muted mb-2" style="font-size: 14px;">
-				        <i class="fas fa-info-circle"></i> 최근 1개월 주문만 표시됩니다. 이전 주문은 날짜 검색을 이용해주세요.
-				    </p>
-				    
+					<p class="text-muted mb-2" style="font-size: 14px;">
+						<i class="fas fa-info-circle"></i> 최근 1개월 주문만 표시됩니다. 이전 주문은 날짜 검색을
+						이용해주세요.
+					</p>
+
 					<!-- 주문 검색 -->
 					<form class="form-inline mb-3 flex-wrap" id="searchForm">
 						<input type="text" class="form-control mr-2 mb-2"
@@ -127,13 +136,16 @@
 							<option value="취소">취소</option>
 							<option value="반품">반품</option>
 							<option value="교환">교환</option>
-						</select> 
-						<input type="date" class="form-control mr-2 mb-2" id="searchStartDate" style="width: 150px;"> 
-						<span class="mr-2 mb-2">~</span> 
-						<input type="date" class="form-control mr-2 mb-2" id="searchEndDate" style="width: 150px;">
+						</select> <input type="date" class="form-control mr-2 mb-2"
+							id="searchStartDate" style="width: 150px;"> <span
+							class="mr-2 mb-2">~</span> <input type="date"
+							class="form-control mr-2 mb-2" id="searchEndDate"
+							style="width: 150px;">
+						<div class="mb-2">
+							<button type="submit" class="btn btn-primary">검색</button>
+						</div>
 						<div class="btn-group mb-2">
-						    <button type="submit" class="btn btn-primary">검색</button>
-						    <button type="button" class="btn btn-secondary" id="resetBtn">초기화</button>
+							<button type="button" class="btn btn-secondary" id="resetBtn">초기화</button>
 						</div>
 					</form>
 

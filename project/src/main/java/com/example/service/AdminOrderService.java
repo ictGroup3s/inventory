@@ -9,4 +9,5 @@ public interface AdminOrderService {
     Map<String, Object> updateOrder(Map<String, Object> params);
     Map<String, Object> updateDetailStatus(Map<String, Object> params);
     Map<String, Object> restoreDetail(Map<String, Object> params);
+    List<Map<String, Object>> getCRByOrder(int orderNo);
 }

@@ -295,33 +295,36 @@
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary back-to-top"><i
 		class="fa fa-angle-double-up"></i></a>
+	
 	<!-- ------------------채팅 관련 추가---------------- -->
-	<!-- ▣ 채팅 목록 박스 -->
-	<div id="chat-list-box" class="chat-list-box" style="display: none;">
-		<div class="chat-list-header">나의 채팅 목록</div>
-		<div id="chat-list" class="chat-list"></div>
-	</div>
-
-	<!-- ▣ 채팅창 -->
-	<div id="chat-box" class="chat-box" style="display: none;">
-		<div class="chat-header">
-			<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
-			<span id="chat-close" class="chat-header-close">✕</span>
+	<c:if test="${sessionScope.loginRole == 0}">
+		<!-- ▣ 채팅 목록 박스 -->
+		<div id="chat-list-box" class="chat-list-box" style="display: none;">
+			<div class="chat-list-header">나의 채팅 목록</div>
+			<div id="chat-list" class="chat-list"></div>
 		</div>
 
-		<div id="chat-messages" class="chat-messages"></div>
+		<!-- ▣ 채팅창 -->
+		<div id="chat-box" class="chat-box" style="display: none;">
+			<div class="chat-header">
+				<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+				<span id="chat-close" class="chat-header-close">✕</span>
+			</div>
 
-		<div class="chat-input">
-			<input type="text" id="chat-text" placeholder="메시지 입력...">
-			<button id="chat-send">Send</button>
+			<div id="chat-messages" class="chat-messages"></div>
+
+			<div class="chat-input">
+				<input type="text" id="chat-text" placeholder="메시지 입력...">
+				<button id="chat-send">Send</button>
+			</div>
+			<button id="new-chat-btn"
+				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+				새 채팅 시작</button>
 		</div>
-		<button id="new-chat-btn"
-			style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
-			새 채팅 시작</button>
-	</div>
 
-	<!-- ▣ 채팅 열기 버튼 -->
-	<button id="chat-open" class="chat-open-btn">💬</button>
+		<!-- ▣ 채팅 열기 버튼 -->
+		<button id="chat-open" class="chat-open-btn">💬</button>
+	</c:if>
 	<div class="toast-container" id="toast-container"></div>
 		
 	<!-- JavaScript Libraries -->
