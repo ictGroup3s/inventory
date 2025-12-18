@@ -70,9 +70,10 @@
 				<form action="selectall" method="get">
 					<div class="input-group">
 						<input type="text" name="q" class="form-control"
-						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
+							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 						<div class="input-group-append">
-							<button class="input-group-text bg-transparent text-primary" type="submit">
+							<button class="input-group-text bg-transparent text-primary"
+								type="submit">
 								<i class="fa fa-search"></i>
 							</button>
 						</div>
@@ -94,7 +95,7 @@
 				<!-- LEFT SIDEBAR (PC ONLY) -->
 				<div class="col-lg-2 d-none d-lg-block">
 					<nav class="category-sidebar" id="mainSidebar">
-						<h5 class="p-3">관리자 페이지</h5>
+						<h6>관리자 페이지</h6>
 						<ul class="nav flex-column">
 							<li class="nav-item"><a href="dashboard"
 								class="nav-link active">대쉬보드</a></li>
@@ -164,12 +165,14 @@
 										</div>
 									</div>
 									<div class="col-6 mb-3">
-										<div class="card h-100">
-											<div class="card-body text-center">
-												<h6>주문건수</h6>
-												<p id="todayOrders">0</p>
+										<a href="/stats" class="text-decoration-none text-dark">
+											<div class="card h-100">
+												<div class="card-body text-center">
+													<h6>주문건수</h6>
+													<p id="todayOrders">0</p>
+												</div>
 											</div>
-										</div>
+										</a>
 									</div>
 									<div class="col-6 mb-3">
 										<a href="/stats" class="text-decoration-none text-dark">

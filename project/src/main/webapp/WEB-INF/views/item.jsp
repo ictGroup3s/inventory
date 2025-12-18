@@ -123,240 +123,242 @@
 						</button>
 					</nav>
 
-					<div class="container py-5">
+					<div class="container-fluid py-5 px-0">
 
 						<!-- 상품 등록 영역 -->
-						<div class="row" style="align-items: flex-start;">
+						<div class="container py-5">
+							<div class="row" style="align-items: flex-start;">
 
-							<!-- 좌측: 상품 이미지 -->
-							<div class="col-lg-4 d-flex justify-content-start"
-								style="padding-left: 0;">
-								<img id="preview" src="img/insert_pic.png" alt="상품 이미지"
-									class="img-fluid"
-									style="max-width: 350px; height: auto; margin-top: 70px;">
+								<!-- 좌측: 상품 이미지 -->
+								<div class="col-lg-5 d-flex justify-content-start"
+									style="padding-left: 0;">
+									<img id="preview" src="img/insert_pic.png" alt="상품 이미지"
+										class="img-fluid"
+										style="max-width: 350px; height: auto; margin-top: 70px;">
+								</div>
+
+								<!-- 우측: 상품 등록 폼 -->
+								<div class="col-lg-7">
+									<h3 class="font-weight-semi-bold mb-4">상품관리</h3>
+
+									<form action="saveItem" method="post"
+										enctype="multipart/form-data">
+										<input type="hidden" name="item_no"> <input
+											type="hidden" name="existingItemImg" value="">
+
+										<!-- 상품 정보 입력 테이블 -->
+										<table class="table table-bordered mx-auto"
+											style="max-width: 600px;">
+											<tr>
+												<td>상품명</td>
+												<td><input type="text"
+													class="form-control required-field" name="item_name"
+													placeholder="상품명"> <small
+													class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
+											</tr>
+
+											<tr>
+												<td>수량</td>
+												<td><input type="number"
+													class="form-control required-field" name="stock_cnt"
+													placeholder="수량"> <small
+													class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
+											</tr>
+
+											<tr>
+												<td>카테고리</td>
+												<td><select class="form-control required-field"
+													name="cate_no">
+														<option value="">선택하세요</option>
+														<option value="1">구이찜볶음</option>
+														<option value="2">국밥면</option>
+														<option value="3">식단관리</option>
+														<option value="4">분식간식</option>
+														<option value="5">반찬소스</option>
+														<option value="6">생수음료</option>
+												</select> <small class="error-msg text-danger d-none">필수 입력
+														항목입니다.</small></td>
+											</tr>
+
+											<tr>
+												<td>원가</td>
+												<td><input type="number"
+													class="form-control required-field" name="origin_p"
+													placeholder="원가"> <small
+													class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
+											</tr>
+
+											<tr>
+												<td>판매가</td>
+												<td><input type="number"
+													class="form-control required-field" name="sales_p"
+													placeholder="판매가"> <small
+													class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
+											</tr>
+
+											<tr>
+												<td>이미지 업로드</td>
+												<td><input type="file" id="uploadFile"
+													class="form-control required-field" name="item_imgFile">
+													<small class="error-msg text-danger d-none">필수 입력
+														항목입니다.</small></td>
+											</tr>
+
+											<tr>
+												<td>상품 상세설명</td>
+												<td><textarea class="form-control required-field"
+														name="item_content" rows="6" placeholder="상품 상세설명을 입력하세요"></textarea>
+													<small class="error-msg text-danger d-none">필수 입력
+														항목입니다.</small></td>
+											</tr>
+
+											<tr>
+												<td>할인률</td>
+												<td>
+													<div class="input-group">
+														<input type="number" class="form-control required-field"
+															name="dis_rate" placeholder="할인률">
+														<div class="input-group-append">
+															<span class="input-group-text">%</span>
+														</div>
+													</div> <small class="error-msg text-danger d-none">필수 입력
+														항목입니다.</small>
+												</td>
+											</tr>
+										</table>
+
+										<!-- 버튼 -->
+										<div class="d-flex align-items-center mb-4 pt-2">
+											<button class="btn btn-primary mr-2 submit-btn register">등록</button>
+											<button class="btn btn-warning mr-2 submit-btn update"
+												formaction="/itemUpdate">수정</button>
+										</div>
+									</form>
+								</div>
+
 							</div>
 
-							<!-- 우측: 상품 등록 폼 -->
-							<div class="col-lg-8">
-								<h3 class="font-weight-semi-bold mb-4">상품관리</h3>
 
-								<form action="saveItem" method="post"
-									enctype="multipart/form-data">
-									<input type="hidden" name="item_no">
+							<!-- 상품 등록 row 끝 -->
 
-									<!-- 상품 정보 입력 테이블 -->
-									<table class="table table-bordered mx-auto"
-										style="max-width: 600px;">
-										<tr>
-											<td>상품명</td>
-											<td><input type="text"
-												class="form-control required-field" name="item_name"
-												placeholder="상품명"> <small
-												class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
-										</tr>
-
-										<tr>
-											<td>수량</td>
-											<td><input type="number"
-												class="form-control required-field" name="stock_cnt"
-												placeholder="수량"> <small
-												class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
-										</tr>
-
-										<tr>
-											<td>카테고리</td>
-											<td><select class="form-control required-field"
-												name="cate_no">
-													<option value="">선택하세요</option>
-													<option value="1">구이찜볶음</option>
-													<option value="2">국밥면</option>
-													<option value="3">식단관리</option>
-													<option value="4">분식간식</option>
-													<option value="5">반찬소스</option>
-													<option value="6">생수음료</option>
-											</select> <small class="error-msg text-danger d-none">필수 입력
-													항목입니다.</small></td>
-										</tr>
-
-										<tr>
-											<td>원가</td>
-											<td><input type="number"
-												class="form-control required-field" name="origin_p"
-												placeholder="원가"> <small
-												class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
-										</tr>
-
-										<tr>
-											<td>판매가</td>
-											<td><input type="number"
-												class="form-control required-field" name="sales_p"
-												placeholder="판매가"> <small
-												class="error-msg text-danger d-none">필수 입력 항목입니다.</small></td>
-										</tr>
-
-										<input type="hidden" name="existingItemImg" value="">
-
-										<tr>
-											<td>이미지 업로드</td>
-											<td><input type="file" id="uploadFile"
-												class="form-control required-field" name="item_imgFile">
-												<small class="error-msg text-danger d-none">필수 입력
-													항목입니다.</small></td>
-										</tr>
-
-										<tr>
-											<td>상품 상세설명</td>
-											<td><textarea class="form-control required-field"
-													name="item_content" rows="6" placeholder="상품 상세설명을 입력하세요"></textarea>
-												<small class="error-msg text-danger d-none">필수 입력
-													항목입니다.</small></td>
-										</tr>
-
-										<tr>
-											<td>할인률</td>
-											<td>
-												<div class="input-group">
-													<input type="number" class="form-control required-field"
-														name="dis_rate" placeholder="할인률">
-													<div class="input-group-append">
-														<span class="input-group-text">%</span>
-													</div>
-												</div> <small class="error-msg text-danger d-none">필수 입력
-													항목입니다.</small>
-											</td>
-										</tr>
-									</table>
-
-									<!-- 등록/수정 버튼 -->
-									<div class="d-flex align-items-center mb-4 pt-2">
-										<button class="btn btn-primary mr-2 submit-btn register">등록</button>
-										<button class="btn btn-warning mr-2 submit-btn update"
-											formaction="/itemUpdate">수정</button>
+							<!-- 상품 목록 테이블 영역 -->
+							<div class="row px-xl-5 mt-4">
+								<div class="col-lg-12">
+									<div
+										class="d-flex justify-content-between align-items-center mb-3">
+										<h4 class="mb-0">등록된 상품 목록</h4>
+										<div class="d-flex">
+											<input type="text" id="itemSearch" class="form-control mr-2"
+												placeholder="상품명 검색" style="width: 200px;"> <select
+												id="categoryFilter" class="form-control"
+												style="width: 200px;">
+												<option value="">전체 카테고리</option>
+												<option value="1">구이찜볶음</option>
+												<option value="2">국밥면</option>
+												<option value="3">식단관리</option>
+												<option value="4">분식간식</option>
+												<option value="5">반찬소스</option>
+												<option value="6">생수음료</option>
+											</select>
+										</div>
 									</div>
+									<!-- 상품 목록 테이블: 가로 전체(w-100) -->
+									<div class="stock-table-wrapper">
+										<table class="table table-bordered w-100 stock-table">
+											<thead class="thead-light">
+												<tr>
+													<th class="item_no">상품코드</th>
+													<th>상품명</th>
+													<th>카테고리</th>
+													<th>원가</th>
+													<th>소비자가</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${list}" var="item">
+													<tr class="item-row" data-item_no="${item.item_no}"
+														data-item_name="${item.item_name}"
+														data-origin_p="${item.origin_p}"
+														data-sales_p="${item.sales_p}"
+														data-cate_no="${item.cate_no}"
+														data-stock_cnt="${item.stock_cnt}"
+														data-item_content="${item.item_content}"
+														data-item_img="${item.item_img}"
+														data-dis_rate="${item.dis_rate }">
+														<td>${item.item_no}</td>
+														<td class="item_name">${item.item_name}</td>
+														<td>${item.cate_name}</td>
+														<td>${item.origin_p}</td>
+														<td>${item.sales_p}</td>
+														<td><button class="btn btn-danger delete-btn"
+																data-itemno="${item.item_no}">삭제</button></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!-- 상품 목록 row 끝 -->
+
+						</div>
+						<!-- container-fluid 끝 -->
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer -->
+			<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+				<div class="row px-xl-5 pt-5">
+					<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+						<a href="#" class="text-decoration-none">
+							<h1 class="mb-4 display-5 font-weight-semi-bold">
+								<span
+									class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
+							</h1>
+						</a>
+						<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
+							ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
+					</div>
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-md-4 mb-5">
+								<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+								<div class="d-flex flex-column justify-content-start">
+									<a class="text-dark mb-2" href="#"><i
+										class="fa fa-angle-right mr-2"></i>Home</a> <a
+										class="text-dark mb-2" href="#"><i
+										class="fa fa-angle-right mr-2"></i>Our Shop</a>
+								</div>
+							</div>
+							<div class="col-md-4 mb-5">
+								<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+								<div class="d-flex flex-column justify-content-start">
+									<a class="text-dark mb-2" href="#"><i
+										class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
+										class="text-dark mb-2" href="#"><i
+										class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+								</div>
+							</div>
+							<div class="col-md-4 mb-5">
+								<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+								<form action="">
+									<input type="text" class="form-control mb-2"
+										placeholder="Your Name" required> <input type="email"
+										class="form-control mb-2" placeholder="Your Email" required>
+									<button class="btn btn-primary btn-block" type="submit">Subscribe</button>
 								</form>
 							</div>
 						</div>
-						<!-- 상품 등록 row 끝 -->
-
-						<!-- 상품 목록 테이블 영역 -->
-						<div class="row px-xl-5 mt-4">
-							<div class="col-lg-12">
-								<div
-									class="d-flex justify-content-between align-items-center mb-3">
-									<h4 class="mb-0">등록된 상품 목록</h4>
-									<div class="d-flex">
-										<input type="text" id="itemSearch" class="form-control mr-2"
-											placeholder="상품명 검색" style="width: 200px;"> <select
-											id="categoryFilter" class="form-control"
-											style="width: 200px;">
-											<option value="">전체 카테고리</option>
-											<option value="1">구이찜볶음</option>
-											<option value="2">국밥면</option>
-											<option value="3">식단관리</option>
-											<option value="4">분식간식</option>
-											<option value="5">반찬소스</option>
-											<option value="6">생수음료</option>
-										</select>
-									</div>
-								</div>
-								<!-- 상품 목록 테이블: 가로 전체(w-100) -->
-								<div class="stock-table-wrapper">
-									<table class="table table-bordered w-100 stock-table">
-										<thead class="thead-light">
-											<tr>
-												<th class="item_no">상품코드</th>
-												<th>상품명</th>
-												<th>카테고리</th>
-												<th>원가</th>
-												<th>소비자가</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${list}" var="item">
-												<tr class="item-row" data-item_no="${item.item_no}"
-													data-item_name="${item.item_name}"
-													data-origin_p="${item.origin_p}"
-													data-sales_p="${item.sales_p}"
-													data-cate_no="${item.cate_no}"
-													data-stock_cnt="${item.stock_cnt}"
-													data-item_content="${item.item_content}"
-													data-item_img="${item.item_img}"
-													data-dis_rate="${item.dis_rate }">
-													<td>${item.item_no}</td>
-													<td class="item_name">${item.item_name}</td>
-													<td>${item.cate_name}</td>
-													<td>${item.origin_p}</td>
-													<td>${item.sales_p}</td>
-													<td><button class="btn btn-danger delete-btn"
-															data-itemno="${item.item_no}">삭제</button></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-						<!-- 상품 목록 row 끝 -->
-
-					</div>
-					<!-- container-fluid 끝 -->
-				</div>
-			</div>
-		</div>
-
-		<!-- Footer -->
-		<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-			<div class="row px-xl-5 pt-5">
-				<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-					<a href="#" class="text-decoration-none">
-						<h1 class="mb-4 display-5 font-weight-semi-bold">
-							<span
-								class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-						</h1>
-					</a>
-					<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
-						ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-				</div>
-				<div class="col-lg-8 col-md-12">
-					<div class="row">
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-							<div class="d-flex flex-column justify-content-start">
-								<a class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Home</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Our Shop</a>
-							</div>
-						</div>
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-							<div class="d-flex flex-column justify-content-start">
-								<a class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-							</div>
-						</div>
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-							<form action="">
-								<input type="text" class="form-control mb-2"
-									placeholder="Your Name" required> <input type="email"
-									class="form-control mb-2" placeholder="Your Email" required>
-								<button class="btn btn-primary btn-block" type="submit">Subscribe</button>
-							</form>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+		<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-	<div id="toast"></div>
-
+		<div id="toast"></div>
 </body>
 </html>
