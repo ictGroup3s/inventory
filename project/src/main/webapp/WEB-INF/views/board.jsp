@@ -59,9 +59,7 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="#" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -154,16 +152,7 @@
 			</div>
 		</div>
 
-		<!-- ================= Footer ================= -->
-		<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-			<div class="row px-xl-5 pt-5">
-				<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-					<h1 class="mb-4 display-5 font-weight-semi-bold">
-						<span class="text-primary font-weight-bold px-3 mr-1">E</span>Shopper
-					</h1>
-				</div>
-			</div>
-		</div>
+
 
 		<!-- JS -->
 		<script
