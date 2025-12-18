@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   <%-- 이거 추가! --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- 이거 추가! --%>
 
 <!DOCTYPE html>
 <html>
@@ -29,25 +31,30 @@
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/stats.css">
 <link rel="stylesheet" href="css/order.css">
 
 
+
+
 </head>
-<body class="${empty sessionScope.loginUser || sessionScope.loginRole != '1' ? 'hide-content' : ''}">
+<body
+	class="${empty sessionScope.loginUser || sessionScope.loginRole != '1' ? 'hide-content' : ''}">
 	<%-- 관리자 아니면 모달 띄우고 페이지 내용 숨김 --%>
-	<c:if test="${empty sessionScope.loginUser || sessionScope.loginRole != '1'}">
-    <div class="admin-overlay"></div>
-    <div class="login-modal">
-        <div class="lock-icon">🔒</div>
-        <h3>로그인이 필요합니다</h3>
-        <p>
-            관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
-        </p>
-        <%-- 현재 페이지 이름만 전달 --%>
-        <a href="login?redirectURL=order" 
-           class="btn-login" style="display: block; text-decoration: none;">로그인</a>
-			<a href="${pageContext.request.contextPath}/" class="btn-home"
-			style="display: block; text-decoration: none;">홈으로</a>
+	<c:if
+		test="${empty sessionScope.loginUser || sessionScope.loginRole != '1'}">
+		<div class="admin-overlay"></div>
+		<div class="login-modal">
+			<div class="lock-icon">🔒</div>
+			<h3>로그인이 필요합니다</h3>
+			<p>
+				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
+			</p>
+			<%-- 현재 페이지 이름만 전달 --%>
+			<a href="login?redirectURL=order" class="btn-login"
+				style="display: block; text-decoration: none;">로그인</a> <a
+				href="${pageContext.request.contextPath}/" class="btn-home"
+				style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
@@ -63,14 +70,15 @@
 				</a>
 			</div>
 			<div class="col-lg-6 col-6 text-left">
-				<form action="">
+				<form action="selectall" method="get">
 					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for products">
+						<input type="text" name="q" class="form-control"
+							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
+							<button class="input-group-text bg-transparent text-primary"
+								type="submit">
 								<i class="fa fa-search"></i>
-							</span>
+							</button>
 						</div>
 					</div>
 				</form>
@@ -105,12 +113,13 @@
 				<!-- Content -->
 				<div class="col-lg-11 dashboard-content">
 					<h3 class="mb-4">주문관리</h3>
-					
+
 					<!-- ✅ 안내 문구 추가 -->
-				    <p class="text-muted mb-2" style="font-size: 14px;">
-				        <i class="fas fa-info-circle"></i> 최근 1개월 주문만 표시됩니다. 이전 주문은 날짜 검색을 이용해주세요.
-				    </p>
-				    
+					<p class="text-muted mb-2" style="font-size: 14px;">
+						<i class="fas fa-info-circle"></i> 최근 1개월 주문만 표시됩니다. 이전 주문은 날짜 검색을
+						이용해주세요.
+					</p>
+
 					<!-- 주문 검색 -->
 					<form class="form-inline mb-3 flex-wrap" id="searchForm">
 						<input type="text" class="form-control mr-2 mb-2"
@@ -127,13 +136,14 @@
 							<option value="취소">취소</option>
 							<option value="반품">반품</option>
 							<option value="교환">교환</option>
-						</select> 
-						<input type="date" class="form-control mr-2 mb-2" id="searchStartDate" style="width: 150px;"> 
-						<span class="mr-2 mb-2">~</span> 
-						<input type="date" class="form-control mr-2 mb-2" id="searchEndDate" style="width: 150px;">
+						</select> <input type="date" class="form-control mr-2 mb-2"
+							id="searchStartDate" style="width: 150px;"> <span
+							class="mr-2 mb-2">~</span> <input type="date"
+							class="form-control mr-2 mb-2" id="searchEndDate"
+							style="width: 150px;">
 						<div class="btn-group mb-2">
-						    <button type="submit" class="btn btn-primary">검색</button>
-						    <button type="button" class="btn btn-secondary" id="resetBtn">초기화</button>
+							<button type="submit" class="btn btn-primary">검색</button>
+							<button type="button" class="btn btn-secondary" id="resetBtn">초기화</button>
 						</div>
 					</form>
 

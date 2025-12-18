@@ -32,6 +32,8 @@
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/stats.css">
+
 <!-- jQuery CDN (최신 버전) -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- main.js -->
@@ -71,14 +73,15 @@
 				</a>
 			</div>
 			<div class="col-lg-6 col-6 text-left">
-				<form action="">
+				<form action="selectall" method="get">
 					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for products">
+						<input type="text" name="q" class="form-control"
+							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
+							<button class="input-group-text bg-transparent text-primary"
+								type="submit">
 								<i class="fa fa-search"></i>
-							</span>
+							</button>
 						</div>
 					</div>
 				</form>
@@ -261,7 +264,7 @@
 									<table class="table table-bordered w-100 stock-table">
 										<thead class="thead-light">
 											<tr>
-												<th>상품코드</th>
+												<th class="item_no">상품코드</th>
 												<th>상품명</th>
 												<th>카테고리</th>
 												<th>원가</th>
@@ -281,7 +284,7 @@
 													data-item_img="${item.item_img}"
 													data-dis_rate="${item.dis_rate }">
 													<td>${item.item_no}</td>
-													<td>${item.item_name}</td>
+													<td class="item_name">${item.item_name}</td>
 													<td>${item.cate_name}</td>
 													<td>${item.origin_p}</td>
 													<td>${item.sales_p}</td>
