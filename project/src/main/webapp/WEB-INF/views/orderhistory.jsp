@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,11 +22,15 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
-	<!-- ⭐ Bootstrap CSS -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- ⭐ Bootstrap CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
+<link href="css/chat.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -72,18 +76,17 @@
 						<li class="nav-item"><a href="/mycs" class="nav-link">취소·반품·교환내역</a></li>
 						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
 						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
+						<li class="nav-item"><a href="/board" class="nav-link">고객센터</a></li>
 					</ul>
 				</nav>
 			</div>
-
-
 			<!-- Main Content -->
 			<div class="col-lg-10"
 				style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
-					<h4 style="margin-top:50px;">주문내역</h4>
-					<span class="ml-2 text-muted"style="margin-right:970px;"> 총 
-					<strong id="totalCount">${fn:length(deliveryList)}</strong>건
+					<h4 style="margin-top: 50px;">주문내역</h4>
+					<span class="ml-2 text-muted" style="margin-right: 970px;">
+						총 <strong id="totalCount">${fn:length(deliveryList)}</strong>건
 					</span>
 				</div>
 				<!-- ⭐ 기간 필터 섹션 ⭐ -->
@@ -93,10 +96,9 @@
 						style="width: 160px;"> <span class="mr-2">~</span> <input
 						type="date" id="endDate" class="form-control mr-3"
 						style="width: 160px;">
-						
-					<button type="button"
-					class="btn btn-outline-primary btn-sm" 
-					onclick="filterByDateRange()">조회</button>
+
+					<button type="button" class="btn btn-outline-primary btn-sm"
+						onclick="filterByDateRange()">조회</button>
 				</div>
 				<table class="table table-striped">
 					<thead>
@@ -164,19 +166,24 @@
 			</div>
 		</div>
 	</div>
-	<!-- ⭐ 주문 상세보기 모달 (버튼 추가) -->
+	<!-- ⭐ 주문 상세보기 모달 -->
 	<c:forEach var="order" items="${deliveryList}">
 		<div class="modal fade" id="orderDetailModal_${order.order_no}"
 			tabindex="-1" role="dialog">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
+
+					<!-- 헤더 -->
 					<div class="modal-header">
 						<h5 class="modal-title">주문 상세내역</h5>
 						<button type="button" class="close" data-dismiss="modal">
 							<span>&times;</span>
 						</button>
 					</div>
+
+					<!-- 바디 -->
 					<div class="modal-body">
+
 						<div class="row mb-3">
 							<div class="col-md-6">
 								<strong>주문번호:</strong> ${order.order_no}
@@ -185,15 +192,19 @@
 								<strong>주문일:</strong> ${order.order_date}
 							</div>
 						</div>
+
 						<div class="row mb-3">
 							<div class="col-md-12">
 								<strong>주문상태:</strong> <span class="badge badge-secondary">${order.order_status}</span>
 							</div>
 						</div>
+
 						<hr>
+
 						<h6>
 							<strong>주문 상품</strong>
 						</h6>
+
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -216,103 +227,84 @@
 								<tr>
 									<td colspan="2" class="text-right"><strong>총
 											결제금액:</strong></td>
-									<td><strong><fmt:formatNumber
-												value="${order.total_amount}" pattern="#,###" />원</strong></td>
+									<td><strong> <fmt:formatNumber
+												value="${order.total_amount}" pattern="#,###" />원
+									</strong></td>
 								</tr>
 							</tfoot>
 						</table>
 
-						<!-- ⭐ 취소/반품/교환 버튼 그룹 -->
 						<hr>
+
 						<h6>
 							<strong>주문 관리</strong>
 						</h6>
 
-						<%--상품이 1개인 경우 --%>
-						<c:choose>
-							<c:when test="${fn:length(order.detailList) == 1}">
-								<div class="row mb-3">
-									<div class="col-md-4">
-										<button type="button" class="btn btn-warning btn-block"
-											onclick="showCRForm(${order.order_no}, '취소')">
-											<i class="fas fa-ban mr-2"></i>전체 취소
-										</button>
-									</div>
-									<div class="col-md-4">
-										<button type="button" class="btn btn-info btn-block"
-											onclick="showCRForm(${order.order_no}, '반품')">
-											<i class="fas fa-undo mr-2"></i>전체 반품
-										</button>
-									</div>
-									<div class="col-md-4">
-										<button type="button" class="btn btn-success btn-block"
-											onclick="showCRForm(${order.order_no}, '교환')">
-											<i class="fas fa-exchange-alt mr-2"></i>전체 교환
-										</button>
-									</div>
-								</div>
-							</c:when>
+						<!-- 상품 선택 -->
+						<div class="mb-3">
+							<h6>취소 / 반품 / 교환할 상품 선택</h6>
 
-							<%-- 상품이 여러 개인 경우 --%>
-							<c:otherwise>
-								<div class="alert alert-warning">
-									<i class="fas fa-info-circle mr-2"></i> <strong>여러 상품이
-										포함된 주문입니다.</strong><br> 부분 취소/반품/교환은 관리자 문의가 필요합니다.
+							<c:forEach var="detail" items="${order.detailList}">
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox"
+										class="custom-control-input product-checkbox"
+										id="product_${order.order_no}_${detail.item_no}"
+										value="${detail.item_no}" data-order-no="${order.order_no}">
+									<label class="custom-control-label"
+										for="product_${order.order_no}_${detail.item_no}">
+										${detail.item_name} (수량: ${detail.item_cnt}개, 금액: <fmt:formatNumber
+											value="${detail.amount}" pattern="#,###" />원)
+									</label>
 								</div>
-								<div class="row mb-3">
-									<div class="col-md-4">
-										<button type="button" class="btn btn-warning btn-block"
-											onclick="showCRForm(${order.order_no}, '취소')">
-											<i class="fas fa-ban mr-2"></i>전체 취소
-										</button>
-									</div>
-									<div class="col-md-4">
-										<button type="button" class="btn btn-info btn-block"
-											onclick="showCRForm(${order.order_no}, '반품')">
-											<i class="fas fa-undo mr-2"></i>전체 반품
-										</button>
-									</div>
-									<div class="col-md-4">
-										<button type="button" class="btn btn-success btn-block"
-											onclick="showCRForm(${order.order_no}, '교환')">
-											<i class="fas fa-exchange-alt mr-2"></i>전체 교환
-										</button>
-									</div>
-								</div>
-								<div class="text-center">
-									<button type="button" class="btn btn-outline-primary"
-										onclick="openAdminChat(${order.order_no})">
-										<i class="fas fa-comments mr-2"></i>부분 취소/교환은 관리자 문의
-									</button>
-								</div>
-							</c:otherwise>
-						</c:choose>
+							</c:forEach>
 
-						<%--취소/반품/교환 신청 폼 (처음에는 숨김)--%>
+							<!-- 전체 선택 -->
+							<div class="custom-control custom-checkbox mt-2">
+								<input type="checkbox" class="custom-control-input"
+									id="selectAll_${order.order_no}"
+									onclick="toggleAllProducts(${order.order_no})"> <label
+									class="custom-control-label" for="selectAll_${order.order_no}">
+									<strong>전체 선택</strong>
+								</label>
+							</div>
+						</div>
+
+						<!-- 버튼 -->
+						<div class="row mb-3">
+							<div class="col-md-4">
+								<button type="button" class="btn btn-warning btn-block"
+									onclick="handleCRRequest(${order.order_no}, '취소')">취소</button>
+							</div>
+							<div class="col-md-4">
+								<button type="button" class="btn btn-info btn-block"
+									onclick="handleCRRequest(${order.order_no}, '반품')">반품
+								</button>
+							</div>
+							<div class="col-md-4">
+								<button type="button" class="btn btn-success btn-block"
+									onclick="handleCRRequest(${order.order_no}, '교환')">교환
+								</button>
+							</div>
+						</div>
+						<!-- 신청 폼 -->
 						<div id="crFormContainer_${order.order_no}"
 							style="display: none; margin-top: 20px;">
 							<hr>
 							<h6>
-								<strong id="crFormTitle_${order.order_no}">취소·반품·교환 신청</strong>
+								<strong>취소 · 반품 · 교환 신청</strong>
 							</h6>
-							<form action="/mycs/apply" method="post"
-								id="crForm_${order.order_no}">
+
+							<form action="/mycs/apply" method="post">
 								<input type="hidden" name="orderNo" value="${order.order_no}">
-								<input type="hidden" name="type" id="crType_${order.order_no}"
-									value="">
+								<input type="hidden" name="type" id="crType_${order.order_no}">
+								<input type="hidden" name="selectedItems"
+									id="selectedItems_${order.order_no}"> <input
+									type="hidden" name="isFullOrder"
+									id="isFullOrder_${order.order_no}" value="false">
 
-								<!-- 교환인 경우만 상품 선택 표시 -->
-								<div class="form-group"
-									id="productSelectGroup_${order.order_no}"
-									style="display: none;">
-								</div>
-
-								<%-- 사유 --%>
 								<div class="form-group">
 									<label>사유 <span class="text-danger">*</span></label>
-									<textarea name="reason" id="reason_${order.order_no}"
-										class="form-control" rows="4" placeholder="사유를 입력해주세요"
-										required></textarea>
+									<textarea name="reason" class="form-control" rows="4" required></textarea>
 								</div>
 
 								<div class="row">
@@ -322,28 +314,34 @@
 									</div>
 									<div class="col-md-6">
 										<button type="submit" class="btn btn-primary btn-block">
-											<i class="fas fa-check mr-2"></i>신청하기
-										</button>
+											신청하기</button>
 									</div>
 								</div>
 							</form>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">닫기</button>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</c:forEach>
+
 	<!-- Footer -->
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
+	<div class="container-fluid bg-secondary text-dark mt-5 pt-5"
+		style="margin-top: 550px !important;">
 		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
-				<p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
-				<p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
-				<p><i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전 9시30분~5시30분</p>
+				<p class="mb-2">
+					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
+					Seoul, KOREA
+				</p>
+				<p class="mb-2">
+					<i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com
+				</p>
+				<p>
+					<i class="fa fa-phone-alt text-primary mr-3"></i>평일 [월~금] 오전
+					9시30분~5시30분
+				</p>
 				<h2 class="mb-0">
 					<i class="fa fa-phone-alt text-primary mr-3"></i>+02 070 0000
 				</h2>
@@ -353,29 +351,30 @@
 					<div class="col-md-4 mb-3">
 						<h5 class="font-weight-bold text-dark mt-4 mb-4">Quick Links</h5>
 						<div class="d-flex flex-column justify-content-start">
-							<a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
-							<a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-							<a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
-							<a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
-							<a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a>
+							<a class="text-dark mb-2" href="/"><i
+								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
+								class="text-dark mb-2" href="selectall"><i
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
+								class="text-dark mb-2" href="mlist"><i
+								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
+								class="text-dark mb-2" href="cart"><i
+								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
+								class="text-dark mb-2" href="checkout"><i
+								class="fa fa-angle-right mr-2"></i>결제</a>
 						</div>
 					</div>
 					<div class="col-lg-8 col-md-12">
 						<div class="row">
 							<div class="col-md-12 mt-4 mb-5">
 								<p class="text-dark mb-2">
-									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp;
-									<span>이용약관</span> &nbsp; | &nbsp;
-									<span>개인정보처리방침</span> &nbsp; | &nbsp;
-									<span>이용안내</span>
-								</p><br>
+									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
+									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
+								</p>
+								<br>
 								<p style="color: #999;">
-									법인명 (상호) : 주식회사 STOCKBOB<br>
-									사업자등록번호 : 000-11-00000<br>
-									통신판매업 : 제 2025-서울-11111 호<br>
-									주소 : 서울특별시 서대문구 신촌동 00<br>
-									채용문의 : ict.atosoft.com<br>
-									팩스 : 070-0000-0000
+									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
+									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
+									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
 								</p>
 							</div>
 						</div>
@@ -386,7 +385,8 @@
 		<div class="row border-top border-light mx-xl-5 py-4">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
-					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved.
+					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						Site Name</a>. All Rights Reserved.
 				</p>
 			</div>
 			<div class="col-md-6 px-xl-0 text-center text-md-right">
@@ -394,16 +394,72 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- ------------------채팅 관련 추가---------------- -->
+	<c:if test="${sessionScope.loginRole == 0}">
+		<!-- ▣ 채팅 목록 박스 -->
+		<div id="chat-list-box" class="chat-list-box" style="display: none;">
+			<div class="chat-list-header">나의 채팅 목록</div>
+			<div id="chat-list" class="chat-list"></div>
+		</div>
+
+		<!-- ▣ 채팅창 -->
+		<div id="chat-box" class="chat-box" style="display: none;">
+			<div class="chat-header">
+				<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
+				<span id="chat-close" class="chat-header-close">✕</span>
+			</div>
+
+			<div id="chat-messages" class="chat-messages"></div>
+
+			<div class="chat-input">
+				<input type="text" id="chat-text" placeholder="메시지 입력...">
+				<button id="chat-send">Send</button>
+			</div>
+			<button id="new-chat-btn"
+				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+				새 채팅 시작</button>
+		</div>
+
+		<!-- ▣ 채팅 열기 버튼 -->
+		<button id="chat-open" class="chat-open-btn">💬</button>
+	</c:if>
+	<div class="toast-container" id="toast-container"></div>
+
+
+
 	<!-- ⭐⭐⭐ JavaScript Libraries ⭐⭐⭐ -->
 	<script>
     window.hasOrderList = ${not empty deliveryList};
 </script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="js/checkout.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="js/order.js"></script>
 
+	<!-- Bootstrap JS -->
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-			
+	<!-- Contact JS -->
+	<script src="mail/jqBootstrapValidation.min.js"></script>
+	<script src="mail/contact.js"></script>
+
+
+	<!-- 1. 로그인 ID 주입 (가장 먼저) -->
+	<script>
+		const myId = "${sessionScope.loginUser.customer_id}";
+		console.log("✅ myId 확인:", myId);
+	</script>
+
+	<!-- 2. Chat JS (SockJS/Stomp 준비된 이후 로드) -->
+	<script src="/js/CustomerChat.js?v=999"></script>
+
+	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
+	<script src="/js/main.js" defer></script>
+
+
 </body>
 </html>

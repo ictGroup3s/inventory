@@ -70,6 +70,7 @@
 						<li class="nav-item"><a href="/mycs" class="nav-link active">취소·반품·교환내역</a></li>
 						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
 						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
+						<li class="nav-item"><a href="/board" class="nav-link">고객센터</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -295,10 +296,13 @@
 			</div>
 		</div>
 	</div>
+	<!-- 채팅 팝업 -->
+	<jsp:include page="/WEB-INF/views/chat/chatPopup.jsp" />
 	<!-- ⭐⭐⭐ JavaScript Libraries ⭐⭐⭐ -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="js/checkout.js"></script>
-
+	<button id="chat-open" type="button" style="display:none;"></button>
+	
 </body>
 </html>

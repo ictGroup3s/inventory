@@ -74,9 +74,9 @@
 						<li class="nav-item"><a href="/orderhistory" class="nav-link">주문내역</a></li>
 						<li class="nav-item"><a href="/mydelivery" class="nav-link">배송내역</a></li>
 						<li class="nav-item"><a href="/mycs" class="nav-link">취소/반품/교환내역</a></li>
-						<li class="nav-item"><a href="/update" class="nav-link">내
-								정보수정</a></li>
+						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
 						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
+						<li class="nav-item"><a href="/board" class="nav-link">고객센터</a></li>
 
 					</ul>
 				</nav>

@@ -71,6 +71,7 @@
 						<li class="nav-item"><a href="/mycs" class="nav-link">취소·반품·교환내역</a></li>
 						<li class="nav-item"><a href="/update" class="nav-link">내정보수정</a></li>
 						<li class="nav-item"><a href="/delete" class="nav-link">회원탈퇴</a></li>
+						<li class="nav-item"><a href="/board" class="nav-link">고객센터</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -82,30 +83,34 @@
 				</div>
 				<!-- 검색 결과 카운트 -->
 				<span class="ml-2 text-muted" style="margin-right:970px;"> 총 <strong id="totalCount">${fn:length(deliveryList)}</strong>건</span>
-				
-		<!-- ⭐ 검색 및 필터 섹션 ⭐ -->
-				<div class="search-box">
-					<div class="row mb-3">
-					<div class="col-md-8" style="margin-right:30px; margin-bottom:20px;">
+
+				<!-- ⭐ 검색 및 필터 섹션 ⭐ -->
+				<div class="search-box mb-3">
+					<div class="row">
 						<div class="col-md-6">
-							<div class="input-group" >
+							<div class="input-group">
 								<select id="searchType" class="form-control"
 									style="max-width: 140px;">
 									<option value="all">전체</option>
 									<option value="order_no">주문번호</option>
 									<option value="item_name">상품명</option>
-								</select> 
-								<input type="text" id="searchInput" class="form-control" placeholder="검색어입력">
+								</select> <input type="text" id="searchInput" class="form-control"
+									placeholder="검색어 입력">
 								<div class="input-group-append">
 									<button class="btn btn-primary" type="button"
 										onclick="searchCR()">
 										<i class="fa fa-search"></i> 검색
 									</button>
+									<button class="btn btn-secondary" type="button"
+										onclick="resetSearch()">
+										<i class="fa fa-redo"></i> 초기화
+									</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- 메시지 표시 -->
+				</div>
+				<!-- 메시지 표시 -->
 					<c:if test="${not empty message}">
 						<div
 							class="alert alert-${messageType == 'success' ? 'success' : 'danger'} alert-dismissible fade show"

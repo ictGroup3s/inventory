@@ -29,8 +29,12 @@ shipToCheckbox.addEventListener('change', function () {
  * "위 내용과 동일" 체크
  *************************************************/
 sameAsAboveCheckbox.addEventListener('change', function () {
-
     if (this.checked) {
+        // ⭐ 수령지주소입력 체크박스도 자동으로 체크
+        shipToCheckbox.checked = true;
+        $(shippingSection).collapse('show');
+        
+        // 주문자 정보 → 수령지 정보로 복사
         shipNameInput.value = nameInput.value;
         shipPhoneInput.value = phoneInput.value;
         shipAddressInput.value = addressInput.value;
@@ -64,19 +68,49 @@ addressInput.addEventListener('input', syncShipping);
  * ⭐ 최종 방어 (가장 중요)
  * 수령지 입력 안 했으면 → 주문자 주소로 저장
  *************************************************/
+/*************************************************
+ * ⭐ 최종 방어 - 수령지 정보 필수!
+ *************************************************/
 if (checkoutForm) {
-    checkoutForm.addEventListener('submit', function () {
-        // 수령지주소입력 체크 안 했으면
-        if (!shipToCheckbox.checked) {
-            shipNameInput.value = nameInput.value;
-            shipPhoneInput.value = phoneInput.value;
-            shipAddressInput.value = addressInput.value;
+    checkoutForm.addEventListener('submit', function (e) {
+        // ⭐⭐⭐ 수령지 정보 필수 체크
+        const shipName = document.getElementById('shipName').value.trim();
+        const shipPhone = document.getElementById('shipPhone').value.trim();
+        const shipAddress = document.getElementById('shipAddress').value.trim();
+
+        if (!shipName || !shipPhone || !shipAddress) {
+            e.preventDefault();
+            alert('수령지 주소를 입력해주세요!\n(수령지주소입력 체크박스를 클릭하여 입력하세요)');
+            
+            // 수령지 섹션 열기
+            document.getElementById('shipto').checked = true;
+            $('#shipping-address').collapse('show');
+            
+            return false;
         }
 
-        // 수령지주소입력은 했지만 값이 비어있을 경우
-        if (!shipNameInput.value) shipNameInput.value = nameInput.value;
-        if (!shipPhoneInput.value) shipPhoneInput.value = phoneInput.value;
-        if (!shipAddressInput.value) shipAddressInput.value = addressInput.value;
+        // 메모 처리
+        const memoSelect = document.getElementById('memoSelect');
+        const memoInput = document.getElementById('memoInput');
+        let finalMemo = '';
+        
+        if (memoSelect.value === 'direct') {
+            finalMemo = memoInput.value;
+        } else if (memoSelect.value !== '요청사항') {
+            finalMemo = memoSelect.value;
+        }
+        
+        // hidden input으로 최종 메모 전달
+        const existingMemo = document.querySelector('input[name="finalMemo"]');
+        if (existingMemo) {
+            existingMemo.value = finalMemo;
+        } else {
+            const hiddenMemo = document.createElement('input');
+            hiddenMemo.type = 'hidden';
+            hiddenMemo.name = 'finalMemo';
+            hiddenMemo.value = finalMemo;
+            this.appendChild(hiddenMemo);
+        }
     });
 }
 
