@@ -38,7 +38,7 @@
                 </a>
             </div>
            	<div class="col-lg-6 col-6 text-left">
-			<form action="selectGui" method="get">
+			<form action="selectGui" method="get" style="margin-left:120px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
@@ -52,10 +52,7 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
+                
                 <a href="cart" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
@@ -71,7 +68,7 @@
        <div class="row px-xl-5">
        <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar">
+				<nav class="category-sidebar" style="margin-left:-40px;">
                   <h6 class="p-3">MENU</h6>
                    <ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall"
@@ -130,20 +127,20 @@
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" style="height: 340px;" onclick="location.href='event1'">
+                        <div class="carousel-item active" style="height: 350px;" onclick="location.href='event1'">
                            <img class="img-fluid" src="img/main_event1.png" alt="Image">
                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                              
                             </div>
                         </div>
-                        <div class="carousel-item" style="height: 340px;" onclick="location.href='event1'">
+                        <div class="carousel-item" style="height: 350px;" onclick="location.href='event1'">
                          <img class="img-fluid" src="img/main_event2.png" alt="Image">
                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                
                             </div>
                         </div>
                         
-                        <div class="carousel-item" style="height:340px;"onclick="location.href='event2'">
+                        <div class="carousel-item" style="height:350px;"onclick="location.href='event2'">
                           <a href="event3">   <img class="img-fluid" src="img/main_event3.png" alt="Image">
                            </a> <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 
@@ -167,7 +164,7 @@
 
 
    <!-- Products Start -->
-    <div class="container-fluid pt-2" style="padding-left:250px;">
+    <div class="container-fluid pt-2" style="padding-left:240px;">
         <div class="text-center mb-4" style="padding-top:30px; ">
             <h3 class="section-title px-5"><span class="px-2">새 상품</span></h3>
         </div>
@@ -246,10 +243,12 @@
  <!-- Offer End  -->
  
 	<!-- 상품 목록 페이지 이동 끝 -->
-  	<!-- Footer Start -->
-		<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-		<div class="row px-xl-3 pt-3">
-			<div class="col-lg-4 col-md-12 mb-3 pr-3 pl-1 pt-3">
+   <!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 
+	style="width:1400px; margin-left:-140px; ">
+		<div class="row px-xl-5 pt-3" style="margin-left:-120px;">
+			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
+
 				<p class="mb-2">
 					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
 					Seoul, KOREA
@@ -280,13 +279,13 @@
 					<div class="col-lg-8 col-md-12">
 						<div class="row">
 							<div class="col-md-12 mt-4 mb-5">
-								<p class="text-dark mb-2" style="margin-left: -30px;">
+								<p class="text-dark mb-2">
 									<span>stockbob 소개</span> &nbsp;&nbsp; | &nbsp;&nbsp; <span>이용약관</span>
 									&nbsp; | &nbsp; <span>개인정보처리방침</span> &nbsp; | &nbsp; <span>이용안내</span>
 
 								</p>
 								<br>
-								<p style="color: #999; margin-left: -30px;">
+								<p style="color: #999;">
 									법인명 (상호) : 주식회사 STOCKBOB<br> 사업자등록번호 : 000-11-00000<br>
 									통신판매업 : 제 2025-서울-11111 호<br> 주소 : 서울특별시 서대문구 신촌동 00<br>
 									채용문의 : ict.atosoft.com<br> 팩스 : 070-0000-0000
@@ -299,6 +298,7 @@
 				</div>
 			</div>
 		</div>
+	
 		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">

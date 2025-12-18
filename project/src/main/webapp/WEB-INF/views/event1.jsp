@@ -34,12 +34,11 @@
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="/" class="text-decoration-none">
                     <img src='../img/logo.png' class='logo'/>
-                    <!-- <h1 class="m-0 display-5 font-weight-semi-bold">
-                    <span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1> -->
+                  
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+               <form action="selectall" method="get" style="margin-left:120px;">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search for products">
                         <div class="input-group-append">
@@ -67,7 +66,7 @@
        <div class="row px-xl-5">
        <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar">
+				<nav class="category-sidebar" style="margin-left:-40px;">
                 <h6 class="p-3">MENU</h6>
                    <ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall"
@@ -162,14 +161,14 @@
     </div>
 
     <!-- Products Start -->
-     <div class="container-fluid pt-2" style="padding-left:170px;">
+     <div class="container-fluid pt-2" style="margin-left:-40px;">
         <div class="text-center mb-4" style="padding-top:30px; ">
             <h3 class="section-title px-5"><span class="px-2">할인 상품</span></h3>
         </div>
         
    <div class="row px-xl-5 pb-3"> 
   	<c:forEach var="item" items="${dis}">
-  	<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
+  	<div class="col-lg-4 col-md-4 col-sm-4 pb-1" >
   	
   	<!--  카드 넓이 -->
 	<div class="card product-item border-0 mb-4 w-76 mx-auto" style="width: 270px; height:450px;"> 
@@ -245,11 +244,12 @@
 		</div>
     </div>
     <!-- event -->
-  	<!-- Footer Start -->
-		<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-		<div class="row px-xl-3 pt-3">
-			<!--  <div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">-->
-		<div class="col-lg-4 col-md-12 mb-3 pr-3 pl-1 pt-3">
+  <!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 
+	style="width:1400px; margin-left:-30px; ">
+		<div class="row px-xl-5 pt-3" style="margin-left:-90px;">
+			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
+
 				<p class="mb-2">
 					<i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
 					Seoul, KOREA
@@ -299,6 +299,7 @@
 				</div>
 			</div>
 		</div>
+	
 		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">

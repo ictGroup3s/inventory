@@ -9769,7 +9769,7 @@ a.text-dark:hover, a.text-dark:focus {
  	position: sticky;
  	background-color: #f8f9fa;
     top: 200px;    /* 상단 네비게이션 높이만큼 조정  */
-	min-height: 400px;  /*    화면 높이에서 상단 네비 높이 제외  */
+	min-height: 300px;  /*    화면 높이에서 상단 네비 높이 제외  */
     width:230px;
 }
 

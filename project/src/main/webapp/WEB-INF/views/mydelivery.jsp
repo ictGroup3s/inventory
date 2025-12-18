@@ -36,7 +36,7 @@
 		<div class="col-lg-6 col-6 text-left">
 			<form action="selectall" method="get" style="margin-left:150px;">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for products">
+					<input type="text" class="form-control" placeholder="찾고 싶은 상품을 검색하세요." >
 					<div class="input-group-append">
 						<span class="input-group-text bg-transparent text-primary">
 							<i class="fa fa-search"></i>
@@ -272,7 +272,7 @@
 	</c:forEach>
 <!-- Footer Start -->
 	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 
-	style="width:1400px; margin-left:-50px; margin-top: 200px !important;">
+	style="width:1400px; margin-left:-50px; margin-top: 400px !important;">
 		<div class="row px-xl-5 pt-3" style="margin-left:-90px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
