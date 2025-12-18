@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>공지사항 상세보기</title>
 
-<!-- CSS & JS 동일 적용 -->
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<!-- 🔥 board.jsp와 동일한 상단바 -->
+<!-- 상단바 -->
 <div class="row align-items-center py-3 px-xl-5 bg-light">
     <div class="col-lg-3 d-none d-lg-block">
         <a href="/" class="text-decoration-none">
@@ -47,7 +47,7 @@
 </div>
 
 
-<!-- 🔥 메인 레이아웃 -->
+<!-- 메인 레이아웃 -->
 <div class="container-fluid">
     <div class="row px-xl-2">
 
@@ -56,11 +56,12 @@
             <h6 class="p-3">고객센터</h6>
             <ul class="nav flex-column">
                 <li class="nav-item"><a href="/board" class="nav-link active">공지사항</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">자주 묻는 질문</a></li>
+                <li class="nav-item"><a href="/board?tab=faq" class="nav-link">자주 묻는 질문</a></li>
+
             </ul>
         </nav>
 
-        <!-- 🔥 상세보기 내용 -->
+        <!-- 상세보기 내용 -->
         <div class="col-lg-10 dashboard-content">
 
             <h3 class="mb-4">공지사항 상세보기</h3>
@@ -100,7 +101,7 @@
 </div>
 
 
-<!-- Footer 동일 -->
+<!-- Footer  -->
 <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
     <div class="row px-xl-5 pt-5">
         <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">

@@ -26,133 +26,197 @@
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
 </head>
+
 <body>
 
-	<!-- Topbar -->
-	<div class="row align-items-center py-3 px-xl-5 bg-light">
-		<div class="col-lg-3 d-none d-lg-block">
-			<a href="/" class="text-decoration-none">
-				<img src="img/logo.png" class="logo"/>
-			</a>
-		</div>
-		<div class="col-lg-6 col-6 text-left">
-			<form action="">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for products">
-					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
-							<i class="fa fa-search"></i>
-						</span>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="col-lg-3 col-6 text-right">
-			<a href="#" class="btn border">
-				<i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a>
-			<a href="cart" class="btn border">
-				<i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
-			</a>
-		</div>
-	</div>
+<!-- ================= 상단바 ================= -->
+<div class="row align-items-center py-3 px-xl-5 bg-light">
+    <div class="col-lg-3 d-none d-lg-block">
+        <a href="/" class="text-decoration-none">
+            <img src="img/logo.png" class="logo"/>
+        </a>
+    </div>
+    <div class="col-lg-6 col-6 text-left">
+        <form action="">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for products">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-transparent text-primary">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-3 col-6 text-right">
+        <a href="#" class="btn border">
+            <i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+        </a>
+        <a href="cart" class="btn border">
+            <i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+        </a>
+    </div>
+</div>
 
-	<!-- Main Layout -->
-	<div class="container-fluid">
-		<div class="row px-xl-2">
+<!-- ================= 메인 ================= -->
+<div class="container-fluid">
+<div class="row px-xl-2">
 
-			<!-- Sidebar -->
-			<nav class="category-sidebar">
-				<h6 class="p-3">고객센터</h6>
-				<ul class="nav flex-column">
-					<li class="nav-item"><a href="board" class="nav-link active">공지사항</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">자주 묻는 질문</a></li>
-				</ul>
-			</nav>
+<!-- 사이드바 -->
+<nav class="category-sidebar">
+    <h6 class="p-3">고객센터</h6>
+    <ul class="nav flex-column">
+        <li class="nav-item"><a href="board" class="nav-link active" id="noticeLink">공지사항</a></li>
 
-			<!-- Content -->
-			<div class="col-lg-10 dashboard-content">
+        <li class="nav-item">
+    <a href="/board?tab=faq" class="nav-link" id="faqLink" onclick="loadFaqPage(1); return false;">자주 묻는 질문</a>
+</li>
 
-				<h3 class="mb-4">공지사항 게시판</h3>
+    </ul>
+</nav>
 
-				<!-- 🔥 AJAX로 내부만 교체되는 영역 -->
-				<div id="contentArea">
+<!-- 콘텐츠 -->
+<div class="col-lg-10 dashboard-content">
+<h3 class="mb-4">공지사항 게시판</h3>
 
-					<!-- 게시글 리스트 -->
-					<div class="table-responsive mb-4">
-						<table class="table table-bordered text-center">
-							<thead class="thead-light">
-								<tr>
-									<th style="width: 80px;">번호</th>
-									<th>제목</th>
-									<th style="width: 150px;">작성자</th>
-									<th style="width: 150px;">작성일</th>
-								</tr>
-							</thead>
-							<tbody>
+<div id="contentArea">
 
-								<c:forEach var="b" items="${list}">
-									<tr>
-										<td>${b.board_no}</td>
-										<td>
-											<!-- 🔥 제목 클릭 시 상세보기로 이동 -->
-											<a href="boardDetail?id=${b.board_no}">
-												${b.title}
-											</a>
-										</td>
-										<td>${b.customer_id}</td>
-										<td>${b.b_date}</td>
-									</tr>
-								</c:forEach>
+<!-- 게시글 목록 -->
+<div class="table-responsive mb-4">
+<table class="table table-bordered text-center">
+<thead class="thead-light">
+<tr>
+    <th style="width:80px;">번호</th>
+    <th>제목</th>
+    <th style="width:150px;">작성자</th>
+    <th style="width:150px;">작성일</th>
+</tr>
+</thead>
+<tbody>
 
-								<c:if test="${empty list}">
-									<tr>
-										<td colspan="4">등록된 공지사항이 없습니다.</td>
-									</tr>
-								</c:if>
+<c:forEach var="b" items="${list}">
+<tr>
+    <td>${b.board_no}</td>
+    <td>
+        <a href="boardDetail?id=${b.board_no}">
+            ${b.title}
+        </a>
+    </td>
+    <td>${b.customer_id}</td>
+    <td>${b.b_date}</td>
+</tr>
+</c:forEach>
 
-							</tbody>
-						</table>
-					</div>
+<c:if test="${empty list}">
+<tr>
+    <td colspan="4">등록된 공지사항이 없습니다.</td>
+</tr>
+</c:if>
 
-					<div class="text-right mb-3">
-						<button class="btn btn-primary" onclick="showWriteForm()">글쓰기</button>
-					</div>
+</tbody>
+</table>
+</div>
 
-				</div>
-				<!-- AJAX contentArea 끝 -->
+<!-- 글쓰기 -->
+<div class="text-right mb-3">
+    <button class="btn btn-primary" onclick="showWriteForm()">글쓰기</button>
+</div>
 
-			</div>
-		</div>
-	</div>
+<!-- 🔥 페이징 영역 (위치만 이동 + 스타일 추가) -->
+<div class="text-center mt-4">
+    <c:if test="${page > 1}">
+        <a class="btn btn-outline-secondary btn-sm" href="/board?page=1">&laquo;</a>
+        <a class="btn btn-outline-secondary btn-sm" href="/board?page=${page-1}">&lsaquo;</a>
+    </c:if>
 
-	<!-- Footer -->
-	<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-		<div class="row px-xl-5 pt-5">
-			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-				<a href="#" class="text-decoration-none">
-					<h1 class="mb-4 display-5 font-weight-semi-bold">
-						<span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-					</h1>
-				</a>
-				<p>Dolore erat dolor sit lorem vero amet...</p>
-			</div>
-		</div>
-	</div>
+    <span class="mx-2 font-weight-bold">
+        ${page} / ${totalPage}
+    </span>
 
-	<!-- JS -->
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="js/main.js"></script>
+    <c:if test="${page < totalPage}">
+        <a class="btn btn-outline-secondary btn-sm" href="/board?page=${page+1}">&rsaquo;</a>
+        <a class="btn btn-outline-secondary btn-sm" href="/board?page=${totalPage}">&raquo;</a>
+    </c:if>
+</div>
 
-	<!-- 🔥 글쓰기 AJAX 로드 -->
-	<script>
-	    function showWriteForm(){
-	        $("#contentArea").load("<%=request.getContextPath()%>/boardWrite");
-	    }
-	</script>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ================= Footer ================= -->
+<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+<div class="row px-xl-5 pt-5">
+<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+    <h1 class="mb-4 display-5 font-weight-semi-bold">
+        <span class="text-primary font-weight-bold px-3 mr-1">E</span>Shopper
+    </h1>
+</div>
+</div>
+</div>
+
+<!-- JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function showWriteForm(){
+    $("#contentArea").load("<%=request.getContextPath()%>/boardWrite");
+}
+
+
+// FAQ AJAX 로딩
+   
+
+function setActiveMenu(isFaq){
+    if(isFaq){
+        $("#noticeLink").removeClass("active");
+        $("#faqLink").addClass("active");
+    }else{
+        $("#faqLink").removeClass("active");
+        $("#noticeLink").addClass("active");
+    }
+}
+
+function loadFaqPage(page){
+    setActiveMenu(true);
+    $("#contentArea").load("<%=request.getContextPath()%>/faq?page=" + page);
+}
+
+function showFaqWriteForm(page){
+    setActiveMenu(true);
+    $("#contentArea").load("<%=request.getContextPath()%>/faqWrite?page=" + page);
+}
+
+function loadFaqDetail(id, page){
+    setActiveMenu(true);
+    $("#contentArea").load("<%=request.getContextPath()%>/faqDetail?id=" + id + "&page=" + page);
+}
+
+function loadFaqEdit(id, page){
+    setActiveMenu(true);
+    $("#contentArea").load("<%=request.getContextPath()%>/faqEdit?id=" + id + "&page=" + page);
+}
+
+function deleteFaq(id, page){
+    if(!confirm("삭제하시겠습니까?")) return;
+    setActiveMenu(true);
+    // 삭제 후 목록으로 자동 복귀
+    $("#contentArea").load("<%=request.getContextPath()%>/faqDelete?id=" + id + "&page=" + page);
+}
+
+
+//  URL 파라미터로 FAQ 탭 자동 오픈
+  
+$(function(){
+    var params = new URLSearchParams(window.location.search);
+    if(params.get("tab") === "faq"){
+        loadFaqPage(1);
+    }
+});
+
+</script>
+
 
 </body>
 </html>
