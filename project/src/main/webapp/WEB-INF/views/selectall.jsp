@@ -70,14 +70,15 @@
 	</div>
 	<!-- Topbar End -->
 
-	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
-	<div class="container-fluid">
+	<!-- Navbar Start LG 미만(모바일/태블릿)에서만 보이도록 설계-->
+	<div class="container-fluid"> 
 		<div class="row border-top px-xl-5" style="margin-left: -80px;">
 			<div class="col-lg-12">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
 					<a href="/" class="text-decoration-none d-block d-lg-none"> <img
 						src="\img\logo.png" class='logo' />
+						
 					</a>
 					<button type="button" class="navbar-toggler" data-toggle="collapse"
 						data-target="#navbarCollapse">
@@ -85,7 +86,7 @@
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
-						
+
 						<div class="navbar-nav ml-auto py-0 text-right">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">

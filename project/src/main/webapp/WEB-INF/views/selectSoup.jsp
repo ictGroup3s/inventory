@@ -80,8 +80,8 @@
 						data-target="#navbarCollapse">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
+					<div class="collapse navbar-collapse justify-content-between">
+
 						<div class="navbar-nav ml-auto py-0 text-right">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
