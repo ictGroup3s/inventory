@@ -42,7 +42,7 @@
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="selectSoup" method="get">
+			<form action="selectGui" method="get">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
@@ -54,17 +54,15 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right">
-			<a href="cart" class="btn border"> <i
-				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
+		 <div class="col-lg-3 col-6 text-right" style="margin-left:-105px;" >
+			<a href="cart" class="btn border"> 
+				<i class="fas fa-shopping-cart text-primary"></i> 
+				<span class="badge">0</span>
 			</a>
 		</div>
 	</div>
-	<!-- Topbar End -->
-	
-	<!-- Navbar Start ########### 카테고리 메뉴바 ##############-->
 	<div class="container-fluid">
-		<div class="row border-top px-xl-5">
+		<div class="row border-top px-xl-5" style="margin-left: -80px;">
 			<div class="col-lg-12">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
@@ -76,8 +74,8 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
-						<div class="navbar-nav ml-auto py-0">
+						id="navbarCollapse" >
+						<div class="navbar-nav py-0" style="margin-left: 850px;">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
 								<a href="login" class="nav-item nav-link">로그인</a>
@@ -110,16 +108,16 @@
 	</div>
 	
 	
-	<div class="container-fluid pt-5">
+<div class="container-fluid">
 		<div class="row px-xl-5">
-            
-            <div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar">
-					<h5 class="p-3">MENU</h5>
+			<div class="col-lg-2">
+				<!-- Sidebar -->
+				<nav class="category-sidebar" style="margin-left:-80px;">
+					<h6>MENU</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link active">국 ．밥 ．면</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link active">구이 ．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
 						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
 						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
@@ -127,20 +125,21 @@
 					</ul>
 				</nav>
 			</div>
+			
 			<div class="col-lg-9 col-md-12">
 				<div class="row pb-3 product-grid">
 					<div class="col-12 pb-1">
 						<div
-							class="d-flex align-items-center justify-content-between mb-4">
+							class="d-flex align-items-center justify-content-between mb-4">						
 							<div class="dropdown">
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false">정렬 기준</button>
 								<div class="dropdown-menu dropdown-menu-right"
 									aria-labelledby="triggerId">
-									<a class="dropdown-item" href="selectSoup?page=1&size=${size}&q=${fn:escapeXml(q)}">최신순</a> 
-									<a class="dropdown-item" href="selectSoup?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">가격 높은순</a> 
-									<a class="dropdown-item" href="selectSoup?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">가격 낮은순</a>
+									<a class="dropdown-item" href="selectGui?page=1&size=${size}&q=${fn:escapeXml(q)}">최신순</a> 
+									<a class="dropdown-item" href="selectGui?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_desc">가격 높은순</a> 
+									<a class="dropdown-item" href="selectGui?page=1&size=${size}&q=${fn:escapeXml(q)}&sort=price_asc">가격 낮은순</a>
 								</div>
 							</div>
 						</div>

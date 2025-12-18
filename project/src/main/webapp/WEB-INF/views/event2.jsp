@@ -29,7 +29,7 @@
 <body>
     <!-- Topbar Start -->
     
-        <div class="row align-items-center py-3 px-xl-5">
+        <div class="row align-items-center py-3 px-xl-5" style="margin-left:60px;">
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="/" class="text-decoration-none">
                     <img src='../img/logo.png' class='logo'/>
@@ -37,21 +37,20 @@
                     <span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1> -->
                 </a>
             </div>
-           	<div class="col-lg-6 col-6 text-left">
-			<form action="selectGui" method="get" style="margin-left:120px;">
+         	<div class="col-lg-6 col-6 text-left">
+			<form action="selectall" method="get" style="margin-left:20px; margin-right:80px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<button class="input-group-text bg-transparent text-primary"
-							type="submit">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-3 col-6 text-right">
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+            <div class="col-lg-3 col-6 text-right" style="margin-left:-102px;">
                 
                 <a href="cart" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
@@ -64,7 +63,7 @@
 
 
     <!-- Navbar Start -->
-    <div class="container-fluid pt-5">
+    <div class="container-fluid pt-0">
        <div class="row px-xl-5">
        <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
@@ -164,21 +163,21 @@
 
 
    <!-- Products Start -->
-    <div class="container-fluid pt-2" style="padding-left:240px;">
-        <div class="text-center mb-4" style="padding-top:30px; ">
+  <div class="container-fluid pt-2" style="margin-left:-40px;">
+        <div class="text-center mb-4" style="margin-top:70px; ">
             <h3 class="section-title px-5"><span class="px-2">새 상품</span></h3>
         </div>
         
    <div class="row px-xl-5 pb-3"> 
   	<c:forEach var="item" items="${newArrivals}">
-  	<div class="col-lg-4 col-md-4 col-sm-4 pb-1">
-	<div class="card product-item border-0 mb-4" style="width: 270px; height:450px;">
+  	<div class="col-lg-4 col-md-4 col-sm-4 pb-1" >
+	<div class="card product-item border-0 mb-4 w-76 mx-auto" style="width: 270px;"> 
 	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 	<a href="detail?item_no=${item.item_no}"> 
-	<img src="/img/product/${item.item_img}" width="300" height="300" alt="${item.item_name}" />
+<img src="/img/product/${item.item_img}" width="270" height="250" alt="${item.item_name}" style="object-fit: cover;" />
 	</a>
 		</div>
-	<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+		<div class="card-body border-left border-right text-center p-0 pt-4 ">
 		<h5 class="text-truncate mb-3">${item.item_name}</h5>
 		<div class="d-flex justify-content-center">
 		<h5>${item.sales_p}원</h5>
@@ -243,10 +242,9 @@
  <!-- Offer End  -->
  
 	<!-- 상품 목록 페이지 이동 끝 -->
-   <!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 
-	style="width:1400px; margin-left:-140px; ">
-		<div class="row px-xl-5 pt-3" style="margin-left:-120px;">
+<!-- Footer Start -->
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 	style="width:1350px; margin-left:-30px;" >
+		<div class="row px-xl-5 pt-3" style="margin-left:-100px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -298,15 +296,15 @@
 				</div>
 			</div>
 		</div>
-	
-		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
+		<div class="row border-top border-light py-4" style="margin-left:-60px; margin-right:60px;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
-					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
+						&copy; <a class="text-dark font-weight-semi-bold" href="#">Your
 						Site Name</a>. All Rights Reserved. Designed by <a
 						class="text-dark font-weight-semi-bold"
 						href="https://htmlcodex.com">HTML Codex</a><br> Distributed
 					By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+
 				</p>
 			</div>
 			<div class="col-md-6 px-xl-0 text-center text-md-right">
@@ -314,7 +312,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- Footer End -->
+	
+	<!-- footer end -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>

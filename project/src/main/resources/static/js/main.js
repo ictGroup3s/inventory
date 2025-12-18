@@ -23,8 +23,8 @@
 			minSlides: 2,      // 최소 보여줄 슬라이드
 			maxSlides: 4,      // 최대 보여줄 슬라이드
 			slideWidth: 250,   // 슬라이드 개별 너비
-			slideMargin: 10    // 슬라이드 간격
-		});
+			slideMargin: 10,    // 슬라이드 간격
+					});
 
 		// 상단으로 이동 버튼
 		$(window).scroll(function() {

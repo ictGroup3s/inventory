@@ -54,7 +54,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right">
+		 <div class="col-lg-3 col-6 text-right" style="margin-left:-105px;" >
 			<a href="cart" class="btn border"> 
 				<i class="fas fa-shopping-cart text-primary"></i> 
 				<span class="badge">0</span>
@@ -62,7 +62,7 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<div class="row border-top px-xl-5">
+		<div class="row border-top px-xl-5" style="margin-left: -80px;">
 			<div class="col-lg-12">
 				<nav
 					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
@@ -74,8 +74,8 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
-						<div class="navbar-nav ml-auto py-0">
+						id="navbarCollapse" >
+						<div class="navbar-nav py-0" style="margin-left: 850px;">
 							<!-- 로그인전 -->
 							<c:if test="${empty sessionScope.loginUser}">
 								<a href="login" class="nav-item nav-link">로그인</a>
@@ -108,12 +108,12 @@
 	</div>
 	
 	
-	<div class="container-fluid pt-5">
+<div class="container-fluid">
 		<div class="row px-xl-5">
-            
-            <div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar">
-					<h5 class="p-3">MENU</h5>
+			<div class="col-lg-2">
+				<!-- Sidebar -->
+				<nav class="category-sidebar" style="margin-left:-80px;">
+					<h6>MENU</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall" class="nav-link">전체상품</a></li>
 						<li class="nav-item"><a href="selectGui" class="nav-link active">구이 ．찜 ．볶음</a></li>
@@ -125,6 +125,7 @@
 					</ul>
 				</nav>
 			</div>
+			
 			<div class="col-lg-9 col-md-12">
 				<div class="row pb-3 product-grid">
 					<div class="col-12 pb-1">
@@ -273,8 +274,9 @@
 	</div>
 	
 	<!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" style="width:1450px; margin-left:80px;">
-		<div class="row px-xl-5 pt-3">
+	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 
+	style="width:1400px; margin-left:55px;">
+		<div class="row px-xl-5 pt-3" style="margin-left:-120px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">
@@ -326,7 +328,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row mx-xl-5 py-4" style="border-top: 1px solid #dee2e6;">
+		<div class="row py-4" style="border-top: 1px solid #dee2e6; margin-left:-80px; margin-right:60px;">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
 					&copy; <a class="text-dark font-weight-semi-bold" href="#">Your

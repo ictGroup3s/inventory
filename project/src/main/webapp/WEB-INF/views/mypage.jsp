@@ -40,15 +40,15 @@
 				<img src='../img/logo.png' class='logo' />
 			</a>
 		</div>
-		<div class="col-lg-6 col-6 text-left" >
-		<form action="mypage" method="get" style="margin-left:150px;">
+		<div class="col-lg-6 col-6 text-left">
+			<form action="selectall" method="get" style="margin-left:-20px; margin-right:90px;">
 				<div class="input-group">
-					<input type="text" class="form-control"
-							placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
-							<i class="fa fa-search"></i>
-						</span>
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
+						</button>
 					</div>
 				</div>
 			</form>

@@ -16,21 +16,20 @@
 
 <body>
 	<!-- Header 부분 -->
-	<div class="row align-items-center py-3 px-xl-5">
+	<div class="row align-items-center py-3 px-xl-5" style="margin-left:70px;">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none">
 				<img src='../img/logo.png' class='logo' />
 			</a>
 		</div>
-		<div class="col-lg-6 col-6 text-left">
-				<form action="selectall" method="get" style="margin-left:50px;">
+	<div class="col-lg-6 col-6 text-left">
+			<form action="selectall" method="get" style="margin-left:150px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<button class="input-group-text bg-transparent text-primary"
-							type="submit">
-							<i class="fa fa-search"></i>
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
 						</button>
 					</div>
 				</div>
@@ -357,6 +356,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- footer end -->
 		<div class="row border-top border-light mx-xl-5 py-4">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">
