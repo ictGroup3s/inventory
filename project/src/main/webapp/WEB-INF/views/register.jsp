@@ -27,30 +27,13 @@
 <body>
 
 <!-- Header -->
-<div class="row align-items-center py-3 px-xl-5">
+<div class="row align-items-center py-3 px-xl-5"style="margin-left:190px;">
     <div class="col-lg-3 d-none d-lg-block">
         <a href="/" class="text-decoration-none">
             <img src="/img/logo.png" class="logo" />
         </a>
     </div>
-    <div class="col-lg-6 col-6 text-left">
-        <form action="">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for products">
-                <div class="input-group-append">
-                    <span class="input-group-text bg-transparent text-primary"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="col-lg-3 col-6 text-right">
-        <a href="#" class="btn border">
-            <i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-        </a>
-        <a href="cart" class="btn border">
-            <i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
-        </a>
-    </div>
+
 </div>
 
 <!-- Page Title -->

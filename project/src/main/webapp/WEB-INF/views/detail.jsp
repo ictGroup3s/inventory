@@ -46,7 +46,7 @@
 
 <body>
 <!-- ############## 로고부분 ############################## -->
-	<div class="row align-items-center py-3 px-xl-5" style="height:150px;">
+	<div class="row align-items-center py-3 px-xl-4" style="margin-left:80px;">
 		 <div class="col-lg-3 d-none d-lg-block"><!-- 큰 화면에서는 3/12, 작은 화면에서는 숨김 -->
 			<a href="/" class="text-decoration-none"> <img
 				src="\img\logo.png" class='logo' />
@@ -54,14 +54,13 @@
 		</div>
 		
 		<div class="col-lg-6 col-6 text-left">
-			<form action="selectall" method="get">
+			<form action="selectall" method="get" style="margin-left:150px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
 						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<button class="input-group-text bg-transparent text-primary"
-							type="submit">
-							<i class="fa fa-search"></i>
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
 						</button>
 					</div>
 				</div>
@@ -121,35 +120,41 @@
 			</div>
 		</div>	
 	</div>		
-	<div class="container-fluid pt-5" >
+	<div class="container-fluid pt-2" >
 		<div class="row px-xl-5">
-		 <!-- ================== 왼쪽 카테고리 ================== -->
+		  <!-- ================== 왼쪽 카테고리 ================== -->
             <div class="col-lg-2 col-md-12 d-none d-lg-block">
-				<nav class="category-sidebar">
-					<h5 class="p-3">Categories</h5>
-					<ul class="nav flex-column">
-						<li class="nav-item"><a href="selectall" class="nav-link active">전체상품</a></li>
-						<li class="nav-item"><a href="selectGui" class="nav-link">구이 ．찜 ．볶음</a></li>
-						<li class="nav-item"><a href="selectSoup" class="nav-link">국 ．밥 ．면</a></li>
+              	<nav class="category-sidebar" style="margin-left:-40px;">
+                <h6 class="p-3">MENU</h6>
+                   <ul class="nav flex-column">
+						<li class="nav-item"><a href="selectall"
+							class="nav-link active">전체상품</a></li>
+						<li class="nav-item"><a href="selectGui" class="nav-link">구이
+								．찜 ．볶음</a></li>
+						<li class="nav-item"><a href="selectSoup" class="nav-link">국
+								．밥 ．면</a></li>
 						<li class="nav-item"><a href="selectDiet" class="nav-link">식단관리</a></li>
-						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식 ．간식</a></li>
-						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬 ．소스</a></li>
-						<li class="nav-item"><a href="selectdrink" class="nav-link">생수 ．음료</a></li>
+						<li class="nav-item"><a href="selectBunsik" class="nav-link">분식
+								．간식</a></li>
+						<li class="nav-item"><a href="selectBanchan" class="nav-link">반찬
+								．소스</a></li>
+						<li class="nav-item"><a href="selectdrink" class="nav-link">생수
+								．음료</a></li>
 					</ul>
-				</nav>
-			</div>
+                </nav>
+            </div>
 			
-
+<!-- Shop Detail Start ######## 이미지 파일 #########################-->
 	<div class="col-lg-10 col-md-12 p-0 m-0" >		 
-	<!-- Shop Detail Start ######## 이미지 파일 #########################-->
-		<div class="container py-4">
+		<div class="container py-5" style="margin-left:-80px;">
 		    <div class="d-flex flex-wrap align-items-center">
 		        <!-- 이미지 -->
-		        <div class="p-2 flex-shrink-0">
-		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" heigh="400px">
+		        <div class="p-2 flex-shrink-0 mr-5">
+		            <img src="/img/product/${product.item_img}" alt="${product.item_name}"  width="350px" height="350px">
 		        </div>
+		        <!-- 텍스트 -->
 		         <div class="p-2 flex-grow-1">
-					<h4 class="font-weight-semi-bold">${product.item_name}</h4>												
+					<h4 class="font-weight-semi-bold" style="margin-bottom:20px; margin-top:80px;">${product.item_name}</h4>												
 		            <div id="product-rating-summary" class="mb-2" style="font-size: 0.9rem; color: #666;"></div>
 		            
 		            <div class="d-flex mb-2 align-items-center">
@@ -177,7 +182,7 @@
 						</c:choose>			
 					</div>					
 				
-				<form action="/cart/addForm" method="post">
+				<form action="/cart/addForm" method="post" style="margin-top:80px;">
 					<input type="hidden" name="item_no" value="${product.item_no}" />
 					<c:if test="${product.stock_cnt <= 10}">
 							<p style="font-size:12px; color:#b90000;"> 남은 수량: ${product.stock_cnt} 개</p>
@@ -294,7 +299,7 @@
 	<!-- Shop Detail End -->
 	
 <!-- Image Slider Start 랜덤으로 호출 (bx slider용) -->
-<div class="container py-5">
+<div class="container-fluid py-5" style="margin-left:-20px;">
    <ul class="bxslider">
             <c:forEach var="rp" items="${randomProducts}">  
                <li>
@@ -347,8 +352,9 @@
 <!-- Image Slider End -->
 
 	 <!-- Footer Start -->
-	<div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2">
-		<div class="row px-xl-5 pt-3">
+	 <div class="container-fluid bg-secondary text-dark mt-3 pt-3 pb-2" 
+	style="width:1400px; margin-left:-50px; ">
+		<div class="row px-xl-5 pt-3" style="margin-left:-90px;">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 
 				<p class="mb-2">

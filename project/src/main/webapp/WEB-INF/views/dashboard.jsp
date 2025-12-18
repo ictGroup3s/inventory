@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -34,9 +35,11 @@
 <link rel="stylesheet" href="css/stats.css">
 
 </head>
-<body class="${empty sessionScope.loginUser || sessionScope.loginRole != '1' ? 'hide-content' : ''}">
+<body
+	class="${empty sessionScope.loginUser || sessionScope.loginRole != '1' ? 'hide-content' : ''}">
 	<%-- 관리자 아니면 모달 띄우고 페이지 내용 숨김 --%>
-	<c:if test="${empty sessionScope.loginUser || sessionScope.loginRole != '1'}">
+	<c:if
+		test="${empty sessionScope.loginUser || sessionScope.loginRole != '1'}">
 		<div class="admin-overlay"></div>
 		<div class="login-modal">
 			<div class="lock-icon">🔒</div>
@@ -44,42 +47,27 @@
 			<p>
 				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
 			</p>
-			<a href="${pageContext.request.contextPath}/login" class="btn-login"
-				style="display: block; text-decoration: none;">로그인</a>
+			<%-- 현재 페이지 이름만 전달 --%>
+			<a href="login?redirectURL=dashboard" class="btn-login"
+				style="display: block; text-decoration: none;">로그인</a> <a
+				href="${pageContext.request.contextPath}/" class="btn-home"
+				style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
 	<%-- 관리자일 때만 보이는 실제 내용 --%>
 	<div class="admin-content">
-		<!-- 기존 관리자 페이지 내용 -->
 
-		<!-- Topbar -->
-		<div class="row align-items-center py-3 px-xl-5 bg-light">
+		<!-- 로고(왼쪽) -->
+		<div class="row align-items-center py-3 px-xl-5"
+			style="margin-left: 60px;">
 			<div class="col-lg-3 d-none d-lg-block">
 				<a href="/" class="text-decoration-none"> <img
 					src="img/logo.png" class="logo" />
 				</a>
 			</div>
-			<div class="col-lg-6 col-6 text-left">
-				<form action="">
-					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for products">
-						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
-								<i class="fa fa-search"></i>
-							</span>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="col-lg-3 col-6 text-right">
-				<a href="#" class="btn border"> <i
-					class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-				</a> <a href="cart" class="btn border"> <i
-					class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
-				</a>
-			</div>
+	
+		
 		</div>
 
 		<!-- Main Layout -->
@@ -96,7 +84,7 @@
 							<li class="nav-item"><a href="stock" class="nav-link">입고/재고관리</a></li>
 							<li class="nav-item"><a href="order" class="nav-link">주문관리</a></li>
 							<li class="nav-item"><a href="stats" class="nav-link">통계</a></li>
-							<li class="nav-item"><a href="mlist" class="nav-link">고객관리</a></li>
+							<li class="nav-item"><a href="mlist" class="nav-link">채팅관리</a></li>
 							<li class="nav-item"><a href="board" class="nav-link">고객센터</a></li>
 						</ul>
 					</nav>
@@ -150,41 +138,52 @@
 							<div class="col-lg-6 col-md-12">
 								<div class="row">
 									<div class="col-6 mb-3">
-										<div class="card h-100">
-											<div class="card-body text-center">
-												<h6>신규 회원</h6>
-												<p id="newMembers">0</p>
+										<a href="/order" class="text-decoration-none text-dark">
+											<div class="card h-100">
+												<div class="card-body text-center">
+													<h6>취소/반품 건수</h6>
+													<p id="cancelReturnCount">0</p>
+
+												</div>
 											</div>
-										</div>
+										</a>
 									</div>
 									<div class="col-6 mb-3">
-										<div class="card h-100">
-											<div class="card-body text-center">
-												<h6>주문건수</h6>
-												<p id="todayOrders">0</p>
+										<a href="/stats" class="text-decoration-none text-dark">
+											<div class="card h-100">
+												<div class="card-body text-center">
+													<h6>주문건수</h6>
+													<p id="todayOrders">0</p>
+												</div>
 											</div>
-										</div>
+										</a>
 									</div>
 									<div class="col-6 mb-3">
-										<div class="card h-100">
-											<div class="card-body text-center">
-												<h6>일 매출</h6>
-												<p>
-													₩<span id="todaySales">0</span>
-												</p>
+										<a href="/stats" class="text-decoration-none text-dark">
+											<div class="card h-100">
+												<div class="card-body text-center">
+													<h6>일 매출</h6>
+													<p>
+														₩<span id="todaySales">0</span>
+													</p>
+												</div>
 											</div>
-										</div>
+										</a>
 									</div>
+
 									<div class="col-6 mb-3">
-										<div class="card h-100">
-											<div class="card-body text-center">
-												<h6>월 매출</h6>
-												<p>
-													₩<span id="monthSales">0</span>
-												</p>
+										<a href="/stats" class="text-decoration-none text-dark">
+											<div class="card h-100">
+												<div class="card-body text-center">
+													<h6>월 매출</h6>
+													<p>
+														₩<span id="monthSales">0</span>
+													</p>
+												</div>
 											</div>
-										</div>
+										</a>
 									</div>
+
 								</div>
 							</div>
 						</div>
@@ -218,62 +217,14 @@
 			</div>
 		</div>
 
-		<!-- Footer -->
-		<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-			<div class="row px-xl-5 pt-5">
-				<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-					<a href="#" class="text-decoration-none">
-						<h1 class="mb-4 display-5 font-weight-semi-bold">
-							<span
-								class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
-						</h1>
-					</a>
-					<p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna,
-						ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-				</div>
-				<div class="col-lg-8 col-md-12">
-					<div class="row">
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-							<div class="d-flex flex-column justify-content-start">
-								<a class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Home</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Our Shop</a>
-							</div>
-						</div>
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-							<div class="d-flex flex-column justify-content-start">
-								<a class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Shop Detail</a> <a
-									class="text-dark mb-2" href="#"><i
-									class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-							</div>
-						</div>
-						<div class="col-md-4 mb-5">
-							<h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-							<form action="">
-								<input type="text" class="form-control mb-2"
-									placeholder="Your Name" required> <input type="email"
-									class="form-control mb-2" placeholder="Your Email" required>
-								<button class="btn btn-primary btn-block" type="submit">Subscribe</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<!-- JS -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="js/main.js"></script>
-	<script src="js/dashboard.js"></script>
-
+		<!-- JS -->
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+		<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -43,7 +43,7 @@
 			<form action="">
 				<div class="input-group">
 					<input type="text" class="form-control"
-						placeholder="Search for products">
+						placeholder="찾고 싶은 상품을 검색하세요." >
 					<div class="input-group-append">
 						<span class="input-group-text bg-transparent text-primary">
 							<i class="fa fa-search"></i>
@@ -53,9 +53,7 @@
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			<a href="#" class="btn border"> <i
-				class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a> <a href="cart" class="btn border"> <i
+			 <a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
@@ -94,6 +92,7 @@
 			<p>회원 아이디: ${sessionScope.loginUser.customer_id}</p>
 	   		 <p>이름: ${sessionScope.loginUser.name}</p>
 			<button type="submit" class="btn btn-outline-primary btn-block py-2 mt-2">탈퇴하기</button>
+			<a href="/mypage" class="btn btn-secondary w-100 mt-2">뒤로가기</a>
 			</form>
 
 		</div>

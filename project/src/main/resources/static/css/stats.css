@@ -1,67 +1,437 @@
 @charset "UTF-8";
 
-.card{
-	margin-bottom:20px;
-	border:none;
+/* ===== 색상 변수 ===== */
+:root {
+	--primary: #D19C97;
+	--primary-dark: #C4847E;
+	--primary-light: #E8C4C0;
+	--accent: #B87A75;
+	--accent2: #A65D57;
+	--gradient1: linear-gradient(135deg, #D19C97, #E8C4C0);
+	--gradient2: linear-gradient(135deg, #C4847E, #D19C97);
+	--gradient3: linear-gradient(135deg, #B87A75, #D19C97);
+	--shadow: rgba(209, 156, 151, 0.2);
+	--shadow-hover: rgba(209, 156, 151, 0.35);
+	--text-dark: #4A3F3E;
+	--text-light: #7D6B69;
 }
+
+/* ===== 카드 기본 스타일 ===== */
+.card {
+	border: none;
+	border-radius: 20px;
+	box-shadow: 0 8px 30px var(--shadow);
+	transition: all 0.4s ease;
+	background: #fff;
+	overflow: hidden;
+}
+
+.card:hover {
+	box-shadow: 0 12px 40px var(--shadow-hover);
+	transform: translateY(-5px);
+}
+
+.card-title {
+	color: var(--accent2);
+	font-weight: 700;
+	font-size: 18px;
+	margin-bottom: 15px;
+}
+
+.card-body {
+	padding: 25px;
+}
+
+/* ===== 대시보드 상단 카드 (신규회원, 주문건수 등) ===== */
+.dashboard-content .col-6 .card {
+	background: var(--gradient1);
+	color: #fff;
+	text-align: center;
+	border-radius: 20px;
+	position: relative;
+	overflow: hidden;
+}
+
+.dashboard-content .col-6 .card::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	right: -50%;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 50%;
+	transition: all 0.5s ease;
+}
+
+.dashboard-content .col-6 .card:hover::before {
+	transform: scale(2);
+}
+
+.dashboard-content .col-6 .card h6 {
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 14px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.dashboard-content .col-6 .card p {
+	font-size: 28px;
+	font-weight: 800;
+	margin: 0;
+	color: #fff;
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 각 카드 다른 그라데이션 */
+.dashboard-content .col-6:nth-child(1) .card {
+	background: linear-gradient(135deg, #D19C97, #E8B4AF);
+}
+
+.dashboard-content .col-6:nth-child(2) .card {
+	background: linear-gradient(135deg, #C4847E, #D9A8A3);
+}
+
+.dashboard-content .col-6:nth-child(3) .card {
+	background: linear-gradient(135deg, #B87A75, #D19C97);
+}
+
+.dashboard-content .col-6:nth-child(4) .card {
+	background: linear-gradient(135deg, #A65D57, #C4847E);
+}
+
+/* ===== 주문현황 카드 ===== */
+.dashboard1 {
+	max-height: 300px;
+	overflow-y: auto;
+	padding: 20px;
+}
+
+.dashboard1::-webkit-scrollbar {
+	width: 6px;
+}
+
+.dashboard1::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 10px;
+}
+
+.dashboard1::-webkit-scrollbar-thumb {
+	background: var(--primary);
+	border-radius: 10px;
+}
+
+.dashboard1 h5 {
+	color: var(--accent2);
+	font-weight: 700;
+}
+
+.dashboard1 h6 {
+	color: var(--text-dark);
+	font-weight: 600;
+	margin-top: 20px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid var(--primary-light);
+}
+
+.dashboard1 p {
+	color: var(--text-light);
+	font-size: 14px;
+}
+
+.dashboard1 p span {
+	font-weight: 700;
+	color: var(--accent2);
+	font-size: 18px;
+}
+
+/* ===== 테이블 스타일 ===== */
+.table-striped {
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.table-striped thead th {
+	background: var(--gradient2);
+	color: #fff;
+	font-weight: 600;
+	padding: 12px 15px;
+	border: none;
+	font-size: 13px;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+
+.table-striped tbody tr {
+	transition: all 0.3s ease;
+}
+
+.table-striped tbody tr:hover {
+	background-color: rgba(209, 156, 151, 0.1) !important;
+	transform: scale(1.01);
+}
+
+.table-striped tbody td {
+	padding: 12px 15px;
+	vertical-align: middle;
+	color: var(--text-dark);
+	font-size: 13px;
+	border-bottom: 1px solid rgba(209, 156, 151, 0.15);
+}
+
+/* ===== 차트 영역 ===== */
 .chart-box {
 	width: 100%;
-	height: 280px; /* 높이 통일 */
+	height: 280px;
 	max-height: 60vh;
 	position: relative;
+	background: linear-gradient(180deg, rgba(209, 156, 151, 0.03),
+		rgba(255, 255, 255, 0));
+	border-radius: 15px;
+	padding: 10px;
 }
 
-/* 중간 크기(screen)에서는 비슷한 비율을 유지하되, 차트가 지나치게 길어지지 않도록 최대 높이를 제한합니다. */
-@media ( max-width : 992px) {
-	.chart-box {
-		height: 260px;
-		max-height: 55vh;
-	}
-}
-
-/* 작은 화면에서는 너무 많은 세로 공간을 차지하지 않도록 높이를 제한합니다. */
-@media ( max-width : 576px) {
-	.chart-box {
-		height: 220px;
-		max-height: 40vh;
-	}
-}
-
-/* 카드 본문을 flex로 유지하여 chart-box가 사용 가능한 공간을 채우도록 합니다. */
-.card.h-100>.card-body {
-	/* keep default flow to avoid forcing equal-height stretching */
-	
-}
-
-.row {
-	align-items: flex-start;
-}
-
-.card.h-100 {
-	height: auto !important;
-}
-
-.card.h-100>.card-body {
-	/* keep default flow to avoid forcing equal-height stretching */
-	
-}
-
-/* 캔버스가 컨테이너를 완전히 채우도록 */
 .chart-box canvas {
 	width: 100% !important;
 	height: 100% !important;
 	display: block;
 }
 
-/* ⭐ 카드 높이 통일 (핵심) */
+#chartWrapSales, #stockChartWrap {
+	background: linear-gradient(180deg, rgba(209, 156, 151, 0.05),
+		transparent);
+	border-radius: 15px;
+	padding: 15px;
+}
+
+/* ===== 날짜 선택 ===== */
+#orderDatePicker {
+	border: 2px solid var(--primary-light);
+	border-radius: 10px;
+	padding: 8px 12px;
+	font-weight: 500;
+	color: var(--text-dark);
+	transition: all 0.3s ease;
+}
+
+#orderDatePicker:focus {
+	border-color: var(--primary);
+	box-shadow: 0 0 0 4px rgba(209, 156, 151, 0.2);
+	outline: none;
+}
+
+/* ===== 버튼 스타일 ===== */
+.btn-primary {
+	background: var(--gradient2);
+	border: none;
+	border-radius: 12px;
+	font-weight: 600;
+	padding: 10px 24px;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 15px var(--shadow);
+}
+
+.btn-primary:hover {
+	background: var(--gradient3);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px var(--shadow-hover);
+}
+
+.btn-outline-primary {
+	border: 2px solid var(--primary);
+	color: var(--primary);
+	border-radius: 12px;
+	font-weight: 600;
+	transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+	background: var(--primary);
+	color: #fff;
+	box-shadow: 0 4px 15px var(--shadow);
+}
+
+/* ===== 폼 컨트롤 ===== */
+.form-control-sm {
+	border: 2px solid rgba(209, 156, 151, 0.3);
+	border-radius: 10px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	padding: 8px 12px;
+	height: 45px;
+}
+
+.form-control-sm:focus {
+	border-color: var(--primary);
+	box-shadow: 0 0 0 4px rgba(209, 156, 151, 0.15);
+}
+
+/* ===== 통계 테이블 스타일 ===== */
+.stats-table {
+	border-collapse: separate;
+	border-spacing: 0;
+	border-radius: 15px;
+	overflow: hidden;
+	box-shadow: 0 4px 20px var(--shadow);
+}
+
+.stats-table thead {
+	background: var(--gradient2);
+}
+
+.stats-table thead th {
+	color: #fff;
+	font-weight: 600;
+	padding: 15px 18px;
+	border: none;
+	text-align: center;
+	font-size: 13px;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.stats-table tbody tr {
+	transition: all 0.3s ease;
+}
+
+.stats-table tbody tr:hover {
+	background-color: rgba(209, 156, 151, 0.08);
+}
+
+.stats-table tbody td {
+	padding: 14px 18px;
+	border-bottom: 1px solid rgba(209, 156, 151, 0.12);
+	text-align: center;
+	vertical-align: middle;
+	color: var(--text-dark);
+}
+
+.stats-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+/* 숫자 강조 */
+.num-cell {
+	font-weight: 700;
+	color: var(--text-dark);
+}
+
+.positive {
+	color: var(--primary) !important;
+	font-weight: 700;
+}
+
+.negative {
+	color: var(--accent2) !important;
+	font-weight: 700;
+}
+
+/* ===== 비중 프로그레스바 ===== */
+.ratio-bar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ratio-bar .bar-bg {
+	flex: 1;
+	height: 10px;
+	background: rgba(209, 156, 151, 0.15);
+	border-radius: 5px;
+	overflow: hidden;
+	min-width: 80px;
+}
+
+.ratio-bar .bar-fill {
+	height: 100%;
+	background: var(--gradient2);
+	border-radius: 5px;
+	transition: width 0.6s ease;
+}
+
+.ratio-bar .bar-text {
+	font-weight: 700;
+	font-size: 13px;
+	color: var(--accent2);
+	min-width: 50px;
+	text-align: right;
+}
+
+/* ===== 상태 배지 ===== */
+.status-badge {
+	display: inline-block;
+	padding: 6px 14px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.status-badge.good {
+	background: rgba(209, 156, 151, 0.15);
+	color: var(--primary-dark);
+}
+
+.status-badge.warning {
+	background: rgba(166, 93, 87, 0.15);
+	color: var(--accent2);
+}
+
+/* ===== 사이드바 스타일 ===== */
+.category-sidebar {
+	background: #fff;
+	border-radius: 20px;
+	box-shadow: 0 8px 30px var(--shadow);
+	overflow: hidden;
+	width:190px;
+}
+
+.category-sidebar h5 {
+	font-weight: 700;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #D19C97;
+}
+
+.category-sidebar .nav-link {
+	color: var(--text-dark);
+	padding: 12px 20px;
+	transition: all 0.3s ease;
+	border-left: 4px solid transparent;
+	font-weight: 500;
+}
+
+.category-sidebar .nav-link:hover {
+	background: rgba(209, 156, 151, 0.1);
+	color: var(--primary-dark);
+	border-left-color: var(--primary);
+}
+
+.category-sidebar .nav-link.active {
+	background: rgba(209, 156, 151, 0.15);
+	color: var(--accent2);
+	border-left-color: var(--accent2);
+	font-weight: 700;
+}
+
+/* ===== 대시보드 레이아웃 ===== */
+.dashboard-content {
+	padding: 20px 0;
+}
+
 .dashboard-content .row {
 	display: flex;
 	flex-wrap: wrap;
+	align-items: stretch;
 }
 
 .dashboard-content .row>.col-lg-6, .dashboard-content .row>.col-md-12 {
 	display: flex;
-	margin-bottom: 20px;
+	margin-bottom: 25px;
 }
 
 .dashboard-content .row>.col-lg-6>.card, .dashboard-content .row>.col-md-12>.card
@@ -77,70 +447,523 @@
 	flex-direction: column;
 }
 
-.dashboard-content .card-body .chart-box {
-	height: 280px;
-	max-height: 280px;
+/* ===== 애니메이션 ===== */
+@keyframes fadeInUp {from { opacity:0;
+	transform: translateY(20px);
 }
 
-
-
-/* 같은 row 안의 카드 높이 맞추기 */
-.dashboard-content .row {
-	align-items: stretch;
+to {
+	opacity: 1;
+	transform: translateY(0);
 }
 
-/* 카드 기본 스타일 */
+}
 .card {
-	height: 100%;
+	animation: fadeInUp 0.5s ease forwards;
 }
 
-/* --- 표 조정: 지표 테이블의 글자 크기를 줄이고 패딩을 더 타이트하게 조정 --- */
-/* 날짜가 한 줄에 들어가도록 일일(daily) 테이블을 더 컴팩트하게 만들기 */
-#dailyTable, #monthlyMetricsTable, #monthlyTable {
-	font-size: 12px; /* smaller */
+.dashboard-content .col-6:nth-child(1) .card {
+	animation-delay: 0.1s;
 }
 
-#dailyTable td, #dailyTable th, #monthlyMetricsTable td,
-	#monthlyMetricsTable th {
-	padding: .25rem .4rem; /* tighter cell padding */
+.dashboard-content .col-6:nth-child(2) .card {
+	animation-delay: 0.2s;
 }
-/* 일일 테이블에서 날짜 열이 줄바꿈되지 않도록 하고 고정된 최소 너비를 지정합니다 */
-#dailyTable th:first-child, #dailyTable td:first-child {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	min-width: 92px; /* 날짜 열이 충분한 너비를 가지도록 합니다 */
-	max-width: 120px;
+
+.dashboard-content .col-6:nth-child(3) .card {
+	animation-delay: 0.3s;
 }
-/* 아주 작은 화면에서 여전히 공간이 부족하면 글꼴 크기를 조금 더 줄입니다 */
-@media ( max-width : 768px) {
-	#dailyTable {
-		font-size: 11px;
+
+.dashboard-content .col-6:nth-child(4) .card {
+	animation-delay: 0.4s;
+}
+
+/* ===== 반응형 ===== */
+@media ( max-width : 992px) {
+	.chart-box {
+		height: 260px;
+		max-height: 55vh;
 	}
-	#dailyTable th:first-child, #dailyTable td:first-child {
-		min-width: 80px;
+	.dashboard-content .col-6 .card p {
+		font-size: 22px;
+	}
+}
+
+@media ( max-width : 768px) {
+	.dashboard1 {
+		max-height: 250px;
+	}
+	.card-body {
+		padding: 20px;
 	}
 }
 
 @media ( max-width : 576px) {
-	#dailyTable, #monthlyMetricsTable, #monthlyTable {
-		font-size: 11px;
+	.chart-box {
+		height: 220px;
+		max-height: 40vh;
+	}
+	.dashboard-content .col-6 .card p {
+		font-size: 18px;
+	}
+	.dashboard-content .col-6 .card h6 {
+		font-size: 12px;
+	}
+	.stats-table thead th, .stats-table tbody td {
+		padding: 10px 12px;
+		font-size: 12px;
 	}
 }
 
-#categorySalesTable th, td {
-	font-size: 12px;
-}
- 
-/* dashboard */
-.dashboard1{
-	max-height: 250px; 
-	overflow-y: auto;
+/* ===== 기타 테이블 ===== */
+#dailyTable, #monthlyMetricsTable, #monthlyTable {
+	font-size: 13px;
 }
 
-.table-striped thead th{
-	position: sticky; 
-	top: 0; 
-	background: #fff; 
-	z-index: 1;
+#dailyTable td, #dailyTable th, #monthlyMetricsTable td,
+	#monthlyMetricsTable th {
+	padding: .3rem .5rem;
 }
+
+#dailyTable th:first-child, #dailyTable td:first-child {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	min-width: 92px;
+	max-width: 120px;
+}
+
+#categorySalesTable th, #categorySalesTable td {
+	font-size: 13px;
+}
+
+/* ===== 월별 테이블 행 ===== */
+.monthly-row-positive td:nth-child(5) {
+	color: var(--primary);
+	font-weight: 700;
+}
+
+.monthly-row-negative td:nth-child(5) {
+	color: var(--accent2);
+	font-weight: 700;
+}
+
+/* ===== 상품관리 페이지 (item.jsp) ===== */
+
+/* 상품 등록 폼 테이블 */
+.table-bordered {
+	border: none !important;
+	border-radius: 15px;
+	overflow: hidden;
+	box-shadow: 0 4px 20px var(--shadow);
+}
+
+.table-bordered td {
+	border: none !important;
+	border-bottom: 1px solid rgba(209, 156, 151, 0.15) !important;
+	padding: 15px 20px !important;
+	vertical-align: middle;
+}
+
+.table-bordered tr:last-child td {
+	border-bottom: none !important;
+}
+
+.table-bordered td:first-child {
+	background: rgba(209, 156, 151, 0.08);
+	font-weight: 600;
+	color: var(--accent2);
+	width: 160px;
+	text-align: center;
+}
+
+/* 폼 입력 필드 */
+.form-control {
+	border: 2px solid rgba(209, 156, 151, 0.2);
+	border-radius: 10px;
+	padding: 10px 15px;
+	transition: all 0.3s ease;
+	font-size: 14px;
+}
+
+.form-control:focus {
+	border-color: var(--primary);
+	box-shadow: 0 0 0 4px rgba(209, 156, 151, 0.15);
+	outline: none;
+}
+
+.form-control::placeholder {
+	color: #bbb;
+}
+
+/* 셀렉트 박스 */
+select.form-control {
+	cursor: pointer;
+	background-image:
+		url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23D19C97' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+	background-position: right 10px center;
+	background-repeat: no-repeat;
+	background-size: 20px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	height: 42px;
+}
+
+/* 텍스트에어리어 */
+textarea.form-control {
+	resize: vertical;
+	min-height: 120px;
+}
+
+/* 파일 업로드 */
+input[type="file"].form-control {
+	padding: 8px 15px;
+	cursor: pointer;
+	height: 42px;
+}
+
+input[type="file"].form-control::file-selector-button {
+	background: var(--gradient2);
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	padding: 6px 16px;
+	margin-right: 15px;
+	cursor: pointer;
+	font-weight: 600;
+	transition: all 0.3s ease;
+}
+
+input[type="file"].form-control::file-selector-button:hover {
+	background: var(--gradient3);
+}
+
+/* 등록/수정 버튼 */
+.submit-btn {
+	padding: 12px 30px;
+	border-radius: 12px;
+	font-weight: 600;
+	font-size: 15px;
+	transition: all 0.3s ease;
+	border: none;
+}
+
+.submit-btn.register {
+	background: var(--gradient2);
+	color: #fff;
+	box-shadow: 0 4px 15px var(--shadow);
+}
+
+.submit-btn.register:hover {
+	background: var(--gradient3);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px var(--shadow-hover);
+}
+
+.submit-btn.update {
+	background: linear-gradient(135deg, #f0ad4e, #ec971f);
+	color: #fff;
+	box-shadow: 0 4px 15px rgba(240, 173, 78, 0.3);
+}
+
+.submit-btn.update:hover {
+	background: linear-gradient(135deg, #ec971f, #d58512);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px rgba(240, 173, 78, 0.4);
+}
+
+.submit-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none !important;
+}
+
+/* 삭제 버튼 */
+.delete-btn {
+	background: linear-gradient(135deg, #e74c3c, #c0392b);
+	border: none;
+	border-radius: 8px;
+	padding: 6px 16px;
+	font-weight: 600;
+	font-size: 13px;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 10px rgba(231, 76, 60, 0.2);
+}
+
+.delete-btn:hover {
+	background: linear-gradient(135deg, #c0392b, #a93226);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* 상품 목록 테이블 */
+.stock-table {
+	border-collapse: separate; /* sticky 위해 필요 */
+    border-spacing: 0;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    table-layout: fixed;       /* 열 균등 분배 */
+}
+
+.stock-table thead.thead-light th {
+	position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    background: var(--gradient2) !important;
+    color: #fff !important;
+    font-weight: 600;
+    padding: 14px 18px;
+    border: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.table .thead-light th {
+  background: var(--gradient2) !important;
+	color: #fff !important;
+	font-weight: 600;
+	padding: 14px 18px;
+	border: none;
+	font-size: 13px;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	text-align: center;
+}
+
+.item_no {
+	width: 105px;
+}
+
+.item_name {
+	text-align: left;
+}
+
+.stock-table tbody tr {
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+.stock-table tbody tr:hover {
+	background-color: rgba(209, 156, 151, 0.1) !important;
+}
+
+.stock-table tbody tr.selected {
+	background-color: rgba(209, 156, 151, 0.2) !important;
+	box-shadow: inset 4px 0 0 var(--primary);
+}
+
+.stock-table tbody td {
+	padding: 14px 18px;
+	border-bottom: 1px solid rgba(209, 156, 151, 0.12);
+	vertical-align: middle;
+	color: var(--text-dark);
+	font-size: 13px;
+}
+
+.stock-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+/* 테이블 래퍼 */
+.stock-table-wrapper {
+	border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow);
+    max-height: 600px;        /* 스크롤 높이 */
+    overflow-y: auto;         /* 세로 스크롤 */
+    overflow-x: hidden;
+}
+
+.item_no{
+	width:86px;
+}
+
+.item_name{
+	width: 210px;
+}
+/* 상품 이미지 미리보기 */
+#preview {
+	border-radius: 20px;
+	box-shadow: 0 8px 30px var(--shadow);
+	transition: all 0.3s ease;
+	border: 4px solid #fff;
+}
+
+#preview:hover {
+	transform: scale(1.02);
+	box-shadow: 0 12px 40px var(--shadow-hover);
+}
+
+/* 페이지 제목 */
+h3.font-weight-semi-bold {
+	color: var(--accent2);
+	font-weight: 700;
+	position: relative;
+	padding-bottom: 15px;
+}
+
+h3.font-weight-semi-bold::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 60px;
+	height: 4px;
+	background: var(--gradient2);
+	border-radius: 2px;
+}
+
+h4.mb-0 {
+	color: var(--accent2);
+	font-weight: 700;
+}
+
+/* 검색 및 필터 */
+#itemSearch, #categoryFilter {
+	border: 2px solid rgba(209, 156, 151, 0.25);
+	border-radius: 10px;
+	padding: 10px 15px;
+	font-size: 14px;
+	transition: all 0.3s ease;
+	height: 42px;
+}
+
+#itemSearch:focus, #categoryFilter:focus {
+	border-color: var(--primary);
+	box-shadow: 0 0 0 4px rgba(209, 156, 151, 0.15);
+	outline: none;
+}
+
+/* 에러 메시지 */
+.error-msg {
+	font-size: 12px;
+	margin-top: 5px;
+}
+
+/* 할인률 입력 그룹 */
+.input-group-text {
+	/* background: var(--gradient1); */
+
+	border: 1px solid #fff;
+	color: #fff;
+	font-weight: 600;
+	border-radius: 0 10px 10px 10px !important;
+}
+
+.input-group .form-control {
+	border-radius: 10px 0 0 10px !important;
+}
+
+/* ===== 재고 관리 페이지 (stock.jsp) ===== */
+
+/* 재고 경고 */
+#stockWarning {
+	background: linear-gradient(135deg, #fff3cd, #ffeeba);
+	border: none;
+	border-radius: 12px;
+	padding: 15px 20px;
+	box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+}
+
+#stockWarning i {
+	color: #d39e00;
+	font-size: 18px;
+}
+
+#stockWarning span {
+	color: #856404;
+	font-weight: 600;
+}
+
+/* 수량 조정 버튼 */
+.stock-adjust-btn {
+	width: 40px;
+	height: 40px;
+	border-radius: 10px !important;
+	font-size: 18px;
+	font-weight: 700;
+	border: 2px solid var(--primary) !important;
+	color: var(--primary) !important;
+	transition: all 0.3s ease;
+}
+
+.stock-adjust-btn:hover {
+	background: var(--primary) !important;
+	color: #fff !important;
+}
+
+/* 변경 후 재고 강조 */
+#new_stock {
+	background: linear-gradient(135deg, #fff3cd, #ffeeba) !important;
+	border: 2px solid #ffc107 !important;
+	font-weight: 700;
+	font-size: 16px;
+	color: #856404;
+}
+
+/* 재고 수정 버튼 */
+#stockSubmitBtn {
+	background: var(--gradient2);
+	border: none;
+	border-radius: 12px;
+	padding: 12px 30px;
+	font-weight: 600;
+	box-shadow: 0 4px 15px var(--shadow);
+	transition: all 0.3s ease;
+}
+
+#stockSubmitBtn:hover:not(:disabled) {
+	background: var(--gradient3);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px var(--shadow-hover);
+}
+
+#stockSubmitBtn:disabled {
+	background: #ccc;
+	box-shadow: none;
+}
+
+/* 초기화 버튼 */
+#resetBtn {
+	border-radius: 12px;
+	padding: 12px 30px;
+	font-weight: 600;
+}
+
+/* 재고 부족 표시 */
+.text-danger.font-weight-bold {
+	background: rgba(231, 76, 60, 0.1);
+	padding: 4px 10px;
+	border-radius: 8px;
+	font-size: 13px;
+}
+
+.text-danger.font-weight-bold i {
+	margin-right: 5px;
+}
+
+/* ===== 토스트 메시지 ===== */
+#toast {
+	position: fixed;
+	bottom: 30px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: var(--gradient2);
+	color: #fff;
+	padding: 15px 30px;
+	border-radius: 12px;
+	box-shadow: 0 8px 30px var(--shadow-hover);
+	font-weight: 600;
+	z-index: 9999;
+	opacity: 0;
+	transition: all 0.3s ease;
+}
+
+#toast.show {
+	opacity: 1;
+	transform: translateX(-50%) translateY(-10px);
+}
+
