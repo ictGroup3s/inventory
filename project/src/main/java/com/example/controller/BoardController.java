@@ -58,6 +58,7 @@ public class BoardController {
      */
     @PostMapping("/boardWrite")
     public String write(BoardVO vo) {
+    	System.out.println("boardcontroller: "+ vo);
         service.insertBoard(vo);
         return "redirect:/board";
     }
