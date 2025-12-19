@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import com.example.model.vo.BoardVO;
 import com.example.service.BoardService;
 
+/* 🔽 [추가] */
+import com.example.model.vo.CustomerVO;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class BoardController {
 
@@ -57,8 +61,17 @@ public class BoardController {
      * 글 등록
      */
     @PostMapping("/boardWrite")
-    public String write(BoardVO vo) {
-    	System.out.println("boardcontroller: "+ vo);
+    public String write(BoardVO vo, HttpSession session) {
+
+        // 추가한 부분
+        CustomerVO loginUser = (CustomerVO) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            vo.setCustomer_id(loginUser.getCustomer_id());
+        }
+       
+        //
+
+        System.out.println("boardcontroller: " + vo);
         service.insertBoard(vo);
         return "redirect:/board";
     }
@@ -90,10 +103,8 @@ public class BoardController {
         return "redirect:/board";
     }
 
- 
-
     /**
-     * FAQ 목록 + 페이징  
+     * FAQ 목록 + 페이징
      */
     @GetMapping("/faq")
     public String faqList(
@@ -111,11 +122,11 @@ public class BoardController {
         model.addAttribute("page", page);
         model.addAttribute("totalPage", totalPage);
 
-        return "faq"; // ✅ /WEB-INF/views/faq.jsp (fragment)
+        return "faq";
     }
 
     /**
-     * FAQ 상세  
+     * FAQ 상세
      */
     @GetMapping("/faqDetail")
     public String faqDetail(
@@ -129,7 +140,7 @@ public class BoardController {
     }
 
     /**
-     * FAQ 글쓰기 폼  
+     * FAQ 글쓰기 폼
      */
     @GetMapping("/faqWrite")
     public String faqWriteForm(@RequestParam(defaultValue = "1") int page, Model model) {
@@ -147,7 +158,7 @@ public class BoardController {
     }
 
     /**
-     * FAQ 수정 폼  
+     * FAQ 수정 폼
      */
     @GetMapping("/faqEdit")
     public String faqEdit(
