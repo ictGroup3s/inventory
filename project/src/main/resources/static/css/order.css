@@ -8,39 +8,55 @@
 }
 
 .status-결제완료 {
-	background: #fff3cd;
-	color: #856404;
+    background: #fff3cd; /* 연한 노랑 */
+    color: #856404; /* 짙은 노랑 */
 }
 
 .status-배송준비중 {
-	background: #cce5ff;
-	color: #004085;
+    background: #cce5ff; /* 파스텔 블루 */
+    color: #004085; /* 짙은 블루 */
 }
 
 .status-배송중 {
-	background: #d4edda;
-	color: #155724;
+    background: #d4edda; /* 연한 초록 */
+    color: #155724; /* 짙은 초록 */
 }
 
 .status-배송완료 {
-	background: #d1ecf1;
-	color: #0c5460;
+    background: #c6f1f3; /* 연한 청록 */
+    color: #0c5460; /* 짙은 청록 */
 }
 
 .status-취소 {
-	background: #f8d7da;
-	color: #721c24;
+    background: #f8d7da; /* 연한 빨강 */
+    color: #721c24; /* 짙은 빨강 */
 }
 
 .status-반품 {
-	background: #e2e3e5;
-	color: #383d41;
+    background: #e2e3e5; /* 연한 회색 */
+    color: #383d41; /* 짙은 회색 */
 }
 
 .status-교환 {
-    background: #e7e3ff;  /* 연한 보라 */
-    color: #4b3f8f;       /* 딥 인디고 */
+    background: #e7e3ff; /* 연한 보라 */
+    color: #4b3f8f; /* 딥 인디고 */
 }
+
+.status-취소신청 {
+    background: #f8d7da; /* 연한 빨강 */
+    color: #721c24; /* 짙은 빨강 */
+}
+
+.status-반품신청 {
+    background: #f1e1ff; /* 아주 연한 보라 */
+    color: #6f42c1; /* 보라색 */
+}
+
+.status-교환신청 {
+    background: #e4f8ff; /* 연한 하늘색 */
+    color: #17a2b8; /* 청록색 */
+}
+
 
 .modal-header {
 	background: #f8f9fa;

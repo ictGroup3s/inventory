@@ -135,6 +135,10 @@
 							<option value="취소">취소</option>
 							<option value="반품">반품</option>
 							<option value="교환">교환</option>
+							<option value="취소신청">취소신청</option>
+							<option value="반품신청">반품신청</option>
+							<option value="교환신청">교환신청</option>
+
 						</select> <input type="date" class="form-control mr-2 mb-2"
 							id="searchStartDate" style="width: 150px;"> <span
 							class="mr-2 mb-2">~</span> <input type="date"
@@ -285,6 +289,7 @@
 								<div class="form-group">
 									<label class="order-info-label">주문 상태</label> <select
 										class="form-control" id="modalStatus">
+										<option value="">전체 상태</option>
 										<option value="결제완료">결제완료</option>
 										<option value="배송준비중">배송준비중</option>
 										<option value="배송중">배송중</option>
@@ -292,6 +297,9 @@
 										<option value="취소">취소</option>
 										<option value="반품">반품</option>
 										<option value="교환">교환</option>
+										<option value="취소신청">취소신청</option>
+										<option value="반품신청">반품신청</option>
+										<option value="교환신청">교환신청</option>
 									</select>
 								</div>
 							</div>
