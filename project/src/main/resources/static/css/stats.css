@@ -779,6 +779,10 @@ input[type="file"].form-control::file-selector-button:hover {
 	font-size: 15px;
 }
 
+.table-striped tbody td, thead th{
+	font-size: 15px;
+}
+
 .stock-table tbody tr:last-child td {
 	border-bottom: none;
 }

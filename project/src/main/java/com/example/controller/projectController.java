@@ -9,26 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.model.vo.CustomerVO;
 import com.example.model.vo.ProductVO;
-import com.example.model.vo.CartItemVO;
-import com.example.model.CartRepository;
-import com.example.service.CartService;
+import com.example.service.DashboardService;
 import com.example.service.ProductService;
 import com.example.service.ReviewService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Cookie;
-import com.example.model.vo.CustomerVO;
-import java.net.URLEncoder;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,6 +28,9 @@ public class projectController {
 
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private DashboardService dashboardService;
 
 	@GetMapping("/")
 	public String home(Model m) throws Exception {
@@ -280,10 +272,21 @@ public class projectController {
     }
 
 
-	@GetMapping("dashboard")
-	public String dashboard() {
-		return "dashboard";
-	}
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+        log.info("===== 대시보드 페이지 호출 =====");
+
+        List<Map<String, Object>> dailyStats = dashboardService.getDailyStats();
+
+        // DB에서 실제 데이터가 들어왔는지 로그 찍기
+        log.info("dailyStats size = {}", dailyStats.size());
+        for (Map<String, Object> stat : dailyStats) {
+            log.info("stat = {}", stat);
+        }
+
+        model.addAttribute("dailyStats", dailyStats);
+        return "dashboard"; 
+    }
 	
 	//@GetMapping("stock")
 	//public String stock() {

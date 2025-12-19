@@ -8,4 +8,5 @@ public interface DashboardService {
     public List<Map<String, Object>> getRecentOrders(String date);
     public List<Map<String, Object>> getDailySales();
     public List<Map<String, Object>> getIncomeExpense();
+    public List<Map<String, Object>> getDailyStats();
 }

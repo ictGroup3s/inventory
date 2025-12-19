@@ -10,26 +10,32 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DashboardRepository {
 
-    @Autowired
-    private SqlSessionTemplate sess;
+	@Autowired
+	private SqlSessionTemplate sess;
 
-    public Map<String, Object> getSummary() {
-        return sess.selectOne("dashboardmapper.getSummary");
-    }
+	public Map<String, Object> getSummary() {
+		return sess.selectOne("dashboardmapper.getSummary");
+	}
 
-    public List<Map<String, Object>> getRecentOrders() {
-        return sess.selectList("dashboardmapper.getRecentOrders");
-    }
+	public List<Map<String, Object>> getRecentOrders() {
+		return sess.selectList("dashboardmapper.getRecentOrders");
+	}
 
-    public List<Map<String, Object>> getDailySales() {
-        return sess.selectList("dashboardmapper.getDailySales");
-    }
+	public List<Map<String, Object>> getDailySales() {
+		return sess.selectList("dashboardmapper.getDailySales");
+	}
 
-    public List<Map<String, Object>> getIncomeExpense() {
-        return sess.selectList("dashboardmapper.getIncomeExpense");
-    }
-    
-    public List<Map<String, Object>> getRecentOrders(String date) {
-        return sess.selectList("dashboardmapper.getRecentOrders", date);
-    }
+	public List<Map<String, Object>> getIncomeExpense() {
+		return sess.selectList("dashboardmapper.getIncomeExpense");
+	}
+
+	public List<Map<String, Object>> getRecentOrders(String date) {
+		return sess.selectList("dashboardmapper.getRecentOrders", date);
+	}
+
+	// 최근 30일 일별 통계 조회
+	public List<Map<String, Object>> getDailyStats() {
+		return sess.selectList("dashboardmapper.getDailyStats");
+	}
+
 }
