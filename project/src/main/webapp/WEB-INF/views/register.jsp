@@ -104,9 +104,9 @@
                         <label>이름 *</label>
                         <input type="text" name="name" class="form-control" placeholder="이름 입력"
                              value="${customerVO.name != null ? customerVO.name : ''}" required>
-                    </div>
-
-                    <div class="form-group">
+    						<c:if test="${not empty idError}">
+    							<span style="color:red; font-size:14px;">${idError}</span>
+    						</c:if>
                         <label>전화번호 *</label>
                         <input type="text" name="phone" class="form-control" placeholder="전화번호 입력"
                            value="${customerVO.phone != null ? customerVO.phone : ''}" 
@@ -177,9 +177,12 @@
                         <label>사업자번호 *</label>
                         <input type="text" name="admin_bnum" class="form-control" 
                         		placeholder="숫자10자리 입력"
-                            	value="${customerVO.admin_bnum != null ? customerVO.admin_bnum : ''}"
+                                value="${not empty admin_bnumInput ? admin_bnumInput : (customerVO.admin_bnum != null ? customerVO.admin_bnum : '')}"
                             	maxlength="10" pattern="\d{10}" required>
                        <small class="form-text text-muted">숫자 10자리만 입력 가능합니다.</small>
+    						<c:if test="${not empty bnumError}">
+    							<span style="color:red; font-size:14px;">${bnumError}</span>
+    						</c:if>
                     </div>
 
                     <div class="form-group">
