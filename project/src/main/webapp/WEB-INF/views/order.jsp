@@ -65,30 +65,30 @@
 		<!-- Topbar -->
 		<div class="row align-items-center py-3 px-xl-5 bg-light">
 			<div class="col-lg-3 offset-lg-1 d-none d-lg-block">
-				<a href="/" class="text-decoration-none"> 
-				<img src="img/logo.png" class="logo" />
+				<a href="/" class="text-decoration-none"> <img
+					src="img/logo.png" class="logo" />
 				</a>
 			</div>
-		 <div class="ml-auto d-flex align-items-center gap-2">
-							<!-- 회원 로그인 후   -->
-							<c:if test="${not empty sessionScope.loginUser}">
-								<span class="nav-item nav-link">안녕하세요,
-									${sessionScope.loginUser.name}님!</span>
+			<div class="ml-auto d-flex align-items-center gap-2">
+				<!-- 회원 로그인 후   -->
+				<c:if test="${not empty sessionScope.loginUser}">
+					<span class="nav-item nav-link">안녕하세요,
+						${sessionScope.loginUser.name}님!</span>
 
 
-								<c:if test="${sessionScope.loginRole == 0}">
-									<a href="mypage" class="nav-item nav-link">마이페이지</a>
-								</c:if>
+					<c:if test="${sessionScope.loginRole == 0}">
+						<a href="mypage" class="nav-item nav-link">마이페이지</a>
+					</c:if>
 
-								<c:if test="${sessionScope.loginRole == 1}">
-									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
-								</c:if>
-								<!-- 로그아웃 링크 -->
-								<a href="logout" class="nav-item nav-link">로그아웃</a>
+					<c:if test="${sessionScope.loginRole == 1}">
+						<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+					</c:if>
+					<!-- 로그아웃 링크 -->
+					<a href="logout" class="nav-item nav-link">로그아웃</a>
 
-							</c:if>
-						</div>
-					</div>
+				</c:if>
+			</div>
+		</div>
 
 		<!-- Main Layout -->
 		<div class="container-fluid">
@@ -313,6 +313,41 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- 커스텀 확인/입력 모달 -->
+		<div class="modal fade" id="customModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content custom-modal">
+					<div class="modal-header">
+						<h5 class="modal-title" id="customModalTitle">확인</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="custom-modal-icon" id="customModalIcon">
+							<i class="fas fa-question-circle"></i>
+						</div>
+						<p class="custom-modal-message" id="customModalMessage"></p>
+						<div class="custom-modal-input" id="customModalInputWrap"
+							style="display: none;">
+							<label id="customModalInputLabel">사유를 입력해주세요</label>
+							<textarea class="form-control" id="customModalInput" rows="3"
+								placeholder="사유 입력..."></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-cancel" data-dismiss="modal"
+							id="customModalCancel">취소</button>
+						<button type="button" class="btn btn-confirm"
+							id="customModalConfirm">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 토스트 알림 -->
+		<div class="toast-container" id="toastContainer"></div>
 	</div>
 	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

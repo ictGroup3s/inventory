@@ -55,7 +55,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 			boolean isOriginalCancelType = "취소".equals(originalStatus) || "반품".equals(originalStatus)
 					|| "교환".equals(originalStatus);
 
-			// 1. 정상 → 취소/반품/교환 (처음 취소/반품/교환하는 경우)
+			// 1. 정상 → 취소/반품/교환 (처음 CR 등록)
 			if (isNewCancelType && !isOriginalCancelType) {
 				log.info("===== 정상 → 취소/반품/교환 처리 =====");
 
@@ -66,6 +66,8 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 				List<Map<String, Object>> items = adminOrderRepository.getOrderItems(orderNo);
 				for (Map<String, Object> item : items) {
 					Object detailNoObj = item.get("DETAIL_NO") != null ? item.get("DETAIL_NO") : item.get("detail_no");
+					int itemCnt = item.get("ITEM_CNT") != null ? ((Number) item.get("ITEM_CNT")).intValue()
+							: item.get("item_cnt") != null ? ((Number) item.get("item_cnt")).intValue() : 0;
 
 					// 상품 상태 변경
 					Map<String, Object> detailParams = new HashMap<>();
@@ -78,8 +80,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 					crParams.put("order_no", orderNo);
 					crParams.put("detail_no", detailNoObj);
 					crParams.put("type", newStatus);
-					crParams.put("return_cnt",
-							item.get("ITEM_CNT") != null ? item.get("ITEM_CNT") : item.get("item_cnt"));
+					crParams.put("return_cnt", itemCnt);
 					crParams.put("status", "승인");
 					crParams.put("reason", reason != null && !reason.isEmpty() ? reason : "주문 전체 " + newStatus);
 					adminOrderRepository.insertCR(crParams);
@@ -87,11 +88,10 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 				log.info("정상 → {} 처리 완료 ({}건)", newStatus, items.size());
 			}
 
-			// 2. 취소/반품/교환 → 다른 취소/반품/교환 (상태만 변경)
+			// 2. 취소/반품/교환 → 다른 취소/반품/교환 (상태만 변경, CR 업데이트)
 			if (isNewCancelType && isOriginalCancelType && !newStatus.equals(originalStatus)) {
 				log.info("===== 취소/반품/교환 상태 변경 =====");
 
-				// 전체 상품 상태 변경
 				List<Map<String, Object>> items = adminOrderRepository.getOrderItems(orderNo);
 				for (Map<String, Object> item : items) {
 					Object detailNoObj = item.get("DETAIL_NO") != null ? item.get("DETAIL_NO") : item.get("detail_no");
@@ -100,6 +100,13 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 					detailParams.put("detail_no", detailNoObj);
 					detailParams.put("detail_status", newStatus);
 					adminOrderRepository.updateDetailStatus(detailParams);
+
+					// CR 테이블 타입 변경
+					Map<String, Object> crParams = new HashMap<>();
+					crParams.put("order_no", orderNo);
+					crParams.put("detail_no", detailNoObj);
+					crParams.put("type", newStatus);
+					adminOrderRepository.updateCRStatusByOrder(crParams);
 				}
 				log.info("{} → {} 상태 변경 완료", originalStatus, newStatus);
 			}
@@ -124,10 +131,12 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 				Map<String, Object> crParams = new HashMap<>();
 				crParams.put("order_no", orderNo);
 				crParams.put("status", "철회");
+				crParams.put("reason", params.get("reason"));	//철회사유
 				adminOrderRepository.updateCRStatusByOrder(crParams);
 				log.info("철회 처리 완료");
 			}
 
+			// 주문 상태 업데이트
 			adminOrderRepository.updateOrder(params);
 			result.put("success", true);
 			result.put("message", "저장되었습니다.");
@@ -147,19 +156,21 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
 			// 상태 변경
 			adminOrderRepository.updateDetailStatus(params);
-			log.info("상태 변경 완료");
 
-			// 재고 복구
+			// 재고 복구 (null 방지)
+			Object itemCntObj = params.get("item_cnt");
+			int itemCnt = itemCntObj != null ? ((Number) itemCntObj).intValue() : 0;
+			params.put("item_cnt", itemCnt);
+
 			adminOrderRepository.restoreItemStock(params);
-			log.info("재고 복구 완료");
 
 			// CR 테이블에 기록 추가
 			Map<String, Object> crParams = new HashMap<>();
 			crParams.put("order_no", params.get("order_no"));
 			crParams.put("detail_no", params.get("detail_no"));
-			crParams.put("type", params.get("detail_status")); // 취소, 반품, 교환
-			crParams.put("return_cnt", params.get("item_cnt"));
-			crParams.put("status", "승인"); // 기본 승인 처리
+			crParams.put("type", params.get("detail_status"));
+			crParams.put("return_cnt", itemCnt);
+			crParams.put("status", "승인");
 			crParams.put("reason", params.get("reason") != null ? params.get("reason") : "관리자 처리");
 
 			adminOrderRepository.insertCR(crParams);
@@ -177,30 +188,38 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
 	@Override
 	public Map<String, Object> restoreDetail(Map<String, Object> params) {
-		Map<String, Object> result = new HashMap<>();
-		try {
-			// 상태 복구
-			adminOrderRepository.restoreDetailStatus(params);
+	    Map<String, Object> result = new HashMap<>();
+	    try {
+	        log.info("===== 상품/주문 복구 시작 ===== params: {}", params);
 
-			// 재고 차감
-			adminOrderRepository.deductItemStock(params);
+	        // 상품 상세 상태 복구 (정상으로)
+	        adminOrderRepository.restoreDetailStatus(params);
 
-			// CR 테이블 상태를 '철회'로 변경
-			Map<String, Object> crParams = new HashMap<>();
-			crParams.put("detail_no", params.get("detail_no"));
-			crParams.put("status", "철회");
-			adminOrderRepository.updateCRStatusByDetail(crParams);
-			log.info("CR 상태 철회로 변경 완료");
+	        // 재고 차감 (null 방지)
+	        Object itemCntObj = params.get("item_cnt");
+	        int itemCnt = itemCntObj != null ? ((Number)itemCntObj).intValue() : 0;
+	        params.put("item_cnt", itemCnt);
 
-			result.put("success", true);
-			result.put("message", "복구되었습니다.");
-		} catch (Exception e) {
-			log.error("복구 실패: ", e);
-			result.put("success", false);
-			result.put("message", "복구에 실패했습니다.");
-		}
-		return result;
+	        adminOrderRepository.deductItemStock(params);
+
+	        // CR 테이블 상태를 '철회'로 변경
+	        Map<String, Object> crParams = new HashMap<>();
+	        crParams.put("detail_no", params.get("detail_no"));
+	        crParams.put("status", "철회");
+
+	        adminOrderRepository.updateCRStatusByDetail(crParams);
+	        log.info("CR 상태 철회로 변경 완료");
+
+	        result.put("success", true);
+	        result.put("message", "복구되었습니다.");
+	    } catch (Exception e) {
+	        log.error("복구 실패: ", e);
+	        result.put("success", false);
+	        result.put("message", "복구에 실패했습니다.");
+	    }
+	    return result;
 	}
+
 
 	@Override
 	public List<Map<String, Object>> getCRByOrder(int orderNo) {

@@ -548,6 +548,20 @@ to {
 	font-weight: 700;
 }
 
+.btn-home{
+	border: 1px solid #D19C97;
+	border-radius: 12px;
+	margin-top: 7px;
+	height: 50px;
+	padding: 14px;
+	font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+}
+
+
 /* ===== 상품관리 페이지 (item.jsp) ===== */
 
 /* 상품 등록 폼 테이블 */

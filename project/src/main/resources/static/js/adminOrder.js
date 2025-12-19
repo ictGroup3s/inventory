@@ -4,6 +4,61 @@
 
 $(function() {
 
+
+	/* =========================
+	   공용 UI 유틸 (추가)
+	========================= */
+
+	// Toast
+	function showToast(message, type = 'success') {
+		if ($('.toast-message').length >= 5) return;
+		const iconMap = {
+			success: 'fa-check-circle',
+			error: 'fa-times-circle',
+			warning: 'fa-exclamation-circle',
+			info: 'fa-info-circle'
+		};
+
+		const toast = $(`
+	        <div class="toast-message toast-${type}">
+	            <i class="fas ${iconMap[type]} mr-2"></i>${message}
+	        </div>
+	    `);
+
+		$('#toastContainer').append(toast);
+
+		setTimeout(() => toast.addClass('show'), 10);
+		setTimeout(() => {
+			toast.removeClass('show');
+			setTimeout(() => toast.remove(), 300);
+		}, 3000);
+	}
+
+	// Confirm / Prompt 통합 모달
+	function openCustomModal(opts) {
+		$('#customModalTitle').text(opts.title || '확인');
+		$('#customModalMessage').html(opts.message || '');
+		$('#customModalIcon i')
+			.attr('class', 'fas ' + (opts.icon || 'fa-question-circle'));
+
+		if (opts.input) {
+			$('#customModalInputWrap').show();
+			$('#customModalInputLabel').text(opts.inputLabel || '사유');
+			$('#customModalInput').val('');
+		} else {
+			$('#customModalInputWrap').hide();
+		}
+
+		$('#customModalConfirm').off('click').on('click', function() {
+			const inputVal = opts.input ? $('#customModalInput').val() : null;
+			$('#customModal').modal('hide');
+			opts.onConfirm && opts.onConfirm(inputVal);
+		});
+
+		$('#customModal').modal('show');
+	}
+
+
 	var currentOrderNo = null;
 
 	// 숫자 포맷
@@ -84,7 +139,7 @@ $(function() {
 			},
 			error: function(err) {
 				console.error('주문 상세 로드 실패:', err);
-				alert('주문 정보를 불러오는데 실패했습니다.');
+				showToast('주문 정보를 불러오는데 실패했습니다.', 'error');
 			}
 		});
 	}
@@ -156,72 +211,83 @@ $(function() {
 
 	// 저장 버튼
 	$('#saveOrderBtn').on('click', function() {
-	    var status = $('#modalStatus').val();
-	    var tracking = $('#modalTracking').val();
-	    var orderName = $('#modalOrderName').val();
-	    var orderPhone = $('#modalOrderPhone').val().replace(/-/g, '');
-	    var orderAddr = $('#modalOrderAddr').val();
-	    var originalStatus = $('#modalStatus').data('original');
-	    var reason = '';
+		var status = $('#modalStatus').val();
+		var tracking = $('#modalTracking').val();
+		var orderName = $('#modalOrderName').val();
+		var orderPhone = $('#modalOrderPhone').val().replace(/-/g, '');
+		var orderAddr = $('#modalOrderAddr').val();
+		var originalStatus = $('#modalStatus').data('original');
 
-	    // 취소/반품으로 변경하는 경우
-	    if ((status === '취소' || status === '반품') && 
-	        originalStatus !== '취소' && originalStatus !== '반품') {
-	        
-	        reason = prompt('취소/반품 사유를 입력해주세요:', '');
-	        if (reason === null) {
-	            return;
-	        }
-	        if (reason.trim() === '') {
-	            reason = '주문 전체 ' + status;
-	        }
-	        
-	        if (!confirm('주문을 ' + status + ' 처리하시겠습니까?\n모든 상품의 재고가 복구됩니다.')) {
-	            return;
-	        }
-	    }
+		function doSave(reason) {
+			$.ajax({
+				url: '/api/admin/orders/' + currentOrderNo,
+				method: 'PUT',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					order_status: status,
+					tracking: tracking,
+					order_name: orderName,
+					order_phone: orderPhone,
+					order_addr: orderAddr,
+					original_status: originalStatus,
+					reason: reason || ''
+				}),
+				success: function() {
+					showToast('저장되었습니다.');
+					$('#orderModal').modal('hide');
+					loadOrders();
+				},
+				error: function() {
+					showToast('저장에 실패했습니다.', 'error');
+				}
+			});
+		}
 
-	    // 취소/반품에서 다른 상태로 변경하는 경우 (철회)
-	    if ((originalStatus === '취소' || originalStatus === '반품') && 
-	        status !== '취소' && status !== '반품') {
-	        
-	        reason = prompt('철회 사유를 입력해주세요:', '');
-	        if (reason === null) {
-	            return;
-	        }
-	        if (reason.trim() === '') {
-	            reason = '주문 철회';
-	        }
-	        
-	        if (!confirm('취소/반품을 철회하시겠습니까?\n재고가 다시 차감됩니다.')) {
-	            return;
-	        }
-	    }
+		// 취소 / 반품
+		if ((status === '취소' || status === '반품' || status === '교환') &&
+			originalStatus !== status) {
 
-	    $.ajax({
-	        url: '/api/admin/orders/' + currentOrderNo,
-	        method: 'PUT',
-	        contentType: 'application/json',
-	        data: JSON.stringify({
-	            order_status: status,
-	            tracking: tracking,
-	            order_name: orderName,
-	            order_phone: orderPhone,
-	            order_addr: orderAddr,
-	            original_status: originalStatus,
-	            reason: reason
-	        }),
-	        success: function(res) {
-	            alert('저장되었습니다.');
-	            $('#orderModal').modal('hide');
-	            loadOrders();
-	        },
-	        error: function(err) {
-	            console.error('저장 실패:', err);
-	            alert('저장에 실패했습니다.');
-	        }
-	    });
+			openCustomModal({
+				title: status + ' 처리',
+				message: '사유를 입력해주세요.',
+				icon: 'fa-exclamation-circle',
+				input: true,
+				inputLabel: status + ' 사유',
+				onConfirm: function(reason) {
+					if (!reason || reason.trim() === '') {
+						showToast('사유를 입력해주세요.', 'warning');
+						return;
+					}
+					doSave(reason);
+				}
+			});
+			return;
+		}
+
+		// 취소/반품 철회
+		if ((originalStatus === '취소' || originalStatus === '반품') &&
+			status !== '취소' && status !== '반품') {
+
+			openCustomModal({
+				title: '철회 처리',
+				message: '사유를 입력해주세요.<br>재고가 다시 차감됩니다.',
+				icon: 'fa-exclamation-circle',
+				input: true,
+				inputLabel: '철회 사유',
+				onConfirm: function(reason) {
+					if (!reason || reason.trim() === '') {
+						showToast('사유를 입력해주세요.', 'warning');
+						return;
+					}
+					doSave(reason);
+				}
+			});
+			return;
+		}
+
+		doSave('');
 	});
+
 
 	// 상세보기 버튼 클릭
 	$(document).on('click', '.btn-detail', function() {
@@ -252,7 +318,7 @@ $(function() {
 		$('#searchEndDate').val('');
 		loadOrders();
 	});
-
+/*
 	// 초기화
 	$('#resetBtn').on('click', function() {
 		$('#searchOrderNo').val('');
@@ -260,7 +326,7 @@ $(function() {
 		$('#searchStatus').val('');
 		loadOrders();
 	});
-
+*/
 	// 초기 로드
 	loadOrders();
 
@@ -293,6 +359,10 @@ $(function() {
 		$('#editShippingBtn').html('<i class="fas fa-edit"></i> 수정');
 		$('#editShippingBtn').removeClass('btn-outline-danger').addClass('btn-outline-secondary');
 	});
+	
+	$('#customModal').on('hidden.bs.modal', function() {
+	    $('#customModalInput').val('');
+	});
 
 	// 상품별 상태 변경
 	$(document).on('change', '.detail-status-select', function() {
@@ -302,53 +372,46 @@ $(function() {
 		var detailNo = $(this).data('detail-no');
 		var itemNo = $(this).data('item-no');
 		var itemCnt = $(this).data('item-cnt');
+		var selectBox = $(this);
 
-		// 사유 입력 받기
-		var reason = prompt('사유를 입력해주세요:', '');
-		if (reason === null) {
-			// 취소 버튼 클릭
-			$(this).val('');
-			return;
-		}
-		if (reason.trim() === '') {
-			alert('사유를 입력해주세요.');
-			$(this).val('');
-			return;
-		}
-
-		if (!confirm('해당 상품을 ' + newStatus + ' 처리하시겠습니까?\n재고가 복구됩니다.')) {
-			$(this).val('');
-			return;
-		}
-
-		$.ajax({
-			url: '/api/admin/orders/detail/' + detailNo + '/status',
-			method: 'PUT',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				detail_status: newStatus,
-				item_no: itemNo,
-				item_cnt: itemCnt,
-				order_no: currentOrderNo,  // 추가!
-				reason: reason              // 추가!
-			}),
-			success: function(res) {
-				if (res.success) {
-					console.log('응답: ', res);
-					alert(newStatus + ' 처리되었습니다.');
-					loadOrderDetail(currentOrderNo);
-					loadOrders();
-				} else {
-					alert(res.message || '처리에 실패했습니다.');
+		openCustomModal({
+			title: newStatus + ' 처리',
+			message: '사유를 입력해주세요.<br>재고가 복구됩니다.',
+			icon: 'fa-exclamation-circle',
+			input: true,
+			inputLabel: '사유',
+			onConfirm: function(reason) {
+				if (!reason || reason.trim() === '') {
+					showToast('사유를 입력해주세요.', 'warning');
+					selectBox.val('');
+					return;
 				}
-			},
-			error: function(err) {
-				console.error('상태 변경 실패:', err);
-				console.error('응답 내용:', err.responseText);
-				alert('처리에 실패했습니다.');
+
+				$.ajax({
+					url: '/api/admin/orders/detail/' + detailNo + '/status',
+					method: 'PUT',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						detail_status: newStatus,
+						item_no: itemNo,
+						item_cnt: itemCnt,
+						order_no: currentOrderNo,
+						reason: reason
+					}),
+					success: function(res) {
+						showToast(newStatus + ' 처리되었습니다.');
+						loadOrderDetail(currentOrderNo);
+						loadOrders();
+					},
+					error: function() {
+						showToast('처리에 실패했습니다.', 'error');
+						selectBox.val('');
+					}
+				});
 			}
 		});
 	});
+
 
 	// 상품 복구
 	$(document).on('click', '.btn-restore', function() {
@@ -356,30 +419,31 @@ $(function() {
 		var itemNo = $(this).data('item-no');
 		var itemCnt = $(this).data('item-cnt');
 
-		if (!confirm('해당 상품을 정상으로 복구하시겠습니까?\n재고가 차감됩니다.')) {
-			return;
-		}
-
-		$.ajax({
-			url: '/api/admin/orders/detail/' + detailNo + '/restore',
-			method: 'PUT',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				item_no: itemNo,
-				item_cnt: itemCnt
-			}),
-			success: function(res) {
-				console.log('응답:', res);
-				alert('복구되었습니다.');
-				loadOrderDetail(currentOrderNo);
-				loadOrders();
-			},
-			error: function(err) {
-				console.error('복구 실패:', err);
-				console.error('응답 내용:', err.responseText);
-				alert('복구에 실패했습니다.');
+		openCustomModal({
+			title: '상품 복구',
+			message: '해당 상품을 정상으로 복구하시겠습니까?<br>재고가 차감됩니다.',
+			icon: 'fa-question-circle',
+			onConfirm: function() {
+				$.ajax({
+					url: '/api/admin/orders/detail/' + detailNo + '/restore',
+					method: 'PUT',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						item_no: itemNo,
+						item_cnt: itemCnt
+					}),
+					success: function() {
+						showToast('복구되었습니다.');
+						loadOrderDetail(currentOrderNo);
+						loadOrders();
+					},
+					error: function() {
+						showToast('복구에 실패했습니다.', 'error');
+					}
+				});
 			}
 		});
 	});
+
 
 });
