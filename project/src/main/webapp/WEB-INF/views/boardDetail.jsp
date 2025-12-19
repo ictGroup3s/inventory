@@ -6,7 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항 상세보기</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
@@ -15,8 +22,8 @@
 </head>
 <body>
 
-<!-- 상단바 -->
-<div class="row align-items-center py-3 px-xl-5 bg-light">
+<!-- Topbar -->
+<div class="row align-items-center py-3 px-xl-4"style="margin-left:50px;">
     <div class="col-lg-3 d-none d-lg-block">
         <a href="/" class="text-decoration-none">
             <img src="img/logo.png" class="logo"/>
@@ -24,35 +31,61 @@
     </div>
 
     <div class="col-lg-6 col-6 text-left">
-        <form action="">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for products">
-                <div class="input-group-append">
-                    <span class="input-group-text bg-transparent text-primary">
-                        <i class="fa fa-search"></i>
-                    </span>
-                </div>
-            </div>
-        </form>
+      	<form action="selectall" method="get" style="margin-left:-20px; margin-right:120px;">
+				<div class="input-group">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
+					<div class="input-group-append">
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
     </div>
 
-    <div class="col-lg-3 col-6 text-right">
-        <a href="#" class="btn border">
-            <i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-        </a>
-        <a href="cart" class="btn border">
+   <div class="col-lg-1 col-3 text-right " style="margin-left:80px;">
+          <a href="cart" class="btn border">
             <i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
         </a>
-    </div>
-</div>
+    </div> 
+		<div class="col-11 d-flex justify-content-end align-items-center" >
+							<!-- 로그인전 -->
+							<c:if test="${empty sessionScope.loginUser}">
+								<a href="login" class="nav-item nav-link " style="color:black;">로그인</a>
+								<a href="register" class="nav-item nav-link"style="color:black;">회원가입</a>
+								<a href="board" class="nav-item nav-link"style="color:black;">고객센터</a>
+							</c:if>
+							
+							<!-- 회원 로그인 후   -->
+							<c:if test="${not empty sessionScope.loginUser}">
+								<span class="nav-item nav-link">안녕하세요,
+									${sessionScope.loginUser.name}님!</span>
+
+
+								<c:if test="${sessionScope.loginRole == 0}">
+									<a href="mypage" class="nav-item nav-link">마이페이지</a>
+								</c:if>
+
+								<c:if test="${sessionScope.loginRole == 1}">
+									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
+								</c:if>
+								<!-- 로그아웃 링크 -->
+								<a href="logout" class="nav-item nav-link">로그아웃</a>
+
+							</c:if>
+						</div> 
+
+ </div> <!-- topbar end -->
+
 
 
 <!-- 메인 레이아웃 -->
 <div class="container-fluid">
-    <div class="row px-xl-2">
+    <div class="row px-xl-5">
 
         <!-- 사이드 메뉴 동일 -->
-        <nav class="category-sidebar">
+        <nav class="category-sidebar" style="margin-left:-30px;">
             <h6 class="p-3">고객센터</h6>
             <ul class="nav flex-column">
                 <li class="nav-item"><a href="/board" class="nav-link active">공지사항</a></li>
@@ -62,9 +95,9 @@
         </nav>
 
         <!-- 상세보기 내용 -->
-        <div class="col-lg-10 dashboard-content">
+        <div class="col-lg-9 pt-5 dashboard-content" style="margin-left:20px;">
 
-            <h3 class="mb-4">공지사항 상세보기</h3>
+            <h3 class="mb-4">게시글 상세</h3>
 
             <table class="table table-bordered">
                 <tr>
@@ -101,16 +134,7 @@
 </div>
 
 
-<!-- Footer  -->
-<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-    <div class="row px-xl-5 pt-5">
-        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-            <h1 class="mb-4 display-5 font-weight-semi-bold">
-                <span class="text-primary font-weight-bold px-3 mr-1">S</span>StockBob
-            </h1>
-        </div>
-    </div>
-</div>
+
 
 </body>
 </html>
