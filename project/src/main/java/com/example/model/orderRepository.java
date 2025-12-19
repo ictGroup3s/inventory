@@ -13,15 +13,13 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+
 
 import com.example.model.vo.CartItemVO;
-import com.example.model.vo.CustomerVO;
+
 import com.example.model.vo.order_detailVO;
 import com.example.model.vo.ordersVO;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -379,47 +377,4 @@ public class orderRepository {
 	        
 	        return list;
 	    }
-
-	    /**
-	     * 주문 상세 내역 조회 (기존 메서드 활용 또는 새로 작성)
-	     */
-	    private List<order_detailVO> getOrderDetail(Integer orderNo) throws SQLException {
-	        List<order_detailVO> detailList = new ArrayList<>();
-	        
-	        String sql = """
-	            SELECT 
-	                od.detail_no,
-	                od.order_no,
-	                od.item_no,
-	                od.item_cnt,
-	                od.item_price,
-	                p.item_name
-	            FROM order_detail od
-	            INNER JOIN product p ON od.item_no = p.item_no
-	            WHERE od.order_no = ?
-	            ORDER BY od.detail_no
-	        """;
-	        
-	        try (Connection conn = dataSource.getConnection();
-	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-	            pstmt.setInt(1, orderNo);
-	            ResultSet rs = pstmt.executeQuery();
-
-	            while (rs.next()) {
-	                order_detailVO detail = new order_detailVO();
-	                detail.setDetail_no(rs.getInt("detail_no"));
-	                detail.setOrder_no(rs.getInt("order_no"));
-	                detail.setItem_no(rs.getInt("item_no"));
-	                detail.setItem_cnt(rs.getInt("item_cnt"));
-	                detail.setItem_price(rs.getInt("item_price"));
-	                detail.setItem_name(rs.getString("item_name"));
-	                
-	                detailList.add(detail);
-	            }
-	        }
-	        
-	        return detailList;
-	    }
-
 }

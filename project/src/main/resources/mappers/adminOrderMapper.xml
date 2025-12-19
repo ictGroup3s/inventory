@@ -4,149 +4,150 @@
 
 <mapper namespace="adminordermapper">
 
-    <!-- 주문 목록 조회 -->
+	<!-- 주문 목록 조회 -->
 	<select id="getOrders" resultType="map" parameterType="map">
-	    SELECT
-	        o.order_no,
-	        o.order_name,
-	        o.order_status,
-	        o.total_amount,
-	        TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI') as order_date,
-	        (
-	            SELECT LISTAGG(p.item_name, ', ') WITHIN GROUP (ORDER BY p.item_name)
-	            FROM order_detail od
-	            JOIN product p ON od.item_no = p.item_no
-	            WHERE od.order_no = o.order_no
-	        ) as item_names
-	    FROM orders o
-	    WHERE 1=1
-	    
-	    <!-- ✅ 검색 조건이 하나도 없으면 최근 1개월만 -->
-	    <if test="(orderNo == null or orderNo == '') and (customerName == null or customerName == '') and (status == null or status == '') and (startDate == null or startDate == '') and (endDate == null or endDate == '')">
-	        AND o.order_date >= ADD_MONTHS(SYSDATE, -1)
-	    </if>
-	    
-	    <if test="orderNo != null and orderNo != ''">
-	        AND o.order_no = #{orderNo}
-	    </if>
-	    <if test="customerName != null and customerName != ''">
-	        AND o.order_name LIKE '%' || #{customerName} || '%'
-	    </if>
-	    <if test="status != null and status != ''">
-	        AND o.order_status = #{status}
-	    </if>
-	    <if test="startDate != null and startDate != ''">
-	        AND TRUNC(o.order_date) &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD')
-	    </if>
-	    <if test="endDate != null and endDate != ''">
-	        AND TRUNC(o.order_date) &lt;= TO_DATE(#{endDate}, 'YYYY-MM-DD')
-	    </if>
-	    ORDER BY o.order_date DESC
-	</select>
-	
-    <!-- 주문 단건 조회 -->
-    <select id="getOrder" resultType="map" parameterType="int">
-        SELECT 
-            order_no,
-            order_name,
-            order_addr,
-            tracking,
-            order_phone,
-            order_status,
-            payment,
-            api_pay,
-            TO_CHAR(order_date, 'YYYY-MM-DD HH24:MI') as order_date,
-            customer_id,
-            total_amount
-        FROM orders
-        WHERE order_no = #{orderNo}
-    </select>
+		SELECT
+		o.order_no,
+		o.order_name,
+		o.order_status,
+		o.total_amount,
+		TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI') as order_date,
+		(
+		SELECT LISTAGG(p.item_name, ', ') WITHIN GROUP (ORDER BY p.item_name)
+		FROM order_detail od
+		JOIN product p ON od.item_no = p.item_no
+		WHERE od.order_no = o.order_no
+		) as item_names
+		FROM orders o
+		WHERE 1=1
 
-    
-    <!-- 주문 정보 수정 -->
+		<!-- ✅ 검색 조건이 하나도 없으면 최근 1개월만 -->
+		<if
+			test="(orderNo == null or orderNo == '') and (customerName == null or customerName == '') and (status == null or status == '') and (startDate == null or startDate == '') and (endDate == null or endDate == '')">
+			AND o.order_date >= ADD_MONTHS(SYSDATE, -1)
+		</if>
+
+		<if test="orderNo != null and orderNo != ''">
+			AND o.order_no = #{orderNo}
+		</if>
+		<if test="customerName != null and customerName != ''">
+			AND o.order_name LIKE '%' || #{customerName} || '%'
+		</if>
+		<if test="status != null and status != ''">
+			AND o.order_status = #{status}
+		</if>
+		<if test="startDate != null and startDate != ''">
+			AND TRUNC(o.order_date) &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD')
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND TRUNC(o.order_date) &lt;= TO_DATE(#{endDate}, 'YYYY-MM-DD')
+		</if>
+		ORDER BY o.order_date DESC
+	</select>
+
+	<!-- 주문 단건 조회 -->
+	<select id="getOrder" resultType="map" parameterType="int">
+		SELECT
+		order_no,
+		order_name,
+		order_addr,
+		tracking,
+		order_phone,
+		order_status,
+		payment,
+		api_pay,
+		TO_CHAR(order_date, 'YYYY-MM-DD HH24:MI') as order_date,
+		customer_id,
+		total_amount
+		FROM orders
+		WHERE order_no = #{orderNo}
+	</select>
+
+
+	<!-- 주문 정보 수정 -->
 	<update id="updateOrder" parameterType="map">
-	    UPDATE orders
-	    SET 
-	        order_status = #{order_status},
-	        tracking = #{tracking},
-	        order_name = #{order_name},
-	        order_phone = #{order_phone},
-	        order_addr = #{order_addr}
-	    WHERE order_no = #{order_no}
+		UPDATE orders
+		SET
+		order_status = #{order_status},
+		tracking = #{tracking},
+		order_name = #{order_name},
+		order_phone = #{order_phone},
+		order_addr = #{order_addr}
+		WHERE order_no = #{order_no}
 	</update>
-	
+
 	<!-- 재고 복구 (취소 시) -->
 	<update id="restoreStock" parameterType="int">
-	    UPDATE product p
-	    SET p.stock_cnt = p.stock_cnt + (
-	        SELECT od.item_cnt
-	        FROM order_detail od
-	        WHERE od.order_no = #{orderNo}
-	        AND od.item_no = p.item_no
-	    )
-	    WHERE p.item_no IN (
-	        SELECT item_no FROM order_detail WHERE order_no = #{orderNo}
-	    )
+		UPDATE product p
+		SET p.stock_cnt = p.stock_cnt + (
+		SELECT od.item_cnt
+		FROM order_detail od
+		WHERE od.order_no = #{orderNo}
+		AND od.item_no = p.item_no
+		)
+		WHERE p.item_no IN (
+		SELECT item_no FROM order_detail WHERE order_no = #{orderNo}
+		)
 	</update>
-	
+
 	<!-- 재고 차감 (취소 해제 시) -->
 	<update id="deductStock" parameterType="int">
-	    UPDATE product p
-	    SET p.stock_cnt = p.stock_cnt - (
-	        SELECT od.item_cnt
-	        FROM order_detail od
-	        WHERE od.order_no = #{orderNo}
-	        AND od.item_no = p.item_no
-	    )
-	    WHERE p.item_no IN (
-	        SELECT item_no FROM order_detail WHERE order_no = #{orderNo}
-	    )
+		UPDATE product p
+		SET p.stock_cnt = p.stock_cnt - (
+		SELECT od.item_cnt
+		FROM order_detail od
+		WHERE od.order_no = #{orderNo}
+		AND od.item_no = p.item_no
+		)
+		WHERE p.item_no IN (
+		SELECT item_no FROM order_detail WHERE order_no = #{orderNo}
+		)
 	</update>
-	
+
 	<!-- 상품 상세 조회 (상태 포함) -->
 	<select id="getOrderItems" resultType="map" parameterType="int">
-	    SELECT 
-	        od.detail_no,
-	        od.item_no,
-	        p.item_name,
-	        od.item_cnt,
-	        od.item_price,
-	        od.amount,
-	        NVL(od.detail_status, '정상') as detail_status,
-	        TO_CHAR(od.status_date, 'YYYY-MM-DD') as status_date
-	    FROM order_detail od
-	    JOIN product p ON od.item_no = p.item_no
-	    WHERE od.order_no = #{orderNo}
+		SELECT
+		od.detail_no,
+		od.item_no,
+		p.item_name,
+		od.item_cnt,
+		od.item_price,
+		od.amount,
+		NVL(od.detail_status, '정상') as detail_status,
+		TO_CHAR(od.status_date, 'YYYY-MM-DD') as status_date
+		FROM order_detail od
+		JOIN product p ON od.item_no = p.item_no
+		WHERE od.order_no = #{orderNo}
 	</select>
-	
+
 	<!-- 상품별 상태 변경 -->
 	<update id="updateDetailStatus" parameterType="map">
-	    UPDATE order_detail
-	    SET detail_status = #{detail_status},
-	        status_date = SYSDATE
-	    WHERE detail_no = #{detail_no}
+		UPDATE order_detail
+		SET detail_status = #{detail_status},
+		status_date = SYSDATE
+		WHERE detail_no = #{detail_no}
 	</update>
-	
+
 	<!-- 상품 상태 복구 (정상으로) -->
 	<update id="restoreDetailStatus" parameterType="map">
-	    UPDATE order_detail
-	    SET detail_status = '정상',
-	        status_date = NULL
-	    WHERE detail_no = #{detail_no}
+		UPDATE order_detail
+		SET detail_status = '정상',
+		status_date = NULL
+		WHERE detail_no = #{detail_no}
 	</update>
-	
+
 	<!-- 개별 상품 재고 복구 -->
 	<update id="restoreItemStock" parameterType="map">
-	    UPDATE product
-	    SET stock_cnt = stock_cnt + #{item_cnt}
-	    WHERE item_no = #{item_no}
+		UPDATE product
+		SET stock_cnt = stock_cnt + #{item_cnt}
+		WHERE item_no = #{item_no}
 	</update>
-	
+
 	<!-- 개별 상품 재고 차감 -->
 	<update id="deductItemStock" parameterType="map">
-	    UPDATE product
-	    SET stock_cnt = stock_cnt - #{item_cnt}
-	    WHERE item_no = #{item_no}
+		UPDATE product
+		SET stock_cnt = stock_cnt - #{item_cnt}
+		WHERE item_no = #{item_no}
 	</update>
 	
 	<!-- 취소/반품 요청 등록 -->
@@ -197,19 +198,12 @@
 	    SET status = #{status}
 	    WHERE cr_no = #{cr_no}
 	</update>
-	
-	<!-- CR 상태 변경 (detail_no 기준) -->
-	<update id="updateCRStatusByDetail" parameterType="map">
-	    UPDATE cr
-	    SET status = #{status}
-	    WHERE detail_no = #{detail_no}
-	    AND status = '승인'
-	</update>
 
 	<!-- CR 상태 변경 (order_no 기준 - 전체 철회) -->
 	<update id="updateCRStatusByOrder" parameterType="map">
 	    UPDATE cr
-	    SET status = #{status}
+	    SET status = #{status},
+	        reason = #{reason}
 	    WHERE order_no = #{order_no}
 	    AND status = '승인'
 	</update>

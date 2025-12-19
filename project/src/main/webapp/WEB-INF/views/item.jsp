@@ -269,7 +269,7 @@
 													<th>카테고리</th>
 													<th>원가</th>
 													<th>소비자가</th>
-													<th></th>
+													<th></th>					
 												</tr>
 											</thead>
 											<tbody>

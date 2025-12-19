@@ -299,6 +299,11 @@ public class projectController {
 	public String order() {
 		return "order";
 	}
+	
+	@GetMapping("chatPopup")
+	public String chatPopup() {
+		return "chatPopup";
+	}
 
 
 }
