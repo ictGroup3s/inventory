@@ -182,4 +182,12 @@ public class orderServiceImple implements orderService {
 			throw new RuntimeException("배송 목록 조회 중 오류 발생", e);
 		}
 	}
+	@Override
+	public List<ordersVO> getDeliveryGroupedList(String customerId) {
+	    try {
+	        return orderRepository.getDeliveryGroupedList(customerId);
+	    } catch (SQLException e) {
+	        throw new RuntimeException("배송 주문 조회 실패", e);
+	    }
+	}
 }

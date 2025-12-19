@@ -25,6 +25,7 @@ public interface orderService {
 
     List<ordersVO> getDeliveries(CustomerVO loginUser);
     
+    List<ordersVO> getDeliveryGroupedList(String loginUser);
     
    
     
