@@ -1,7 +1,5 @@
 package com.example.service;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +16,24 @@ public class UserService {
 		this.repo = repo;
 	}
 
+	@Transactional
+	public boolean checkEmailExists(String email) {
+		return repo.checkEmail(email)>0; // 이메일이 이미 있으면 true, 없으면 false
+	}
+	
+	
 	@Transactional //매서드 내에서 db 작업이 모두 성공해야 커밋됨. DB 상태가 깨끗하게 유지
 	public boolean registerUser(CustomerVO vo) {
 
 		 //아이디 중복체크
 		 if(repo.checkId(vo.getCustomer_id()) > 0) return false;
 
-	     //회원가입  
+	     //이메일 중복 체크
+		 if (checkEmailExists(vo.getEmail())) {
+			 return false; //이베일이 이미 존재하면 false로 반환
+		 }
+		 
+		 //회원가입  
 		 repo.registerUser(vo);   // Mapper XML의 registerUser 호출
 	     return true;
 	}
@@ -38,7 +47,7 @@ public class UserService {
 	public void updateUser(CustomerVO customer) {
 		repo.updateUser(customer);
 	}
-
+	//회원 조회
 	public CustomerVO getUserById(String customer_id) {
 		return repo.selectAllById(customer_id);
 	}

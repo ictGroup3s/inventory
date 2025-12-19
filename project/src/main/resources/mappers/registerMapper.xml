@@ -29,6 +29,14 @@
 		WHERE customer_id = #{customer_id}
 	</select>
 
+	<!-- 이메일 중복 체크 -->
+	<select id="checkEmail" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM customer
+		WHERE email = #{email}
+	
+	</select>
+	
 	<!--  회원 삭제(탈퇴) -->
 	<update id="softDeleteById" parameterType="string">
 		UPDATE customer 

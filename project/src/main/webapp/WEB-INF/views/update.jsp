@@ -94,12 +94,12 @@
             <input type="text" name="name" class="form-control" value="${sessionScope.loginUser.name}" required>
         </div>
 
-        <!-- 비밀번호 -->
+        <!-- 현재 비밀번호 -->
         <div class="mb-3">
-            <label>비밀번호</label>
-            <input type="password" name="pwd" class="form-control" placeholder="변경 시 입력">
+            <label>기존 비밀번호</label>
+            <input type="password" name="pwd" class="form-control" placeholder="변경시 입력">
         </div>
-
+        
         <!-- 전화번호 -->
         <div class="mb-3">
             <label>전화번호</label>
