@@ -168,7 +168,7 @@
   	<!--  카드 넓이 -->
 	<div class="card product-item border-0 mb-4 w-76 mx-auto" style="width: 270px;" > 
 	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-	<a href="event1?item_no=${item.item_no}"> 
+	<a href="detail?item_no=${item.item_no}"> 
 <img src="/img/product/${item.item_img}" width="270" height="250" alt="${item.item_name}" style="object-fit: cover;" />
 	</a>
 		</div>

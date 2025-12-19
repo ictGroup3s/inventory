@@ -171,6 +171,7 @@
    <div class="row px-xl-5 pb-3"> 
   	<c:forEach var="item" items="${newArrivals}">
   	<div class="col-lg-4 col-md-4 col-sm-4 pb-1" >
+  	
 	<div class="card product-item border-0 mb-4 w-76 mx-auto" style="width: 270px;"> 
 	<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 	<a href="detail?item_no=${item.item_no}"> 
