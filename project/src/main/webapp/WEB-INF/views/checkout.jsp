@@ -246,8 +246,9 @@
                     <!-- 결제 방식 라디오 버튼 -->
                     <div class="form-group">
                         <div class="custom-control custom-radio" style="padding-top:10px;">
-                            <input type="radio" class="custom-control-input" name="payment" id="paypal" value="card">
-                            <label class="custom-control-label" for="paypal">카드결제</label>
+									<input type="radio" class="custom-control-input" name="payment"
+										id="paypal" value="card" data-toggle="modal"
+										data-target="#payModal"> <label class="custom-control-label" for="paypal">카드결제</label>
                         </div>
                     </div>
                     <div class="form-group">
