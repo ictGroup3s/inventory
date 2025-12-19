@@ -42,6 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			p.dis_rate
 		FROM product p
 		LEFT JOIN cate c ON p.cate_no = c.cate_no
+		WHERE stock_cnt > 0
 	</select>
 	
 	<!-- stock.jsp 전용 - 입고/출고 포함 -->
@@ -68,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    FROM stock
 		    GROUP BY item_no
 		) s ON p.item_no = s.item_no
+		WHERE stock_cnt > 0
 		ORDER BY p.updated_at DESC  -- 변경된 순서대로 (최신 변경이 위로)
 	</select>
 
