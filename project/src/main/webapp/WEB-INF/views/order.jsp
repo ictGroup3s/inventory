@@ -219,7 +219,6 @@
 						<hr>
 
 						<!-- 배송 정보 -->
-						<!-- 배송 정보 -->
 						<div
 							class="d-flex justify-content-between align-items-center mb-3">
 							<h6 class="mb-0">
@@ -329,12 +328,14 @@
 							<i class="fas fa-question-circle"></i>
 						</div>
 						<p class="custom-modal-message" id="customModalMessage"></p>
+						<!-- 사유 입력창을 감싸는 부분 -->
 						<div class="custom-modal-input" id="customModalInputWrap"
 							style="display: none;">
 							<label id="customModalInputLabel">사유를 입력해주세요</label>
 							<textarea class="form-control" id="customModalInput" rows="3"
 								placeholder="사유 입력..."></textarea>
 						</div>
+
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-cancel" data-dismiss="modal"

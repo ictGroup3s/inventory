@@ -74,4 +74,12 @@ public class AdminServiceImpl implements AdminService {
 	    return list;
 	}
 
+	@Override
+	public void updateItemStatusToSoldOut(Integer itemNo) {
+		try {
+			adminRepository.updateItemStatusToSoldOut(itemNo);
+		}catch(Exception e){
+			throw new RuntimeException("상품 품절 처리 실패 ", e);
+		}
+	}
 }
