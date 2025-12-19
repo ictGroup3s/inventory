@@ -37,7 +37,7 @@
 				class="logo" />
 			</a>
 		</div>
-			<div class="col-lg-6 col-6 text-left">
+			<div class="col-lg-6 col-6 text-left" >
 			<form action="selectall" method="get" style="margin-left:-20px; margin-right:90px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
