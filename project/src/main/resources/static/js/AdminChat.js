@@ -110,7 +110,8 @@ $(function() {
 			const dateTime = new Date(timestamp.replace(" ", "T"));
 			const dateStr = formatDate(dateTime);
 			const timeStr = formatTime(dateTime);
-
+			
+			// 날짜 구분 표시
 			if (lastDisplayedDate !== dateStr) {
 				html += `<div class="date-divider">${dateStr}</div>`;
 				lastDisplayedDate = dateStr;

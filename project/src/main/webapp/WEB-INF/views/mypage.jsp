@@ -41,28 +41,27 @@
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="">
+			<form action="selectall" method="get" style="margin-left:-20px; margin-right:90px;">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for products">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
-							<i class="fa fa-search"></i>
-						</span>
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
+						</button>
 					</div>
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border">
-				<i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-			</a>
+		<div class="col-lg-3 col-6 text-right" style="margin-left:-80px;">
 			<a href="cart" class="btn border">
 				<i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
 	</div>
+	
 	<!-- Main Layout -->
-	<div class="container-fluid">
+	<div class="container-fluid"  style="margin-left:-100px;">
 		<div class="row px-xl-5">
 			<!-- LEFT SIDEBAR (PC ONLY) -->
 			<div class="col-lg-2 d-none d-lg-block">
@@ -82,7 +81,7 @@
 				</nav>
 			</div>
 			<!-- ✅ 메인 대시보드 -->
-			<div class="col-lg-10" style="margin-top: 30px; margin-bottom: 50px;">
+			<div class="col-lg-10 pl-4" style="margin-top: 30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
 					<h3>모든내역</h3>
 					<p class="text-muted">주문 및 배송 현황을 한눈에 확인하세요</p>

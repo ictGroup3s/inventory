@@ -154,9 +154,13 @@
 													data-item="${ci.product.item_no}"
 													data-max="${ci.product.stock_cnt}"
 													value="${ci.qty}" min="1" max="${ci.product.stock_cnt}" style="width: 50px; height: 40px; flex: none;" />
+													
 												<div class="input-group-append">
 													<button class="btn btn-sm btn-primary qty-increase" data-item="${ci.product.item_no}" type="button">+</button>
 												</div>
+												<c:if test="${ci.product.stock_cnt <= 10}">
+													<p style="font-size:12px; color:#b90000;"> 남은 수량: ${ci.product.stock_cnt} 개</p>
+												</c:if>
 											</div>
 										</td>
 										<td class="align-middle"><span class="row-subtotal" data-item="${ci.product.item_no}"><fmt:formatNumber value="${ci.subtotal}" pattern=",###"/></span>원</td>

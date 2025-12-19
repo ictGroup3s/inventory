@@ -48,10 +48,8 @@
 				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
 			</p>
 			<%-- 현재 페이지 이름만 전달 --%>
-			<a href="login?redirectURL=dashboard" class="btn-login"
-				style="display: block; text-decoration: none;">로그인</a> <a
-				href="${pageContext.request.contextPath}/" class="btn-home"
-				style="display: block; text-decoration: none;">홈으로</a>
+			<a href="login?redirectURL=dashboard" class="btn-login" style="display: block; text-decoration: none;">로그인</a> 
+			<a href="/" class="btn-home" style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
