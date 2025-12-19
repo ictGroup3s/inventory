@@ -40,6 +40,7 @@
 
 .card-body {
 	padding: 25px;
+	margin-top: 25px;
 }
 
 /* ===== 대시보드 상단 카드 (신규회원, 주문건수 등) ===== */
@@ -548,6 +549,20 @@ to {
 	font-weight: 700;
 }
 
+.btn-home{
+	border: 1px solid #D19C97;
+	border-radius: 12px;
+	margin-top: 7px;
+	height: 50px;
+	padding: 14px;
+	font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+}
+
+
 /* ===== 상품관리 페이지 (item.jsp) ===== */
 
 /* 상품 등록 폼 테이블 */
@@ -761,7 +776,7 @@ input[type="file"].form-control::file-selector-button:hover {
 	border-bottom: 1px solid rgba(209, 156, 151, 0.12);
 	vertical-align: middle;
 	color: var(--text-dark);
-	font-size: 13px;
+	font-size: 15px;
 }
 
 .stock-table tbody tr:last-child td {
@@ -782,8 +797,10 @@ input[type="file"].form-control::file-selector-button:hover {
 }
 
 .item_name{
-	width: 210px;
+	width: 230px;
 }
+
+
 /* 상품 이미지 미리보기 */
 #preview {
 	border-radius: 20px;

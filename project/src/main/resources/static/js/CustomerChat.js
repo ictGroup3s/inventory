@@ -130,29 +130,30 @@ $(function() {
 
 	// 메시지 출력 함수
 	function appendMessage(msg, type, timestamp) {
-		if (msg === "__JOIN__") return;
+	    if (msg === "__JOIN__") return;
 
-		console.log("timestamp:", timestamp);
-		let html = "";
+	    let html = "";
 
-		if (timestamp) {
-			const dateTime = new Date(timestamp.replace(" ", "T"));
-			const dateStr = formatDate(dateTime);
-			const timeStr = formatTime(dateTime);
+	    if (timestamp) {
+	        const dateTime = new Date(timestamp.replace(" ", "T"));
+	        const dateStr = formatDate(dateTime);
+	        const timeStr = formatTime(dateTime);
 
-			if (lastDisplayedDate !== dateStr) {
-				html += `<div class="date-divider">${dateStr}</div>`;
-				lastDisplayedDate = dateStr;
-			}
+	        // 날짜 구분 표시
+	        if (lastDisplayedDate !== dateStr) {
+	            html += `<div class="date-divider">${dateStr}</div>`;
+	            lastDisplayedDate = dateStr;
+	        }
 
-			html += `<div class="message ${type}">${msg}<span class="time">${timeStr}</span></div>`;
-		} else {
-			html += `<div class="message ${type}">${msg}</div>`;
-		}
+	        html += `<div class="message ${type}">${msg}<span class="time">${timeStr}</span></div>`;
+	    } else {
+	        html += `<div class="message ${type}">${msg}</div>`;
+	    }
 
 		$("#chat-messages").append(html);
 		$("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
 	}
+
 
 	function formatDate(date) {
 		const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
