@@ -35,22 +35,19 @@
 			</a>
 		</div>
 		<div class="col-lg-6 col-6 text-left">
-			<form action="">
+			<form action="selectall" method="get" style="margin-left:-20px; margin-right:90px;">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for products">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
 					<div class="input-group-append">
-						<span class="input-group-text bg-transparent text-primary">
-							<i class="fa fa-search"></i>
-						</span>
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
+						</button>
 					</div>
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right">
-			<a href="" class="btn border">
-				<i class="fas fa-heart text-primary"></i>
-				<span class="badge">0</span>
-			</a>
+		<div class="col-lg-3 col-6 text-right" style="margin-left:-80px;">
 			<a href="cart" class="btn border">
 				<i class="fas fa-shopping-cart text-primary"></i>
 				<span class="badge">0</span>
@@ -58,7 +55,7 @@
 		</div>
 	</div>
 	<!-- Main Layout -->
-	<div class="container-fluid">
+	<div class="container-fluid"  style="margin-left:-100px;">
 		<div class="row px-xl-5">
 			<div class="col-lg-2">
 				<!-- Sidebar -->
@@ -77,15 +74,17 @@
 			</div>
 
 			<!-- Main Content -->
-			<div class="col-lg-10" style="margin-top: -30px; margin-bottom: 50px;">
+			<div class="col-lg-10 pl-4" style="margin-top: -20px; margin-bottom: 40px;">
 				<div class="text-center mb-4">
 					<h4 style="margin-top:50px;">배송내역</h4>
 				</div>
 				<!-- 검색 결과 카운트 -->
-				<span class="ml-2 text-muted" style="margin-right:970px;"> 총 <strong id="totalCount">${fn:length(deliveryList)}</strong>건</span>
+				<span class="ml-2 text-muted"> 
+				총 <strong id="totalCount">${fn:length(deliveryList)}</strong>건
+				</span>
 
 				<!-- ⭐ 검색 및 필터 섹션 ⭐ -->
-				<div class="search-box mb-3">
+				<div class="search-box mb-3" style="margin-top:20px;">
 					<div class="row">
 						<div class="col-md-6">
 							<div class="input-group">
@@ -101,10 +100,7 @@
 										onclick="searchCR()">
 										<i class="fa fa-search"></i> 검색
 									</button>
-									<button class="btn btn-secondary" type="button"
-										onclick="resetSearch()">
-										<i class="fa fa-redo"></i> 초기화
-									</button>
+									
 								</div>
 							</div>
 						</div>
@@ -124,7 +120,8 @@
 							<p class="text-center">배송 내역이 없습니다.</p>
 						</c:when>
 						<c:otherwise>
-							<table class="table table-striped">
+						
+							<table class="table table-striped" style="margin-top:40px;">
 								<thead>
 									<tr>
 										<th>주문번호</th>
