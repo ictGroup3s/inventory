@@ -62,7 +62,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right" style="margin-left: -105px;">			
+		<div class="col-lg-3 col-6 text-right">			
 			<a href="cart" class="btn border">
 				<i class="fas fa-shopping-cart text-primary"></i>
 				<span class="ml-1">장바구니</span>
@@ -121,12 +121,12 @@
 	</div>
 
 
-	<div class="container-fluid pt-2">
+	<div class="container-fluid">
 		<div class="row px-xl-5">
 			<div class="col-lg-2">
 				<!-- Sidebar -->
 				<nav class="category-sidebar" style="margin-left: -80px;">
-					<h6 class="p-3">MENU</h6>
+					<h6>MENU</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a href="selectall"
 							class="nav-link active">전체상품</a></li>
