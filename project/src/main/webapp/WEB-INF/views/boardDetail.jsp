@@ -5,12 +5,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 상세보기</title>
+
+<!-- ※ 수정: 제목 문구 -->
+<title>문의 상세보기</title>
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<!-- ======================= [추가된 부분 시작] ======================= -->
+<style>
+    /* 사이드바와 상세보기 내용 겹침 방지 */
+    .dashboard-content {
+        margin-left: 240px;
+    }
+</style>
+<!-- ======================= [추가된 부분 끝] ======================= -->
 
 </head>
 <body>
@@ -55,8 +66,15 @@
         <nav class="category-sidebar">
             <h6 class="p-3">고객센터</h6>
             <ul class="nav flex-column">
-                <li class="nav-item"><a href="/board" class="nav-link active">공지사항</a></li>
-                <li class="nav-item"><a href="/board?tab=faq" class="nav-link">자주 묻는 질문</a></li>
+
+                <!-- ※ 수정: 문의가 active -->
+                <li class="nav-item">
+                    <a href="/board" class="nav-link active">문의</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/board?tab=faq" class="nav-link">자주 묻는 질문</a>
+                </li>
 
             </ul>
         </nav>
@@ -64,7 +82,8 @@
         <!-- 상세보기 내용 -->
         <div class="col-lg-10 dashboard-content">
 
-            <h3 class="mb-4">공지사항 상세보기</h3>
+            <!-- ※ 수정: 타이틀 문구 -->
+            <h3 class="mb-4">문의 상세보기</h3>
 
             <table class="table table-bordered">
                 <tr>
