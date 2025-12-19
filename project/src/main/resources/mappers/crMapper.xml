@@ -11,23 +11,32 @@
         <result property="order_no" column="order_no"/>
         <result property="detail_no" column="detail_no"/>
         <result property="type" column="type"/>
-        <result property="return_no" column="return_no"/>
+        <result property="return_cnt" column="return_cnt"/>
         <result property="status" column="status"/>
         <result property="reason" column="reason"/>
         <result property="re_date" column="re_date"/>
+        
+         <result property="item_name" column="item_name"/>
     </resultMap>
 
     <!-- 사용자별 취소/반품/교환 내역 조회 -->
-    <select id="findByUserId" resultMap="crResultMap">
-        SELECT 
-            cr.*,
-            od.item_name
-        FROM cr cr
-        INNER JOIN order_detail od ON cr.detail_no = od.detail_no
-        INNER JOIN orders o ON cr.order_no = o.order_no
-        WHERE o.user_id = #{userId}
-        ORDER BY cr.re_date DESC
-    </select>
+	<select id="findByUserId" resultMap="crResultMap">
+    SELECT
+        cr.cr_no,
+        cr.order_no,
+        cr.detail_no,
+        cr.type,
+        cr.return_cnt,
+        cr.status,
+        cr.reason,
+        cr.re_date,
+        od.item_name AS item_name
+    FROM cr
+    LEFT JOIN order_detail od ON cr.detail_no = od.detail_no
+    INNER JOIN orders o ON cr.order_no = o.order_no
+    WHERE o.user_id = #{userId}
+    ORDER BY cr.re_date DESC
+</select>
 
     <!-- 취소/반품/교환 상세 조회 -->
     <select id="findById" resultMap="crResultMap">
@@ -40,25 +49,27 @@
     </select>
 
     <!-- 취소/반품/교환 신청 -->
-    <insert id="insert" useGeneratedKeys="true" keyProperty="cr_no">
-        INSERT INTO cr (
-            order_no,
-            detail_no,
-            type,
-            reason,
-            return_no,
-            status,
-            re_date
-        ) VALUES (
-            #{order_no},
-            #{detail_no},
-            #{type},
-            #{reason},
-            #{return_no},
-            '신청',
-            NOW()
-        )
-    </insert>
+   <insert id="insertCR" parameterType="map">
+    INSERT INTO cr (
+        cr_no,
+        order_no,
+        detail_no,
+        type,
+        return_cnt,
+        status,
+        reason,
+        re_date
+    ) VALUES (
+        cr_seq.NEXTVAL,
+        #{order_no},
+        #{detail_no},
+        #{type},
+        #{return_cnt},
+        #{status},
+        #{reason},
+        SYSDATE
+    )
+</insert>
 
     <!-- 상태 업데이트 -->
     <update id="updateStatus">

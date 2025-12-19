@@ -127,22 +127,19 @@
 	</select>
 
 	 <!-- 고객의 전체 주문내역 조회 -->
-	<select id="getDeliveryList" parameterType="string" resultMap="OrderDetailResult">
-	    SELECT
-	        od.detail_no,
-	        od.order_no,
-	        od.item_no,
-	        od.item_cnt,
-	        od.item_price,
-	        (od.item_cnt * od.item_price) AS amount,
-	        p.item_name,
-	        TO_CHAR(o.order_date, 'YYYY-MM-DD HH24:MI:SS') AS order_date,
-	        o.order_status
-	    FROM order_detail od
-	    JOIN orders o ON od.order_no = o.order_no
-	    JOIN product p ON od.item_no = p.item_no
-	    WHERE o.customer_id = #{customer_id}
-	    ORDER BY o.order_date DESC
-	</select>
+<select id="getDeliveryList"
+        parameterType="string"
+        resultType="com.example.model.vo.ordersVO">
+
+    SELECT
+        o.order_no,
+        o.order_status,
+        o.tracking,
+        TO_CHAR(o.order_date, 'YYYY-MM-DD') AS order_date
+    FROM orders o
+    WHERE o.customer_id = #{customer_id}
+    ORDER BY o.order_date DESC
+
+</select>
 
 </mapper>

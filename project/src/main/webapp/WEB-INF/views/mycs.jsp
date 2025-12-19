@@ -27,6 +27,8 @@
 </head>
 
 <body>
+
+
 	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none">
@@ -134,13 +136,14 @@
 									data-status="${cr.status}">
 									<td>${cr.order_no}</td>
 
-									<!-- ⭐⭐⭐ item_count를 이용한 간단한 표시 ⭐⭐⭐ -->
-									<td> ${cr.item_name}
-									<c:if test="${cr.item_count > 1}">
-										<span class="text-muted"> 외 ${cr.item_count - 1}개</span>
-									</c:if>
-									</td>
-
+									<td><c:choose>
+											<c:when test="${not empty cr.item_name}">
+									            ${cr.item_name}
+									        </c:when>
+											<c:otherwise>
+									            전체 주문
+									        </c:otherwise>
+										</c:choose></td>
 									<td>
 									<span class="badge 
 										${cr.type == '취소' ? 'badge-warning' : 
