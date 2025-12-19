@@ -17,4 +17,5 @@ public class crVO {
 	private Timestamp re_date; // 신청일
 	
 	private String item_name;
+	private Integer item_count;
 }
