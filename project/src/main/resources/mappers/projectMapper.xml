@@ -51,8 +51,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					(SELECT COUNT(*) FROM review WHERE item_no = p.item_no) AS review_cnt
 				FROM product p
 				<where>
+					AND p.stock_cnt &gt;= 1		<!-- 재고 있는 상품만 노출 -->
 					<if test="q != null and q != ''">
-						(p.item_name LIKE '%' || #{q} || '%')
+						AND (p.item_name LIKE '%' || #{q} || '%')
 					</if>
 					<if test="cate_no != null">
 						AND p.cate_no = #{cate_no}
@@ -71,8 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectProductsCount" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM product
 		<where>
+			AND stock_cnt &gt;= 1	<!-- 재고 있는 상품만 노출 -->
 			<if test="q != null and q != ''">
-				(item_name LIKE '%' || #{q} || '%')
+				AND (item_name LIKE '%' || #{q} || '%')
 			</if>
 			<if test="cate_no != null">
 				AND cate_no = #{cate_no}
@@ -96,6 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(SELECT AVG(rating) FROM review WHERE item_no = p.item_no) AS avg_rating,
 				(SELECT COUNT(*) FROM review WHERE item_no = p.item_no) AS review_cnt
 			FROM product p
+			WHERE p.stock_cnt &gt;= 1	<!-- 재고 있는 상품만 노출 -->
 			ORDER BY DBMS_RANDOM.VALUE
 		) WHERE ROWNUM &lt;= #{limit}
 	</select>
