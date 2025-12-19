@@ -16,83 +16,65 @@
 
 <body>
 	<!-- Header 부분 -->
-	<div class="row align-items-center py-3 px-xl-5" style="margin-left:70px;">
+	<div class="row align-items-center py-3 px-xl-5">
 		<div class="col-lg-3 d-none d-lg-block">
 			<a href="/" class="text-decoration-none">
 				<img src='../img/logo.png' class='logo' />
 			</a>
 		</div>
-	<div class="col-lg-6 col-6 text-left">
-			<form action="selectall" method="get" style="margin-left:150px;">
+		<div class="col-lg-6 col-6 text-left">
+			<form action="">
 				<div class="input-group">
-					<input type="text" name="q" class="form-control"
-						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
+					<input type="text" class="form-control" placeholder="Search for products">
 					<div class="input-group-append">
-						<button class="input-group-text bg-transparent text-primary" type="submit">
-								<i class="fa fa-search"></i>
-						</button>
+						<span class="input-group-text bg-transparent text-primary">
+							<i class="fa fa-search"></i>
+						</span>
 					</div>
 				</div>
 			</form>
 		</div>
 		<div class="col-lg-3 col-6 text-right">
-			
+			<a href="" class="btn border">
+				<i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
+			</a>
 			<a href="cart" class="btn border">
 				<i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
 		</div>
 	</div>
-		<div class="col-lg-12">
-				<nav
-					class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-					<a href="/" class="text-decoration-none d-block d-lg-none"> <img
-						src='../img/logo.png' class='logo' />
-					</a>
-					<button type="button" class="navbar-toggler" data-toggle="collapse"
-						data-target="#navbarCollapse">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse" >
-						<div class="navbar-nav ml-auto py-0">
-							<!-- 로그인전 -->
-							<c:if test="${empty sessionScope.loginUser}">
-								<a href="login" class="nav-item nav-link">로그인</a>
-								<a href="register" class="nav-item nav-link">회원가입</a>
-								<a href="board" class="nav-item nav-link">고객센터</a>
-							</c:if>
 
-							<!-- 회원 로그인 후   -->
-							<c:if test="${not empty sessionScope.loginUser}">
-								<span class="nav-item nav-link">안녕하세요,
-									${sessionScope.loginUser.customer_id}님!</span>
-
-
-								<c:if test="${sessionScope.loginRole == 0}">
-									<a href="mypage" class="nav-item nav-link">마이페이지</a>
-								</c:if>
-
-								<c:if test="${sessionScope.loginRole == 1}">
-									<a href="dashboard" class="nav-item nav-link">관리자 페이지</a>
-								</c:if>
-								<!-- 로그아웃 링크 -->
-								<a href="logout" class="nav-item nav-link">로그아웃</a>
-
-							</c:if>
-						</div>
+	<!-- Navbar -->
+	<div class="container-fluid">
+		<div class="col-lg-9" aling="right">
+			<nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+				<a href="" class="text-decoration-none d-block d-lg-none">
+					<h1 class="m-0 display-5 font-weight-semi-bold">
+						<span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
+					</h1>
+				</a>
+				<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+					<div class="navbar-nav ml-auto py-0" style="padding-left:-50px;margin-right:-35%;">
+						<a href="login" class="nav-item nav-link">로그인</a> 
+						<a href="register" class="nav-item nav-link">회원가입</a> 
+						<a href="board" class="nav-item nav-link">고객센터</a>
 					</div>
-				</nav>
-			</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+
 	<!-- Page Header -->
-		<div class="container-fluid bg-secondary mb-5">
-		<div
-			class="d-flex flex-column align-items-center justify-content-center"
-			style="min-height: 150px; width:1200px;">
+	<div class="container-fluid bg-secondary mb-5" align="center">
+		<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
 			<h1 class="font-weight-semi-bold text-uppercase mb-3">결제창</h1>
 			<div class="d-inline-flex">
-				<p class="m-0">
-					<a href="header"><h4>메인으로</h4></a>
-				</p>				
+				<p class="m-0"><a href="">Home</a></p>
+				<p class="m-0 px-2">-</p>
+				<p class="m-0">payment</p>
 			</div>
 		</div>
 	</div>
@@ -264,8 +246,9 @@
                     <!-- 결제 방식 라디오 버튼 -->
                     <div class="form-group">
                         <div class="custom-control custom-radio" style="padding-top:10px;">
-                            <input type="radio" class="custom-control-input" name="payment" id="paypal" value="card">
-                            <label class="custom-control-label" for="paypal">카드결제</label>
+									<input type="radio" class="custom-control-input" name="payment"
+										id="paypal" value="card" data-toggle="modal"
+										data-target="#payModal"> <label class="custom-control-label" for="paypal">카드결제</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -313,8 +296,8 @@
 	<!-- FORM 끝 -->
 	
 	<!-- Footer -->
-	<div class="container-fluid bg-secondary text-dark mt-2 pt-1" >
-		<div class="row px-xl-5 pt-3">
+	<div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="margin-top: 550px !important;">
+		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-3 pr-3 pr-xl-3 pl-3 pl-xl-5 pt-3">
 				<p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Seoul, KOREA</p>
 				<p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>stockbob@stockbob.com</p>
@@ -330,7 +313,9 @@
 						<div class="d-flex flex-column justify-content-start">
 							<a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>메인 홈</a>
 							<a class="text-dark mb-2" href="selectall"><i class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
-					
+							<a class="text-dark mb-2" href="mlist"><i class="fa fa-angle-right mr-2"></i>마이페이지</a>
+							<a class="text-dark mb-2" href="cart"><i class="fa fa-angle-right mr-2"></i>장바구니</a>
+							<a class="text-dark mb-2" href="checkout"><i class="fa fa-angle-right mr-2"></i>결제</a>
 						</div>
 					</div>
 					<div class="col-lg-8 col-md-12">
@@ -356,7 +341,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- footer end -->
 		<div class="row border-top border-light mx-xl-5 py-4">
 			<div class="col-md-6 px-xl-0">
 				<p class="mb-md-0 text-center text-md-left text-dark">

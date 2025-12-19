@@ -143,7 +143,9 @@
 													<div class="cart-product-name" style="word-break:break-word; max-width:320px; font-size:16px; ">${ci.product.item_name}</div>												
 											</div>
 										</td>
-										<td class="align-middle"><fmt:formatNumber value="${ci.product.sales_p}" pattern=",###"/>원</td>
+										<td class="align-middle">
+											<h6 class="text-muted mb-0"><del><fmt:formatNumber value="${ci.product.sales_p}" pattern="#,###" />원</del></h6>
+											<fmt:formatNumber value="${ci.product.sales_p* (100 - ci.product.dis_rate) / 100}" pattern=",###"/>원</td>
 										<td class="align-middle">
 											<div class="input-group quantity mx-auto" style="width: 120px;">
 												<div class="input-group-prepend">

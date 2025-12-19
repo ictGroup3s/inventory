@@ -283,7 +283,7 @@ public class orderController {
 			redirectAttributes.addFlashAttribute("message", "주문이 완료되었습니다.");
 			redirectAttributes.addFlashAttribute("orderNo", order.getOrder_no());
 
-			return "redirect:/order/complete";
+			return "redirect:/ordercomplete";
 
 		} catch (Exception e) {
 			log.error("주문 처리 중 오류 발생", e);
