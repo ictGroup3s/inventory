@@ -40,6 +40,7 @@
 
 .card-body {
 	padding: 25px;
+	margin-top: 25px;
 }
 
 /* ===== 대시보드 상단 카드 (신규회원, 주문건수 등) ===== */
