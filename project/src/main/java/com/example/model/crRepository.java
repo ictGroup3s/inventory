@@ -32,71 +32,57 @@ public class crRepository {
   /**
    * 취소/반품/교환 목록 조회 (고객별)
    */
-  public List<crVO> getCRListByCustomerId(String customerId) throws SQLException {
-      log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-      log.info("┃  📋 취소/반품/교환 목록 조회 (Repository)           ┃");
-      log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-      log.info("   - customerId: {}", customerId);
-      
-      List<crVO> list = new ArrayList<>();
-      
-      String sql = """
-      		SELECT
-      		cr.cr_no,
-      		cr.order_no,
-      		cr.type,
-      		cr.return_cnt,
-      		cr.reason,
-      		cr.status,
-      		cr.re_date,
-      		MIN(p.item_name) || ' 외 ' || (COUNT(*)- 1) || '건' AS item_name
-      		FROM cr
-      		JOIN orders o ON cr.order_no = o.order_no
-      		JOIN order_detail od ON o.order_no = od.order_no
-      		JOIN product p ON od.item_no = p.item_no
-      		WHERE o.customer_id = ?
-      		GROUP BY
-      		cr.cr_no,
-      		cr.order_no,
-      		cr.type,
-      		cr.return_cnt,
-      		cr.reason,
-      		cr.status,
-      		cr.re_date
-      		ORDER BY cr.re_date DESC
-      """;
-      
-      log.info("   - 실행 SQL: {}", sql.replaceAll("\\s+", " "));
-      
-      try (Connection conn = dataSource.getConnection();
-           PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-          pstmt.setString(1, customerId);
-          ResultSet rs = pstmt.executeQuery();
-
-          while (rs.next()) {
-              crVO vo = new crVO();
-              vo.setCr_no(rs.getInt("cr_no"));
-              vo.setOrder_no(rs.getInt("order_no"));
-              vo.setType(rs.getString("type"));
-              vo.setReturn_cnt(rs.getObject("return_cnt", Integer.class));
-              vo.setReason(rs.getString("reason"));
-              vo.setStatus(rs.getString("status"));
-              vo.setRe_date(rs.getTimestamp("re_date"));
-              vo.setItem_name(rs.getString("item_name")); 
-              
-              list.add(vo);
-          }
-          
-          log.info("   ✅ 조회 성공: {} 건", list.size());
-      } catch (Exception e) {
-          log.error("   ❌ 조회 실패!", e);
-          throw e;
-      }
-      
-      return list;
-  }
-
+	 public List<crVO> getCRListByCustomerId(String customerId) throws SQLException {
+		    log.info("===== getCRListByCustomerId 시작 =====");
+		    log.info("customerId: {}", customerId);
+		    
+		    String sql = """
+		        SELECT cr.* 
+		        FROM cr cr
+		        INNER JOIN orders o ON cr.order_no = o.order_no
+		        WHERE o.customer_id = ?
+		        ORDER BY cr.re_date DESC
+		    """;
+		    
+		    List<crVO> list = new ArrayList<>();
+		    
+		    try (Connection conn = dataSource.getConnection();
+		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		        
+		        pstmt.setString(1, customerId);
+		        log.info("쿼리 실행 - customer_id: {}", customerId);
+		        
+		        ResultSet rs = pstmt.executeQuery();
+		        
+		        while (rs.next()) {
+		            crVO cr = new crVO();
+		            cr.setCr_no(rs.getInt("cr_no"));
+		            cr.setOrder_no(rs.getInt("order_no"));
+		            cr.setType(rs.getString("type"));
+		            cr.setStatus(rs.getString("status"));
+		            cr.setReason(rs.getString("reason"));
+		            cr.setRe_date(rs.getTimestamp("re_date"));
+		            
+		            int returnCnt = rs.getInt("return_cnt");
+		            if (!rs.wasNull()) {
+		                cr.setReturn_cnt(returnCnt);
+		            }
+		            
+		            cr.setItem_name("상품명"); // 임시
+		            
+		            list.add(cr);
+		            log.info("CR 추가: cr_no={}, order_no={}", cr.getCr_no(), cr.getOrder_no());
+		        }
+		        
+		        log.info("===== 조회된 CR 개수: {} =====", list.size());
+		        
+		    } catch (Exception e) {
+		        log.error("❌ 오류 발생", e);
+		        throw e;
+		    }
+		    
+		    return list;
+		}
   /**
    * 취소/반품/교환 신청
    */

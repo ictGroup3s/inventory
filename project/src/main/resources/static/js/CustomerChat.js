@@ -132,6 +132,13 @@ $(function() {
 	function appendMessage(msg, type, timestamp) {
 	    if (msg === "__JOIN__") return;
 
+	    const $container = $("#chat-messages");
+
+	    // 사용자가 이미 맨 아래에 있었는지 체크
+	    const isAtBottom =
+	        $container.scrollTop() + $container.innerHeight() >=
+	        $container[0].scrollHeight - 10;
+
 	    let html = "";
 
 	    if (timestamp) {
@@ -139,20 +146,28 @@ $(function() {
 	        const dateStr = formatDate(dateTime);
 	        const timeStr = formatTime(dateTime);
 
-	        // 날짜 구분 표시
 	        if (lastDisplayedDate !== dateStr) {
 	            html += `<div class="date-divider">${dateStr}</div>`;
 	            lastDisplayedDate = dateStr;
 	        }
 
-	        html += `<div class="message ${type}">${msg}<span class="time">${timeStr}</span></div>`;
+	        html += `<div class="message ${type}">
+	                    ${msg}
+	                    <span class="time">${timeStr}</span>
+	                 </div>`;
 	    } else {
 	        html += `<div class="message ${type}">${msg}</div>`;
 	    }
 
-		$("#chat-messages").append(html);
-		$("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+	    // 🔹 append (아래로 쌓임)
+	    $container.append(html);
+
+	    // 🔹 사용자가 맨 아래에 있을 때만 자동 스크롤
+	    if (isAtBottom) {
+	        $container.scrollTop($container[0].scrollHeight);
+	    }
 	}
+
 
 
 	function formatDate(date) {

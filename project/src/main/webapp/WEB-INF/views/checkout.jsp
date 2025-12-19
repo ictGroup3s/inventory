@@ -283,9 +283,10 @@
                             </button>
                         </c:when>
                         <c:otherwise>
-									<button type="submit"
-										class="btn btn-block btn-primary my-3 py-3">결제하기</button>
-								</c:otherwise>
+                            <button type="button" id="btnOpenModal" class="btn btn-block btn-primary my-3 py-3">
+                                결제하기
+                            </button>
+                        </c:otherwise>
                     </c:choose>
                 </div>
             </div>

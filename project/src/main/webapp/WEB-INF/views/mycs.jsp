@@ -116,14 +116,6 @@
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
 						</div>
 					</c:if>
-					<!-- 	 ⭐ 초기화 버튼 아래로 이동 ⭐
-					<div class="text-left">
-						<button class="btn btn-outline-secondary" onclick="resetSearch()">
-							<i class="fa fa-redo"></i> 초기화
-						</button>
-					</div>
-				</div> -->
-
 					<table class="table table-striped" id="crTable">
 						<thead>
 							<tr>
@@ -137,23 +129,31 @@
 						</thead>
 						<tbody id="crTableBody">
 							<c:forEach var="cr" items="${crList}">
-								<tr class="cr-row"  data-order-no="${cr.order_no}"
-													data-item-name="${cr.item_name}" 
-													data-type="${cr.type}"
-													data-status="${cr.status}">
+								<tr class="cr-row" data-order-no="${cr.order_no}"
+									data-item-name="${cr.item_name}" data-type="${cr.type}"
+									data-status="${cr.status}">
 									<td>${cr.order_no}</td>
-									<td>${cr.item_name}</td>
+
+									<!-- ⭐⭐⭐ item_count를 이용한 간단한 표시 ⭐⭐⭐ -->
+									<td> ${cr.item_name}
+									<c:if test="${cr.item_count > 1}">
+										<span class="text-muted"> 외 ${cr.item_count - 1}개</span>
+									</c:if>
+									</td>
+
 									<td>
 									<span class="badge 
-									${cr.type == '취소' ? 'badge-warning' : 
-									  cr.type == '반품' ? 'badge-info' : 'badge-success'}">
-											${cr.type} </span></td>
+										${cr.type == '취소' ? 'badge-warning' : 
+										  cr.type == '반품' ? 'badge-info' : 'badge-success'}">
+																	${cr.type} </span>
+									</td>
 									<td>
 									<span class="badge 
-									${cr.status == '접수' ? 'badge-secondary' : 
-									  cr.status == '처리중' ? 'badge-primary' : 
-									  cr.status == '완료' ? 'badge-success' : 'badge-danger'}">
-											${cr.status} </span></td>
+										${cr.status == '접수' ? 'badge-secondary' : 
+										  cr.status == '처리중' ? 'badge-primary' : 
+										  cr.status == '완료' ? 'badge-success' : 'badge-danger'}">
+																	${cr.status} </span>
+									</td>
 									<td><fmt:formatDate value="${cr.re_date}"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td>

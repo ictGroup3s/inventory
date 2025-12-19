@@ -135,6 +135,10 @@
 							<option value="취소">취소</option>
 							<option value="반품">반품</option>
 							<option value="교환">교환</option>
+							<option value="취소신청">취소신청</option>
+							<option value="반품신청">반품신청</option>
+							<option value="교환신청">교환신청</option>
+
 						</select> <input type="date" class="form-control mr-2 mb-2"
 							id="searchStartDate" style="width: 150px;"> <span
 							class="mr-2 mb-2">~</span> <input type="date"
@@ -156,7 +160,7 @@
 									<th class="col-order-no">주문번호</th>
 									<th class="col-customer">고객명</th>
 									<th class="col-items">상품</th>
-									<th class="col-amount">총 금액</th>
+									<th class="col-amount" style="width: 130px;">총 금액</th>
 									<th class="col-date">주문일</th>
 									<th class="col-status">상태</th>
 									<th class="col-action">관리</th>
@@ -218,7 +222,6 @@
 
 						<hr>
 
-						<!-- 배송 정보 -->
 						<!-- 배송 정보 -->
 						<div
 							class="d-flex justify-content-between align-items-center mb-3">
@@ -286,6 +289,7 @@
 								<div class="form-group">
 									<label class="order-info-label">주문 상태</label> <select
 										class="form-control" id="modalStatus">
+										<option value="">전체 상태</option>
 										<option value="결제완료">결제완료</option>
 										<option value="배송준비중">배송준비중</option>
 										<option value="배송중">배송중</option>
@@ -293,6 +297,9 @@
 										<option value="취소">취소</option>
 										<option value="반품">반품</option>
 										<option value="교환">교환</option>
+										<option value="취소신청">취소신청</option>
+										<option value="반품신청">반품신청</option>
+										<option value="교환신청">교환신청</option>
 									</select>
 								</div>
 							</div>
@@ -329,12 +336,14 @@
 							<i class="fas fa-question-circle"></i>
 						</div>
 						<p class="custom-modal-message" id="customModalMessage"></p>
+						<!-- 사유 입력창을 감싸는 부분 -->
 						<div class="custom-modal-input" id="customModalInputWrap"
 							style="display: none;">
 							<label id="customModalInputLabel">사유를 입력해주세요</label>
 							<textarea class="form-control" id="customModalInput" rows="3"
 								placeholder="사유 입력..."></textarea>
 						</div>
+
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-cancel" data-dismiss="modal"

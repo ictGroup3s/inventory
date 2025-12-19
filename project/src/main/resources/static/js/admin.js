@@ -1,6 +1,32 @@
 /**
  *  admin.js
  */
+
+// showToast 함수 정의 (전역)
+function showToast(message, type) {
+    var toastContainer = document.getElementById('toast');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast';
+        document.body.appendChild(toastContainer);
+    }
+
+    var toast = document.createElement('div');
+    toast.classList.add('toast');
+    if (type) toast.classList.add('toast-' + type);
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(function() {
+        toast.classList.add('fade-out');
+        setTimeout(function() {
+            toast.remove();
+        }, 500);
+    }, 3000);
+}
+
+
 $(function() {
     
     // ===== 재고 관리 변수 =====
@@ -142,27 +168,31 @@ $(function() {
     });
 
     // 삭제버튼
-    $('.delete-btn').click(function() {
-        let itemNo = $(this).data('itemno');
-        let row = $(this).closest('tr');
+	$(document).on('click', '.delete-btn', function() {
+	    var itemNo = $(this).data('itemno'); // 삭제할 상품의 item_no를 가져옵니다.
 
-        $.ajax({
-            url: '/deleteItem',
-            type: 'POST',
-            data: { itemNo: itemNo },
-            success: function(response) {
-                if (response === "success") {
-                    row.remove();
-                    showToast("정말로 삭제하시겠습니까?");
-                } else {
-                    showToast('삭제 실패');
-                }
-            },
-            error: function() {
-                showToast('삭제 실패');
-            }
-        });
-    });
+	    if (confirm('이 상품을 품절 처리 하시겠습니까?')) {
+	        $.ajax({
+	            url: '/admin/item/updateStatus',  // 상태 업데이트를 위한 경로
+	            method: 'POST',
+	            data: {
+	                item_no: itemNo
+	            },
+	            success: function(response) {
+	                if (response.success) {
+	                    showToast('상품이 품절 처리되었습니다.');  // 성공 시 토스트 메시지
+	                    location.reload();  // 페이지 새로고침
+	                } else {
+	                    showToast('상품 품절 처리에 실패했습니다.');  // 실패 시 토스트 메시지
+	                }
+	            },
+	            error: function() {
+	                showToast('서버 오류가 발생했습니다.');  // 서버 오류 시 토스트 메시지
+	            }
+	        });
+	    }
+	});
+
 
     // 상세보기 버튼 클릭
     $(".detail-btn").click(function() {

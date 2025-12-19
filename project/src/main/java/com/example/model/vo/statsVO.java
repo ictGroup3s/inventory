@@ -14,5 +14,4 @@ public class statsVO {
 	private Integer total_price;
 	private Integer margin;
 	private Integer total_discount;
-	private Integer store_no;
 }
