@@ -134,5 +134,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ) stocks ON dates.base_date = stocks.stock_date
         ORDER BY base_date
     </select>
+    
+    <!-- 최근 30일 일별 통계 -->
+	<select id="getDailyStats" resultType="map">
+	    SELECT 
+	        stats_date,
+	        total_order,
+	        total_sales,
+	        cancel_cnt,
+	        return_cnt,
+	        total_price,
+	        margin,
+	        total_discount
+	    FROM stats
+	    WHERE stats_date >= TRUNC(SYSDATE) - 30
+	    ORDER BY stats_date DESC
+	</select>
+    
 
 </mapper>

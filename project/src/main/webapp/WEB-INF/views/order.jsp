@@ -156,7 +156,7 @@
 									<th class="col-order-no">주문번호</th>
 									<th class="col-customer">고객명</th>
 									<th class="col-items">상품</th>
-									<th class="col-amount">총 금액</th>
+									<th class="col-amount" style="width: 130px;">총 금액</th>
 									<th class="col-date">주문일</th>
 									<th class="col-status">상태</th>
 									<th class="col-action">관리</th>

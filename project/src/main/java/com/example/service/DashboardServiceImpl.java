@@ -33,4 +33,9 @@ public class DashboardServiceImpl implements DashboardService {
     public List<Map<String, Object>> getIncomeExpense() {
         return dashboardRepository.getIncomeExpense();
     }
+    
+    @Override
+    public List<Map<String, Object>> getDailyStats() {
+        return dashboardRepository.getDailyStats();
+    }
 }
