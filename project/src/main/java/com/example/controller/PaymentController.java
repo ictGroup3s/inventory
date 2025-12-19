@@ -237,6 +237,6 @@ public class PaymentController {
 	        }
 	        
 	        // 검증 통과 시 결제 처리
-	        return "/ordercomplete";
+	        return "ordercomplete";
 	    }
 	}

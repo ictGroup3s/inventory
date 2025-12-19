@@ -17,4 +17,6 @@ public class order_detailVO {
 	private Integer amount;	
 	private Integer additional_count;
 	
+	private int qty;
+	
 }
