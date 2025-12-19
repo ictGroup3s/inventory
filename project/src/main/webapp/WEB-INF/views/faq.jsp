@@ -59,8 +59,10 @@
 
 <!-- 글쓰기 -->
 <div class="text-right mb-3 mt-4">
-	<button class="btn btn-primary"
-		onclick="showFaqWriteForm(${page}); return false;">글쓰기</button>
+	<c:if test="${sessionScope.loginRole == 1}">
+		<button class="btn btn-primary"
+			onclick="showFaqWriteForm(${page}); return false;">글쓰기</button>
+	</c:if>
 </div>
 
 <!-- 페이징 -->
