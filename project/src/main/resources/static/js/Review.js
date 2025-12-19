@@ -109,7 +109,7 @@
 			data: { item_no: item_no },
 			success: function(reviews) {				
 				if (!reviews || reviews.length === 0) {
-                    $('#review-summary').text('(0개)');
+					$('#review-summary').text('0.0 (0개)');
 					$('#product-rating-summary').html(buildReadOnlyHeartsHtml(0) + ' 0.0 (0개 리뷰)');
 					reviewList.html('<p>등록된 리뷰가 없습니다.</p>');
 					$('#review-pagination').empty();
@@ -128,7 +128,7 @@
                 });
 				var avg = count > 0 ? (totalRating / count).toFixed(1) : '0.0';
 				var avgHearts = buildReadOnlyHeartsHtml(parseFloat(avg));
-				var summaryHtml = avgHearts + ' ' + avg + ' / ' + reviews.length + '개';
+				var summaryHtml = avgHearts + ' ' + avg + ' (' + reviews.length + '개)';
                 
                 $('#review-summary').html(summaryHtml);
 				$('#product-rating-summary').html(avgHearts + ' ' + avg + ' (' + reviews.length + '개 리뷰)');
@@ -153,6 +153,14 @@
 		// 리뷰 항목 생성
 		slicedReviews.forEach(function(r) {
 			var ratingHtml = buildReadOnlyHeartsHtml(r.rating);
+			var imagesHtml = '';
+			if (r.images && Array.isArray(r.images) && r.images.length > 0) {
+				imagesHtml = '<div class="mt-2 d-flex flex-wrap">'
+					+ r.images.map(function(url) {
+						return '<img src="' + url + '" alt="review image" style="width:120px;height:120px;object-fit:cover;border:1px solid #eee;margin-right:8px;margin-bottom:8px;" />';
+					}).join('')
+					+ '</div>';
+			}
 
 			var html = '<div class="mb-3 border-bottom pb-2" id="review-' + r.review_no + '">'
 				+ '<div class="d-flex justify-content-between align-items-center">'
@@ -173,6 +181,7 @@
 			
 			html += '</div>'
 				+ '<p class="review-content">' + r.re_content + '</p>'
+				+ imagesHtml
 				+ '</div>';
 			reviewList.append(html);
 		});
@@ -213,11 +222,35 @@
 		// 수정용 별점 HTML 생성
 		var starsHtml = buildEditableHeartsHtml(currentRating);
 
+		// 기존 이미지(삭제 선택)
+		var existingImagesHtml = '';
+		if (reviewData && reviewData.imageMetas && Array.isArray(reviewData.imageMetas) && reviewData.imageMetas.length > 0) {
+			existingImagesHtml = '<div class="mt-2">'
+				+ '<div class="mb-1"><small class="text-muted">삭제할 이미지를 선택하세요</small></div>'
+				+ '<div class="d-flex flex-wrap">'
+				+ reviewData.imageMetas.map(function(img){
+					var url = '/img/review/' + (img.img_path || '');
+					return '<label class="mr-2 mb-2" style="cursor:pointer;">'
+						+ '<input type="checkbox" class="mr-1 delete-review-image" value="' + img.review_img_no + '">'
+						+ '<img src="' + url + '" alt="review image" style="width:80px;height:80px;object-fit:cover;border:1px solid #eee;" />'
+						+ '</label>';
+				}).join('')
+				+ '</div>'
+				+ '</div>';
+		}
+
+		var addImagesHtml = '<div class="mt-2">'
+			+ '<div class="mb-1"><small class="text-muted">이미지 추가</small></div>'
+			+ '<input type="file" class="form-control edit-review-images" accept="image/*" multiple>'
+			+ '</div>';
+
 		var editHtml = '<div class="edit-form">'
             + starsHtml
 			+ '<textarea class="form-control mb-2 edit-textarea" rows="3">' 
 			+ originalContent 
 			+ '</textarea>'
+			+ existingImagesHtml
+			+ addImagesHtml
 			+ '<div class="text-right">'
 			+ '<button class="btn btn-sm btn-primary save-edit-btn" data-id="' 
 			+ reviewNo 
@@ -247,6 +280,44 @@
 		var reviewDiv = $(this).closest('.mb-3');
 		var newContent = reviewDiv.find('.edit-textarea').val();
         var newRating = reviewDiv.find('.edit-rating-input').val();
+
+		var deleteIds = [];
+		reviewDiv.find('.delete-review-image:checked').each(function(){
+			deleteIds.push($(this).val());
+		});
+
+		var fileInput = reviewDiv.find('.edit-review-images').get(0);
+		var hasFiles = fileInput && fileInput.files && fileInput.files.length > 0;
+		var hasDeletes = deleteIds.length > 0;
+
+		if (hasFiles || hasDeletes) {
+			var fd = new FormData();
+			fd.append('review_no', reviewNo);
+			fd.append('re_content', newContent);
+			fd.append('rating', newRating);
+			deleteIds.forEach(function(id){ fd.append('delete_img_no', id); });
+			if (hasFiles) {
+				for (var i = 0; i < fileInput.files.length; i++) {
+					fd.append('images', fileInput.files[i]);
+				}
+			}
+
+			$.ajax({
+				url: '/review/updateWithImages',
+				type: 'POST',
+				data: fd,
+				processData: false,
+				contentType: false,
+				success: function(res) {
+					alert('수정되었습니다.');
+					loadReviews();
+				},
+				error: function(err) {
+					alert('수정 실패');
+				}
+			});
+			return;
+		}
 
 		$.ajax({
 			url: '/review/update',
@@ -307,23 +378,30 @@
 
 // 		리뷰 등록
 	$('#addReview').on('click', function() {
-		var reviewData = {
-			item_no: item_no,
-			re_title: $('#re_title').val(),
-			re_content: $('#re_content').val(),
-			customer_id: $('input[name="customer_id"]').val(),
-            rating: $('#rating').val()
-		};
+		var fd = new FormData();
+		fd.append('item_no', item_no);
+		fd.append('re_title', $('#re_title').val());
+		fd.append('re_content', $('#re_content').val());
+		fd.append('rating', $('#rating').val());
+
+		var input = document.getElementById('review_images');
+		if (input && input.files && input.files.length > 0) {
+			for (var i = 0; i < input.files.length; i++) {
+				fd.append('images', input.files[i]);
+			}
+		}
 
 		$.ajax({
-			url: '/review/add',
+			url: '/review/addWithImages',
 			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify(reviewData),
+			data: fd,
+			processData: false,
+			contentType: false,
 			success: function(response) {
 				alert('리뷰가 등록되었습니다.');
 				$('#re_title').val('');
 				$('#re_content').val('');
+				if (input) input.value = '';
 				loadReviews();	// 리뷰 목록 새로고침
 			},
 			error: function(err) {

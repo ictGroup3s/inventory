@@ -1,11 +1,16 @@
 package com.example.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.model.ReviewRepository;
+import com.example.model.ReviewImageRepository;
+import com.example.model.vo.ReviewImageVO;
 import com.example.model.vo.ReviewVO;
 
 @Service
@@ -14,10 +19,36 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Autowired
 	private ReviewRepository reviewRepository;
+
+	@Autowired
+	private ReviewImageRepository reviewImageRepository;
 	
 	// 상품 번호(item_no)로 리뷰 가져오기
 	public List<ReviewVO> getReviewList(Integer item_no) {
-		return reviewRepository.selectReviewsByItemNo(item_no);
+		List<ReviewVO> reviews = reviewRepository.selectReviewsByItemNo(item_no);
+		if (reviews == null || reviews.isEmpty()) return reviews;
+
+		List<ReviewImageVO> images = reviewImageRepository.selectImagesByItemNo(item_no);
+		if (images == null || images.isEmpty()) return reviews;
+
+		Map<Integer, List<String>> imageUrlsByReviewNo = new HashMap<>();
+		Map<Integer, List<ReviewImageVO>> imageMetasByReviewNo = new HashMap<>();
+		for (ReviewImageVO image : images) {
+			if (image == null || image.getReview_no() == null || image.getImg_path() == null) continue;
+			imageUrlsByReviewNo
+				.computeIfAbsent(image.getReview_no(), k -> new ArrayList<>())
+				.add("/img/review/" + image.getImg_path());
+			imageMetasByReviewNo
+				.computeIfAbsent(image.getReview_no(), k -> new ArrayList<>())
+				.add(image);
+		}
+
+		for (ReviewVO review : reviews) {
+			if (review == null || review.getReview_no() == null) continue;
+			review.setImages(imageUrlsByReviewNo.getOrDefault(review.getReview_no(), new ArrayList<>()));
+			review.setImageMetas(imageMetasByReviewNo.getOrDefault(review.getReview_no(), new ArrayList<>()));
+		}
+		return reviews;
 	}
 	
 	// 리뷰 작성
@@ -46,6 +77,12 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	public void deleteReview(Integer review_no) {
+		// FK 설정 여부와 상관없이 안전하게 먼저 이미지 레코드를 삭제
+		try {
+			reviewImageRepository.deleteByReviewNo(review_no);
+		} catch (Exception ignored) {
+			// 이미지 테이블이 아직 없거나(초기 적용 전) 매퍼 미적용 환경을 고려
+		}
 		reviewRepository.delete(review_no);
 	}
 

@@ -1,105 +1,27 @@
-# GitHub Copilot Instructions for Inventory Project
+# Copilot instructions (project module)
 
-This guide provides essential context for AI coding agents working on this Spring Boot + JSP inventory and chat application.
+This folder is the runnable Spring Boot app. Canonical instructions also exist at the repo root: `.github/copilot-instructions.md`.
 
-## Architecture & Tech Stack
-- **Framework**: Spring Boot 3.5.8 (Java 17)
-- **Database**: Oracle (ojdbc11) with MyBatis 3.0.5
-- **Frontend**: JSP (Jakarta JSTL) + Static Resources (CSS/JS in `src/main/resources/static`)
-- **Real-time**: Spring WebSocket (`TextWebSocketHandler`)
-- **Build**: Maven (`mvnw`)
+## Build/run (from this folder)
+- PowerShell: `.\mvnw.cmd spring-boot:run`
+- Bash: `./mvnw spring-boot:run`
+- Tests: `.\mvnw.cmd test` (or `./mvnw test`)
 
-## Code Structure & Patterns
+## Architecture highlights
+- Spring MVC with JSP views (`spring.mvc.view.*` in `src/main/resources/application.properties`).
+- Oracle + MyBatis XML mappers (`mybatis.mapper-locations=classpath:mappers/**/*.xml`).
+- Real-time chat via Spring WebSocket at `/ws/chat` (`com.example.config.WebSocketConfig`).
 
-### Layered Architecture
-1.  **Controller**: 
-    - `@RestController` for JSON APIs (e.g., `ReviewController`).
-    - `@Controller` for JSP views (e.g., `AdminController`).
-2.  **Service**: 
-    - Interface + Implementation pattern (e.g., `ReviewService` interface and `ReviewServiceImpl` class).
-3.  **Repository (Data Access)**:
-    - **Pattern**: Manual implementation using `SqlSessionTemplate`.
-    - **Structure**: Interface (`ReviewRepository`) + Implementation (`ReviewRepositoryImpl`).
-    - **MyBatis Usage**: `sess.selectList("namespace.id", param)` inside the implementation.
-4.  **Model**:
-    - VOs in `com.example.model.vo` using Lombok `@Data`.
-    - Mappers in `src/main/resources/mappers/`.
+## MyBatis (follow existing style)
+- Data access is mostly `SqlSessionTemplate` with string statement IDs.
+- Two namespace styles are in use; match the module you’re editing:
+  - Short namespace strings (e.g. `adminmapper.getItemList`, see `src/main/resources/mappers/adminMapper.xml`).
+  - Fully-qualified namespaces (e.g. `com.example.model.ReviewRepository.selectReviewsByItemNo`, see `src/main/resources/mappers/ReviewMapper.xml`).
+- Ensure Java calls match `<mapper namespace>.<statement id>` exactly.
 
-### MyBatis Convention (Crucial)
-Do **not** use `@Mapper` interfaces directly. Use the `RepositoryImpl` pattern:
-
-**Repository Implementation (`src/main/java/com/example/model/ReviewRepositoryImpl.java`):**
-```java
-@Repository
-public class ReviewRepositoryImpl implements ReviewRepository {
-    @Autowired
-    private SqlSessionTemplate sess;
-
-    @Override
-    public List<ReviewVO> selectReviewsByItemNo(Integer item_no) {
-        // Namespace must match the XML mapper namespace
-        return sess.selectList("com.example.model.ReviewRepository.selectReviewsByItemNo", item_no);
-    }
-}
-```
-
-**Mapper XML (`src/main/resources/mappers/ReviewMapper.xml`):**
-```xml
-<mapper namespace="com.example.model.ReviewRepository">
-    <select id="selectReviewsByItemNo" parameterType="int" resultType="com.example.model.vo.ReviewVO">
-        SELECT * FROM review WHERE item_no = #{item_no}
-    </select>
-</mapper>
-```
-
-### Chat System Architecture
-- **Handler**: `UnifiedChatHandler` (`/ws/chat`).
-- **Protocol**: JSON messages.
-    - `__JOIN__`: Register session (no broadcast).
-    - `__CLOSE__`: End chat, broadcast close, remove cache.
-    - Normal Message: Broadcast to room, save to file, save to DB.
-- **Storage**:
-    - Files: `src/main/resources/static/chat/chat_{customerId}_{adminId}_{timestamp}.txt`.
-    - DB: `ChatService` saves metadata.
-
-## Developer Workflow
-
-### Build & Run (PowerShell)
-```powershell
-# Run Application (Port 8080)
-.\mvnw.cmd spring-boot:run
-
-# Clean & Package
-.\mvnw.cmd clean package
-
-# Run Tests
-.\mvnw.cmd test
-```
-
-### Common Tasks
-
-**Adding a New Feature:**
-1.  **VO**: Create `YourVO.java` in `com.example.model.vo`.
-2.  **Mapper**: Create/Update XML in `src/main/resources/mappers/`. Use `<selectKey>` for Oracle sequences if needed.
-3.  **Repository**: Add method to Interface, implement in `Impl` using `SqlSessionTemplate`.
-4.  **Service**: Add business logic.
-5.  **Controller**: Expose endpoint.
-6.  **View**: Add JSP in `src/main/webapp/WEB-INF/views/`.
-
-**Oracle Sequence Example:**
-```xml
-<insert id="add" parameterType="com.example.model.vo.ReviewVO">
-    <selectKey keyProperty="review_no" resultType="int" order="BEFORE">
-        SELECT review_seq.NEXTVAL FROM dual
-    </selectKey>
-    INSERT INTO review (review_no, ...) VALUES (#{review_no}, ...)
-</insert>
-```
-
-## Key Directories
-- **Controllers**: `src/main/java/com/example/controller/`
-- **Services**: `src/main/java/com/example/service/`
-- **Repositories**: `src/main/java/com/example/model/`
-- **Mappers**: `src/main/resources/mappers/`
-- **Views (JSP)**: `src/main/webapp/WEB-INF/views/`
-- **Static Assets**: `src/main/resources/static/`
+## WebSocket chat protocol
+- Handler: `src/main/java/com/example/webSocket/UnifiedChatHandler.java`.
+- JSON fields: `customerId`, `adminId`, `sender`, `message`.
+  - `message="__JOIN__"`: register session only
+  - `message="__CLOSE__"`: broadcast close + reset cached file mapping
+- Transcripts append under `src/main/resources/static/chat/` and are read via `GET /chat/files/{fileName}`.

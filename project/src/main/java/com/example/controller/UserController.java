@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.model.vo.CustomerVO;
+import com.example.service.BsNumVerResult;
+import com.example.service.BsNumVerService;
 import com.example.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,9 +18,11 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 	
 	private final UserService service; //서비스단 (서비스실행>레포정보불러옴>매퍼)
+	private final BsNumVerService BsNumVerService;
 	
-	public UserController(UserService service) { //생성자 서비스 주입받음
+	public UserController(UserService service, BsNumVerService BsNumVerService) { //생성자 서비스 주입받음
 		this.service = service; //변경불가
+		this.BsNumVerService = BsNumVerService;
 	}
 	
 	@PostMapping("/registerAction")
@@ -31,7 +35,7 @@ public class UserController {
 		@RequestParam String phone, 
 		@RequestParam(required = false) String email,
 		@RequestParam(required = false) String addr,
-		@RequestParam(required = false) Integer admin_bnum
+		@RequestParam(required = false) String admin_bnum
 				,	Model m) {
 	
  	    CustomerVO vo = new CustomerVO();
@@ -42,14 +46,29 @@ public class UserController {
 			vo.setPhone(phone);
 			vo.setAddr(addr);
 			vo.setRole("admin".equals(user_type) ? 1 : 0); //admin이면 1세팅 아니면 0
-			vo.setAdmin_bnum("admin".equals(user_type) ? admin_bnum : 0); // 일반 회원은 0, admin은 입력값
+			vo.setAdmin_bnum("admin".equals(user_type) ? parseBusinessNoOrNull(admin_bnum) : 0L); // 일반 회원은 0, admin은 입력값
 			
 			 // 비밀번호 확인
 		    if(!pwd.equals(pwd2)) {
 		        m.addAttribute("pwError", "비밀번호가 서로 일치하지 않습니다.");
 		        m.addAttribute("customerVO", vo); // JSP에서 값 유지
 		        m.addAttribute("user_type", user_type);
+		        if ("admin".equals(user_type)) {
+		        	m.addAttribute("admin_bnumInput", admin_bnum);
+		        }
 		        return "register"; // JSP 파일 이름
+		    }
+		    
+		    // 관리자: 사업자번호 형식/인증 검증
+		    if ("admin".equals(user_type)) {
+		    	BsNumVerResult verifyResult = BsNumVerService.verify(admin_bnum);
+		    	if (!verifyResult.isValid()) {
+		    		m.addAttribute("bnumError", verifyResult.getMessage());
+		    		m.addAttribute("customerVO", vo);
+		    		m.addAttribute("user_type", user_type);
+		    		m.addAttribute("admin_bnumInput", admin_bnum);
+		    		return "register";
+		    	}
 		    }
 		    
 		    //회원가입
@@ -60,6 +79,9 @@ public class UserController {
 		        m.addAttribute("idError", "이미 존재하는 아이디입니다.");
 		        m.addAttribute("customerVO", vo);
 		        m.addAttribute("user_type", user_type);
+		        if ("admin".equals(user_type)) {
+		        	m.addAttribute("admin_bnumInput", admin_bnum);
+		        }
 
 		        return "register";  // 다시 회원가입 화면으로
 		    }
@@ -114,5 +136,16 @@ public class UserController {
 			
 			//수정 완료 후 마이페이지로 
 			return "redirect:/mypage";
+		}
+		
+		private static Long parseBusinessNoOrNull(String value) {
+			if (value == null) return null;
+			String digits = value.replaceAll("[^0-9]", "");
+			if (digits.isBlank()) return null;
+			try {
+				return Long.parseLong(digits);
+			} catch (NumberFormatException e) {
+				return null;
+			}
 		}
 	}
