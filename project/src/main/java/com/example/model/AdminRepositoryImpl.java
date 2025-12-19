@@ -64,5 +64,11 @@ public class AdminRepositoryImpl implements AdminRepository{
 	public List<ProductVO> getStockList() {
 	    return sess.selectList("adminmapper.getStockList");
 	}
+
+	@Override
+	public void updateItemStatusToSoldOut(int itemNo) {
+	    sess.update("adminmapper.updateItemStatusToSoldOut", itemNo);
+	}
+
 	
 }

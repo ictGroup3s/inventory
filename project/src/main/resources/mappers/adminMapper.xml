@@ -94,6 +94,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 		item_no = #{itemNo}
 	</delete>
+
+    <!-- 상품 품절 처리 -->
+   <update id="updateItemStatusToSoldOut" parameterType="int">
+	    UPDATE product
+	    SET deleted_at = SYSDATE,
+	        stock_cnt = 0
+	    WHERE item_no = #{itemNo}
+	</update>
+
+
+
+	
+
 	<!-- <update id="updateStock" parameterType="ProductVO"> UPDATE product 
 		SET item_name = #{item_name}, origin_p = #{origin_p}, sales_p = #{sales_p}, 
 		stock_cnt = #{stock_cnt} WHERE item_no = #{item_no} </update> -->
