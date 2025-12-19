@@ -37,7 +37,7 @@
 				class="logo" />
 			</a>
 		</div>
-			<div class="col-lg-6 col-6 text-left" >
+			<div class="col-lg-6 col-6 text-left">
 			<form action="selectall" method="get" style="margin-left:-20px; margin-right:90px;">
 				<div class="input-group">
 					<input type="text" name="q" class="form-control"
@@ -91,7 +91,7 @@
 <nav class="category-sidebar" style="margin-left:-50px;">
     <h6 class="p-3">고객센터</h6>
     <ul class="nav flex-column">
-        <li class="nav-item"><a href="board" class="nav-link active" id="noticeLink">공지사항</a></li>
+        <li class="nav-item"><a href="board" class="nav-link active" id="noticeLink">문의</a></li>
 
         <li class="nav-item">
     <a href="/board?tab=faq" class="nav-link" id="faqLink" onclick="loadFaqPage(1); return false;">자주 묻는 질문</a>
