@@ -48,8 +48,9 @@
 				관리자 페이지에 접근하려면<br>먼저 로그인해주세요.
 			</p>
 			<%-- 현재 페이지 이름만 전달 --%>
-			<a href="login?redirectURL=dashboard" class="btn-login" style="display: block; text-decoration: none;">로그인</a> 
-			<a href="/" class="btn-home" style="display: block; text-decoration: none;">홈으로</a>
+			<a href="login?redirectURL=dashboard" class="btn-login"
+				style="display: block; text-decoration: none;">로그인</a> <a href="/"
+				class="btn-home" style="display: block; text-decoration: none;">홈으로</a>
 		</div>
 	</c:if>
 
@@ -64,8 +65,8 @@
 					src="img/logo.png" class="logo" />
 				</a>
 			</div>
-	
-		
+
+
 		</div>
 
 		<!-- Main Layout -->
@@ -209,20 +210,65 @@
 								</div>
 							</div>
 						</div>
+						<!-- 날짜별 통계 테이블 -->
+						<div class="row">
+							<div class="col-12 mb-3">
+								<div class="card h-100">
+									<div class="card-body">
+										<h5 class="card-title">일별 통계 요약</h5>
+										<table class="table table-bordered table-striped" style="font-size: 15px;">
+											<thead>
+												<tr>
+													<th style="text-align:center;">날짜</th>
+													<th>주문 건수</th>
+													<th>총 판매 수량</th>
+													<th>취소 건수</th>
+													<th>반품 건수</th>
+													<th>총 매출 (₩)</th>
+													<th>마진률 (%)</th>
+													<th>총 할인액</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="stat" items="${dailyStats}">
+													<tr>
+														<td><c:out value="${stat.STATS_DATE}" /></td>
+														<td><c:out value="${stat.TOTAL_ORDER}" /></td>
+														<td><c:out value="${stat.TOTAL_SALES}" /></td>
+														<td><c:out value="${stat.CANCEL_CNT}" /></td>
+														<td><c:out value="${stat.RETURN_CNT}" /></td>
+														<td>₩<c:out value="${stat.TOTAL_PRICE}" /></td>
+														<td><c:out value="${stat.MARGIN}" />%</td>
+														<td>₩<c:out value="${stat.TOTAL_DISCOUNT}" /></td>
+
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
 
 					</div>
 				</div>
+
 			</div>
+
 		</div>
 
 
-		<!-- JS -->
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-		<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<script src="js/main.js"></script>
-		<script src="js/dashboard.js"></script>
+	</div>
+
+
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/dashboard.js"></script>
 </body>
 </html>

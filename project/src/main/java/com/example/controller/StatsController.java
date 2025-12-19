@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,12 @@ public class StatsController {
 		Map<String, Object> result = new HashMap<>();
 		try {
 			statsService.insertDailyStats();
+			
+			/*
+			 * //하드코딩 날짜 지정 LocalDate targetDate = LocalDate.of(2025, 12, 16); //원하는 날짜
+			 * statsService.insertDailyStatsforDate(targetDate);
+			 */
+			
 			result.put("success", true);
 			result.put("message", "통계 집계 완료");
 		} catch (Exception e) {
