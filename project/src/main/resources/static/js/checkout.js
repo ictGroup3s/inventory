@@ -332,4 +332,106 @@ function filterByDateRange() {
 	        visibleCount === 0 ? 'block' : 'none';
 	}
 
+	// 배송내역 검색 함수
+	function searchCR() {
+	    console.log("=== 검색 시작 ===");
+	    
+	    const searchType = document.getElementById('searchType').value;
+	    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+	    
+	    console.log("검색 타입:", searchType);
+	    console.log("검색어:", searchInput);
+	    
+	    const rows = document.querySelectorAll('tr[data-order-no]');
+	    let visibleCount = 0;
+	    
+	    // 검색어가 없으면 전체 표시
+	    if (!searchInput) {
+	        rows.forEach(row => {
+	            row.style.display = '';
+	            visibleCount++;
+	        });
+	        document.getElementById('totalCount').textContent = visibleCount;
+	        return;
+	    }
+	    
+	    rows.forEach((row, index) => {
+	        let visible = false;
+	        
+	        if (searchType === 'all') {
+	            // 전체 검색: 주문번호 또는 상품명
+	            const orderNo = row.getAttribute('data-order-no').toLowerCase();
+	            const itemName = row.getAttribute('data-item-name').toLowerCase();
+	            
+	            if (orderNo.includes(searchInput) || itemName.includes(searchInput)) {
+	                visible = true;
+	            }
+	            
+	        } else if (searchType === 'order_no') {
+	            // 주문번호로 검색
+	            const orderNo = row.getAttribute('data-order-no').toLowerCase();
+	            
+	            if (orderNo.includes(searchInput)) {
+	                visible = true;
+	            }
+	            
+	        } else if (searchType === 'item_name') {
+	            // 상품명으로 검색
+	            const itemName = row.getAttribute('data-item-name').toLowerCase();
+	            
+	            if (itemName.includes(searchInput)) {
+	                visible = true;
+	            }
+	        }
+	        
+	        row.style.display = visible ? '' : 'none';
+	        if (visible) visibleCount++;
+	    });
+	    
+	    console.log("검색 결과:", visibleCount + "건");
+	    
+	    // 결과 카운트 업데이트
+	    const totalCountEl = document.getElementById('totalCount');
+	    if (totalCountEl) {
+	        totalCountEl.textContent = visibleCount;
+	    }
+	    
+	    // 검색 결과 없음 메시지
+	    const table = document.querySelector('.table');
+	    let noResultDiv = document.getElementById('noResultMessage');
+	    
+	    if (visibleCount === 0) {
+	        // 메시지 div가 없으면 생성
+	        if (!noResultDiv) {
+	            noResultDiv = document.createElement('div');
+	            noResultDiv.id = 'noResultMessage';
+	            noResultDiv.className = 'text-center py-4';
+	            noResultDiv.innerHTML = '<i class="fas fa-search fa-3x text-muted mb-3"></i><p class="text-muted">검색 결과가 없습니다.</p>';
+	            table.parentNode.insertBefore(noResultDiv, table.nextSibling);
+	        }
+	        noResultDiv.style.display = 'block';
+	        if (table) table.style.display = 'none';
+	    } else {
+	        if (noResultDiv) noResultDiv.style.display = 'none';
+	        if (table) table.style.display = 'table';
+	    }
+	}
+
+	// 엔터키로 검색
+	document.addEventListener('DOMContentLoaded', function() {
+	    console.log("✅ DOM 로드 완료");
+	    
+	    const searchInput = document.getElementById('searchInput');
+	    if (searchInput) {
+	        searchInput.addEventListener('keypress', function(e) {
+	            if (e.key === 'Enter') {
+	                searchCR();
+	            }
+	        });
+	        console.log("✅ 엔터키 이벤트 등록 완료");
+	    }
+	});
+
+	console.log("✅ searchCR 함수 정의 완료");
+
 

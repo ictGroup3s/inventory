@@ -382,13 +382,7 @@
 							<a class="text-dark mb-2" href="/"><i
 								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
 								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
-								class="text-dark mb-2" href="mlist"><i
-								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
-								class="text-dark mb-2" href="cart"><i
-								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
-								class="text-dark mb-2" href="checkout"><i
-								class="fa fa-angle-right mr-2"></i>결제</a>
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
 						</div>
 					</div>
 					<div class="col-lg-8 col-md-12">

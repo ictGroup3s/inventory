@@ -62,7 +62,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-lg-3 col-6 text-right" style="margin-left: -105px;">			
+		<div class="col-lg-3 col-6 text-right">			
 			<a href="cart" class="btn border">
 				<i class="fas fa-shopping-cart text-primary"></i>
 				<span class="ml-1">장바구니</span>

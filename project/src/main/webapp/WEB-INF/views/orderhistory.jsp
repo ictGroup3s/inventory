@@ -29,8 +29,6 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
-<link href="css/chat.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -60,7 +58,7 @@
 		</div>
 	</div>
 	<!-- Main Layout -->
-	<div class="container-fluid"  style="margin-left:-100px;">
+	<div class="container-fluid" style="margin-left: -100px;">
 		<div class="row px-xl-5">
 			<div class="col-lg-2">
 				<!-- Sidebar -->
@@ -83,7 +81,7 @@
 				style="margin-top: -30px; margin-bottom: 50px;">
 				<div class="text-center mb-4">
 					<h4 style="margin-top: 50px;">주문내역</h4>
-					<span class="ml-2 text-muted" style="margin-right: 970px;">
+					<span class="ml-2 text-muted" style="margin-right: 960px;">
 						총 <strong id="totalCount">${fn:length(deliveryList)}</strong>건
 					</span>
 				</div>
@@ -231,93 +229,6 @@
 								</tr>
 							</tfoot>
 						</table>
-
-						<hr>
-
-						<h6>
-							<strong>주문 관리</strong>
-						</h6>
-
-						<!-- 상품 선택 -->
-						<div class="mb-3">
-							<h6>취소 / 반품 / 교환할 상품 선택</h6>
-
-							<c:forEach var="detail" items="${order.detailList}">
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox"
-										class="custom-control-input product-checkbox"
-										id="product_${order.order_no}_${detail.item_no}"
-										value="${detail.item_no}" data-order-no="${order.order_no}">
-									<label class="custom-control-label"
-										for="product_${order.order_no}_${detail.item_no}">
-										${detail.item_name} (수량: ${detail.item_cnt}개, 금액: <fmt:formatNumber
-											value="${detail.amount}" pattern="#,###" />원)
-									</label>
-								</div>
-							</c:forEach>
-
-							<!-- 전체 선택 -->
-							<div class="custom-control custom-checkbox mt-2">
-								<input type="checkbox" class="custom-control-input"
-									id="selectAll_${order.order_no}"
-									onclick="toggleAllProducts(${order.order_no})"> <label
-									class="custom-control-label" for="selectAll_${order.order_no}">
-									<strong>전체 선택</strong>
-								</label>
-							</div>
-						</div>
-
-						<!-- 버튼 -->
-						<div class="row mb-3">
-							<div class="col-md-4">
-								<button type="button" class="btn btn-warning btn-block"
-									onclick="handleCRRequest(${order.order_no}, '취소')">취소</button>
-							</div>
-							<div class="col-md-4">
-								<button type="button" class="btn btn-info btn-block"
-									onclick="handleCRRequest(${order.order_no}, '반품')">반품
-								</button>
-							</div>
-							<div class="col-md-4">
-								<button type="button" class="btn btn-success btn-block"
-									onclick="handleCRRequest(${order.order_no}, '교환')">교환
-								</button>
-							</div>
-						</div>
-						<!-- 신청 폼 -->
-						<div id="crFormContainer_${order.order_no}"
-							style="display: none; margin-top: 20px;">
-							<hr>
-							<h6>
-								<strong>취소 · 반품 · 교환 신청</strong>
-							</h6>
-
-							<form action="/mycs/apply" method="post">
-								<input type="hidden" name="orderNo" value="${order.order_no}">
-								<input type="hidden" name="type" id="crType_${order.order_no}">
-								<input type="hidden" name="selectedItems"
-									id="selectedItems_${order.order_no}"> <input
-									type="hidden" name="isFullOrder"
-									id="isFullOrder_${order.order_no}" value="false">
-
-								<div class="form-group">
-									<label>사유 <span class="text-danger">*</span></label>
-									<textarea name="reason" class="form-control" rows="4" required></textarea>
-								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<button type="button" class="btn btn-secondary btn-block"
-											onclick="hideCRForm(${order.order_no})">취소</button>
-									</div>
-									<div class="col-md-6">
-										<button type="submit" class="btn btn-primary btn-block">
-											신청하기</button>
-									</div>
-								</div>
-							</form>
-						</div>
-
 					</div>
 				</div>
 			</div>
@@ -393,46 +304,12 @@
 		</div>
 	</div>
 
-	<!-- ------------------채팅 관련 추가---------------- -->
-	<c:if test="${sessionScope.loginRole == 0}">
-		<!-- ▣ 채팅 목록 박스 -->
-		<div id="chat-list-box" class="chat-list-box" style="display: none;">
-			<div class="chat-list-header">나의 채팅 목록</div>
-			<div id="chat-list" class="chat-list"></div>
-		</div>
-
-		<!-- ▣ 채팅창 -->
-		<div id="chat-box" class="chat-box" style="display: none;">
-			<div class="chat-header">
-				<span id="chat-toggle-list" class="chat-header-btn">☰ 목록</span> <span>상담채팅</span>
-				<span id="chat-close" class="chat-header-close">✕</span>
-			</div>
-
-			<div id="chat-messages" class="chat-messages"></div>
-
-			<div class="chat-input">
-				<input type="text" id="chat-text" placeholder="메시지 입력...">
-				<button id="chat-send">Send</button>
-			</div>
-			<button id="new-chat-btn"
-				style="display: none; width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;">
-				새 채팅 시작</button>
-		</div>
-
-		<!-- ▣ 채팅 열기 버튼 -->
-		<button id="chat-open" class="chat-open-btn">💬</button>
-	</c:if>
-	<div class="toast-container" id="toast-container"></div>
-
-
 
 	<!-- ⭐⭐⭐ JavaScript Libraries ⭐⭐⭐ -->
 	<script>
     window.hasOrderList = ${not empty deliveryList};
 </script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script src="js/order.js"></script>
 
 	<!-- Bootstrap JS -->
@@ -441,21 +318,7 @@
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-	<!-- Contact JS -->
-	<script src="mail/jqBootstrapValidation.min.js"></script>
-	<script src="mail/contact.js"></script>
-
-
-	<!-- 1. 로그인 ID 주입 (가장 먼저) -->
-	<script>
-		const myId = "${sessionScope.loginUser.customer_id}";
-		console.log("✅ myId 확인:", myId);
-	</script>
-
-	<!-- 2. Chat JS (SockJS/Stomp 준비된 이후 로드) -->
-	<script src="/js/CustomerChat.js?v=999"></script>
-
-	<!-- 3. Main JS (기타 UI 스크립트 – defer 가능) -->
+	<!-- 3. Main JS -->
 	<script src="/js/main.js" defer></script>
 
 
