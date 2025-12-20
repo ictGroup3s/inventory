@@ -50,8 +50,8 @@
 					</div>
 				</div>
 			</form>
-		</div>
-		<div class="col-lg-3 col-6 text-right" style="margin-left:-80px;">
+		</div> 
+		<div class="col-lg-3 col-6 text-right" style="margin-left:-50px;">
 			<a href="cart" class="btn border"> <i
 				class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
 			</a>
