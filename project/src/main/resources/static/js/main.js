@@ -438,3 +438,4 @@ function loadCrDetail(crNo) {
 		"상세 내용 로딩 중... (cr_no=" + crNo + ")";
 }
 
+
