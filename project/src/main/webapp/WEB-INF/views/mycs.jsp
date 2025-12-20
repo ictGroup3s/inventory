@@ -145,23 +145,20 @@
 									        </c:otherwise>
 										</c:choose></td>
 									<td>
-									<span class="badge 
-										${cr.type == '취소' ? 'badge-warning' : 
-										  cr.type == '반품' ? 'badge-info' : 'badge-success'}">
-																	${cr.type} </span>
+										<!-- type: 취소/반품/교환 --> 
+										<span class="badge 
+								        ${cr.type == '취소' ? 'badge-warning' : 
+								          cr.type == '반품' ? 'badge-info' : 'badge-success'}">
+										${cr.type} </span>
 									</td>
 									<td>
-									<span class="badge 
-										${cr.status == '접수' ? 'badge-secondary' : 
-										  cr.status == '처리중' ? 'badge-primary' : 
-										  cr.status == '완료' ? 'badge-success' : 'badge-danger'}">
-																	${cr.status} </span>
-									</td>
-									<td><fmt:formatDate value="${cr.re_date}"
-											pattern="yyyy-MM-dd HH:mm" /></td>
-									<td>
-										<button class="btn btn-sm btn-secondary" data-toggle="modal"
-											data-target="#detailModal_${cr.cr_no}">상세보기</button>
+										<!-- status: 접수/처리중/완료/거부/승인/철회 --> 
+										<span class="badge 
+									        ${cr.status == '접수' ? 'badge-secondary' : 
+									          cr.status == '처리중' ? 'badge-primary' : 
+									          cr.status == '완료' || cr.status == '승인' ? 'badge-success' : 
+									          cr.status == '철회' ? 'badge-warning' : 'badge-danger'}">
+											${cr.status} </span>
 									</td>
 								</tr>
 							</c:forEach>

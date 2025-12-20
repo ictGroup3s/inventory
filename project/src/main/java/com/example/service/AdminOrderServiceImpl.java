@@ -55,37 +55,25 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 			boolean isOriginalCancelType = "취소".equals(originalStatus) || "반품".equals(originalStatus)
 					|| "교환".equals(originalStatus);
 
-			// 1. 정상 → 취소/반품/교환 (처음 CR 등록)
+			// 1. 정상 → 취소/반품/교환
 			if (isNewCancelType && !isOriginalCancelType) {
-				log.info("===== 정상 → 취소/반품/교환 처리 =====");
+			    log.info("===== 정상 → 취소/반품/교환 처리 =====");
 
-				// 재고 복구
-				adminOrderRepository.restoreStock(orderNo);
+			    // 재고 복구
+			    adminOrderRepository.restoreStock(orderNo);
 
-				// 전체 상품 조회 및 상태 변경
-				List<Map<String, Object>> items = adminOrderRepository.getOrderItems(orderNo);
-				for (Map<String, Object> item : items) {
-					Object detailNoObj = item.get("DETAIL_NO") != null ? item.get("DETAIL_NO") : item.get("detail_no");
-					int itemCnt = item.get("ITEM_CNT") != null ? ((Number) item.get("ITEM_CNT")).intValue()
-							: item.get("item_cnt") != null ? ((Number) item.get("item_cnt")).intValue() : 0;
+			    // 전체 상품 상태 변경
+			    List<Map<String, Object>> items = adminOrderRepository.getOrderItems(orderNo);
+			    for (Map<String, Object> item : items) {
+			        Object detailNoObj = item.get("DETAIL_NO") != null ? item.get("DETAIL_NO") : item.get("detail_no");
 
-					// 상품 상태 변경
-					Map<String, Object> detailParams = new HashMap<>();
-					detailParams.put("detail_no", detailNoObj);
-					detailParams.put("detail_status", newStatus);
-					adminOrderRepository.updateDetailStatus(detailParams);
-
-					// CR 테이블에 기록
-					Map<String, Object> crParams = new HashMap<>();
-					crParams.put("order_no", orderNo);
-					crParams.put("detail_no", detailNoObj);
-					crParams.put("type", newStatus);
-					crParams.put("return_cnt", itemCnt);
-					crParams.put("status", "승인");
-					crParams.put("reason", reason != null && !reason.isEmpty() ? reason : "주문 전체 " + newStatus);
-					adminOrderRepository.insertCR(crParams);
-				}
-				log.info("정상 → {} 처리 완료 ({}건)", newStatus, items.size());
+			        Map<String, Object> detailParams = new HashMap<>();
+			        detailParams.put("detail_no", detailNoObj);
+			        detailParams.put("detail_status", newStatus);
+			        adminOrderRepository.updateDetailStatus(detailParams);
+			    }
+			    
+			    log.info("정상 → {} 처리 완료 ({}건)", newStatus, items.size());
 			}
 
 			// 2. 취소/반품/교환 → 다른 취소/반품/교환 (상태만 변경, CR 업데이트)

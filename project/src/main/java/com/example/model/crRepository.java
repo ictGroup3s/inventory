@@ -37,10 +37,32 @@ public class crRepository {
 		    log.info("customerId: {}", customerId);
 		    
 		    String sql = """
-		        SELECT cr.* 
+		        SELECT 
+		            cr.cr_no,
+		            cr.order_no,
+		            cr.type,
+		            CASE 
+		                -- 주문 상태와 동기화
+		                WHEN o.order_status IN ('취소완료', '반품완료', '교환완료') THEN '완료'
+		                WHEN o.order_status IN ('취소', '반품', '교환') THEN '처리중'
+		                ELSE cr.status
+		            END as status,
+		            cr.reason,
+		            cr.re_date,
+		            cr.return_cnt,
+		            CASE 
+		                WHEN COUNT(DISTINCT od.item_no) = 1 THEN MAX(p.item_name)
+		                WHEN COUNT(DISTINCT od.item_no) > 1 THEN MAX(p.item_name) || ' 외 ' || (COUNT(DISTINCT od.item_no) - 1) || '개'
+		                ELSE '전체 주문'
+		            END as item_name
 		        FROM cr cr
 		        INNER JOIN orders o ON cr.order_no = o.order_no
+		        LEFT JOIN order_detail od ON cr.order_no = od.order_no
+		        LEFT JOIN product p ON od.item_no = p.item_no
 		        WHERE o.customer_id = ?
+		        AND (cr.reason NOT LIKE '%관리자 처리%' OR cr.reason IS NULL)
+		        AND (cr.reason NOT LIKE '%주문 전체%' OR cr.reason IS NULL)
+		        GROUP BY cr.cr_no, cr.order_no, cr.type, cr.status, cr.reason, cr.re_date, cr.return_cnt, o.order_status
 		        ORDER BY cr.re_date DESC
 		    """;
 		    
@@ -50,7 +72,6 @@ public class crRepository {
 		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		        
 		        pstmt.setString(1, customerId);
-		        log.info("쿼리 실행 - customer_id: {}", customerId);
 		        
 		        ResultSet rs = pstmt.executeQuery();
 		        
@@ -68,10 +89,8 @@ public class crRepository {
 		                cr.setReturn_cnt(returnCnt);
 		            }
 		            
-		            cr.setItem_name("상품명"); // 임시
-		            
+		            cr.setItem_name(rs.getString("item_name"));
 		            list.add(cr);
-		            log.info("CR 추가: cr_no={}, order_no={}", cr.getCr_no(), cr.getOrder_no());
 		        }
 		        
 		        log.info("===== 조회된 CR 개수: {} =====", list.size());
@@ -502,4 +521,20 @@ public class crRepository {
           return result;
       }
   }
+//crRepository.java에 추가
+public int deleteDuplicateCR() throws SQLException {
+   String sql = """
+       DELETE FROM cr
+       WHERE reason LIKE '%관리자 처리%' 
+          OR reason LIKE '%주문 전체%'
+   """;
+   
+   try (Connection conn = dataSource.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+       
+       int result = pstmt.executeUpdate();
+       log.info("✅ 중복 CR 삭제: {} 건", result);
+       return result;
+   }
+}
 }

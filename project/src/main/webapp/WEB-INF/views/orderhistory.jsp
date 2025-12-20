@@ -311,6 +311,7 @@
 </script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="js/order.js"></script>
+	<script src="js/checkout.js"></script>
 
 	<!-- Bootstrap JS -->
 	<script
