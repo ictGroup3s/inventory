@@ -104,9 +104,6 @@
                         <label>이름 *</label>
                         <input type="text" name="name" class="form-control" placeholder="이름 입력"
                              value="${customerVO.name != null ? customerVO.name : ''}" required>
-    						<c:if test="${not empty idError}">
-    							<span style="color:red; font-size:14px;">${idError}</span>
-    						</c:if>
                         <label>전화번호 *</label>
                         <input type="text" name="phone" class="form-control" placeholder="전화번호 입력"
                            value="${customerVO.phone != null ? customerVO.phone : ''}" 
