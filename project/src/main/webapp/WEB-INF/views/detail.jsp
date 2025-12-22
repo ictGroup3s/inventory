@@ -471,6 +471,31 @@
 	<button id="chat-open" class="chat-open-btn">💬</button>
 	<div class="toast-container" id="toast-container"></div>
 
+	<!-- 리뷰 이미지 Modal -->
+	<div id="imageModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg">
+	    <div class="modal-content" style="background-color: transparent; border: none;">
+	      <div class="modal-body text-center p-0 position-relative">
+	        <button type="button" class="close text-white position-absolute" data-dismiss="modal" aria-label="Close" style="top: -30px; right: 0; font-size: 2rem; opacity: 1; text-shadow: none;">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        
+	        <!-- 이전 (리뷰 이미지 이동) -->
+	        <button id="modalPrevBtn" class="btn btn-dark position-absolute" style="top: 50%; left: 0; transform: translateY(-50%); opacity: 0.7; z-index: 10; border-radius: 50%; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+	            <i class="fas fa-chevron-left"></i>
+	        </button>
+
+	        <img id="modalImage" src="" class="img-fluid" alt="Review Image" style="max-height: 80vh;">
+
+	        <!-- 다음 (리뷰 이미지 이동) -->
+	        <button id="modalNextBtn" class="btn btn-dark position-absolute" style="top: 50%; right: 0; transform: translateY(-50%); opacity: 0.7; z-index: 10; border-radius: 50%; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+	            <i class="fas fa-chevron-right"></i>
+	        </button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 	<!-- JavaScript Libraries -->
 	<!-- jQuery 먼저 -->
 

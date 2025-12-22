@@ -96,7 +96,7 @@
 
         <!-- 현재 비밀번호 -->
         <div class="mb-3">
-            <label>기존 비밀번호</label>
+            <label>새 비밀번호</label>
             <input type="password" name="pwd" class="form-control" placeholder="변경시 입력">
         </div>
         

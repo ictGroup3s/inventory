@@ -17,6 +17,10 @@
 	var allReviews = [];
 	var currentPage = 1;
 	var itemsPerPage = 5;
+	
+	// 이미지 갤러리 변수
+	var currentGalleryImages = [];
+	var currentGalleryIndex = 0;
 
 	// [공통 내부 함수] 하트(평점) HTML 생성 (읽기/수정 공용)
 	function buildHeartsHtml(options) {
@@ -99,6 +103,57 @@
         updateStarState(container.find('.edit-rating-heart'), value);
     });
 
+    // 리뷰 이미지 클릭 시 모달 표시 (갤러리 기능 포함)
+    $(document).on('click', '.review-image-zoom', function() {
+        var reviewNo = $(this).data('review-no');
+        var index = $(this).data('index');
+        
+        var review = allReviews.find(function(r) { return r.review_no == reviewNo; });
+        if (review && review.images && review.images.length > 0) {
+            currentGalleryImages = review.images;
+            currentGalleryIndex = index;
+            updateModalImage();
+            $('#imageModal').modal('show');
+        }
+    });
+
+    // 모달 이미지 업데이트 함수
+    function updateModalImage() {
+        if (currentGalleryImages.length > 0) {
+            var src = currentGalleryImages[currentGalleryIndex];
+            $('#modalImage').attr('src', src);
+            
+            // 이미지가 1개 이상일 때만 버튼 표시
+            if (currentGalleryImages.length > 1) {
+                $('#modalPrevBtn').show();
+                $('#modalNextBtn').show();
+            } else {
+                $('#modalPrevBtn').hide();
+                $('#modalNextBtn').hide();
+            }
+        }
+    }
+
+    // 이전 버튼 클릭
+    $('#modalPrevBtn').click(function() {
+        if (currentGalleryIndex > 0) {
+            currentGalleryIndex--;
+        } else {
+            currentGalleryIndex = currentGalleryImages.length - 1; // 마지막 이미지로 순환
+        }
+        updateModalImage();
+    });
+
+    // 다음 버튼 클릭
+    $('#modalNextBtn').click(function() {
+        if (currentGalleryIndex < currentGalleryImages.length - 1) {
+            currentGalleryIndex++;
+        } else {
+            currentGalleryIndex = 0; // 첫 번째 이미지로 순환
+        }
+        updateModalImage();
+    });
+
 	function loadReviews() {
 		reviewList.html('<p>리뷰를 불러오는중...</p>');
 
@@ -156,8 +211,8 @@
 			var imagesHtml = '';
 			if (r.images && Array.isArray(r.images) && r.images.length > 0) {
 				imagesHtml = '<div class="mt-2 d-flex flex-wrap">'
-					+ r.images.map(function(url) {
-						return '<img src="' + url + '" alt="review image" style="width:120px;height:120px;object-fit:cover;border:1px solid #eee;margin-right:8px;margin-bottom:8px;" />';
+					+ r.images.map(function(url, idx) {
+						return '<img src="' + url + '" class="review-image-zoom" data-review-no="' + r.review_no + '" data-index="' + idx + '" alt="review image" style="width:120px;height:120px;object-fit:cover;border:1px solid #eee;margin-right:8px;margin-bottom:8px;cursor:pointer;" />';
 					}).join('')
 					+ '</div>';
 			}
