@@ -2,7 +2,9 @@ package com.example.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.model.vo.ProductVO;
 import com.example.service.AdminService;
 import com.example.service.AdminServiceImpl;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -102,19 +105,39 @@ public class AdminController {
 
 
 
-	@PostMapping("/deleteItem")
-	@ResponseBody
-	public String deleteItem(@RequestParam("itemNo") Integer itemNo) {
-		log.info("받은 item_no: " + itemNo);
-		try {
-			adminService.deleteItem(itemNo);
-			return "success";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "fail";
-		}
+	//@PostMapping("/deleteItem")
+	//@ResponseBody
+	//public String deleteItem(@RequestParam("itemNo") Integer itemNo) {
+	//	log.info("받은 item_no: " + itemNo);
+	//	try {
+	//		adminService.deleteItem(itemNo);
+	//		return "success";
+	//	} catch (Exception e) {
+	//		e.printStackTrace();
+	//		return "fail";
+	//	}
 
+	//}
+	
+	
+	//품절처리
+	@PostMapping("/admin/item/updateStatus")
+	@ResponseBody
+	public Map<String, Object> updateItemStatus(@RequestParam("item_no") Integer itemNo){
+		Map<String, Object> response = new HashMap<>();
+		try {
+			adminService.updateItemStatusToSoldOut(itemNo); 	//품질 처리 메서드 호출
+			response.put("success", true);
+			response.put("message", "상품이 품절 처리되었습니다.");
+		}catch(Exception e) {
+			log.error("상품 품절 처리 실패",e);
+			response.put("success", false);
+			response.put("message", "상품 품절 처리에 실패했습니다.");
+		}
+		
+		return response;
 	}
+	
 	
 	// ***** stock ***** 
 	// 상품 등록 페이지 + 목록 보여주기

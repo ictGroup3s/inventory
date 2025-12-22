@@ -122,7 +122,7 @@
 												<tr>
 													<th>고객명</th>
 													<th>상품명</th>
-													<th>수량</th>
+													<th style="width:57px;">수량</th>
 													<th>금액</th>
 												</tr>
 											</thead>

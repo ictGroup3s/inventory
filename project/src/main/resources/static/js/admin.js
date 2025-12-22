@@ -1,6 +1,32 @@
 /**
  *  admin.js
  */
+
+// showToast 함수 정의 (전역)
+function showToast(message, type) {
+    var toastContainer = document.getElementById('toast');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast';
+        document.body.appendChild(toastContainer);
+    }
+
+    var toast = document.createElement('div');
+    toast.classList.add('toast');
+    if (type) toast.classList.add('toast-' + type);
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(function() {
+        toast.classList.add('fade-out');
+        setTimeout(function() {
+            toast.remove();
+        }, 500);
+    }, 3000);
+}
+
+
 $(function() {
     
     // ===== 재고 관리 변수 =====
@@ -26,8 +52,41 @@ $(function() {
     $('.submit-btn.register').prop('disabled', true);
     $('.submit-btn.update').prop('disabled', true);
 
+    // 상품상세 에디터
+    function hasSummernote() {
+        return typeof $.fn.summernote === 'function' && $('textarea[name="item_content"]').next('.note-editor').length > 0;
+    }
+
+    function decodeHtmlEntities(value) {
+        if (value == null) return '';
+        return $('<textarea/>').html(value).text();
+    }
+
+    function getItemContentValue() {
+        if (hasSummernote()) {
+            return $('textarea[name="item_content"]').summernote('code');
+        }
+        return $('textarea[name="item_content"]').val();
+    }
+
+    function setItemContentValue(value) {
+        if (hasSummernote()) {
+            $('textarea[name="item_content"]').summernote('code', value || '');
+        } else {
+            $('textarea[name="item_content"]').val(value || '');
+        }
+    }
+
     // 폼 직접 입력 감지 (등록 모드)
     $('input[name="item_name"], input[name="origin_p"], input[name="sales_p"], input[name="stock_cnt"], select[name="cate_no"], textarea[name="item_content"], input[name="dis_rate"], #uploadFile').on('input change', function() {
+        if (!$('input[name="item_no"]').val()) {
+            $('.submit-btn.register').prop('disabled', false);
+            $('.submit-btn.update').prop('disabled', true);
+        }
+    });
+
+    // 편집기 - 상품상세 Summernote content change도 등록 모드 감지에 포함
+    $('textarea[name="item_content"]').on('summernote.change', function() {
         if (!$('input[name="item_no"]').val()) {
             $('.submit-btn.register').prop('disabled', false);
             $('.submit-btn.update').prop('disabled', true);
@@ -43,7 +102,10 @@ $(function() {
         $('#item_no').val($this.data('item_no'));
         $('input[name="item_name"]').val($this.data('item_name'));
         $('#item_name').val($this.data('item_name'));
-        $('textarea[name="item_content"]').val($this.data('item_content'));
+        // data-item_content 는 JSP에서 escapeXml 처리되어 들어오므로, 다시 HTML 엔티티를 복원
+        const rawContentAttr = $this.attr('data-item_content');
+        const decodedContent = decodeHtmlEntities(rawContentAttr);
+        setItemContentValue(decodedContent);
         $('input[name="origin_p"]').val($this.data('origin_p'));
         $('#origin_p').val($this.data('origin_p'));
         $('input[name="sales_p"]').val($this.data('sales_p'));
@@ -106,27 +168,31 @@ $(function() {
     });
 
     // 삭제버튼
-    $('.delete-btn').click(function() {
-        let itemNo = $(this).data('itemno');
-        let row = $(this).closest('tr');
+	$(document).on('click', '.delete-btn', function() {
+	    var itemNo = $(this).data('itemno'); // 삭제할 상품의 item_no를 가져옵니다.
 
-        $.ajax({
-            url: '/deleteItem',
-            type: 'POST',
-            data: { itemNo: itemNo },
-            success: function(response) {
-                if (response === "success") {
-                    row.remove();
-                    showToast("정말로 삭제하시겠습니까?");
-                } else {
-                    showToast('삭제 실패');
-                }
-            },
-            error: function() {
-                showToast('삭제 실패');
-            }
-        });
-    });
+	    if (confirm('이 상품을 품절 처리 하시겠습니까?')) {
+	        $.ajax({
+	            url: '/admin/item/updateStatus',  // 상태 업데이트를 위한 경로
+	            method: 'POST',
+	            data: {
+	                item_no: itemNo
+	            },
+	            success: function(response) {
+	                if (response.success) {
+	                    showToast('상품이 품절 처리되었습니다.');  // 성공 시 토스트 메시지
+	                    location.reload();  // 페이지 새로고침
+	                } else {
+	                    showToast('상품 품절 처리에 실패했습니다.');  // 실패 시 토스트 메시지
+	                }
+	            },
+	            error: function() {
+	                showToast('서버 오류가 발생했습니다.');  // 서버 오류 시 토스트 메시지
+	            }
+	        });
+	    }
+	});
+
 
     // 상세보기 버튼 클릭
     $(".detail-btn").click(function() {
@@ -235,6 +301,20 @@ $(function() {
             // 수정 모드일 때 이미지 필드는 검증 건너뛰기
             if (isUpdateMode && $field.attr('name') === 'item_imgFile') {
                 $errorMsg.addClass('d-none');
+                return true;
+            }
+
+            // 에디터 - 상품상세 Summernote 사용 시 item_content는 별도 빈값 체크
+            if ($field.is('textarea') && $field.attr('name') === 'item_content' && hasSummernote()) {
+                const isEmpty = $field.summernote('isEmpty');
+                if (isEmpty) {
+                    $errorMsg.removeClass('d-none');
+                    isValid = false;
+                } else {
+                    $errorMsg.addClass('d-none');
+                    // submit 직전에 textarea에 코드 동기화
+                    $field.val(getItemContentValue());
+                }
                 return true;
             }
 

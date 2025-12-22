@@ -211,9 +211,10 @@
 		<div class="row px-xl-5">
 			<div class="col">
 				<div class="nav nav-tabs justify-content-center border-secondary mb-4">
-					<c:set var="activeTab" value="${param.tab eq 'review' ? 'review' : 'info'}" />
+					<c:set var="activeTab" value="${param.tab eq 'write' ? 'write' : (param.tab eq 'review' ? 'review' : 'info')}" />
 					<a class="nav-item nav-link ${activeTab eq 'info' ? 'active' : ''}" data-toggle="tab" href="#tab-pane-2">상품정보</a> 
 					<a class="nav-item nav-link ${activeTab eq 'review' ? 'active' : ''}" data-toggle="tab" href="#tab-pane-3">리뷰</a>
+					<a class="nav-item nav-link ${activeTab eq 'write' ? 'active' : ''}" data-toggle="tab" href="#tab-pane-4">리뷰작성</a>
 				</div>
 
 				<div class="tab-content">
@@ -230,71 +231,84 @@
 
 					<div class="tab-pane fade ${activeTab eq 'review' ? 'show active' : ''}" id="tab-pane-3">
 						<div class="row">
-							<div class="col-md-6">
-								<h4 class="mb-4">리뷰 목록 <span id="review-summary" style="font-size: 0.6em; color: #666;"></span></h4>
-								<div id="review-section" data-item-no="${product.item_no}" data-login-user="${sessionScope.loginUser.customer_id}">
-								
-								<!-- 리뷰 목록 출력 부분 ajax / 리뷰 수정-삭제(Review.js)-->
-									<div id="review-list">										
-								
+							<div class="col-md-12">
+								<div class="card border-secondary">
+										<div class="card-header bg-light border-secondary d-flex align-items-center">
+											<h4 class="mb-0">리뷰 목록</h4>
+											<span id="review-summary" style="font-size: 0.9rem; color: #666; white-space: nowrap; margin-left: 10px;"></span>
+										</div>
+									<div class="card-body">
+										<div id="review-section" data-item-no="${product.item_no}" data-login-user="${sessionScope.loginUser.customer_id}">
+											<!-- 리뷰 목록 출력 부분 ajax / 리뷰 수정-삭제(Review.js) -->
+											<div id="review-list"></div>
+											<div id="review-pagination" class="mt-3 d-flex justify-content-center"></div>
+										</div>
 									</div>
-
-									<!-- 페이지 이동 버튼 영역 -->
-									<div id="review-pagination" class="mt-3 d-flex justify-content-center"></div>
-									<!-- 페이지 이동 버튼 영역 -->
-									    
 								</div>
 							</div>
-					          
-						<div class="col-md-6">
-							<h4 class="mb-4">리뷰 작성</h4>
-							<c:choose>
-								<c:when test="${empty sessionScope.loginUser}">
-									<p class="text-muted">로그인 후 리뷰 작성이 가능합니다.</p>
-								</c:when>
-								<c:when test="${not empty sessionScope.loginUser and not canWriteReview}">
-									<p class="text-muted">${reviewBlockReason}</p>
-								</c:when>
-								<c:otherwise>
-									<form id="reviewForm">
-										<input type="hidden" name="item_no" value="${product.item_no}" />
-									    <input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
-								
-								<div class="form-group">
-                                    <label class="mb-1">평점 *</label>
-                                    <div id="rating-input" class="d-flex align-items-center">
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="1" style="cursor:pointer; color: #D19C97;"></i>
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="2" style="cursor:pointer; color: #D19C97;"></i>
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="3" style="cursor:pointer; color: #D19C97;"></i>
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="4" style="cursor:pointer; color: #D19C97;"></i>
-                                        <i class="fas fa-heart fa-lg rating-heart mr-1" data-value="5" style="cursor:pointer; color: #D19C97;"></i>
-                                        <input type="hidden" name="rating" id="rating" value="5">
-                                    </div>
-                                </div>
-
-								<div class="form-group">
-									<label for="re_content">내 리뷰작성 *</label>
-											<textarea id="re_content" name="re_content" cols="30" rows="5" class="form-control"
-												placeholder="리뷰 내용을 입력하세요 (예: 맛/양/배송 상태)"
-												data-placeholder="리뷰 내용을 입력하세요 (예: 맛/양/배송 상태)"></textarea>
-								</div>
-								<div class="form-group">
-									<label for="re_title">제목 *</label> 
-									<input type="text" id="re_title" name="re_title" class="form-control" id="name">
-								</div>
-								
-								<div class="form-group mb-0">
-									<input type="button" id="addReview" value="리뷰 남기기" class="btn btn-primary px-3">
-								</div>
-											
-								</form>
-								</c:otherwise>
-							</c:choose>
-
 						</div>
 					</div>
+
+					<div class="tab-pane fade ${activeTab eq 'write' ? 'show active' : ''}" id="tab-pane-4">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card border-secondary">
+									<div class="card-header bg-light border-secondary">
+										<h4 class="mb-0">리뷰 작성</h4>
+									</div>
+									<div class="card-body">
+										<c:choose>
+											<c:when test="${empty sessionScope.loginUser}">
+												<p class="text-muted">로그인 후 리뷰 작성이 가능합니다.</p>
+											</c:when>
+											<c:when test="${not empty sessionScope.loginUser and not canWriteReview}">
+												<p class="text-muted">${reviewBlockReason}</p>
+											</c:when>
+											<c:otherwise>
+												<form id="reviewForm">
+													<input type="hidden" name="item_no" value="${product.item_no}" />
+													<input type="hidden" name="customer_id" value="${sessionScope.loginUser.customer_id}" />
+													<div class="form-group">
+														<label class="mb-1">평점 *</label>
+														<div id="rating-input" class="d-flex align-items-center">
+															<i class="fas fa-heart fa-lg rating-heart mr-1" data-value="1" style="cursor:pointer; color: #D19C97;"></i>
+															<i class="fas fa-heart fa-lg rating-heart mr-1" data-value="2" style="cursor:pointer; color: #D19C97;"></i>
+															<i class="fas fa-heart fa-lg rating-heart mr-1" data-value="3" style="cursor:pointer; color: #D19C97;"></i>
+															<i class="fas fa-heart fa-lg rating-heart mr-1" data-value="4" style="cursor:pointer; color: #D19C97;"></i>
+															<i class="fas fa-heart fa-lg rating-heart mr-1" data-value="5" style="cursor:pointer; color: #D19C97;"></i>
+															<input type="hidden" name="rating" id="rating" value="5">
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label for="re_title">제목 *</label>
+														<input type="text" id="re_title" name="re_title" class="form-control" id="name">
+													</div>
+
+													<div class="form-group">
+														<label for="re_content">내 리뷰작성 *</label>
+														<textarea id="re_content" name="re_content" cols="30" rows="5" class="form-control"
+															placeholder="리뷰 내용을 입력하세요 (예: 맛/양/배송 상태)"
+															data-placeholder="리뷰 내용을 입력하세요 (예: 맛/양/배송 상태)"></textarea>
+													</div>
+													
+													<div class="form-group">
+														<label for="review_images">사진 올리기</label>
+														<input type="file" id="review_images" name="images" class="form-control" accept="image/*" multiple>
+													</div>
+													<div class="form-group mb-0">
+														<input type="button" id="addReview" value="리뷰 남기기" class="btn btn-primary px-3">
+													</div>
+												</form>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -382,13 +396,7 @@
 							<a class="text-dark mb-2" href="/"><i
 								class="fa fa-angle-right mr-2"></i>메인 홈</a> <a
 								class="text-dark mb-2" href="selectall"><i
-								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a> <a
-								class="text-dark mb-2" href="mlist"><i
-								class="fa fa-angle-right mr-2"></i>마이페이지</a> <a
-								class="text-dark mb-2" href="cart"><i
-								class="fa fa-angle-right mr-2"></i>장바구니</a> <a
-								class="text-dark mb-2" href="checkout"><i
-								class="fa fa-angle-right mr-2"></i>결제</a>
+								class="fa fa-angle-right mr-2"></i>상품페이지로 이동</a>
 						</div>
 					</div>
 					<div class="col-lg-8 col-md-12">

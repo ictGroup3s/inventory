@@ -16,4 +16,5 @@ public interface AdminRepository {
 	public ProductVO getProductByNo(Integer itemNo);
 	public void updateStockOnly(ProductVO vo);
 	public List<ProductVO> getStockList();
+	public void updateItemStatusToSoldOut(int itemNo);
 }

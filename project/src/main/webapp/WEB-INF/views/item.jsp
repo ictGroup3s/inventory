@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -29,6 +30,9 @@
 	rel="stylesheet">
 <link href="lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
+
+<!-- 상품 상세 에디터 -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs4.min.css" rel="stylesheet">
 
 <!-- Custom Styles -->
 <link rel="stylesheet" href="css/style.css">
@@ -123,19 +127,19 @@
 					<div class="container-fluid py-5 px-0">
 
 						<!-- 상품 등록 영역 -->
-						<div class="container py-5">
+						<div class="container py-5" style="max-width: 1200px;">
 							<div class="row" style="align-items: flex-start;">
 
 								<!-- 좌측: 상품 이미지 -->
-								<div class="col-lg-5 d-flex justify-content-start"
-									style="padding-left: 0;">
+								<div class="col-12 col-lg-auto d-flex justify-content-start"
+									style="padding-left: 0; flex: 0 0 460px; max-width: 460px;">
 									<img id="preview" src="img/insert_pic.png" alt="상품 이미지"
 										class="img-fluid"
-										style="max-width: 350px; height: auto; margin-top: 70px;">
+										style="max-width: 420px; height: auto; margin-top: 70px;">
 								</div>
 
 								<!-- 우측: 상품 등록 폼 -->
-								<div class="col-lg-7">
+								<div class="col" style="flex: 1 1 0; min-width: 0;">
 									<h3 class="font-weight-semi-bold mb-4">상품관리</h3>
 
 									<form action="saveItem" method="post"
@@ -144,8 +148,11 @@
 											type="hidden" name="existingItemImg" value="">
 
 										<!-- 상품 정보 입력 테이블 -->
-										<table class="table table-bordered mx-auto"
-											style="max-width: 600px;">
+										<table class="table table-bordered item-form-table" style="width: 100%;">
+											<colgroup>
+												<col style="width: 130px;">
+												<col>
+											</colgroup>
 											<tr>
 												<td>상품명</td>
 												<td><input type="text"
@@ -280,7 +287,7 @@
 														data-sales_p="${item.sales_p}"
 														data-cate_no="${item.cate_no}"
 														data-stock_cnt="${item.stock_cnt}"
-														data-item_content="${item.item_content}"
+														data-item_content="${fn:escapeXml(item.item_content)}"
 														data-item_img="${item.item_img}"
 														data-dis_rate="${item.dis_rate }">
 														<td>${item.item_no}</td>
@@ -310,6 +317,24 @@
 		<script
 			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 		<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs4.min.js"></script>
+		<script>
+			$(function() {
+				var $content = $('textarea[name="item_content"]');
+				if ($content.length) {
+					$content.summernote({
+						height: 220,
+						placeholder: '상품 상세설명을 입력하세요',
+						toolbar: [
+							['style', ['bold', 'italic', 'underline', 'clear']],
+							['para', ['ul', 'ol', 'paragraph']],
+							['insert', ['link']],
+							['view', ['codeview']]
+						]
+					});
+				}
+			});
+		</script>		
 
 		<div id="toast"></div>
 </body>

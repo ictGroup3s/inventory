@@ -143,7 +143,9 @@
 													<div class="cart-product-name" style="word-break:break-word; max-width:320px; font-size:16px; ">${ci.product.item_name}</div>												
 											</div>
 										</td>
-										<td class="align-middle"><fmt:formatNumber value="${ci.product.sales_p}" pattern=",###"/>원</td>
+										<td class="align-middle">
+											<h6 class="text-muted mb-0"><del><fmt:formatNumber value="${ci.product.sales_p}" pattern="#,###" />원</del></h6>
+											<fmt:formatNumber value="${ci.product.sales_p* (100 - ci.product.dis_rate) / 100}" pattern=",###"/>원</td>
 										<td class="align-middle">
 											<div class="input-group quantity mx-auto" style="width: 120px;">
 												<div class="input-group-prepend">
@@ -154,9 +156,13 @@
 													data-item="${ci.product.item_no}"
 													data-max="${ci.product.stock_cnt}"
 													value="${ci.qty}" min="1" max="${ci.product.stock_cnt}" style="width: 50px; height: 40px; flex: none;" />
+													
 												<div class="input-group-append">
 													<button class="btn btn-sm btn-primary qty-increase" data-item="${ci.product.item_no}" type="button">+</button>
 												</div>
+												<c:if test="${ci.product.stock_cnt <= 10}">
+													<p style="font-size:12px; color:#b90000;"> 남은 수량: ${ci.product.stock_cnt} 개</p>
+												</c:if>
 											</div>
 										</td>
 										<td class="align-middle"><span class="row-subtotal" data-item="${ci.product.item_no}"><fmt:formatNumber value="${ci.subtotal}" pattern=",###"/></span>원</td>

@@ -205,20 +205,20 @@
             <!-- 이전 페이지 버튼 -->
             <c:if test="${currentPage > 1}">
                 <li class="page-item">
-                    <a class="page-link" href="event1?page=${currentPage - 1}&size=${size}">이전</a>
+                    <a class="page-link" href="event2?page=${currentPage - 1}&size=${size}">이전</a>
                 </li>
             </c:if>
             <!-- 페이지 번호 버튼들 -->
             <c:forEach var="i" begin="1" end="${totalPages}">
                 <li class="page-item <c:if test="${i == currentPage}">active</c:if>">
-                    <a class="page-link" href="event1?page=${i}&size=${size}">${i}</a>
+                    <a class="page-link" href="event2?page=${i}&size=${size}">${i}</a>
                 </li>
             </c:forEach>
 
             <!-- 다음 페이지 버튼 -->
             <c:if test="${currentPage < totalPages}">
                 <li class="page-item">
-                    <a class="page-link" href="event1?page=${currentPage + 1}&size=${size}">다음</a>
+                    <a class="page-link" href="event2?page=${currentPage + 1}&size=${size}">다음</a>
                 </li>
             </c:if>
         </ul>

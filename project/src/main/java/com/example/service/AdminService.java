@@ -11,5 +11,6 @@ public interface AdminService {
 	public void deleteItem(Integer itemNo) throws Exception;
 	public void updateStock(ProductVO vo);
 	public List<ProductVO> getStockList();
+	public void updateItemStatusToSoldOut(Integer itemNo);	//품절 처리 메서드
 	
 }
