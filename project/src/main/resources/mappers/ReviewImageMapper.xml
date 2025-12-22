@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.model.ReviewImageRepository">
+
+	<select id="selectImagesByItemNo" parameterType="int" resultType="com.example.model.vo.ReviewImageVO">
+		SELECT
+			ri.review_img_no,
+			ri.review_no,
+			ri.img_path,
+			ri.sort_order,
+			ri.reg_date
+		FROM review_image ri
+		JOIN review r ON r.review_no = ri.review_no
+		WHERE r.item_no = #{item_no}
+		ORDER BY ri.review_no DESC, ri.sort_order ASC
+	</select>
+
+	<select id="selectImagesByReviewNo" parameterType="int" resultType="com.example.model.vo.ReviewImageVO">
+		SELECT
+			review_img_no,
+			review_no,
+			img_path,
+			sort_order,
+			reg_date
+		FROM review_image
+		WHERE review_no = #{review_no}
+		ORDER BY sort_order ASC
+	</select>
+
+	<insert id="insert" parameterType="com.example.model.vo.ReviewImageVO">
+		<selectKey keyProperty="review_img_no" resultType="int" order="BEFORE">
+			SELECT review_image_seq.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO review_image (review_img_no, review_no, img_path, sort_order, reg_date)
+		VALUES (#{review_img_no}, #{review_no}, #{img_path}, #{sort_order}, sysdate)
+	</insert>
+
+	<delete id="deleteByReviewNo" parameterType="int">
+		DELETE FROM review_image WHERE review_no = #{review_no}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		DELETE FROM review_image
+		WHERE review_img_no IN
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -363,4 +363,23 @@ public class crController {
 			return "error";
 		}
 	}
+	// crController.java에 추가
+	@PostMapping("/admin/cr/cleanup")
+	public String cleanupDuplicateCR(RedirectAttributes ra) {
+	    log.info("===== 중복 CR 정리 시작 =====");
+	    
+	    try {
+	        int deletedCount = crRepository.deleteDuplicateCR();
+	        log.info("✅ 중복 CR {} 건 삭제 완료", deletedCount);
+	        
+	        ra.addFlashAttribute("message", "중복 데이터 " + deletedCount + "건이 삭제되었습니다.");
+	        ra.addFlashAttribute("messageType", "success");
+	    } catch (Exception e) {
+	        log.error("❌ 중복 CR 삭제 실패", e);
+	        ra.addFlashAttribute("message", "삭제 중 오류가 발생했습니다.");
+	        ra.addFlashAttribute("messageType", "error");
+	    }
+	    
+	    return "redirect:/admin/cr";
+	}
 }

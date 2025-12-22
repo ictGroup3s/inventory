@@ -116,9 +116,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label>이메일</label>
-                        <input type="email" name="email" class="form-control" placeholder="이메일 입력"
-                            value="${customerVO.email != null ? customerVO.email : ''}">
+                        <label>이메일 *</label>
+                        <input type="email" name="email" class="form-control" placeholder="이메일 인증 필수"
+                            value="${customerVO.email != null ? customerVO.email : ''}" required>
+                     <c:if test="${not empty emailError}">
+                            <span style="color:red; font-size:14px;">${emailError}</span>
+                        </c:if>
+                    
                     </div>
 
                     <div class="form-group">

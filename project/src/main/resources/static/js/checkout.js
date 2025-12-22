@@ -302,23 +302,19 @@ function filterByDateRange() {
     const startInput = document.getElementById('startDate').value;
     const endInput = document.getElementById('endDate').value;
 
-    const startDate = startInput ? new Date(startInput) : null;
-    const endDate = endInput ? new Date(endInput) : null;
+    if (!startInput || !endInput) {
+        alert('시작일과 종료일을 모두 선택해주세요.');
+        return;
+    }
 
-	// ⭐ 핵심: 종료일을 하루의 끝으로 설정
-	  if (endDate) {
-	      endDate.setHours(23, 59, 59, 999);
-	  }
-	  
     const rows = document.querySelectorAll('.order-row');
     let visibleCount = 0;
 
     rows.forEach(row => {
-        const orderDate = parseOrderDate(row.dataset.orderDate);
-        let visible = true;
+        const orderDateStr = row.dataset.orderDate;
+        const orderDate = orderDateStr.split(' ')[0]; // "2024-12-20"
 
-        if (startDate && orderDate < startDate) visible = false;
-        if (endDate && orderDate > endDate) visible = false;
+        const visible = orderDate >= startInput && orderDate <= endInput;
 
         row.style.display = visible ? '' : 'none';
         if (visible) visibleCount++;
@@ -326,11 +322,11 @@ function filterByDateRange() {
 
     document.getElementById('totalCount').textContent = visibleCount;
 
-	 document.getElementById('totalCount').textContent = visibleCount;
-
-	    document.getElementById('noResultMessage').style.display =
-	        visibleCount === 0 ? 'block' : 'none';
-	}
+    const noResultMsg = document.getElementById('noResultMessage');
+    if (noResultMsg) {
+        noResultMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+}
 
 	// 배송내역 검색 함수
 	function searchCR() {

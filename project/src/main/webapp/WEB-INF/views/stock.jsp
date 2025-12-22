@@ -236,7 +236,7 @@
 										</div>
 									</div>
 									<!-- 상품 목록 테이블: 가로 전체(w-100) -->
-									<div class="stock-table-wrapper">
+									<div class="stock-table-wrapper" >
 										<table class="stock-table">
 											<thead class="thead-light">
 												<tr>

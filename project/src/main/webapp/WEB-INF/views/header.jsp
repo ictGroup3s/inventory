@@ -39,6 +39,31 @@
 </head>
 
 <body>
+<!-- 로그인 필요 모달 -->
+<div class="modal fade" id="loginRequiredModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 15px;">
+            <div class="modal-body text-center p-5">
+                <div class="mb-4">
+                    <i class="fas fa-lock" style="font-size: 60px; color: #D19C97;"></i>
+                </div>
+                <h5 class="mb-3">로그인이 필요합니다</h5>
+                <p class="text-muted mb-4">
+                    로그인한 회원만 이용 가능한 서비스입니다.<br>
+                    먼저 로그인해주세요.
+                </p>
+                <a href="login" class="btn btn-primary btn-block mb-2" 
+                   style="background-color: #D19C97; border: none; border-radius: 8px; padding: 12px;">
+                    로그인
+                </a>
+                <button type="button" class="btn btn-outline-secondary btn-block" 
+                        data-dismiss="modal" style="border-radius: 8px; padding: 12px;">
+                    돌아가기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 	<!-- Topbar Start -->
 
 	<div class="row align-items-center py-3 px-xl-5"
@@ -489,6 +514,18 @@
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
+	<!-- ✅ 로그인 체크 (JSTL 사용 - JSP에서만 가능) -->
+	<c:if test="${empty sessionScope.loginUser}">
+		<script>
+			$(document).ready(function() {
+				$('#loginRequiredModal').modal({
+					backdrop : 'static',
+					keyboard : false
+				});
+				$('#loginRequiredModal').modal('show');
+			});
+		</script>
+	</c:if>
 
 	<!-- 1. 로그인 ID 주입 (가장 먼저) -->
 	<script>

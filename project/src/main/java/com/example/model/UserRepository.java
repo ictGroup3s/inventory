@@ -13,6 +13,10 @@ public interface UserRepository{
 	
 		// 아이디 중복 체크
 		int checkId(@Param("customer_id") String customer_id); // Mapper XML에 id="checkId"와 매핑
+		
+		// 이메일 중복체크
+		int checkEmail(@Param("email") String email); //이메일 중복체크
+		
 		// 회원가입
 		void registerUser(CustomerVO customer); // Mapper XML에 id="registerUser"와 매핑
 		
