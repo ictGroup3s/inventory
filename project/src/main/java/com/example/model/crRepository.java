@@ -21,520 +21,507 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 public class crRepository {
 
-	 @Autowired
-	    private DataSource dataSource;
-	 
+	@Autowired
+	private DataSource dataSource;
 
-	 /* ===============================
-     고객용 메서드
-     =============================== */
+	/*
+	 * =============================== 고객용 메서드 ===============================
+	 */
 
-  /**
-   * 취소/반품/교환 목록 조회 (고객별)
-   */
-	 public List<crVO> getCRListByCustomerId(String customerId) throws SQLException {
-		    log.info("===== getCRListByCustomerId 시작 =====");
-		    log.info("customerId: {}", customerId);
-		    
-		    String sql = """
-		        SELECT 
-		            cr.cr_no,
-		            cr.order_no,
-		            cr.type,
-		            CASE 
-		                -- 주문 상태와 동기화
-		                WHEN o.order_status IN ('취소완료', '반품완료', '교환완료') THEN '완료'
-		                WHEN o.order_status IN ('취소', '반품', '교환') THEN '처리중'
-		                ELSE cr.status
-		            END as status,
-		            cr.reason,
-		            cr.re_date,
-		            cr.return_cnt,
-		            CASE 
-		                WHEN COUNT(DISTINCT od.item_no) = 1 THEN MAX(p.item_name)
-		                WHEN COUNT(DISTINCT od.item_no) > 1 THEN MAX(p.item_name) || ' 외 ' || (COUNT(DISTINCT od.item_no) - 1) || '개'
-		                ELSE '전체 주문'
-		            END as item_name
-		        FROM cr cr
-		        INNER JOIN orders o ON cr.order_no = o.order_no
-		        LEFT JOIN order_detail od ON cr.order_no = od.order_no
-		        LEFT JOIN product p ON od.item_no = p.item_no
-		        WHERE o.customer_id = ?
-		        AND (cr.reason NOT LIKE '%관리자 처리%' OR cr.reason IS NULL)
-		        AND (cr.reason NOT LIKE '%주문 전체%' OR cr.reason IS NULL)
-		        GROUP BY cr.cr_no, cr.order_no, cr.type, cr.status, cr.reason, cr.re_date, cr.return_cnt, o.order_status
-		        ORDER BY cr.re_date DESC
-		    """;
-		    
-		    List<crVO> list = new ArrayList<>();
-		    
-		    try (Connection conn = dataSource.getConnection();
-		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		        
-		        pstmt.setString(1, customerId);
-		        
-		        ResultSet rs = pstmt.executeQuery();
-		        
-		        while (rs.next()) {
-		            crVO cr = new crVO();
-		            cr.setCr_no(rs.getInt("cr_no"));
-		            cr.setOrder_no(rs.getInt("order_no"));
-		            cr.setType(rs.getString("type"));
-		            cr.setStatus(rs.getString("status"));
-		            cr.setReason(rs.getString("reason"));
-		            cr.setRe_date(rs.getTimestamp("re_date"));
-		            
-		            int returnCnt = rs.getInt("return_cnt");
-		            if (!rs.wasNull()) {
-		                cr.setReturn_cnt(returnCnt);
-		            }
-		            
-		            cr.setItem_name(rs.getString("item_name"));
-		            list.add(cr);
-		        }
-		        
-		        log.info("===== 조회된 CR 개수: {} =====", list.size());
-		        
-		    } catch (Exception e) {
-		        log.error("❌ 오류 발생", e);
-		        throw e;
-		    }
-		    
-		    return list;
+	/**
+	 * 취소/반품/교환 목록 조회 (고객별)
+	 */
+	public List<crVO> getCRListByCustomerId(String customerId) throws SQLException {
+		log.info("===== getCRListByCustomerId 시작 =====");
+		log.info("customerId: {}", customerId);
+
+		String sql = """
+				    SELECT
+				        cr.cr_no,
+				        cr.order_no,
+				        cr.type,
+				        CASE
+				            -- 주문 상태와 동기화
+				            WHEN o.order_status IN ('취소완료', '반품완료', '교환완료') THEN '완료'
+				            WHEN o.order_status IN ('취소', '반품', '교환') THEN '처리중'
+				            ELSE cr.status
+				        END as status,
+				        cr.reason,
+				        cr.re_date,
+				        cr.return_cnt,
+				        CASE
+				            WHEN COUNT(DISTINCT od.item_no) = 1 THEN MAX(p.item_name)
+				            WHEN COUNT(DISTINCT od.item_no) > 1 THEN MAX(p.item_name) || ' 외 ' || (COUNT(DISTINCT od.item_no) - 1) || '개'
+				            ELSE '전체 주문'
+				        END as item_name
+				    FROM cr cr
+				    INNER JOIN orders o ON cr.order_no = o.order_no
+				    LEFT JOIN order_detail od ON cr.order_no = od.order_no
+				    LEFT JOIN product p ON od.item_no = p.item_no
+				    WHERE o.customer_id = ?
+				    AND (cr.reason NOT LIKE '%관리자 처리%' OR cr.reason IS NULL)
+				    AND (cr.reason NOT LIKE '%주문 전체%' OR cr.reason IS NULL)
+				    GROUP BY cr.cr_no, cr.order_no, cr.type, cr.status, cr.reason, cr.re_date, cr.return_cnt, o.order_status
+				    ORDER BY cr.re_date DESC
+				""";
+
+		List<crVO> list = new ArrayList<>();
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, customerId);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				crVO cr = new crVO();
+				cr.setCr_no(rs.getInt("cr_no"));
+				cr.setOrder_no(rs.getInt("order_no"));
+				cr.setType(rs.getString("type"));
+				cr.setStatus(rs.getString("status"));
+				cr.setReason(rs.getString("reason"));
+				cr.setRe_date(rs.getTimestamp("re_date"));
+
+				int returnCnt = rs.getInt("return_cnt");
+				if (!rs.wasNull()) {
+					cr.setReturn_cnt(returnCnt);
+				}
+
+				cr.setItem_name(rs.getString("item_name"));
+				list.add(cr);
+			}
+
+			log.info("===== 조회된 CR 개수: {} =====", list.size());
+
+		} catch (Exception e) {
+			log.error("❌ 오류 발생", e);
+			throw e;
 		}
-  /**
-   * 취소/반품/교환 신청
-   */
-  public int insertCR(crVO crVO) throws SQLException {
 
-      log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-      log.info("┃  📝 CR 신청 등록                                    ┃");
-      log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+		return list;
+	}
 
-      String sql = """
-          INSERT INTO cr
-          (cr_no, order_no, type, return_cnt, reason, status, re_date)
-          VALUES (cr_seq.NEXTVAL, ?, ?, ?, ?, ?, SYSDATE)
-      """;
+	/**
+	 * 취소/반품/교환 신청
+	 */
+	public int insertCR(crVO crVO) throws SQLException {
 
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setInt(1, crVO.getOrder_no());
-          pstmt.setString(2, crVO.getType());
+	    log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+	    log.info("┃  📝 CR 신청 등록                                    ┃");
+	    log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 
-          if (crVO.getReturn_cnt() != null) {
-              pstmt.setInt(3, crVO.getReturn_cnt());
-          } else {
-              pstmt.setNull(3, java.sql.Types.INTEGER);
-          }
+	    String sql = """
+	        INSERT INTO cr
+	        (cr_no, order_no, detail_no, type, return_cnt, reason, status, re_date)
+	        VALUES (cr_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, SYSDATE)
+	    """;
 
-          pstmt.setString(4, crVO.getReason());
-          pstmt.setString(5, crVO.getStatus());
+	    try (Connection conn = dataSource.getConnection(); 
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        
+	        pstmt.setInt(1, crVO.getOrder_no());
+	        pstmt.setInt(2, crVO.getDetail_no());  // ← detail_no 추가!
+	        pstmt.setString(3, crVO.getType());
 
-          int result = pstmt.executeUpdate();
-          
-          log.info("   ✅ CR 신청 등록 완료 - 주문번호: {}, 유형: {}", 
-              crVO.getOrder_no(), crVO.getType());
-          
-          return result;
-      }
-  }
+	        if (crVO.getReturn_cnt() != null) {
+	            pstmt.setInt(4, crVO.getReturn_cnt());
+	        } else {
+	            pstmt.setNull(4, java.sql.Types.INTEGER);
+	        }
 
-  /**
-   * 주문 상품 개수
-   */
-  public int getOrderItemCount(int orderNo) throws SQLException {
+	        pstmt.setString(5, crVO.getReason());
+	        pstmt.setString(6, crVO.getStatus());
 
-      String sql = """
-          SELECT COUNT(*)
-          FROM order_detail
-          WHERE order_no = ?
-      """;
+	        int result = pstmt.executeUpdate();
 
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setInt(1, orderNo);
+	        log.info("   ✅ CR 신청 등록 완료 - 주문번호: {}, 상세번호: {}, 유형: {}", 
+	                 crVO.getOrder_no(), crVO.getDetail_no(), crVO.getType());
 
-          try (ResultSet rs = pstmt.executeQuery()) {
-              if (rs.next()) {
-                  int count = rs.getInt(1);
-                  log.info("   - 주문 {} 상품 개수: {}", orderNo, count);
-                  return count;
-              }
-          }
-      }
-      return 0;
-  }
+	        return result;
+	    }
+	}
 
-  /**
-   * 🔐 내 주문인지 확인 (보안 핵심)
-   */
-  public boolean isMyOrder(int orderNo, String customerId) throws SQLException {
+	/**
+	 * 주문 상품 개수
+	 */
+	public int getOrderItemCount(int orderNo) throws SQLException {
 
-      String sql = """
-          SELECT COUNT(*)
-          FROM orders
-          WHERE order_no = ?
-          AND customer_id = ?
-      """;
+		String sql = """
+				    SELECT COUNT(*)
+				    FROM order_detail
+				    WHERE order_no = ?
+				""";
 
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setInt(1, orderNo);
-          pstmt.setString(2, customerId);
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, orderNo);
 
-          try (ResultSet rs = pstmt.executeQuery()) {
-              rs.next();
-              boolean isMine = rs.getInt(1) > 0;
-              log.info("   - 주문 {} 소유 확인: {}", orderNo, isMine);
-              return isMine;
-          }
-      }
-  }
- 
-  /**
-   * 내 주문번호 목록 조회
-   */
-  public List<Integer> getMyOrderNos(String customerId) throws SQLException {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					int count = rs.getInt(1);
+					log.info("   - 주문 {} 상품 개수: {}", orderNo, count);
+					return count;
+				}
+			}
+		}
+		return 0;
+	}
 
-      String sql = """
-          SELECT DISTINCT order_no
-          FROM orders
-          WHERE customer_id = ?
-          ORDER BY order_no DESC
-      """;
+	/**
+	 * 🔐 내 주문인지 확인 (보안 핵심)
+	 */
+	public boolean isMyOrder(int orderNo, String customerId) throws SQLException {
 
-      List<Integer> list = new ArrayList<>();
+		String sql = """
+				    SELECT COUNT(*)
+				    FROM orders
+				    WHERE order_no = ?
+				    AND customer_id = ?
+				""";
 
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setString(1, customerId);
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, orderNo);
+			pstmt.setString(2, customerId);
 
-          try (ResultSet rs = pstmt.executeQuery()) {
-              while (rs.next()) {
-                  list.add(rs.getInt("order_no"));
-              }
-          }
-      }
-      
-      log.info("   - 고객 {} 주문번호 개수: {}", customerId, list.size());
-      
-      return list;
-  }
-  
-  /**
-   * 주문 상세 조회 (상품 목록)
-   */
-  public List<order_detailVO> getOrderDetails(int orderNo) throws SQLException {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				rs.next();
+				boolean isMine = rs.getInt(1) > 0;
+				log.info("   - 주문 {} 소유 확인: {}", orderNo, isMine);
+				return isMine;
+			}
+		}
+	}
 
-      String sql = """
-          SELECT
-              od.detail_no,
-              od.order_no,
-              od.item_no,
-              od.qty,
-              p.item_name
-          FROM order_detail od
-          JOIN product p ON od.item_no = p.item_no
-          WHERE od.order_no = ?
-      """;
+	/**
+	 * 내 주문번호 목록 조회
+	 */
+	public List<Integer> getMyOrderNos(String customerId) throws SQLException {
 
-      List<order_detailVO> list = new ArrayList<>();
+		String sql = """
+				    SELECT DISTINCT order_no
+				    FROM orders
+				    WHERE customer_id = ?
+				    ORDER BY order_no DESC
+				""";
 
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setInt(1, orderNo);
+		List<Integer> list = new ArrayList<>();
 
-          try (ResultSet rs = pstmt.executeQuery()) {
-              while (rs.next()) {
-                  order_detailVO vo = new order_detailVO();
-                  vo.setDetail_no(rs.getInt("detail_no"));
-                  vo.setOrder_no(rs.getInt("order_no"));
-                  vo.setItem_no(rs.getInt("item_no"));
-                  vo.setQty(rs.getInt("qty"));
-                  vo.setItem_name(rs.getString("item_name"));
-                  list.add(vo);
-              }
-          }
-      }
-      
-      log.info("   - 주문 {} 상세 조회: {} 건", orderNo, list.size());
-      
-      return list;
-  }
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, customerId);
 
-  /* ===============================
-     관리자용 메서드
-     =============================== */
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					list.add(rs.getInt("order_no"));
+				}
+			}
+		}
 
-  /**
-   * CR 번호로 CR 정보 조회 (관리자용)
-   */
-  public crVO getCRById(int crNo) throws SQLException {
-      
-      log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-      log.info("┃  🔍 CR 상세 조회 - CR 번호: {}                      ┃", crNo);
-      log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-      
-      String sql = """
-          SELECT
-              cr.cr_no,
-              cr.order_no,
-              cr.type,
-              cr.return_cnt,
-              cr.reason,
-              cr.status,
-              cr.re_date
-          FROM cr
-          WHERE cr_no = ?
-      """;
-      
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setInt(1, crNo);
-          
-          try (ResultSet rs = pstmt.executeQuery()) {
-              if (rs.next()) {
-                  crVO vo = new crVO();
-                  vo.setCr_no(rs.getInt("cr_no"));
-                  vo.setOrder_no(rs.getInt("order_no"));
-                  vo.setType(rs.getString("type"));
-                  vo.setReturn_cnt(rs.getObject("return_cnt", Integer.class));
-                  vo.setReason(rs.getString("reason"));
-                  vo.setStatus(rs.getString("status"));
-                  vo.setRe_date(rs.getTimestamp("re_date"));
-                  
-                  log.info("   ✅ CR 조회 완료 - 주문번호: {}, 유형: {}", 
-                      vo.getOrder_no(), vo.getType());
-                  
-                  return vo;
-              }
-          }
-      }
-      
-      log.warn("   ⚠️  CR 정보 없음 - crNo: {}", crNo);
-      return null;
-  }
+		log.info("   - 고객 {} 주문번호 개수: {}", customerId, list.size());
 
-  /**
-   * 모든 CR 목록 조회 (관리자용)
-   */
-  public List<crVO> getAllCRList() throws SQLException {
-      
-      log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-      log.info("┃  📋 전체 CR 목록 조회 (관리자)                      ┃");
-      log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-      
-      List<crVO> list = new ArrayList<>();
-      
-      String sql = """
-          SELECT
-              cr.cr_no,
-              cr.order_no,
-              cr.type,
-              cr.return_cnt,
-              cr.reason,
-              cr.status,
-              cr.re_date,
-              o.customer_id,
-              p.item_name
-          FROM cr
-          JOIN orders o ON cr.order_no = o.order_no
-          JOIN order_detail od ON o.order_no = od.order_no
-          JOIN product p ON od.item_no = p.item_no
-          ORDER BY cr.re_date DESC
-      """;
-      
-      try (Connection conn = dataSource.getConnection();
-           PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		return list;
+	}
 
-          ResultSet rs = pstmt.executeQuery();
+	/**
+	 * 주문 상세 조회 (상품 목록)
+	 */
+	public List<order_detailVO> getOrderDetails(int orderNo) throws SQLException {
 
-          while (rs.next()) {
-              crVO vo = new crVO();
-              vo.setCr_no(rs.getInt("cr_no"));
-              vo.setOrder_no(rs.getInt("order_no"));
-              vo.setType(rs.getString("type"));
-              vo.setReturn_cnt(rs.getObject("return_cnt", Integer.class));
-              vo.setReason(rs.getString("reason"));
-              vo.setStatus(rs.getString("status"));
-              vo.setRe_date(rs.getTimestamp("re_date"));
-              vo.setItem_name(rs.getString("item_name"));
-              // customer_id 필드가 있다면 추가
-              // vo.setCustomer_id(rs.getString("customer_id"));
-              
-              list.add(vo);
-          }
-          
-          log.info("   ✅ 전체 CR 조회 성공: {} 건", list.size());
-      } catch (Exception e) {
-          log.error("   ❌ 조회 실패!", e);
-          throw e;
-      }
-      
-      return list;
-  }
+		String sql = """
+				    SELECT
+				        od.detail_no,
+				        od.order_no,
+				        od.item_no,
+				        od.qty,
+				        p.item_name
+				    FROM order_detail od
+				    JOIN product p ON od.item_no = p.item_no
+				    WHERE od.order_no = ?
+				""";
 
-  /**
-   * CR 상태 업데이트 (관리자용)
-   */
-  public int updateCRStatus(int crNo, String status) throws SQLException {
-      
-      log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-      log.info("┃  🔄 CR 상태 업데이트                                ┃");
-      log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-      
-      String sql = """
-          UPDATE cr
-          SET status = ?
-          WHERE cr_no = ?
-      """;
-      
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setString(1, status);
-          pstmt.setInt(2, crNo);
-          
-          int result = pstmt.executeUpdate();
-          
-          log.info("   ✅ CR 상태 업데이트 - crNo: {}, 새 상태: {}", crNo, status);
-          
-          return result;
-      }
-  }
+		List<order_detailVO> list = new ArrayList<>();
 
-  /* ===============================
-     재고 복구 메서드
-     =============================== */
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, orderNo);
 
-  /**
-   * 주문 취소/반품 시 재고 복구
-   */
-  public int restoreStock(int orderNo) throws SQLException {
-      
-      log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-      log.info("┃  📦 재고 복구 시작 - 주문번호: {}                    ┃", orderNo);
-      log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-      
-      String sql = """
-          UPDATE product p
-          SET stock = stock + (
-              SELECT od.qty
-              FROM order_detail od
-              WHERE od.order_no = ?
-              AND od.item_no = p.item_no
-          )
-          WHERE item_no IN (
-              SELECT item_no
-              FROM order_detail
-              WHERE order_no = ?
-          )
-      """;
-      
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setInt(1, orderNo);
-          pstmt.setInt(2, orderNo);
-          
-          int result = pstmt.executeUpdate();
-          
-          log.info("   ✅ 재고 복구 완료 - 영향받은 상품 수: {}", result);
-          
-          return result;
-          
-      } catch (Exception e) {
-          log.error("   ❌ 재고 복구 실패!", e);
-          throw e;
-      }
-  }
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					order_detailVO vo = new order_detailVO();
+					vo.setDetail_no(rs.getInt("detail_no"));
+					vo.setOrder_no(rs.getInt("order_no"));
+					vo.setItem_no(rs.getInt("item_no"));
+					vo.setQty(rs.getInt("qty"));
+					vo.setItem_name(rs.getString("item_name"));
+					list.add(vo);
+				}
+			}
+		}
 
-  /**
-   * 주문의 총 수량 조회
-   */
-  public int getTotalQtyByOrderNo(int orderNo) throws SQLException {
-      
-      String sql = """
-          SELECT SUM(qty) as total_qty
-          FROM order_detail
-          WHERE order_no = ?
-      """;
-      
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setInt(1, orderNo);
-          
-          try (ResultSet rs = pstmt.executeQuery()) {
-              if (rs.next()) {
-                  int totalQty = rs.getInt("total_qty");
-                  log.info("   - 주문 {} 총 수량: {}", orderNo, totalQty);
-                  return totalQty;
-              }
-          }
-      }
-      return 0;
-  }
+		log.info("   - 주문 {} 상세 조회: {} 건", orderNo, list.size());
 
-  /**
-   * 주문 상태 업데이트 (취소/반품/교환 완료 시)
-   */
-  public int updateOrderStatus(int orderNo, String status) throws SQLException {
-      
-      log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-      log.info("┃  🔄 주문 상태 업데이트                              ┃");
-      log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-      
-      String sql = """
-          UPDATE orders
-          SET order_status = ?
-          WHERE order_no = ?
-      """;
-      
-      try (
-          Connection conn = dataSource.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)
-      ) {
-          pstmt.setString(1, status);
-          pstmt.setInt(2, orderNo);
-          
-          int result = pstmt.executeUpdate();
-          
-          log.info("   ✅ 주문 상태 업데이트 - orderNo: {}, 새 상태: {}", orderNo, status);
-          
-          return result;
-      }
-  }
+		return list;
+	}
+
+	/*
+	 * =============================== 관리자용 메서드 ===============================
+	 */
+
+	/**
+	 * CR 번호로 CR 정보 조회 (관리자용)
+	 */
+	public crVO getCRById(int crNo) throws SQLException {
+
+		log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+		log.info("┃  🔍 CR 상세 조회 - CR 번호: {}                      ┃", crNo);
+		log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+		String sql = """
+				    SELECT
+				        cr.cr_no,
+				        cr.order_no,
+				        cr.type,
+				        cr.return_cnt,
+				        cr.reason,
+				        cr.status,
+				        cr.re_date
+				    FROM cr
+				    WHERE cr_no = ?
+				""";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, crNo);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					crVO vo = new crVO();
+					vo.setCr_no(rs.getInt("cr_no"));
+					vo.setOrder_no(rs.getInt("order_no"));
+					vo.setType(rs.getString("type"));
+					vo.setReturn_cnt(rs.getObject("return_cnt", Integer.class));
+					vo.setReason(rs.getString("reason"));
+					vo.setStatus(rs.getString("status"));
+					vo.setRe_date(rs.getTimestamp("re_date"));
+
+					log.info("   ✅ CR 조회 완료 - 주문번호: {}, 유형: {}", vo.getOrder_no(), vo.getType());
+
+					return vo;
+				}
+			}
+		}
+
+		log.warn("   ⚠️  CR 정보 없음 - crNo: {}", crNo);
+		return null;
+	}
+
+	/**
+	 * 모든 CR 목록 조회 (관리자용)
+	 */
+	public List<crVO> getAllCRList() throws SQLException {
+
+		log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+		log.info("┃  📋 전체 CR 목록 조회 (관리자)                      ┃");
+		log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+		List<crVO> list = new ArrayList<>();
+
+		String sql = """
+				    SELECT
+				        cr.cr_no,
+				        cr.order_no,
+				        cr.type,
+				        cr.return_cnt,
+				        cr.reason,
+				        cr.status,
+				        cr.re_date,
+				        o.customer_id,
+				        p.item_name
+				    FROM cr
+				    JOIN orders o ON cr.order_no = o.order_no
+				    JOIN order_detail od ON o.order_no = od.order_no
+				    JOIN product p ON od.item_no = p.item_no
+				    ORDER BY cr.re_date DESC
+				""";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				crVO vo = new crVO();
+				vo.setCr_no(rs.getInt("cr_no"));
+				vo.setOrder_no(rs.getInt("order_no"));
+				vo.setType(rs.getString("type"));
+				vo.setReturn_cnt(rs.getObject("return_cnt", Integer.class));
+				vo.setReason(rs.getString("reason"));
+				vo.setStatus(rs.getString("status"));
+				vo.setRe_date(rs.getTimestamp("re_date"));
+				vo.setItem_name(rs.getString("item_name"));
+				// customer_id 필드가 있다면 추가
+				// vo.setCustomer_id(rs.getString("customer_id"));
+
+				list.add(vo);
+			}
+
+			log.info("   ✅ 전체 CR 조회 성공: {} 건", list.size());
+		} catch (Exception e) {
+			log.error("   ❌ 조회 실패!", e);
+			throw e;
+		}
+
+		return list;
+	}
+
+	/**
+	 * CR 상태 업데이트 (관리자용)
+	 */
+	public int updateCRStatus(int crNo, String status) throws SQLException {
+
+		log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+		log.info("┃  🔄 CR 상태 업데이트                                ┃");
+		log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+		String sql = """
+				    UPDATE cr
+				    SET status = ?
+				    WHERE cr_no = ?
+				""";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, status);
+			pstmt.setInt(2, crNo);
+
+			int result = pstmt.executeUpdate();
+
+			log.info("   ✅ CR 상태 업데이트 - crNo: {}, 새 상태: {}", crNo, status);
+
+			return result;
+		}
+	}
+
+	/*
+	 * =============================== 재고 복구 메서드 ===============================
+	 */
+
+	/**
+	 * 주문 취소/반품 시 재고 복구
+	 */
+	public int restoreStock(int orderNo) throws SQLException {
+
+		log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+		log.info("┃  📦 재고 복구 시작 - 주문번호: {}                    ┃", orderNo);
+		log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+		String sql = """
+				    UPDATE product p
+				    SET stock = stock + (
+				        SELECT od.qty
+				        FROM order_detail od
+				        WHERE od.order_no = ?
+				        AND od.item_no = p.item_no
+				    )
+				    WHERE item_no IN (
+				        SELECT item_no
+				        FROM order_detail
+				        WHERE order_no = ?
+				    )
+				""";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, orderNo);
+			pstmt.setInt(2, orderNo);
+
+			int result = pstmt.executeUpdate();
+
+			log.info("   ✅ 재고 복구 완료 - 영향받은 상품 수: {}", result);
+
+			return result;
+
+		} catch (Exception e) {
+			log.error("   ❌ 재고 복구 실패!", e);
+			throw e;
+		}
+	}
+
+	public List<Integer> getDetailNosByOrder(int orderNo) throws SQLException {
+		String sql = "SELECT detail_no FROM order_detail WHERE order_no = ?";
+		List<Integer> detailNos = new ArrayList<>();
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, orderNo);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					detailNos.add(rs.getInt("detail_no"));
+				}
+			}
+		}
+
+		log.info("   - 주문 {} 상세 번호 조회: {} 건", orderNo, detailNos.size());
+		return detailNos;
+	}
+
+	/**
+	 * 주문의 총 수량 조회
+	 */
+	public int getTotalQtyByOrderNo(int orderNo) throws SQLException {
+
+		String sql = """
+				    SELECT SUM(qty) as total_qty
+				    FROM order_detail
+				    WHERE order_no = ?
+				""";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, orderNo);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					int totalQty = rs.getInt("total_qty");
+					log.info("   - 주문 {} 총 수량: {}", orderNo, totalQty);
+					return totalQty;
+				}
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * 주문 상태 업데이트 (취소/반품/교환 완료 시)
+	 */
+	public int updateOrderStatus(int orderNo, String status) throws SQLException {
+
+		log.info("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+		log.info("┃  🔄 주문 상태 업데이트                              ┃");
+		log.info("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+		String sql = """
+				    UPDATE orders
+				    SET order_status = ?
+				    WHERE order_no = ?
+				""";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, status);
+			pstmt.setInt(2, orderNo);
+
+			int result = pstmt.executeUpdate();
+
+			log.info("   ✅ 주문 상태 업데이트 - orderNo: {}, 새 상태: {}", orderNo, status);
+
+			return result;
+		}
+	}
+
 //crRepository.java에 추가
-public int deleteDuplicateCR() throws SQLException {
-   String sql = """
-       DELETE FROM cr
-       WHERE reason LIKE '%관리자 처리%' 
-          OR reason LIKE '%주문 전체%'
-   """;
-   
-   try (Connection conn = dataSource.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-       
-       int result = pstmt.executeUpdate();
-       log.info("✅ 중복 CR 삭제: {} 건", result);
-       return result;
-   }
-}
+	public int deleteDuplicateCR() throws SQLException {
+		String sql = """
+				    DELETE FROM cr
+				    WHERE reason LIKE '%관리자 처리%'
+				       OR reason LIKE '%주문 전체%'
+				""";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			int result = pstmt.executeUpdate();
+			log.info("✅ 중복 CR 삭제: {} 건", result);
+			return result;
+		}
+	}
 }

@@ -104,7 +104,6 @@
                         <label>이름 *</label>
                         <input type="text" name="name" class="form-control" placeholder="이름 입력"
                              value="${customerVO.name != null ? customerVO.name : ''}" required>
-    					
                         <label>전화번호 *</label>
                         <input type="text" name="phone" class="form-control" placeholder="전화번호 입력"
                            value="${customerVO.phone != null ? customerVO.phone : ''}" 
@@ -114,13 +113,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label>이메일 *</label>
-                        <input type="email" name="email" class="form-control" placeholder="이메일 인증 필수"
-                            value="${customerVO.email != null ? customerVO.email : ''}" required>
-                     <c:if test="${not empty emailError}">
-                            <span style="color:red; font-size:14px;">${emailError}</span>
-                        </c:if>
-                    
+                        <label>이메일</label>
+                        <input type="email" name="email" class="form-control" placeholder="이메일 입력"
+                            value="${customerVO.email != null ? customerVO.email : ''}">
                     </div>
 
                     <div class="form-group">

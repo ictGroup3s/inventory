@@ -31,11 +31,11 @@
 
 	<!-- 이메일 중복 체크 -->
 	<select id="checkEmail" parameterType="string" resultType="int">
-		SELECT COUNT(*)
-		FROM customer
-		WHERE email = #{email}
-	
+	    SELECT COUNT(*)
+	    FROM customer
+	    WHERE email = #{email, jdbcType=VARCHAR}
 	</select>
+
 	
 	<!--  회원 삭제(탈퇴) -->
 	<update id="softDeleteById" parameterType="string">
@@ -50,8 +50,9 @@
 		SET name = #{name}
 			,pwd = #{pwd}
 			,phone = #{phone}
-			,email = #{email}
-			,addr = #{addr}
+			,email = #{email, jdbcType=VARCHAR}
+			, jdbcType=VARCHAR}
+
 		WHERE customer_id = #{customer_id}
 	</update>
 	
