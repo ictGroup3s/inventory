@@ -13,16 +13,23 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
 
-<!-- ======================= [추가된 부분 시작] ======================= -->
-<style>
-    /* 사이드바와 상세보기 내용 겹침 방지 */
-    .dashboard-content {
-        margin-left: 240px;
-    }
-</style>
-<!-- ======================= [추가된 부분 끝] ======================= -->
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+	rel="stylesheet">
 
+<!-- Font Awesome -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+	rel="stylesheet">
 </head>
 <body>
 
@@ -35,22 +42,21 @@
     </div>
 
     <div class="col-lg-6 col-6 text-left">
-        <form action="">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for products">
-                <div class="input-group-append">
-                    <span class="input-group-text bg-transparent text-primary">
-                        <i class="fa fa-search"></i>
-                    </span>
-                </div>
-            </div>
-        </form>
+      <form action="selectall" method="get" style="margin-left:-20px; margin-right:90px;">
+				<div class="input-group">
+					<input type="text" name="q" class="form-control"
+						placeholder="찾고 싶은 상품을 검색하세요." value="${q}">
+					<div class="input-group-append">
+						<button class="input-group-text bg-transparent text-primary" type="submit">
+								<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
     </div>
 
     <div class="col-lg-3 col-6 text-right">
-        <a href="#" class="btn border">
-            <i class="fas fa-heart text-primary"></i> <span class="badge">0</span>
-        </a>
+        
         <a href="cart" class="btn border">
             <i class="fas fa-shopping-cart text-primary"></i> <span class="badge">0</span>
         </a>
@@ -60,7 +66,7 @@
 
 <!-- 메인 레이아웃 -->
 <div class="container-fluid">
-    <div class="row px-xl-2">
+    <div class="row ">
 
         <!-- 사이드 메뉴 동일 -->
         <nav class="category-sidebar">
@@ -80,7 +86,8 @@
         </nav>
 
         <!-- 상세보기 내용 -->
-        <div class="col-lg-10 dashboard-content">
+        <div class="col-lg-10 dashboard-content" style="margin-left: 240px; margin-top:-180px; ">
+        
 
             <!-- ※ 수정: 타이틀 문구 -->
             <h3 class="mb-4">문의 상세보기</h3>
