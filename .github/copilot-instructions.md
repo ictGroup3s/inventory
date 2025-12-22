@@ -1,41 +1,59 @@
-# Copilot instructions (inventory)
+# Copilot Instructions (Inventory Project)
 
-## Project shape
-- This repo’s runnable Spring Boot app lives under `project/` (Maven wrapper + `pom.xml`).
-- Tech: Spring Boot 3.5.x, Java 17, JSP views, Oracle JDBC, MyBatis XML mappers, WebSocket chat.
+## Project Overview
+- **Framework**: Spring Boot 3.5.8 (Java 17)
+- **Database**: Oracle JDBC (`ojdbc11`), MyBatis 3.0.5
+- **Frontend**: JSP (`/WEB-INF/views/`), JSTL, Static resources (`/static/`)
+- **Features**: WebSocket Chat, OAuth (Google, Kakao), Business Verification
 
-## Build/run (from repo root)
-- PowerShell: `cd project; .\mvnw.cmd spring-boot:run`
-- Bash: `cd project && ./mvnw spring-boot:run`
-- Tests: `cd project; .\mvnw.cmd test` (or `./mvnw test`)
+## Build & Run
+- **Run App**: `cd project; .\mvnw.cmd spring-boot:run` (Windows) or `./mvnw spring-boot:run` (Bash)
+- **Run Tests**: `cd project; .\mvnw.cmd test`
+- **Port**: Defaults to `8080`
 
-## Key directories
-- Controllers: `project/src/main/java/com/example/controller/`
-- Services: `project/src/main/java/com/example/service/`
-- Data access + MyBatis calls: `project/src/main/java/com/example/model/`
-- Mapper XML: `project/src/main/resources/mappers/*.xml` (loaded via `mybatis.mapper-locations`)
-- JSP views: `project/src/main/webapp/WEB-INF/views/` (resolver in `application.properties`)
-- Static assets: `project/src/main/resources/static/`
+## Architecture & Key Directories
+- **Controllers**: `project/src/main/java/com/example/controller/`
+- **Services**: `project/src/main/java/com/example/service/`
+- **Models/VOs**: `project/src/main/java/com/example/model/vo/` (Aliased in `application.properties`)
+- **Repositories**: `project/src/main/java/com/example/model/` (Impl classes use `SqlSessionTemplate`)
+- **Mappers (XML)**: `project/src/main/resources/mappers/`
+- **Views (JSP)**: `project/src/main/webapp/WEB-INF/views/`
+- **Static Assets**: `project/src/main/resources/static/` (CSS, JS, Chat logs)
 
-## MyBatis conventions (important)
-- This codebase uses **two** statement-ID styles—follow the one used by the feature you’re editing:
-  - Short namespace strings in XML, called via `SqlSessionTemplate`, e.g. `adminmapper.getItemList` (see `adminMapper.xml` + `AdminRepositoryImpl`).
-  - Fully-qualified interface namespace in XML, e.g. `com.example.model.ReviewRepository.selectReviewsByItemNo` (see `ReviewMapper.xml` + `ReviewRepositoryImpl`).
-- When adding a query:
-  - Ensure the Java call string exactly matches `<mapper namespace>.<statement id>`.
-  - Put the XML under `project/src/main/resources/mappers/`.
+## MyBatis Conventions (CRITICAL)
+This project uses **two distinct styles** for MyBatis statement IDs. Match the style of the file you are editing:
+1.  **Short Namespace**: Used in `AdminRepositoryImpl` / `adminMapper.xml`.
+    -   XML: `<mapper namespace="adminmapper">`
+    -   Java: `sess.selectList("adminmapper.getItemList")`
+2.  **Fully Qualified Namespace**: Used in `ReviewRepositoryImpl` / `ReviewMapper.xml`.
+    -   XML: `<mapper namespace="com.example.model.ReviewRepository">`
+    -   Java: `sess.selectList("com.example.model.ReviewRepository.selectReviewsByItemNo", ...)`
 
-## WebSocket chat
-- WebSocket endpoint: `/ws/chat` registered in `project/src/main/java/com/example/config/WebSocketConfig.java`.
-- Handler: `project/src/main/java/com/example/webSocket/UnifiedChatHandler.java`.
-- Message format: JSON with `customerId`, `adminId`, `sender` (`admin` or customer), `message`.
-  - `message="__JOIN__"`: registers session only (no broadcast/save)
-  - `message="__CLOSE__"`: broadcasts close and resets cached file mapping (no DB/file save)
-- Chat transcripts are appended to `project/src/main/resources/static/chat/chat_{customerId}_{adminId}_{timestamp}.txt`.
-- REST helper to read transcripts: `GET /chat/files/{fileName}` in `UserChatController`.
+**Rule**: Always check the XML mapper's `namespace` attribute before writing the Java DAO call.
 
-## Session/auth assumptions used in controllers
-- Several endpoints trust the session attribute `loginUser` (e.g. `ReviewController` forces `customer_id` from session and ignores client-supplied id).
+## WebSocket Chat Implementation
+- **Handler**: `UnifiedChatHandler.java` (mapped to `/ws/chat`)
+- **Room Logic**: `roomId = customerId + "_" + adminId`
+- **Storage**: Chat logs are saved to `src/main/resources/static/chat/` as `.txt` files.
+- **Message Protocol**:
+    ```json
+    {
+      "customerId": "...",
+      "adminId": "...",
+      "sender": "admin" | "customer",
+      "message": "..."
+    }
+    ```
+- **Control Messages**: `__JOIN__` (init session), `__CLOSE__` (end session).
 
-## Local config notes
-- `project/src/main/resources/application.properties` contains Oracle connection info and OAuth client settings; treat these as local/dev secrets and avoid introducing new hard-coded secrets in code.
+## Configuration & Secrets
+- **Properties**: `project/src/main/resources/application.properties`
+- **Secrets**:
+    -   Oracle DB credentials (`c##scott`/`tiger`) are currently hardcoded for dev.
+    -   OAuth keys (Google, Kakao) are present in properties.
+    -   **Business Verify API**: Uses environment variables `BUSINESS_VERIFY_REMOTE_URL` and `BUSINESS_VERIFY_REMOTE_KEY`. Do not hardcode these.
+
+## Coding Patterns
+- **Logging**: Use Lombok `@Slf4j` for logging.
+- **Session**: Controllers often rely on `session.getAttribute("loginUser")`. Ensure session state is handled in new endpoints.
+- **JSP**: Views are resolved from `/WEB-INF/views/` with `.jsp` suffix.
