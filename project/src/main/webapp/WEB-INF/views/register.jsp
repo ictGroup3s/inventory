@@ -175,11 +175,17 @@
 
                     <div class="form-group">
                         <label>사업자번호 *</label>
-                        <input type="text" name="admin_bnum" class="form-control" 
-                        		placeholder="숫자10자리 입력"
-                                value="${not empty admin_bnumInput ? admin_bnumInput : (customerVO.admin_bnum != null ? customerVO.admin_bnum : '')}"
-                            	maxlength="10" pattern="\d{10}" required>
+                        <div class="input-group">
+	                        <input type="text" name="admin_bnum" id="admin_bnum" class="form-control" 
+	                        		placeholder="숫자10자리 입력"
+	                                value="${not empty admin_bnumInput ? admin_bnumInput : (customerVO.admin_bnum != null ? customerVO.admin_bnum : '')}"
+	                            	maxlength="10" pattern="\d{10}" required>
+	                        <div class="input-group-append">
+	                        	<button type="button" class="btn btn-secondary" id="btnVerifyBnum">인증확인</button>
+	                        </div>
+                        </div>
                        <small class="form-text text-muted">숫자 10자리만 입력 가능합니다.</small>
+                       <div id="bnumMsg" style="font-size:14px; margin-top:5px;"></div>
     						<c:if test="${not empty bnumError}">
     							<span style="color:red; font-size:14px;">${bnumError}</span>
     						</c:if>
@@ -283,6 +289,35 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-
+<script>
+$(document).ready(function() {
+	$('#btnVerifyBnum').click(function() {
+		var bnum = $('#admin_bnum').val();
+		if(!bnum) {
+			alert('사업자번호를 입력해주세요.');
+			return;
+		}
+		
+		$.ajax({
+			url: '/api/business/verify',
+			type: 'GET',
+			data: { bnum: bnum },
+			dataType: 'json',
+			success: function(res) {
+				var $msg = $('#bnumMsg');
+				if(res.valid) {
+					$msg.css('color', 'green').text(res.message);
+				} else {
+					$msg.css('color', 'red').text(res.message);
+				}
+			},
+			error: function(err) {
+				console.error(err);
+				alert('인증 서버 통신 중 오류가 발생했습니다.');
+			}
+		});
+	});
+});
+</script>
 </body>
 </html>

@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -30,6 +31,15 @@ public class BsNumVerServiceImpl implements BsNumVerService {
 
 	@Value("${business.verify.remote.key:}")
 	private String remoteKey;
+
+	@PostConstruct
+	public void init() {
+		log.info("=== Business Verify Configuration ===");
+		log.info("Enabled: {}", remoteEnabled);
+		log.info("URL: {}", remoteUrl);
+		log.info("Key: {}", (remoteKey != null && !remoteKey.isBlank()) ? "SET (Hidden)" : "NOT SET");
+		log.info("=====================================");
+	}
 
 	@Override
 	public BsNumVerResult verify(String businessNumber) {

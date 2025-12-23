@@ -154,7 +154,13 @@
 								<!-- ml-auto = 왼쪽 여백 자동 채움(margin-left: auto) -->
 								<button class="btn border dropdown-toggle" type="button"
 									id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">정렬 기준</button>
+									aria-expanded="false">
+									<c:choose>
+										<c:when test="${sort eq 'price_desc'}">가격 높은순</c:when>
+										<c:when test="${sort eq 'price_asc'}">가격 낮은순</c:when>
+										<c:otherwise>최신순</c:otherwise>
+									</c:choose>
+								</button>
 								<div class="dropdown-menu dropdown-menu-right"
 									aria-labelledby="triggerId">
 									<a class="dropdown-item"

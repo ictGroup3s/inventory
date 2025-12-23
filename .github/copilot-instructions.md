@@ -18,7 +18,7 @@
 - **Repositories**: `project/src/main/java/com/example/model/` (Impl classes use `SqlSessionTemplate`)
 - **Mappers (XML)**: `project/src/main/resources/mappers/`
 - **Views (JSP)**: `project/src/main/webapp/WEB-INF/views/`
-- **Static Assets**: `project/src/main/resources/static/` (CSS, JS, Chat logs)
+- **Static Assets**: `project/src/main/resources/static/` (CSS, JS, Chat logs, Product Images)
 
 ## MyBatis Conventions (CRITICAL)
 This project uses **two distinct styles** for MyBatis statement IDs. Match the style of the file you are editing:
@@ -34,7 +34,7 @@ This project uses **two distinct styles** for MyBatis statement IDs. Match the s
 ## WebSocket Chat Implementation
 - **Handler**: `UnifiedChatHandler.java` (mapped to `/ws/chat`)
 - **Room Logic**: `roomId = customerId + "_" + adminId`
-- **Storage**: Chat logs are saved to `src/main/resources/static/chat/` as `.txt` files.
+- **Storage**: Chat logs are saved to `project/src/main/resources/static/chat/` as `.txt` files.
 - **Message Protocol**:
     ```json
     {
@@ -56,4 +56,7 @@ This project uses **two distinct styles** for MyBatis statement IDs. Match the s
 ## Coding Patterns
 - **Logging**: Use Lombok `@Slf4j` for logging.
 - **Session**: Controllers often rely on `session.getAttribute("loginUser")`. Ensure session state is handled in new endpoints.
+- **File Uploads**: 
+    -   Images are saved to `project/src/main/resources/static/img/product/`.
+    -   Use `System.getProperty("user.dir")` or relative paths carefully.
 - **JSP**: Views are resolved from `/WEB-INF/views/` with `.jsp` suffix.
